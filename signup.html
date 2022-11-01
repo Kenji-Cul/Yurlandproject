@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="stylesheet" href="css/landingpage.css" />
+    <title>Yurland</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="landingpage.html"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+        </div>
+    </header>
+
+    <!-- Landing Page Text -->
+    <section class="landing_text_container">
+        <p class="landing_text">We have what you want,</p>
+        <p class="landing_text">Let's setup your account.</p>
+    </section>
+
+    <section class="login-form-container">
+        <form action="profile.html" class="login-form">
+            <div class="input-div name">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Input your full name" />
+            </div>
+
+            <div class="input-div email">
+                <label for="email">Email</label>
+                <input type="text" id="email" placeholder="Input your email address" />
+            </div>
+
+            <div class="input-div number">
+                <label for="number">Phone number</label>
+                <input type="text" id="number" placeholder="Input your phone number" />
+            </div>
+
+            <div class="input-div password">
+                <label for="email">Password</label>
+                <input type="password" placeholder="Input your password" id="password" />
+                <i class="ri-eye-off-line"></i>
+            </div>
+
+            <button class="btn">Sign Up</button>
+        </form>
+    </section>
+
+    <script src="js/login.js"></script>
+</body>
+
+</html>
