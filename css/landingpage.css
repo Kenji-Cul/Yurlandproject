@@ -404,7 +404,7 @@ section .landing_text {
     filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
     border-radius: 8px;
     width: 80%;
-    height: 120px;
+    height: 150px;
 }
 
 .land-image img {
@@ -442,7 +442,7 @@ section .landing_text {
 .land-estate {
     border: 1px solid #d4d1d1;
     width: 240px;
-    height: 200px;
+    height: 250px;
     padding-top: 8px;
     display: flex;
     justify-content: top;
