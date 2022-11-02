@@ -30,7 +30,97 @@
         </div>
     </header>
 
+    <div class="red-div">
+        <div class="img-info">
+            <img class="main-img" src="images/estate1.jpg" alt="" />
+
+            <div class="info-details">
+                <div class="info1">
+                    <img src="images/estate1.jpg" alt="" />
+                </div>
+                <div class="info2">
+                    <img src="images/estate2.jpg" alt="" />
+                </div>
+                <div class="info3">
+                    <img src="images/estate3.jpg" alt="" />
+                </div>
+                <div class="info4">
+                    <img src="images/estate4.jpg" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="land-info">
+        <div>
+            <p class="location">Isinmi Eko</p>
+            <p>Epe,Lagos</p>
+        </div>
+        <div class="unit-price">&#8358;6,000,000 per unit</div>
+    </div>
+
+    <div class="land-desc">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex soluta beatae praesentium in itaque? Sapiente eveniet, quisquam excepturi repellendus blanditiis sed autem eius doloremque! Ab placeat animi perferendis amet a!
+    </div>
+
+    <div class="units">
+        <p class="h1">Units</p>
+        <div class="measure">
+            <p>1 unit</p>
+            <p class="line"></p>
+            <p>half plot</p>
+        </div>
+    </div>
+
+    <div class="estateinfo">
+        <div class="select-box">
+            <div class="options-container">
+                <div class="option">
+                    <input type="radio" class="radio" id="two" name="number" value="two" />
+                    <label for="two">2</label>
+                </div>
+
+                <div class="option">
+                    <input type="radio" class="radio" id="three" name="number" value="three" />
+                    <label for="three">3</label>
+                </div>
+
+                <div class="option">
+                    <input type="radio" class="radio" id="four" name="number" value="four" />
+                    <label for="four">4</label>
+                </div>
+
+                <div class="option">
+                    <input type="radio" class="radio" id="five" name="number" value="five" />
+                    <label for="five">5</label>
+                </div>
+            </div>
+            <div class="selected">1</div>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="estate_page_button">Continue</button>
+    </div>
+
     <script src="js/main.js"></script>
+    <script>
+        var targetImg = document.querySelector(".main-img");
+
+        var clickedImg = document.querySelectorAll(".info-details img");
+        clickedImg.forEach((element) => {
+            element.onclick = () => {
+                var src = element.src;
+                var targetsrc = src.substr(22, src.length);
+                targetImg.src = targetsrc;
+                clickedImg[0].style.border = "1px solid white";
+                clickedImg[1].style.border = "1px solid white";
+                clickedImg[2].style.border = "1px solid white";
+                clickedImg[3].style.border = "1px solid white";
+                element.style.border = "none";
+            };
+        });
+    </script>
 </body>
 
 </html>

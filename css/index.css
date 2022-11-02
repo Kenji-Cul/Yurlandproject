@@ -89,6 +89,30 @@ section .landing_text {
     cursor: pointer;
 }
 
+.btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.estate_page_button {
+    margin: 1.7em 0;
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 16px;
+    width: 340px;
+    height: 44px;
+    background: #7e252b;
+    border-radius: 45px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
 .select-box {
     position: relative;
     display: flex;
@@ -780,6 +804,137 @@ section .landing_text {
     color: #1a0709;
 }
 
+
+/* Estate Info Page Styling */
+
+.red-div {
+    width: 100%;
+    height: 10em;
+    background-color: #7e252b;
+    padding-top: 9em;
+}
+
+.img-info {
+    width: 100%;
+    height: 20em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.img-info .main-img {
+    width: 80%;
+    height: 300px;
+    filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
+    border-radius: 25px;
+    margin-top: -1em;
+    object-fit: cover;
+}
+
+.info-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 2em;
+    left: 5em;
+    gap: 1em;
+}
+
+.info-details img {
+    width: 49px;
+    height: 49px;
+    filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
+    border-radius: 13px;
+    border: 1px solid #ffffff;
+    cursor: pointer;
+}
+
+.land-info {
+    margin-top: 9em;
+    padding: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.land-info .location {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 19px;
+    color: #1a0709;
+}
+
+.land-info p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #808080;
+}
+
+.unit-price {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 19px;
+    color: #808080;
+}
+
+.land-desc {
+    padding: 2em;
+    padding-top: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #808080;
+}
+
+.units {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 1em;
+    padding-left: 2em;
+}
+
+.measure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+}
+
+.units .h1 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    color: #1a0709;
+}
+
+.units .line {
+    width: 10px;
+    height: 2px;
+    background-color: #808080;
+}
+
+.units p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    color: #808080;
+}
+
+.estateinfo {
+    width: 30%;
+    padding: 2em;
+    padding-top: 1em;
+}
+
+.estateinfo .select-box {
+    border: 1px solid #bfbfbf;
+    border-radius: 8px;
+}
+
 @media only screen and (min-width: 800px) {
     .landing_form {
         width: 50%;
@@ -847,5 +1002,27 @@ section .landing_text {
     .payment-image-div img {
         width: 16em;
         height: 16em;
+    }
+    /* Estate Page Styling */
+    .red-div {
+        height: 15em;
+    }
+    .img-info .main-img {
+        height: 400px;
+        width: 60%;
+    }
+    .info-details {
+        bottom: 4em;
+        right: 50px;
+    }
+    .info-details img {
+        width: 70px;
+        height: 70px;
+    }
+    .img-info {
+        height: 30em;
+    }
+    .land-info {
+        margin-top: 14em;
     }
 }
