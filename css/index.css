@@ -55,6 +55,8 @@ section .landing_text {
     height: 65vh;
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .landing_form {
@@ -420,6 +422,7 @@ section .landing_text {
     width: 100%;
     height: 100%;
     border-radius: 8px;
+    object-fit: cover;
 }
 
 .land-name p {
@@ -516,6 +519,10 @@ section .landing_text {
     margin-bottom: 2em;
 }
 
+.subscribed-lands a {
+    text-decoration: none;
+}
+
 .subscribed-details {
     display: flex;
     justify-content: space-between;
@@ -543,6 +550,7 @@ section .landing_text {
     width: 100%;
     height: 100%;
     border-radius: 8px;
+    object-fit: cover;
 }
 
 .price {
@@ -555,6 +563,33 @@ section .landing_text {
     align-items: center;
     justify-content: center;
     color: #7e252b;
+    cursor: pointer;
+}
+
+.price-container a {
+    text-decoration: none;
+}
+
+.price-container .price {
+    border: 1px solid #7e252b;
+    border-radius: 45px;
+    padding: 8.45588px 13.5294px;
+    width: 140px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7e252b;
+    color: #fff;
+    cursor: pointer;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    padding: 1em;
 }
 
 .subscribed-details .land-name {
@@ -609,6 +644,16 @@ section .landing_text {
     align-items: center;
 }
 
+.page-title3 {
+    padding: 2em;
+    padding-top: 8em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.4em;
+}
+
 .page-title img {
     cursor: pointer;
 }
@@ -618,6 +663,14 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 22px;
+    line-height: 28px;
+    color: #1a0709;
+}
+
+.page-title3 p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
     line-height: 28px;
     color: #1a0709;
 }
@@ -725,4 +778,74 @@ section .landing_text {
     font-weight: 600;
     font-size: 17px;
     color: #1a0709;
+}
+
+@media only screen and (min-width: 800px) {
+    .landing_form {
+        width: 50%;
+    }
+    .login-link {
+        font-size: 20px;
+        color: #2f3640;
+    }
+    .login-form {
+        width: 50%;
+    }
+    .land-btn-container {
+        justify-content: left;
+        padding-left: 3em;
+    }
+    .profile-div-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .land-estate {
+        border: 1px solid #d4d1d1;
+        width: 350px;
+        height: 320px;
+        padding-top: 8px;
+        display: flex;
+        justify-content: top;
+        align-items: center;
+        gap: 1em;
+        flex-direction: column;
+        border-radius: 8px;
+        margin-bottom: 1.6em;
+    }
+    .land-image {
+        filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
+        border-radius: 8px;
+        width: 80%;
+        height: 230px;
+    }
+    .subscribed-lands {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 3em;
+        min-height: 90vh;
+    }
+    .subscribed-img {
+        width: 100%;
+    }
+    .subscribed-img img {
+        width: 100%;
+        height: 220px;
+    }
+    .subscribed-land {
+        height: 20em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .lands-notification .subscribe-div {
+        width: 40%;
+    }
+    .payment-image-div {
+        justify-content: left;
+        padding-left: 2em;
+    }
+    .payment-image-div img {
+        width: 16em;
+        height: 16em;
+    }
 }
