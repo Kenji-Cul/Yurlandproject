@@ -359,6 +359,10 @@ section .landing_text {
     justify-content: center;
 }
 
+.land-btn-container a {
+    text-decoration: none;
+}
+
 .profile-div {
     background: #fee1e3;
     width: 156px;
@@ -584,4 +588,141 @@ section .landing_text {
 .subscribed-img i {
     font-size: 40px;
     color: #f2f2f2;
+}
+
+
+/* All estates page styling */
+
+.page-title {
+    padding: 2em;
+    padding-top: 10em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-title2 {
+    padding: 2em;
+    padding-top: 8em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-title img {
+    cursor: pointer;
+}
+
+.page-title p,
+.page-title2 p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 28px;
+    color: #1a0709;
+}
+
+
+/* Payment page Styling */
+
+.payment-image-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5em;
+    position: relative;
+}
+
+.payment-image-div img {
+    width: 13em;
+    height: 13em;
+}
+
+.payment-image-div p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: #fee1e3;
+}
+
+.payment-image-div .payment-desc {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    position: absolute;
+    top: 10px;
+    padding: 15px;
+}
+
+.payment-desc .price-div,
+.payment-desc .payment-count {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 19px;
+    color: #f2f2f2;
+}
+
+.transactions {
+    padding: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.transactions p {
+    font-weight: 600;
+}
+
+.transactions .more {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 13px;
+    color: #ff6600;
+}
+
+.transaction-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em;
+    margin-bottom: 1.5em;
+}
+
+.transaction-details .radius {
+    width: 50px;
+    height: 50px;
+    background: #d9d9d9;
+    border-radius: 8px;
+}
+
+.details p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: #1a0709;
+}
+
+.location,
+.date,
+.time {
+    color: #b9b4b4;
+}
+
+.inner-detail {
+    display: flex;
+    gap: 0.5em;
+}
+
+.inner-detail p {
+    height: 20px;
+    width: 3px;
+    background: #d9d9d9;
+}
+
+.price-detail {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    color: #1a0709;
 }
