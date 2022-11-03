@@ -18,13 +18,6 @@ selectedAll.forEach((selected) => {
 
       optionsContainer.classList.add("active");
     }
-
-    searchBox.value = "";
-    filterList("");
-
-    if (optionsContainer.classList.contains("active")) {
-      searchBox.focus();
-    }
   });
 
   optionsList.forEach((o) => {
@@ -33,17 +26,4 @@ selectedAll.forEach((selected) => {
       optionsContainer.classList.remove("active");
     });
   });
-
-  const filterList = (searchTerm) => {
-    searchTerm = searchTerm.toLowerCase();
-    optionsList.forEach((option) => {
-      let label =
-        option.firstElementChild.nextElementSibling.innerText.toLowerCase();
-      if (label.indexOf(searchTerm) != -1) {
-        option.style.display = "block";
-      } else {
-        option.style.display = "none";
-      }
-    });
-  };
 });

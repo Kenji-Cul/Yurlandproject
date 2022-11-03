@@ -34,9 +34,30 @@
 
         <div class="nav">
             <img src="images/cart.svg" alt="cart icon" />
-            <img src="images/menu.svg" alt="menu icon" />
+            <div class="menu">
+                <img src="images/menu.svg" alt="menu icon" />
+            </div>
         </div>
     </header>
+
+
+    <ul class="dropdown-links">
+        <li><a href="newland.html">New Land</a></li>
+        <li><a href="transactions.html">Transaction History</a></li>
+        <li><a href="mylands.html">My Land</a></li>
+        <li><a href="payment.html">New Payment</a></li>
+        <li><a href="referral.html">Referral</a></li>
+        <li><a href="documents.html">Documents</a></li>
+        <li><a href="profiledetails.html">Profile</a> and
+            <a href="settings.html">Settings</a></li>
+        <li><a href="#">Card</a></li>
+        <li><a href="#">Logout</a></li>
+
+        <div class="close">
+            <i class="ri-close-fill"></i>
+        </div>
+    </ul>
+    </div>
 
     <div class="profile-info">
         <div class="details">
@@ -55,16 +76,16 @@
     </div>
 
     <div class="profile-div-container">
-        <a href="mylands.html">
-            <div class="profile-div">
-                <img class="profile-icon" src="images/land.svg" alt="land-icon-image" />
+        <div class="profile-div">
+            <img class="profile-icon" src="images/land.svg" alt="land-icon-image" />
 
+            <a href="mylands.html">
                 <div class="navigate">
                     <p>My land</p>
                     <img src="images/right_arrow.svg" alt="" />
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
 
         <div class="profile-div">
             <img class="profile-icon" src="images/Wallet.svg" alt="land-icon-image" />
@@ -86,25 +107,26 @@
             </div>
         </a>
 
+        <div class="profile-div">
+            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-        <a href="transactions.html">
-            <div class="profile-div">
-                <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
-
+            <a href="transactions.html">
                 <div class="navigate">
                     <p>Transactions</p>
                     <img src="images/right_arrow.svg" alt="" />
                 </div>
-            </div>
+            </a>
+        </div>
     </div>
-    </a>
 
     <div class="swiper estates swiper-counter">
         <p class="available">Available Estates</p>
         <div class="land_estate_container swiper-wrapper">
             <div class="land-estate swiper-slide">
                 <div class="land-image">
-                    <img src="images/estate1.jpg" alt="estate image" />
+                    <a href="estateinfo.html">
+                        <img src="images/estate1.jpg" alt="estate image" />
+                    </a>
                 </div>
                 <div class="land-details">
                     <div class="land-name">
@@ -118,7 +140,9 @@
 
             <div class="land-estate swiper-slide">
                 <div class="land-image">
-                    <img src="images/estate2.jpg" alt="estate image" />
+                    <a href="estateinfo.html">
+                        <img src="images/estate2.jpg" alt="estate image" />
+                    </a>
                 </div>
                 <div class="land-details">
                     <div class="land-name">
@@ -132,7 +156,9 @@
 
             <div class="land-estate swiper-slide">
                 <div class="land-image">
-                    <img src="images/estate3.jpg" alt="estate image" />
+                    <a href="estateinfo.html">
+                        <img src="images/estate3.jpg" alt="estate image" />
+                    </a>
                 </div>
                 <div class="land-details">
                     <div class="land-name">
@@ -146,7 +172,9 @@
 
             <div class="land-estate swiper-slide">
                 <div class="land-image">
-                    <img src="images/estate4.jpg" alt="estate image" />
+                    <a href="estateinfo.html">
+                        <img src="images/estate4.jpg" alt="estate image" />
+                    </a>
                 </div>
                 <div class="land-details">
                     <div class="land-name">
@@ -161,10 +189,37 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <!--========== SWIPER JS ============  -->
-    <script src="js/swiper-bundle.min.js"></script>
+    <div class="foot">
+        <div class="profile-div">
+            <img class="profile-icon" src="images/paypal.svg" alt="land-icon-image" />
 
+            <div class="navigate">
+                <div>
+                    <p>Make new</p>
+                    <p>Payment</p>
+                </div>
+                <img src="images/right_arrow.svg" alt="" />
+            </div>
+        </div>
+    </div>
+
+    <script src="js/swiper-bundle.min.js"></script>
     <script src="js/profile.js"></script>
+    <!--========== SWIPER JS ============  -->
+    <script>
+        let dropdownnav = document.querySelector(".dropdown-links");
+        dropdownnav.style.display = "none";
+
+        let menu = document.querySelector(".menu");
+        menu.onclick = () => {
+            dropdownnav.style.display = "block";
+        };
+
+        let close = document.querySelector(".close");
+        close.onclick = () => {
+            dropdownnav.style.display = "none";
+        };
+    </script>
 </body>
 
 </html>

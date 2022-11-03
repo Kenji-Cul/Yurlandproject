@@ -26,16 +26,22 @@
     </header>
 
     <div class="page-title">
+        <a href="profile.html"><img src="images/arrowleft.svg" alt="" /></a>
         <p>All Estates</p>
-        <div>
-            <img src="images/search.svg" alt="" />
-        </div>
+        <form action="">
+            <input type="search" name="" id="" placeholder="Search here.." />
+            <div>
+                <img class="search-icon" src="images/search.svg" alt="" />
+            </div>
+        </form>
     </div>
 
     <div class="subscribed-lands">
         <div class="subscribed-land">
             <div class="subscribed-img">
-                <img src="images/estate1.jpg" alt="estate image" />
+                <a href="estateinfo.html">
+                    <img src="images/estate1.jpg" alt="estate image" />
+                </a>
                 <div class="ellipse">
                     <i class="ri-heart-line"></i>
                 </div>
@@ -51,7 +57,9 @@
 
         <div class="subscribed-land">
             <div class="subscribed-img">
-                <img src="images/estate1.jpg" alt="estate image" />
+                <a href="estateinfo.html">
+                    <img src="images/estate1.jpg" alt="estate image" />
+                </a>
                 <div class="ellipse">
                     <i class="ri-heart-line"></i>
                 </div>
@@ -67,7 +75,9 @@
 
         <div class="subscribed-land">
             <div class="subscribed-img">
-                <img src="images/estate1.jpg" alt="estate image" />
+                <a href="estateinfo.html">
+                    <img src="images/estate1.jpg" alt="estate image" />
+                </a>
                 <div class="ellipse">
                     <i class="ri-heart-line"></i>
                 </div>
@@ -83,7 +93,9 @@
 
         <div class="subscribed-land">
             <div class="subscribed-img">
-                <img src="images/estate1.jpg" alt="estate image" />
+                <a href="estateinfo.html">
+                    <img src="images/estate1.jpg" alt="estate image" />
+                </a>
                 <div class="ellipse">
                     <i class="ri-heart-line"></i>
                 </div>
@@ -99,6 +111,14 @@
     </div>
 
     <script src="js/main.js"></script>
+    <script>
+        var search = document.querySelector(".page-title form input");
+        var searchicon = document.querySelector(".search-icon");
+        search.style.display = "none";
+        searchicon.onclick = () => {
+            search.style.display = "block";
+        };
+    </script>
 </body>
 
 </html>

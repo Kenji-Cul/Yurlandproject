@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+
+    <link rel="stylesheet" href="css/index.css" />
+    <title>Yurland</title>
+</head>
+
+<body class="profile-body">
+    <!-- Header -->
+    <header class="signup">
+        <div class="logo">
+            <a href="index.html"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+        </div>
+
+        <div class="nav">
+            <img src="images/cart.svg" alt="cart icon" />
+            <img src="images/menu.svg" alt="menu icon" />
+        </div>
+    </header>
+
+    <div class="page-title4">
+        <div>
+            <img src="images/orange-cart-icon.svg" alt="" />
+        </div>
+        <p>Summary</p>
+    </div>
+
+    <div class="image-desc">
+        <img src="images/estate3.jpg" alt="" />
+    </div>
+
+    <div class="price-desc">
+        <div>
+            <div class="land-name">
+                <p>Isinmi Eko</p>
+            </div>
+            <div class="land-location">
+                <p>Epe,Lagos</p>
+            </div>
+        </div>
+
+        <div class="cost">
+            <p>Total Cost:&nbsp;&nbsp;&nbsp;<span>&#8358;6,000,000</span></p>
+            <p>Daily Cost:&nbsp;&nbsp;&nbsp;<span>&#8358;6,000</span></p>
+        </div>
+
+        <form action="" id="paymentplanform">
+            <div class="payment-plan">
+                <p>Choose payment plan</p>
+                <label class="radio" for="outright">
+          <input
+            type="radio"
+            name="payment"
+            id="outright"
+            value="outright payment"
+          />
+          <span></span>
+          <p>Outright payment</p>
+        </label>
+                <label class="radio" fo="sub">
+          <input
+            type="radio"
+            name="payment"
+            id="sub"
+            value="subscription payment"
+          />
+          <span></span>
+          <p>Payflex</p>
+        </label>
+            </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="estate_page_button" type="submit">Continue</button>
+    </div>
+    </form>
+
+    <script src="js/main.js"></script>
+    <script>
+        const planform = document.querySelector('#paymentplanform');
+        const paybtn = document.querySelector('.estate_page_button');
+        planform.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+        function checkPaymentMode() {
+            let xhr = new XMLHttpRequest(); //creating XML Object
+            xhr.open("POST", "getplan.php", true);
+            xhr.onload = () => {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            let data = xhr.response;
+                            if (data == "outright payment") {
+                                location.href = "outrightpayment.html";
+                            }
+                            if (data == "subscription payment") {
+                                location.href = "subpayment.html";
+                            }
+                        }
+                    }
+                }
+                // we have to send the information through ajax to php
+            let formData = new FormData(planform); //creating new formData Object
+
+            xhr.send(formData); //sending the form data to php
+        }
+
+        paybtn.onclick = () => {
+            checkPaymentMode();
+        }
+    </script>
+</body>
+
+</html>

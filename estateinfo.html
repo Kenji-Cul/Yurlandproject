@@ -64,7 +64,7 @@
     </div>
 
     <div class="units">
-        <p class="h1">Units</p>
+        <p class="h1">How many units are you buying?</p>
         <div class="measure">
             <p>1 unit</p>
             <p class="line"></p>
@@ -73,54 +73,33 @@
     </div>
 
     <div class="estateinfo">
-        <div class="select-box">
-            <div class="options-container">
-                <div class="option">
-                    <input type="radio" class="radio" id="two" name="number" value="two" />
-                    <label for="two">2</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="three" name="number" value="three" />
-                    <label for="three">3</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="four" name="number" value="four" />
-                    <label for="four">4</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" class="radio" id="five" name="number" value="five" />
-                    <label for="five">5</label>
-                </div>
-            </div>
-            <div class="selected">1</div>
+        <div class="input-div">
+            <input type="number" placeholder="Input number of units" id="unit" />
         </div>
     </div>
 
     <div class="btn-container">
-        <button class="estate_page_button">Continue</button>
+        <a href="summarypage.html"><button class="estate_page_button">Continue</button></a
+      >
     </div>
 
     <script src="js/main.js"></script>
     <script>
-        var targetImg = document.querySelector(".main-img");
+      var targetImg = document.querySelector(".main-img");
 
-        var clickedImg = document.querySelectorAll(".info-details img");
-        clickedImg.forEach((element) => {
-            element.onclick = () => {
-                var src = element.src;
-                var targetsrc = src.substr(22, src.length);
-                targetImg.src = targetsrc;
-                clickedImg[0].style.border = "1px solid white";
-                clickedImg[1].style.border = "1px solid white";
-                clickedImg[2].style.border = "1px solid white";
-                clickedImg[3].style.border = "1px solid white";
-                element.style.border = "none";
-            };
-        });
+      var clickedImg = document.querySelectorAll(".info-details img");
+      clickedImg.forEach((element) => {
+        element.onclick = () => {
+          var src = element.src;
+          var targetsrc = src.substr(25, src.length);
+          targetImg.src = targetsrc;
+          clickedImg[0].style.border = "1px solid white";
+          clickedImg[1].style.border = "1px solid white";
+          clickedImg[2].style.border = "1px solid white";
+          clickedImg[3].style.border = "1px solid white";
+          element.style.border = "none";
+        };
+      });
     </script>
-</body>
-
+  </body>
 </html>
