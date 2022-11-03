@@ -6,6 +6,14 @@
     list-style-type: none;
 }
 
+:root {
+    --primary-black: #1a0709;
+    --primary-white: #fee1e3;
+    --inactive-grey: #808080;
+    --secondary-color: #ff6600;
+    --primary-main: #7e252b;
+}
+
 body {
     height: 120vh;
 }
@@ -87,7 +95,7 @@ section .landing_text {
     padding: 10px 16px;
     width: 281px;
     height: 44px;
-    background: #7e252b;
+    background: var(--primary-main);
     border-radius: 45px;
     border: none;
     color: #ffffff;
@@ -115,7 +123,7 @@ section .landing_text {
     padding: 10px 16px;
     width: 340px;
     height: 44px;
-    background: #7e252b;
+    background: var(--primary-main);
     border-radius: 45px;
     border: none;
     color: #ffffff;
@@ -130,7 +138,7 @@ section .landing_text {
 }
 
 .login-link {
-    color: #1a0709;
+    color: var(--primary-black);
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -138,7 +146,7 @@ section .landing_text {
 }
 
 .login-link a {
-    color: #ff6600;
+    color: var(--secondary-color);
 }
 
 .company {
@@ -156,7 +164,7 @@ section .landing_text {
 }
 
 .company span {
-    color: #ff6600;
+    color: var(--secondary-color);
 }
 
 .select-container {
@@ -174,7 +182,7 @@ section .landing_text {
 
 .select-box .options-container {
     background: #ffffff;
-    color: #808080;
+    color: var(--inactive-grey);
     max-height: 0;
     width: 100%;
     opacity: 0;
@@ -190,7 +198,7 @@ section .landing_text {
     background: #ffffff;
     border-radius: 8px;
     margin-bottom: 8px;
-    color: #808080;
+    color: var(--inactive-grey);
     position: relative;
     order: 0;
 }
@@ -242,7 +250,7 @@ section .landing_text {
 }
 
 .select-box .option:hover {
-    background: #808080;
+    background: var(--inactive-grey);
     color: #ffffff;
 }
 
@@ -312,7 +320,7 @@ section .landing_text {
     padding: 16px 16px;
     width: 370px;
     height: 44px;
-    background: #7e252b;
+    background: var(--primary-main);
     border-radius: 45px;
     border: none;
     color: #ffffff;
@@ -428,7 +436,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .profile-image {
@@ -496,7 +504,7 @@ section .landing_text {
 }
 
 .navigate p {
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .navigate img {
@@ -527,21 +535,21 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .land-location p {
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .available {
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
-    color: #1a0709;
+    color: var(--primary-black);
     padding-bottom: 14px;
 }
 
@@ -641,7 +649,7 @@ section .landing_text {
 }
 
 .subscribe-div .lands-count {
-    color: #ff6600;
+    color: var(--secondary-color);
     font-style: normal;
     font-weight: 600;
     font-size: 17px;
@@ -668,11 +676,11 @@ section .landing_text {
 }
 
 .code-container span {
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .price {
-    border: 1px solid #7e252b;
+    border: 1px solid var(--primary-main);
     border-radius: 45px;
     padding: 8.45588px 13.5294px;
     width: 140px;
@@ -680,7 +688,7 @@ section .landing_text {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7e252b;
+    color: var(--primary-main);
     cursor: pointer;
 }
 
@@ -709,7 +717,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 22px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .price-button {
@@ -730,7 +738,7 @@ section .landing_text {
 }
 
 .price-container .price {
-    border: 1px solid #7e252b;
+    border: 1px solid var(--primary-main);
     border-radius: 45px;
     padding: 8.45588px 13.5294px;
     width: 140px;
@@ -738,7 +746,7 @@ section .landing_text {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #7e252b;
+    background-color: var(--primary-main);
     color: #fff;
     cursor: pointer;
 }
@@ -755,14 +763,14 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .subscribed-details .land-location {
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .ellipse {
@@ -854,7 +862,7 @@ section .landing_text {
     font-weight: 600;
     font-size: 22px;
     line-height: 28px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .page-title3 p {
@@ -862,7 +870,7 @@ section .landing_text {
     font-weight: 600;
     font-size: 26px;
     line-height: 28px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 
@@ -998,7 +1006,7 @@ section .landing_text {
     font-weight: 600;
     font-size: 13px;
     line-height: 13px;
-    color: #ff6600;
+    color: var(--secondary-color);
 }
 
 .transaction-details {
@@ -1041,7 +1049,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .location,
@@ -1065,7 +1073,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 17px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 
@@ -1074,7 +1082,7 @@ section .landing_text {
 .red-div {
     width: 100%;
     height: 10em;
-    background-color: #7e252b;
+    background-color: var(--primary-main);
     padding-top: 9em;
 }
 
@@ -1127,21 +1135,21 @@ section .landing_text {
     font-style: normal;
     font-weight: 500;
     font-size: 19px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .land-info p {
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .unit-price {
     font-style: normal;
     font-weight: 500;
     font-size: 19px;
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .land-desc {
@@ -1150,7 +1158,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .units {
@@ -1172,20 +1180,20 @@ section .landing_text {
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .units .line {
     width: 10px;
     height: 2px;
-    background-color: #808080;
+    background-color: var(--inactive-grey);
 }
 
 .units p {
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .estateinfo {
@@ -1219,7 +1227,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 500;
     font-size: 15px;
-    color: #808080;
+    color: var(--inactive-grey);
 }
 
 .radio {
@@ -1236,7 +1244,7 @@ section .landing_text {
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    border: 2px solid #7e252b;
+    border: 2px solid var(--primary-main);
     display: block;
     position: relative;
 }
@@ -1245,7 +1253,7 @@ section .landing_text {
     content: "";
     height: 16px;
     width: 16px;
-    background: #7e252b;
+    background: var(--primary-main);
     border-radius: 50%;
     position: absolute;
     transform: translate(-50%, 50%) scale(0);
@@ -1268,7 +1276,7 @@ section .landing_text {
 .radio p {
     font-style: normal;
     font-size: 10px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .cost {
@@ -1285,7 +1293,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 500;
     font-size: 17px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .directions {
@@ -1304,7 +1312,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 13px;
-    color: #ff6600;
+    color: var(--secondary-color);
 }
 
 
@@ -1332,7 +1340,7 @@ section .landing_text {
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
     text-align: center;
-    color: #ff6600;
+    color: var(--secondary-color);
     width: 150px;
     padding: 0.3em 0.3em;
 }
@@ -1360,7 +1368,7 @@ section .landing_text {
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .referral {
@@ -1370,7 +1378,7 @@ section .landing_text {
 
 .referral span {
     text-transform: uppercase;
-    color: #ff6600;
+    color: var(--secondary-color);
 }
 
 .referral img {
@@ -1381,7 +1389,7 @@ section .landing_text {
 .referral .referral_code {
     text-transform: uppercase;
     font-weight: 600;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .details-container {
@@ -1401,17 +1409,17 @@ section .landing_text {
 }
 
 .account-detail2 span {
-    color: #808080;
+    color: var(--inactive-grey);
     font-size: 13px;
 }
 
 .account-detail2 p {
     text-transform: uppercase;
-    color: #1a0709;
+    color: var(--primary-black);
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
-    color: #1a0709;
+    color: var(--primary-black);
 }
 
 .account-detail2 i {
