@@ -29,7 +29,10 @@
         <a href="profile.html"><img src="images/arrowleft.svg" alt="" /></a>
         <p>All Estates</p>
         <form action="">
-            <input type="search" name="" id="" placeholder="Search here.." />
+            <div class="search-input">
+                <i class="ri-close-line"></i>
+                <input type="search" name="" id="" placeholder="Search here.." />
+            </div>
             <div>
                 <img class="search-icon" src="images/search.svg" alt="" />
             </div>
@@ -114,9 +117,15 @@
     <script>
         var search = document.querySelector(".page-title form input");
         var searchicon = document.querySelector(".search-icon");
+        var searchclose = document.querySelector(".search-input i");
         search.style.display = "none";
+        searchclose.style.visibility = "hidden";
         searchicon.onclick = () => {
             search.style.display = "block";
+            searchclose.style.visibility = "visible";
+            searchclose.onclick = () => {
+                document.querySelector(".search-input").style.display = "none";
+            };
         };
     </script>
 </body>

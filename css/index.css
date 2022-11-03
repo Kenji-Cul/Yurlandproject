@@ -944,8 +944,8 @@ section .landing_text {
 }
 
 .payment-count img {
-    width: 50px;
-    height: 50px;
+    width: 50px !important;
+    height: 50px !important;
     cursor: pointer;
 }
 
@@ -1418,6 +1418,21 @@ section .landing_text {
     font-size: 30px;
 }
 
+.search-input {
+    position: fixed;
+    top: 6em;
+    right: 2em;
+    z-index: 20000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.search-input i {
+    font-size: 25px;
+}
+
 @media only screen and (min-width: 800px) {
     .landing_form {
         width: 50%;
@@ -1530,5 +1545,138 @@ section .landing_text {
     }
     .account-detail2 {
         width: 60%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    body {
+        background-image: url(images/landing_image.jpg);
+        background-repeat: no-repeat;
+        background-size: 120% !important;
+        overflow-x: hidden;
+        height: 100vh;
+    }
+    .payment-image-div img {
+        width: 9em;
+        height: 9em;
+    }
+    .transaction-details {
+        flex-direction: column;
+        align-items: left;
+    }
+    .payment-image-div2 img {
+        width: 10em;
+        height: 10em;
+    }
+    .payment-image-div2 .payment-desc2 {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+        position: absolute;
+        bottom: 2.4em;
+        padding: 15px;
+    }
+    .payment-image-div2 .payment-desc3 {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+        position: absolute;
+        bottom: 0.6em;
+        padding: 15px;
+    }
+    .transaction-details2 {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    body {
+        background-image: url(images/landing_image.jpg);
+        background-repeat: no-repeat;
+        background-size: 120% !important;
+        overflow-x: hidden;
+        height: 100vh;
+    }
+    .company {
+        margin-top: 2em;
+        position: absolute;
+        bottom: -4em;
+        width: 360px;
+        height: 40px;
+        background: rgba(174, 172, 172, 0.7);
+        backdrop-filter: blur(2px);
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .page-title2 {
+        padding-right: 30%;
+    }
+    .signup .nav {
+        right: 20%;
+    }
+    .profile-div {
+        width: 120px;
+        height: 120px;
+    }
+    .transaction-details {
+        flex-direction: column;
+        align-items: left;
+    }
+    .payment-image-div2 {
+        grid-gap: 0.5em;
+    }
+    .payment-image-div2 img {
+        width: 10em;
+        height: 10em;
+    }
+    .payment-image-div2 .payment-desc2 {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+        position: absolute;
+        bottom: 3.2em;
+    }
+    .payment-image-div2 .payment-desc3 {
+        position: absolute;
+        bottom: 0.7em;
+    }
+    .transaction-details2 {
+        flex-direction: column;
+    }
+    .btn {
+        width: 340px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    body {
+        background-image: url(images/landing_image.jpg);
+        background-repeat: no-repeat;
+        background-size: 140% !important;
+        overflow-x: hidden;
+        height: 80vh;
+    }
+    .landing_text_container {
+        width: 120%;
+        height: 6em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: 7em;
+    }
+    .landing_form_container {
+        width: 120%;
+    }
+    .landing_form {
+        width: 92%;
+    }
+    .landing_page_button {
+        width: 220px;
+    }
+    .btn {
+        width: 260px;
     }
 }
