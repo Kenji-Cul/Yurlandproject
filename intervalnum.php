@@ -51,39 +51,41 @@
             </div>
         </div>
 
-        <?php if($_GET['data'] == "daily"){?>
-        <div class="input-div">
-            <label for="day">Daily</label>
-            <input type="number" id="day" placeholder="Input number of days" />
-        </div>
-        <?php }?>
+        <form action="paymentsuccess.html">
+            <?php if($_GET['data'] == "daily"){?>
+            <div class="input-div">
+                <label for="day">Daily</label>
+                <input type="number" id="day" placeholder="Input number of days" />
+            </div>
+            <?php }?>
 
 
-        <?php if($_GET['data'] == "weekly"){?>
-        <div class="input-div">
-            <label for="week">Weekly</label>
-            <input type="number" id="week" placeholder="Input number of weeks" />
-        </div>
-        <?php }?>
+            <?php if($_GET['data'] == "weekly"){?>
+            <div class="input-div">
+                <label for="week">Weekly</label>
+                <input type="number" id="week" placeholder="Input number of weeks" />
+            </div>
+            <?php }?>
 
-        <?php if($_GET['data'] == "monthly"){?>
-        <div class="input-div">
-            <label for="month">Monthly</label>
-            <input type="number" id="month" placeholder="Input number of months" />
-        </div>
-        <?php }?>
+            <?php if($_GET['data'] == "monthly"){?>
+            <div class="input-div">
+                <label for="month">Monthly</label>
+                <input type="number" id="month" placeholder="Input number of months" />
+            </div>
+            <?php }?>
 
-        <?php if($_GET['data'] == "annually"){?>
-        <div class="input-div">
-            <label for="annual">Annually</label>
-            <input type="number" id="annual" placeholder="Input number of years" />
-        </div>
-        <?php }?>
+            <?php if($_GET['data'] == "annually"){?>
+            <div class="input-div">
+                <label for="annual">Annually</label>
+                <input type="number" id="annual" placeholder="Input number of years" />
+            </div>
+            <?php }?>
 
 
-        <div class="btn-container">
-            <a href=""><button class="estate_page_button">Pay</button></a>
-        </div>
+            <div class="btn-container">
+                <a href=""><button class="estate_page_button" type="submit">Pay</button></a>
+            </div>
+        </form>
 
         <script src="js/main.js"></script>
 </body>

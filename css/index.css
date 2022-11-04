@@ -102,6 +102,23 @@ section .landing_text {
     cursor: pointer;
 }
 
+.landing_page_button2 {
+    margin: 1.7em 0;
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 16px;
+    width: 281px;
+    height: 44px;
+    background: var(--primary-main);
+    border-radius: 45px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
 .btn-container {
     width: 100%;
     display: flex;
@@ -1439,6 +1456,32 @@ section .landing_text {
 
 .search-input i {
     font-size: 25px;
+}
+
+
+/* Payment Sucess Page styling */
+
+.success {
+    width: 100%;
+    height: 100%;
+    padding-top: 8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 4em;
+}
+
+.success img {
+    width: 90%;
+    height: 90%;
+}
+
+.success p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    color: #1a0709;
 }
 
 @media only screen and (min-width: 800px) {
