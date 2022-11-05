@@ -29,9 +29,9 @@
 
     <section class="login-form-container">
         <form action="" class="login-form" id="login-form">
-            <div class="input-div email">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Input your email address" name="email" />
+            <div class="input-div name">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="agentname" placeholder="Input your name" />
             </div>
 
             <div class="input-div password">
@@ -59,11 +59,11 @@
             $("#login-form .btn").click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "checkuser.php",
+                    url: "checkagent.php",
                     data: $("#login-form input"),
                     success: function(response) {
                         if (response === "success") {
-                            location.href = "profile.php";
+                            location.href = "agent.html";
                         } else {
                             $("section .error").html(response);
                             $("section .error").css({

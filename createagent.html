@@ -22,25 +22,36 @@
 
     <!-- Landing Page Text -->
     <section class="landing_text_container">
-        <p class="landing_text">Welcome Back!</p>
-        <p class="landing_text">Login to your account</p>
+        <p class="landing_text">Create</p>
+        <p class="landing_text">New Agent</p>
         <p class="error">Please input all fields</p>
     </section>
 
     <section class="login-form-container">
         <form action="" class="login-form" id="login-form">
-            <div class="input-div email">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Input your email address" name="email" />
+            <div class="input-div name">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="agentname" placeholder="Input agent's full name" />
             </div>
 
             <div class="input-div password">
                 <label for="password">Password</label>
-                <input type="password" placeholder="Input your password" id="password" name="password" />
+                <input type="password" placeholder="Input agent's password" id="password" name="password" />
                 <i class="ri-eye-off-line"></i>
             </div>
 
-            <button class="btn" type="submit">Login</button>
+            <div class="input-div email">
+                <label for="referralid">Referral Id</label>
+                <input type="text" id="referralid" name="refid" value="" placeholder="Input agent's referral id" />
+                <div id="createid">Create ID</div>
+            </div>
+
+            <div class="input-div email">
+                <label for="percent">Earning Percentage</label>
+                <input type="number" id="percent" name="percent" placeholder="Input agent's earning percentage" />
+            </div>
+
+            <button class="btn" type="submit">Create Agent</button>
             <div style="display: none">
                 <img src="images/loading.svg" alt="" class="loading-img" />
             </div>
@@ -50,30 +61,45 @@
     <script src="js/login.js"></script>
     <script>
         $(document).ready(function() {
-            $("#login-form").submit(function(e) {
-                e.preventDefault();
-                var loadingImg = $(".loading-img");
-                $(".btn").html(loadingImg);
+            var button = $("#createid");
+
+            button.click(function() {
+                createRandomString(8);
             });
+
+            function createRandomString(string_length) {
+                var random_string = "";
+                var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678910";
+                for (var i, i = 0; i < string_length; i++) {
+                    random_string += characters.charAt(
+                        Math.floor(Math.random() * characters.length)
+                    );
+                }
+                $("#referralid").val(random_string);
+            }
 
             $("#login-form .btn").click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "checkuser.php",
+                    url: "insertagent.php",
                     data: $("#login-form input"),
                     success: function(response) {
                         if (response === "success") {
-                            location.href = "profile.php";
+                            location.href = "agentsuccess.html";
                         } else {
-                            $("section .error").html(response);
                             $("section .error").css({
                                 visibility: "visible",
                             });
-                            $(".btn").html("Login");
-                            // console.log(response);
+                            $(".btn").html("Create Agent");
                         }
                     },
                 });
+            });
+
+            $("#login-form").submit(function(e) {
+                e.preventDefault();
+                var loadingImg = $(".loading-img");
+                $(".btn").html(loadingImg);
             });
         });
     </script>

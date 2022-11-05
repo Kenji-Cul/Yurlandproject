@@ -60,6 +60,24 @@ section .landing_text {
     text-align: center;
 }
 
+section .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 31px;
+    text-align: center;
+    color: #e11900;
+    border: 1px solid #e11900;
+    width: 30%;
+    padding: 10px 10px;
+    background-color: #e1dede;
+    visibility: hidden;
+}
+
 
 /*  Landing Form Section */
 
@@ -376,6 +394,23 @@ section .landing_text {
     top: 40px;
     color: #b2b2b2;
     cursor: pointer;
+}
+
+.email #createid {
+    position: absolute;
+    right: 15px;
+    top: 40px;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid var(--primary-main);
+    border-radius: 45px;
+    padding: 8.45588px 13.5294px;
+    width: 100px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-main);
 }
 
 .input-div {
@@ -1067,6 +1102,10 @@ section .landing_text {
     font-weight: 600;
     font-size: 16px;
     color: var(--primary-black);
+}
+
+.details h3 {
+    text-transform: uppercase;
 }
 
 .location,

@@ -1,3 +1,11 @@
+<?php 
+session_start();
+include_once "projectlog.php";
+if(!isset($_SESSION['unique_id'])){
+    header("Location:index.html");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,15 +21,15 @@
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
     <style>
+    body {
+        overflow-x: hidden;
+    }
+
+    @media only screen and (min-width: 800px) {
         body {
-            overflow-x: hidden;
+            height: 90vh;
         }
-        
-        @media only screen and (min-width: 800px) {
-            body {
-                height: 90vh;
-            }
-        }
+    }
     </style>
 </head>
 
@@ -52,7 +60,7 @@
             <a href="settings.html">Settings</a>
         </li>
         <li><a href="#">Card</a></li>
-        <li><a href="#">Logout</a></li>
+        <li><a href="logout.php">Logout</a></li>
 
         <div class="close">
             <i class="ri-close-fill"></i>
@@ -62,7 +70,14 @@
     <div class="profile-info">
         <div class="details">
             <p>Welcome Back!</p>
-            <h3>Ciroma Adekunle</h3>
+            <?php 
+             $user = new User;
+             $newuser = $user->selectUser($_SESSION['unique_id']);
+            ?>
+            <h3><?php if(isset($newuser['first_name'])){  ?>
+                <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
+                <?php }?>
+            </h3>
         </div>
 
         <div class="profile-image">
@@ -207,18 +222,18 @@
     <script src="js/profile.js"></script>
     <!--========== SWIPER JS ============  -->
     <script>
-        let dropdownnav = document.querySelector(".dropdown-links");
+    let dropdownnav = document.querySelector(".dropdown-links");
+    dropdownnav.style.display = "none";
+
+    let menu = document.querySelector(".menu");
+    menu.onclick = () => {
+        dropdownnav.style.display = "block";
+    };
+
+    let close = document.querySelector(".close");
+    close.onclick = () => {
         dropdownnav.style.display = "none";
-
-        let menu = document.querySelector(".menu");
-        menu.onclick = () => {
-            dropdownnav.style.display = "block";
-        };
-
-        let close = document.querySelector(".close");
-        close.onclick = () => {
-            dropdownnav.style.display = "none";
-        };
+    };
     </script>
 </body>
 
