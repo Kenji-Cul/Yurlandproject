@@ -10,6 +10,11 @@
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
+    <style>
+        section .error {
+            width: 60%;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,7 +29,6 @@
     <section class="landing_text_container">
         <p class="landing_text">Create</p>
         <p class="landing_text">Super Admin</p>
-        <p class="error">Please input all fields</p>
     </section>
 
     <section class="login-form-container">
@@ -34,12 +38,18 @@
                 <input type="text" id="name" name="supadminname" placeholder="Input your full name" />
             </div>
 
+            <div class="input-div name">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="supadminemail" placeholder="Input your email" />
+            </div>
+
             <div class="input-div password">
                 <label for="password">Password</label>
                 <input type="password" placeholder="Input your password" name="password" id="password" />
                 <i class="ri-eye-off-line"></i>
             </div>
 
+            <p class="error">Please input all fields</p>
             <button class="btn" type="submit">Create SuperAdmin</button>
             <div style="display: none">
                 <img src="images/loading.svg" alt="" class="loading-img" />
@@ -59,12 +69,13 @@
             $("#supadmin-form .btn").click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "insertsupadmin.php",
+                    url: "inserters/insertsupadmin.php",
                     data: $("#supadmin-form input"),
                     success: function(response) {
                         if (response === "success") {
-                            location.href = "supadminsuccess.html";
+                            location.href = "successpage/supadminsuccess.html";
                         } else {
+                            $("section .error").html(response);
                             $("section .error").css({
                                 visibility: "visible",
                             });

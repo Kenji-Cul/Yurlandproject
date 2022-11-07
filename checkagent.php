@@ -2,14 +2,14 @@
 include_once "projectlog.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $name = $_POST['agentname'];
+    $email = $_POST['agentemail'];
     $password = $_POST['password'];
 
-if(empty($name) || empty($password)){
+if(empty($email) || empty($password)){
     $errormsg = "Please input all fields";
 } else {
      $user = new User;
-     $insertuser = $user->agentLogin($name);
+     $insertuser = $user->agentLogin($email);
      if(isset($insertuser['agent_password'])){
         if(password_verify($password,$insertuser['agent_password'])){
             session_start();

@@ -10,6 +10,15 @@
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
+    <style>
+        body {
+            height: 150vh;
+        }
+        
+        section .error {
+            width: 60%;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,7 +33,6 @@
     <section class="landing_text_container">
         <p class="landing_text">Create</p>
         <p class="landing_text">New Agent</p>
-        <p class="error">Please input all fields</p>
     </section>
 
     <section class="login-form-container">
@@ -32,6 +40,11 @@
             <div class="input-div name">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="agentname" placeholder="Input agent's full name" />
+            </div>
+
+            <div class="input-div name">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="agentemail" placeholder="Input agent's email" />
             </div>
 
             <div class="input-div password">
@@ -51,6 +64,7 @@
                 <input type="number" id="percent" name="percent" placeholder="Input agent's earning percentage" />
             </div>
 
+            <p class="error">Please input all fields</p>
             <button class="btn" type="submit">Create Agent</button>
             <div style="display: none">
                 <img src="images/loading.svg" alt="" class="loading-img" />
@@ -81,12 +95,13 @@
             $("#login-form .btn").click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "insertagent.php",
+                    url: "inserters/insertagent.php",
                     data: $("#login-form input"),
                     success: function(response) {
                         if (response === "success") {
-                            location.href = "agentsuccess.html";
+                            location.href = "successpage/agentsuccess.html";
                         } else {
+                            $("section .error").html(response);
                             $("section .error").css({
                                 visibility: "visible",
                             });

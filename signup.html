@@ -84,11 +84,11 @@
             $("#signup-form .btn").click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "insertuser.php",
+                    url: "inserters/insertuser.php",
                     data: $("#signup-form input"),
                     success: function(response) {
                         if (response === "success") {
-                            location.href = "usersuccess.html";
+                            location.href = "successpage/usersuccess.html";
                         } else {
                             $("section .error").html(response);
                             $("section .error").css({

@@ -25,6 +25,11 @@ if(!isset($_SESSION['unique_id'])){
         overflow-x: hidden;
     }
 
+
+
+
+
+
     @media only screen and (min-width: 800px) {
         body {
             height: 90vh;
@@ -47,6 +52,22 @@ if(!isset($_SESSION['unique_id'])){
             </div>
         </div>
     </header>
+    <?php 
+             $user = new User;
+             $newuser = $user->selectUser($_SESSION['unique_id']);
+            ?>
+
+    <?php if(empty($newuser['driver_license']) || empty($newuser['passport']) || empty($newuser['nin'])){
+    ?>
+    <div class="update-data">
+        <div class="notice-div">
+            <p>Please Update Your Data For Verification</p>
+        </div>
+    </div>
+
+    <?php }?>
+
+
 
     <ul class="dropdown-links">
         <li><a href="newland.html">New Land</a></li>
@@ -56,7 +77,7 @@ if(!isset($_SESSION['unique_id'])){
         <li><a href="referral.html">Referral</a></li>
         <li><a href="documents.html">Documents</a></li>
         <li>
-            <a href="profiledetails.html">Profile</a> and
+            <a href="profiledetails.php">Profile</a> and
             <a href="settings.html">Settings</a>
         </li>
         <li><a href="#">Card</a></li>
@@ -70,10 +91,6 @@ if(!isset($_SESSION['unique_id'])){
     <div class="profile-info">
         <div class="details">
             <p>Welcome Back!</p>
-            <?php 
-             $user = new User;
-             $newuser = $user->selectUser($_SESSION['unique_id']);
-            ?>
             <h3><?php if(isset($newuser['first_name'])){  ?>
                 <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
                 <?php }?>
@@ -81,7 +98,14 @@ if(!isset($_SESSION['unique_id'])){
         </div>
 
         <div class="profile-image">
-            <img src="images/profile-image.jpg" alt="profile image" />
+            <?php if(!empty($newuser['photo'])){?>
+            <img src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" />
+            <?php }?>
+            <?php if(empty($newuser['photo'])){?>
+            <div class="empty-img">
+                <i class="ri-user-fill"></i>
+            </div>
+            <?php }?>
         </div>
     </div>
     <div class="land-btn-container">

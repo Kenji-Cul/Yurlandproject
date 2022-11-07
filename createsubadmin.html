@@ -10,6 +10,15 @@
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
+    <style>
+        body {
+            height: 160vh;
+        }
+        
+        section .error {
+            width: 60%;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,7 +33,6 @@
     <section class="landing_text_container">
         <p class="landing_text">Create</p>
         <p class="landing_text">Sub Admin</p>
-        <p class="error">Please input all fields</p>
     </section>
 
     <section class="login-form-container">
@@ -34,12 +42,23 @@
                 <input type="text" id="name" name="subadminname" placeholder="Input your full name" />
             </div>
 
+            <div class="input-div name">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="subadminemail" placeholder="Input your full email" />
+            </div>
+
+            <div class="input-div name">
+                <label for="num">Phone Number</label>
+                <input type="text" id="num" name="subadmin_number" placeholder="Input your phone number" />
+            </div>
+
             <div class="input-div password">
                 <label for="password">Password</label>
                 <input type="password" placeholder="Input your password" name="password" id="password" />
                 <i class="ri-eye-off-line"></i>
             </div>
 
+            <p class="error">Please input all fields</p>
             <button class="btn" type="submit">Create SubAdmin</button>
             <div style="display: none">
                 <img src="images/loading.svg" alt="" class="loading-img" />
@@ -59,12 +78,13 @@
             $("#subadmin-form .btn").click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "insertsubadmin.php",
+                    url: "inserters/insertsubadmin.php",
                     data: $("#subadmin-form input"),
                     success: function(response) {
                         if (response === "success") {
-                            location.href = "subadminsuccess.html";
+                            location.href = "successpage/subadminsuccess.html";
                         } else {
+                            $("section .error").html(response);
                             $("section .error").css({
                                 visibility: "visible",
                             });

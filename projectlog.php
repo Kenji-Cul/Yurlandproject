@@ -22,10 +22,10 @@ include "signconstant.php";
         }
      }
 
-     function createAgent($agentname,$agent_password,$referralid,$earningpercent){
+     function createAgent($agentname,$agent_password,$referralid,$earningpercent, $email){
         $uniqueid = rand();
         $pwd = password_hash($agent_password,PASSWORD_DEFAULT);
-          $sql = "INSERT INTO agent_table(unique_id,agent_name,agent_password,referral_id,earning_percentage) VALUES('{$uniqueid}','{$agentname}','{$pwd}','{$referralid}','{$earningpercent}')";
+          $sql = "INSERT INTO agent_table(unique_id,agent_name, agent_email,agent_password,referral_id,earning_percentage) VALUES('{$uniqueid}','{$agentname}','{$email}','{$pwd}','{$referralid}','{$earningpercent}')";
           $result = $this->dbcon->query($sql);
           if($this->dbcon->affected_rows == 1){
             session_start();
@@ -38,10 +38,10 @@ include "signconstant.php";
      }
 
 
-     function createSuperAdmin($adminname,$adminpassword){
+     function createSuperAdmin($adminname,$adminpassword,$adminemail){
         $pwd = password_hash($adminpassword,PASSWORD_DEFAULT);
         $uniqueid = rand();
-          $sql = "INSERT INTO super_admin(unique_id,super_adminname,super_adminpassword) VALUES('{$uniqueid}','{$adminname}','{$pwd}')";
+          $sql = "INSERT INTO super_admin(unique_id,super_adminname,super_adminpassword,super_adminemail) VALUES('{$uniqueid}','{$adminname}','{$pwd}','{$adminemail}')";
           $result = $this->dbcon->query($sql);
           if($this->dbcon->affected_rows == 1){
             session_start();
@@ -54,10 +54,10 @@ include "signconstant.php";
      }
 
 
-     function createSubAdmin($subadminname,$subadminpassword){
+     function createSubAdmin($subadminname,$subadminpassword, $subadminemail, $subadminnum){
         $pwd = password_hash($subadminpassword,PASSWORD_DEFAULT);
         $uniqueid = rand();
-          $sql = "INSERT INTO sub_admin(unique_id,subadmin_name,subadmin_password) VALUES('{$uniqueid}','{$subadminname}','{$pwd}')";
+          $sql = "INSERT INTO sub_admin(unique_id,subadmin_name,subadmin_password,subadmin_email,subadmin_num) VALUES('{$uniqueid}','{$subadminname}','{$pwd}','{$subadminemail}','{$subadminnum}')";
           $result = $this->dbcon->query($sql);
           if($this->dbcon->affected_rows == 1){
             session_start();
@@ -97,6 +97,42 @@ include "signconstant.php";
         }
       }
 
+      function checkAgentEmailAddress($email){
+        $sql = "SELECT * FROM agent_table WHERE agent_email ='{$email}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+      }
+
+
+      function checkSubadminEmailAddress($email){
+        $sql = "SELECT * FROM sub_admin WHERE subadmin_email ='{$email}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+      }
+
+      function checkSuperadminEmailAddress($email){
+        $sql = "SELECT * FROM super_admin WHERE super_adminemail ='{$email}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+      }
+
+
+
 
       function selectUser($uniqueid){
         $sql = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
@@ -121,8 +157,30 @@ include "signconstant.php";
       }
     }
 
-    function agentLogin($name){
-        $sql = "SELECT * FROM agent_table WHERE agent_name= '{$name}'";
+    function agentLogin($email){
+        $sql = "SELECT * FROM agent_table WHERE agent_email= '{$email}'";
+        $result = $this->dbcon->query($sql);
+      $row = $result->fetch_assoc();
+      if($result->num_rows == 1){
+          return $row;
+      }else{
+          return $row;
+      }
+    }
+
+    function subAdminLogin($name){
+        $sql = "SELECT * FROM sub_admin WHERE subadmin_email= '{$name}'";
+        $result = $this->dbcon->query($sql);
+      $row = $result->fetch_assoc();
+      if($result->num_rows == 1){
+          return $row;
+      }else{
+          return $row;
+      }
+    }
+
+    function superAdminLogin($name){
+        $sql = "SELECT * FROM super_admin WHERE super_adminemail= '{$name}'";
         $result = $this->dbcon->query($sql);
       $row = $result->fetch_assoc();
       if($result->num_rows == 1){
@@ -133,7 +191,191 @@ include "signconstant.php";
     }
 
 
+    function insertNextOfKin($nextofkinfirstname,$nextofkinlastname, $nextofkinemail, $nexofkinaddress, $nextofkinphone,$nextofkinrelation, $uniqueid){
+         $sql = "UPDATE user SET nextofkin_firstname='{$nextofkinfirstname}', nextofkin_lastname='{$nextofkinlastname}', nextofkin_email='{$nextofkinemail}' , nextofkin_address='{$nexofkinaddress}', nextofkin_phone='{$nextofkinphone}', nextofkin_relation='{$nextofkinrelation}' WHERE unique_id='{$uniqueid}'";
+         $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+    }
+
+    function insertUserAddress($homeaddress,$uniqueid){
+        $sql = "UPDATE user SET home_address = '{$homeaddress}' WHERE unique_id='{$uniqueid}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+    }
+
+    function updatePhoneNum($phonenum,$uniqueid){
+        $sql = "UPDATE user SET phone_number = '{$phonenum}' WHERE unique_id='{$uniqueid}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+    }
+
+
+   
       
+
+    function insertDocuments($uniqueid,$nin){
+        if(isset($_FILES['passport'])){
+        $filename = $_FILES['passport']['name'];
+        $filesize = $_FILES['passport']['size'];
+        $filetype = $_FILES['passport']['type'];
+        $file_error = $_FILES['passport']['error'];
+        $filetmp = $_FILES['passport']['tmp_name'];
+      // validate image
+        if($file_error > 0){
+            $error = "You have not selected a file";
+        }
+    
+        if($filesize > 2097152){
+            $error = "File Should be 2mb or less";
+        }
+    
+        $extensions = array("gif", "png", "jpeg", "svg", "jpg");
+        $file_ext = explode(".",$filename);
+        $file_ext = end($file_ext);
+    
+        if(!in_array(strtolower($file_ext), $extensions)){
+            $error = $file_ext."File format not supported";
+        }
+
+       
+    
+        //upload document
+        //$folder = "userdocuments/";
+        $newfilename = time().rand().".".$file_ext;
+        $destination_path = getcwd().DIRECTORY_SEPARATOR;
+        $target_path = $destination_path . '../userdocuments/'. basename($newfilename);
+        //$destination = $folder.$newfilename;
+        if(move_uploaded_file($filetmp, $target_path)){
+         $sql = "UPDATE user SET passport='{$newfilename}', nin='{$nin}' WHERE unique_id='{$uniqueid}'";
+         $result = $this->dbcon->query($sql);
+      
+              //check if the connection runs successfully
+              if($this->dbcon->affected_rows==1){
+                //   echo "<h3 align='center'>Photo added successfully</h3>";
+                echo "success";
+              }else{
+            //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+            if(isset($error)){
+                echo $error;
+            }
+              }
+     } 
+    }
+    }
+
+
+    function insertLicense($uniqueid){
+        if(isset($_FILES['license'])){
+        $filename = $_FILES['license']['name'];
+        $filesize = $_FILES['license']['size'];
+        $filetype = $_FILES['license']['type'];
+        $file_error = $_FILES['license']['error'];
+        $filetmp = $_FILES['license']['tmp_name'];
+      // validate image
+        if($file_error > 0){
+            $error = "You have not selected a file";
+            return $error;
+        }
+    
+        if($filesize > 2097152){
+            $error = "Your file should be less than 2mb";
+            return $error;
+        }
+    
+        $extensions = array("pdf");
+        $file_ext = explode(".",$filename);
+        $file_ext = end($file_ext);
+    
+        if(!in_array(strtolower($file_ext), $extensions)){
+            $error = $file_ext."File format not supported";
+            return $error;
+        }
+    
+        //upload document
+        //$folder = "userdocuments/";
+        $newfilename = time().rand().".".$file_ext;
+        $destination_path = getcwd().DIRECTORY_SEPARATOR;
+        $target_path = $destination_path . '../documents/'. basename($newfilename);
+        //$destination = $folder.$newfilename;
+        if(move_uploaded_file($filetmp, $target_path)){
+         $sql = "UPDATE user SET driver_license='{$newfilename}' WHERE unique_id='{$uniqueid}'";
+         $result = $this->dbcon->query($sql);
+      
+              //check if the connection runs successfully
+              if($this->dbcon->affected_rows==1){
+                //   echo "<h3 align='center'>Photo added successfully</h3>";
+                echo "success";
+              }else{
+            //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+              }
+     } 
+    }
+    }
+
+
+    function updateUserDetails($uniqueid, $gender, $occupation,$day,$month, $year){
+        if(isset($_FILES['image'])){
+        $filename = $_FILES['image']['name'];
+        $filesize = $_FILES['image']['size'];
+        $filetype = $_FILES['image']['type'];
+        $file_error = $_FILES['image']['error'];
+        $filetmp = $_FILES['image']['tmp_name'];
+      // validate image
+        if($file_error > 0){
+            $error = "You have not selected a file";
+            return $error;
+        }
+    
+        if($filesize > 2097152){
+            $error = "Your file should be less than 2mb";
+            return $error;
+        }
+    
+        $extensions = array("gif", "png", "jpeg", "svg", "jpg");
+        $file_ext = explode(".",$filename);
+        $file_ext = end($file_ext);
+    
+        if(!in_array(strtolower($file_ext), $extensions)){
+            $error = $file_ext."File format not supported";
+            return $error;
+        }
+    
+        //upload document
+        //$folder = "userdocuments/";
+        $newfilename = time().rand().".".$file_ext;
+        $destination_path = getcwd().DIRECTORY_SEPARATOR;
+        $target_path = $destination_path . '../profileimage/'. basename($newfilename);
+        //$destination = $folder.$newfilename;
+        if(move_uploaded_file($filetmp, $target_path)){
+         $sql = "UPDATE user SET photo='{$newfilename}', gender='{$gender}', occupation='{$occupation}', dayof='{$day}', monthof='{$month}', yearof='{$year}' WHERE unique_id='{$uniqueid}'";
+         $result = $this->dbcon->query($sql);
+      
+              //check if the connection runs successfully
+              if($this->dbcon->affected_rows==1){
+                //   echo "<h3 align='center'>Photo added successfully</h3>";
+                echo "success";
+              }else{
+            //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+              }
+     } 
+    }
+    }
+
+
+
+
 
  }
 
