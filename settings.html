@@ -14,6 +14,32 @@
         body {
             min-height: 100vh;
         }
+        
+        .account-detail2 {
+            position: relative;
+        }
+        
+        .account-detail2 .flex {
+            position: absolute;
+            left: 90px;
+        }
+        
+        .account-detail3 {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 3em;
+        }
+        
+        .account-detail3 p {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 22px;
+            text-align: center;
+            color: #eb5757;
+        }
     </style>
 </head>
 
@@ -35,6 +61,50 @@
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <p>Settings</p>
+    </div>
+
+    <div class="details-container">
+        <div class="account-detail2">
+            <div class="radius"></div>
+            <div class="flex">
+                <p>Ciroma Adekunle</p>
+                <span>Account Details</span>
+            </div>
+            <i class="ri-arrow-right-s-line"></i>
+        </div>
+
+        <div class="account-detail2">
+            <div class="radius"></div>
+            <div class="flex">
+                <p style="text-transform: capitalize">Statements & Reports</p>
+                <span>Download monthly statements</span>
+            </div>
+            <i class="ri-arrow-right-s-line"></i>
+        </div>
+
+        <div class="account-detail2">
+            <div class="radius"></div>
+            <div class="flex">
+                <p style="text-transform: capitalize">Get help</p>
+                <span>Get support or send feedback</span>
+            </div>
+            <i class="ri-arrow-right-s-line"></i>
+        </div>
+
+        <div class="account-detail2">
+            <div class="radius"></div>
+            <div class="flex">
+                <p style="text-transform: capitalize">Security</p>
+                <span>Protect your account</span>
+            </div>
+            <i class="ri-arrow-right-s-line"></i>
+        </div>
+
+        <div class="account-detail3">
+            <a href="#">
+                <p>Sign Out</p>
+            </a>
+        </div>
     </div>
 
     <script src="js/main.js"></script>

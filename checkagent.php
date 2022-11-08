@@ -14,7 +14,7 @@ if(empty($email) || empty($password)){
         if(password_verify($password,$insertuser['agent_password'])){
             session_start();
             session_unset();
-            $_SESSION['unique_id'] = $insertuser['unique_id'];
+            $_SESSION['uniqueagent_id'] = $insertuser['uniqueagent_id'];
             echo "success";
         } else {
             $errormsg = "Invalid Details Try Again";

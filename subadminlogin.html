@@ -63,7 +63,7 @@
                     data: $("#login-form input"),
                     success: function(response) {
                         if (response === "success") {
-                            location.href = "subadmin.html";
+                            location.href = "subadmin.php";
                         } else {
                             $("section .error").html(response);
                             $("section .error").css({

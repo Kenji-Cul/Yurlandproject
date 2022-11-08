@@ -22,6 +22,42 @@ if(!isset($_SESSION['unique_id'])){
     body {
         min-height: 100vh;
     }
+
+    .colored-div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 230px;
+        border-radius: 8px;
+        gap: 0;
+        height: 50px;
+        background-color: #fee1e3;
+    }
+
+    .colored-div span {
+        font-size: 18px;
+        text-transform: capitalize;
+    }
+
+    section {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    section .error {
+        color: #ff6600;
+        border: 1px solid #ff6600;
+        height: 1em;
+        border-radius: 8px;
+        margin-bottom: 1.5em;
+        width: 80px;
+    }
+
+    .copy-div {
+        cursor: pointer;
+    }
     </style>
 </head>
 
@@ -38,12 +74,18 @@ if(!isset($_SESSION['unique_id'])){
         </div>
     </header>
 
+
     <div class="page-title2">
         <a href="profile.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <p>Account Details</p>
     </div>
+
+    <section>
+        <p class="error">Copied</p>
+    </section>
+
 
     <?php 
              $user = new User;
@@ -59,13 +101,35 @@ if(!isset($_SESSION['unique_id'])){
         </div>
         <?php }?>
 
+
         <p><?php if(isset($newuser['first_name'])){  ?>
             <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
             <?php }?>
         </p>
+        <?php 
+        if($newuser['referral_id'] !== ""){ ?>
+        <p class="referral colored-div">
+            <?php   $seconduser = $user->selectReferralUser($newuser['referral_id']);
+               $thirduser = $user->selectReferralAgent($newuser['referral_id']);
+            
+            ?>
+            <span>Referral:</span>&nbsp;<span><?php if(isset($seconduser['first_name'])){
+             echo $seconduser['first_name'];
+            }?></span>&nbsp;<span><?php if(isset($seconduser['last_name'])){
+                echo $seconduser['last_name'];
+            }?></span>
+            <span><?php if(isset($thirduser['agent_name'])){
+             echo $thirduser['agent_name'];
+            }?></span>
+        </p>
+        <?php }?>
         <div class="referral">
-            <div><span>copy</span><img src="images/copy.svg" alt="" /></div>
-            <div class="referral_code">jghyt7k</div>
+            <div class="copy-div"><span>copy</span><img src="images/copy.svg" alt="" /></div>
+            <div class="referral_code"><?php if(isset($newuser['personal_ref'])){
+                echo $newuser['personal_ref'];
+            }?> <input type="text" name="" class="copy-text" value="<?php if(isset($newuser['personal_ref'])){
+                echo $newuser['personal_ref'];
+            }?>" style="display: none;"></div>
         </div>
     </div>
 
@@ -144,8 +208,46 @@ if(!isset($_SESSION['unique_id'])){
                 <i class="ri-arrow-right-s-line"></i>
             </div>
         </a>
+
+        <div class="account-detail2">
+            <button class="btn">Request Change Of Ownership</button>
+        </div>
     </div>
-    <script src="js/main.js"></script>
+
+    <script>
+    let copybtn = document.querySelector('.copy-div');
+
+    copybtn.onclick = () => {
+        copyFunction();
+    }
+
+    function copyFunction() {
+        // Get the text field
+        var copyText = document.querySelector('.copy-text');
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        let referralLink =
+            `http://localhost/Yurland/customerreferral.php?ref=${copyText.value}&key=ajfhagfag16253553&refkey=785e7156hfagf&rex=l737727277272277`;
+        navigator.clipboard.writeText(referralLink);
+        if (navigator.clipboard.writeText(referralLink)) {
+            setTimeout(() => {
+                document.querySelector("section .error").style.visibility = "visible";
+            }, 400);
+            setTimeout(() => {
+                document.querySelector("section .error").style.visibility = "hidden";
+            }, 4000);
+
+
+        }
+
+
+    }
+    </script>
+
 </body>
 
 </html>

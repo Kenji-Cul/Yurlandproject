@@ -57,6 +57,11 @@
                 <input type="number" id="number" placeholder="Input your phone number" name="number" />
             </div>
 
+            <div class="input-div email">
+                <!-- <label for="referral">Referral</label> -->
+                <input type="hidden" id="referral" placeholder="Input referral id" val="" name="referral" />
+            </div>
+
             <div class="input-div password">
                 <label for="email">Password</label>
                 <input type="password" placeholder="Input your password" id="password" name="password" />
@@ -81,7 +86,19 @@
                 $(".btn").html(loadingImg);
             });
 
+            function createRandomString(string_length) {
+                var random_string = "";
+                var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678910";
+                for (var i, i = 0; i < string_length; i++) {
+                    random_string += characters.charAt(
+                        Math.floor(Math.random() * characters.length)
+                    );
+                }
+                $("#referral").val(random_string);
+            }
+
             $("#signup-form .btn").click(function() {
+                createRandomString(8);
                 $.ajax({
                     type: "POST",
                     url: "inserters/insertuser.php",

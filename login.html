@@ -10,6 +10,24 @@
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
+    <style>
+        .remember-div {
+            display: flex !important;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .remember a {
+            color: #ff6600;
+            text-decoration: underline;
+        }
+        
+        .radio p {
+            font-size: 17px;
+            font-weight: 400;
+        }
+    </style>
 </head>
 
 <body>
@@ -38,6 +56,17 @@
                 <label for="password">Password</label>
                 <input type="password" placeholder="Input your password" id="password" name="password" />
                 <i class="ri-eye-off-line"></i>
+            </div>
+
+            <div class="input-div remember-div">
+                <label class="radio" for="check">
+            <input type="checkbox" name="" id="check" />
+            <span class="check"></span>
+            <p>Remember me</p>
+          </label>
+                <div class="remember">
+                    <a href="#">Forgot Password?</a>
+                </div>
             </div>
 
             <button class="btn" type="submit">Login</button>

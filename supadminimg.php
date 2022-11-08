@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['unique_id'])){
+if(!isset($_SESSION['uniquesupadmin_id'])){
 header("Location:index.html");
 }
 
@@ -83,55 +83,23 @@ header("Location:index.html");
 
     <!-- Landing Page Text -->
     <div class="page-title2">
-        <a href="profiledetails.php">
+        <a href="subadmininfo.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <p>Upload Details</p>
     </div>
 
+
     <?php 
              $user = new User;
-             $newuser = $user->selectUser($_SESSION['unique_id']);
+             $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
             ?>
     <section class="login-form-container">
         <form action="" class="login-form" id="upload-form">
-            <div class="input-div name">
-                <label for="occupation">Occupation</label>
-                <input type="text" id="occupation" placeholder="Fill in your occupation" name="occupation" value="<?php if(isset($newuser['occupation'])){
-                    echo $newuser['occupation'];
-                }?>" />
-            </div>
-
-            <div class="select-container input-div">
-                <div class="input-div name">
-                    <label for="gender">Gender</label>
-                    <input type="text" id="gender" placeholder="Fill in gender" name="gender" value="<?php if(isset($newuser['gender'])){
-                    echo $newuser['gender'];
-                }?>" />
-                </div>
-
-                <div class="input-div name">
-                    <label for="day">Day</label>
-                    <input type="text" id="day" placeholder="Fill in day" name="day" />
-                </div>
-
-                <div class="input-div name">
-                    <label for="month">Month</label>
-                    <input type="text" id="month" placeholder="Fill in month" name="month" />
-                </div>
-
-                <div class="input-div name">
-                    <label for="year">Year</label>
-                    <input type="text" id="year" placeholder="Fill in year" name="year" />
-                </div>
-
-
-            </div>
-            </div>
 
             <div class="input-div email">
                 <label>Profile Image</label>
-                <input type="text" name="text" placeholder="Upload your profile image" disabled />
+                <input type="text" name="text" placeholder="Upload your profile Image" disabled />
                 <input type="file" id="passport" placeholder="Upload your profile image" name="image" hidden="hidden"
                     accept="image/*" />
                 <div id="createid">Upload</div>
@@ -196,7 +164,7 @@ header("Location:index.html");
 
     function uploadFile(name) {
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "inserters/insertdetails.php", true);
+        xhr.open("POST", "inserters/insertsupadminimg.php", true);
         xhr.upload.addEventListener("progress", ({
             loaded,
             total
@@ -260,7 +228,7 @@ header("Location:index.html");
 
     function insertDetails() {
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "inserters/insertdetails.php", true);
+        xhr.open("POST", "inserters/insertsupadminimg.php", true);
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
@@ -268,7 +236,7 @@ header("Location:index.html");
                     if (data === "success") {
                         //console.log("uploaded");
                         submitbtn.onclick = () => {
-                            location.href = "successpage/updatesuccess.html";
+                            location.href = "successpage/supadminsucceed.html";
                         };
                     } else {
                         error.textContent = data;

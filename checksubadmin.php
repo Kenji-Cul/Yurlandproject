@@ -14,7 +14,7 @@ if(empty($email) || empty($password)){
         if(password_verify($password,$insertuser['subadmin_password'])){
             session_start();
             session_unset();
-            $_SESSION['unique_id'] = $insertuser['unique_id'];
+            $_SESSION['uniquesubadmin_id'] = $insertuser['unique_id'];
             echo "success";
         } else {
             $errormsg = "Invalid Details Try Again";

@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['unique_id'])){
+if(!isset($_SESSION['uniquesupadmin_id'])){
     header("Location:index.html");
 }
 
@@ -23,6 +23,10 @@ if(!isset($_SESSION['unique_id'])){
     <style>
     body {
         overflow-x: hidden;
+    }
+
+    .dropdown-links {
+        height: 24em;
     }
 
 
@@ -54,33 +58,26 @@ if(!isset($_SESSION['unique_id'])){
     </header>
     <?php 
              $user = new User;
-             $newuser = $user->selectUser($_SESSION['unique_id']);
+             $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
             ?>
 
-    <?php if(empty($newuser['driver_license']) || empty($newuser['passport']) || empty($newuser['nin'])){
-    ?>
-    <div class="update-data">
-        <div class="notice-div">
-            <p>Please Update Your Data For Verification</p>
-        </div>
-    </div>
 
-    <?php }?>
 
 
 
     <ul class="dropdown-links">
-        <li><a href="newland.html">New Land</a></li>
-        <li><a href="transactions.html">Transaction History</a></li>
-        <li><a href="mylands.html">My Land</a></li>
-        <li><a href="payment.html">New Payment</a></li>
-        <li><a href="userreferral.php">Referral</a></li>
-        <li><a href="documents.html">Documents</a></li>
-        <li>
-            <a href="profiledetails.php">Profile</a> and
-            <a href="settings.html">Settings</a>
-        </li>
-        <li><a href="#">Card</a></li>
+        <li><a href="#">New Land</a></li>
+        <li><a href="#">Estates</a></li>
+        <li><a href="#">Transaction History</a></li>
+        <li><a href="#">All Customers</a></li>
+        <li><a href="#">All Customers Land</a></li>
+        <li><a href="#">Edit Customer</a></li>
+        <li><a href="#">New Payment</a></li>
+        <li><a href="#">New Agent</a></li>
+        <li><a href="#">Executives</a></li>
+        <li><a href="#">View All Earnings</a></li>
+        <li><a href="#">Pay Earnings</a></li>
+        <li><a href="supadmininfo.php">Profile</a></li>
         <li><a href="logout.php">Logout</a></li>
 
         <div class="close">
@@ -88,20 +85,21 @@ if(!isset($_SESSION['unique_id'])){
         </div>
     </ul>
 
+
     <div class="profile-info">
         <div class="details">
             <p>Welcome Back!</p>
-            <h3><?php if(isset($newuser['first_name'])){  ?>
-                <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
+            <h3><?php if(isset($newuser['super_adminname'])){  ?>
+                <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
                 <?php }?>
             </h3>
         </div>
 
         <div class="profile-image">
-            <?php if(!empty($newuser['photo'])){?>
-            <img src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" />
+            <?php if(!empty($newuser['admin_image'])){?>
+            <img src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" />
             <?php }?>
-            <?php if(empty($newuser['photo'])){?>
+            <?php if(empty($newuser['admin_image'])){?>
             <div class="empty-img">
                 <i class="ri-user-fill"></i>
             </div>
@@ -118,9 +116,9 @@ if(!isset($_SESSION['unique_id'])){
         <div class="profile-div">
             <img class="profile-icon" src="images/land.svg" alt="land-icon-image" />
 
-            <a href="mylands.html">
+            <a href="#">
                 <div class="navigate">
-                    <p>My land</p>
+                    <p>Total Customer Count</p>
                     <img src="images/right_arrow.svg" alt="" />
                 </div>
             </a>
@@ -130,17 +128,17 @@ if(!isset($_SESSION['unique_id'])){
             <img class="profile-icon" src="images/Wallet.svg" alt="land-icon-image" />
 
             <div class="navigate">
-                <p>Wallet</p>
+                <p>Land</p>
                 <img src="images/right_arrow.svg" alt="" />
             </div>
         </div>
 
-        <a href="payment.html">
+        <a href="#">
             <div class="profile-div">
                 <img class="profile-icon" src="images/Chart.svg" alt="land-icon-image" />
 
                 <div class="navigate">
-                    <p>Payment Count</p>
+                    <p>Total Payment</p>
                     <img src="images/right_arrow.svg" alt="" />
                 </div>
             </div>
@@ -149,7 +147,84 @@ if(!isset($_SESSION['unique_id'])){
         <div class="profile-div">
             <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-            <a href="transactions.html">
+            <a href="#">
+                <div class="navigate">
+                    <p>Payment Count</p>
+                    <img src="images/right_arrow.svg" alt="" />
+                </div>
+            </a>
+        </div>
+
+        <div class="profile-div">
+            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+            <a href="#">
+                <div class="navigate">
+                    <p>Total Earning Agents</p>
+                    <img src="images/right_arrow.svg" alt="" />
+                </div>
+            </a>
+        </div>
+
+        <div class="profile-div">
+            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+            <a href="#">
+                <div class="navigate">
+                    <p>Total Paid Earning Agents</p>
+                    <img src="images/right_arrow.svg" alt="" />
+                </div>
+            </a>
+        </div>
+
+        <div class="profile-div">
+            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+            <a href="#">
+                <div class="navigate">
+                    <p>Total Pending Earning Agents</p>
+                    <img src="images/right_arrow.svg" alt="" />
+                </div>
+            </a>
+        </div>
+
+        <div class="profile-div">
+            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+            <a href="#">
+                <div class="navigate">
+                    <p>Total Earning Executives</p>
+                    <img src="images/right_arrow.svg" alt="" />
+                </div>
+            </a>
+        </div>
+
+        <div class="profile-div">
+            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+            <a href="#">
+                <div class="navigate">
+                    <p>Total Paid Earning Executives</p>
+                    <img src="images/right_arrow.svg" alt="" />
+                </div>
+            </a>
+        </div>
+
+        <div class="profile-div">
+            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+            <a href="#">
+                <div class="navigate">
+                    <p>Total Pending Earning Executives</p>
+                    <img src="images/right_arrow.svg" alt="" />
+                </div>
+            </a>
+        </div>
+
+        <div class="profile-div">
+            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+            <a href="#">
                 <div class="navigate">
                     <p>Transactions</p>
                     <img src="images/right_arrow.svg" alt="" />
