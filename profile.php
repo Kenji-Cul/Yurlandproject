@@ -78,7 +78,7 @@ if(!isset($_SESSION['unique_id'])){
         <li><a href="documents.html">Documents</a></li>
         <li>
             <a href="profiledetails.php">Profile</a> and
-            <a href="settings.html">Settings</a>
+            <a href="settings.php">Settings</a>
         </li>
         <li><a href="#">Card</a></li>
         <li><a href="logout.php">Logout</a></li>

@@ -34,6 +34,10 @@ if(!isset($_SESSION['unique_id'])){
         background-color: #fee1e3;
     }
 
+    .detail-3 {
+        box-shadow: none !important;
+    }
+
     .colored-div span {
         font-size: 18px;
         text-transform: capitalize;
@@ -45,6 +49,8 @@ if(!isset($_SESSION['unique_id'])){
         align-items: center;
         justify-content: center;
     }
+
+
 
     section .error {
         color: #ff6600;
@@ -209,7 +215,7 @@ if(!isset($_SESSION['unique_id'])){
             </div>
         </a>
 
-        <div class="account-detail2">
+        <div class="account-detail2 detail-3">
             <button class="btn">Request Change Of Ownership</button>
         </div>
     </div>
