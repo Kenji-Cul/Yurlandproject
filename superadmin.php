@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniquesupadmin_id'])){
-    header("Location:index.html");
+    header("Location:index.php");
 }
 
 ?>
@@ -46,7 +46,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.html"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
         </div>
 
         <div class="nav">
@@ -73,6 +73,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         <li><a href="#">All Customers Land</a></li>
         <li><a href="#">Edit Customer</a></li>
         <li><a href="#">New Payment</a></li>
+        <li><a href="selectprice.php">Create Product</a></li>
         <li><a href="#">New Agent</a></li>
         <li><a href="#">Executives</a></li>
         <li><a href="#">View All Earnings</a></li>

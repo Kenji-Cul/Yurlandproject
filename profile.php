@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location:index.html");
+    header("Location:index.php");
 }
 
 ?>
@@ -20,10 +20,13 @@ if(!isset($_SESSION['unique_id'])){
     <link rel="stylesheet" href="css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
+
     <style>
     body {
         overflow-x: hidden;
     }
+
+
 
 
 
@@ -42,14 +45,17 @@ if(!isset($_SESSION['unique_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.html"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
         </div>
 
         <div class="nav">
-            <img src="images/cart.svg" alt="cart icon" />
-            <div class="menu">
-                <img src="images/menu.svg" alt="menu icon" />
-            </div>
+            <a href="cartreview.php">
+                <div class="cart">
+                    <div class="cart-notify"></div>
+                    <img src="images/cart.svg" alt="cart icon" />
+                </div>
+            </a>
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
         </div>
     </header>
     <?php 
@@ -70,10 +76,10 @@ if(!isset($_SESSION['unique_id'])){
 
 
     <ul class="dropdown-links">
-        <li><a href="newland.html">New Land</a></li>
-        <li><a href="transactions.html">Transaction History</a></li>
-        <li><a href="mylands.html">My Land</a></li>
-        <li><a href="payment.html">New Payment</a></li>
+        <li><a href="preference.php">New Land</a></li>
+        <li><a href="transactions.php">Transaction History</a></li>
+        <li><a href="mylands.php">My Land</a></li>
+        <li><a href="payment.php">New Payment</a></li>
         <li><a href="userreferral.php">Referral</a></li>
         <li><a href="documents.html">Documents</a></li>
         <li>
@@ -87,6 +93,8 @@ if(!isset($_SESSION['unique_id'])){
             <i class="ri-close-fill"></i>
         </div>
     </ul>
+
+
 
     <div class="profile-info">
         <div class="details">
@@ -109,16 +117,17 @@ if(!isset($_SESSION['unique_id'])){
         </div>
     </div>
     <div class="land-btn-container">
-        <a href="allestates.html">
+        <a href="allestates.php">
             <button class="btn land-btn">Buy a new land</button>
         </a>
+
     </div>
 
     <div class="profile-div-container">
         <div class="profile-div">
             <img class="profile-icon" src="images/land.svg" alt="land-icon-image" />
 
-            <a href="mylands.html">
+            <a href="mylands.php">
                 <div class="navigate">
                     <p>My land</p>
                     <img src="images/right_arrow.svg" alt="" />
@@ -135,7 +144,7 @@ if(!isset($_SESSION['unique_id'])){
             </div>
         </div>
 
-        <a href="payment.html">
+        <a href="payment.php">
             <div class="profile-div">
                 <img class="profile-icon" src="images/Chart.svg" alt="land-icon-image" />
 
@@ -149,7 +158,7 @@ if(!isset($_SESSION['unique_id'])){
         <div class="profile-div">
             <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-            <a href="transactions.html">
+            <a href="transactions.php">
                 <div class="navigate">
                     <p>Transactions</p>
                     <img src="images/right_arrow.svg" alt="" />
@@ -161,76 +170,40 @@ if(!isset($_SESSION['unique_id'])){
     <div class="swiper estates swiper-counter">
         <p class="available">Available Estates</p>
         <div class="land_estate_container swiper-wrapper">
+            <?php 
+             $land = new User;
+             $landview = $land->selectLandPrime();
+             if(!empty($landview)){
+                foreach($landview as $key => $value){
+            ?>
             <div class="land-estate swiper-slide">
                 <div class="land-image">
-                    <a href="estateinfo.html">
-                        <img src="images/estate1.jpg" alt="estate image" />
+                    <a
+                        href="estateinfo2.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+                        <img src="landimage/<?php if(isset($value['product_image'])){
+                            echo $value['product_image'];
+                        }?>" alt="estate image" />
                     </a>
                 </div>
                 <div class="land-details">
                     <div class="land-name">
-                        <p>Isinmi Eko</p>
+                        <p><?php echo $value['product_name'];?></p>
                     </div>
                     <div class="land-location">
-                        <p>Epe,Lagos</p>
+                        <p><?php echo $value['product_location'];?></p>
                     </div>
                 </div>
             </div>
 
-            <div class="land-estate swiper-slide">
-                <div class="land-image">
-                    <a href="estateinfo.html">
-                        <img src="images/estate2.jpg" alt="estate image" />
-                    </a>
-                </div>
-                <div class="land-details">
-                    <div class="land-name">
-                        <p>Isinmi Eko</p>
-                    </div>
-                    <div class="land-location">
-                        <p>Epe,Lagos</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="land-estate swiper-slide">
-                <div class="land-image">
-                    <a href="estateinfo.html">
-                        <img src="images/estate3.jpg" alt="estate image" />
-                    </a>
-                </div>
-                <div class="land-details">
-                    <div class="land-name">
-                        <p>Isinmi Eko</p>
-                    </div>
-                    <div class="land-location">
-                        <p>Epe,Lagos</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="land-estate swiper-slide">
-                <div class="land-image">
-                    <a href="estateinfo.html">
-                        <img src="images/estate4.jpg" alt="estate image" />
-                    </a>
-                </div>
-                <div class="land-details">
-                    <div class="land-name">
-                        <p>Isinmi Eko</p>
-                    </div>
-                    <div class="land-location">
-                        <p>Epe,Lagos</p>
-                    </div>
-                </div>
-            </div>
+            <?php   }
+             } ?>
         </div>
         <div class="swiper-pagination"></div>
     </div>
 
     <div class="foot">
         <div class="profile-div">
-            <img class="profile-icon" src="images/paypal.svg" alt="land-icon-image" />
+            <img class="profile-icon" src="images/paystack.svg" alt="land-icon-image" />
 
             <div class="navigate">
                 <div>
@@ -242,10 +215,11 @@ if(!isset($_SESSION['unique_id'])){
         </div>
     </div>
 
-    <script src="js/swiper-bundle.min.js"></script>
-    <script src="js/profile.js"></script>
+    <script src="js/swiper-bundle.min.js" defer></script>
+    <script src="js/profile.js" defer></script>
+    <script src="js/cart.js" defer></script>
     <!--========== SWIPER JS ============  -->
-    <script>
+    <script type="text/javascript">
     let dropdownnav = document.querySelector(".dropdown-links");
     dropdownnav.style.display = "none";
 
@@ -259,6 +233,7 @@ if(!isset($_SESSION['unique_id'])){
         dropdownnav.style.display = "none";
     };
     </script>
+
 </body>
 
 </html>

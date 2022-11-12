@@ -24,6 +24,21 @@
             flex-direction: column;
         }
         
+        .navigation-div .offer {
+            background: #ffffff;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--secondary-color);
+            width: 150px;
+            padding: 0.3em 0.3em;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #1a0709;
+        }
+        
         .no-lands p {
             font-style: normal;
             font-weight: 600;
@@ -43,7 +58,7 @@
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.html"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
         </div>
 
         <div class="nav">
@@ -67,7 +82,9 @@
     <div class="navigation-div">
         <div class="navig">
             <div class="offer">Offer letter</div>
-            <div class="payment">Payment Receipt</div>
+            <a href="paymentreceipt.php">
+                <div class="payment">Payment Receipt</div>
+            </a>
             <div class="allocation">Allocation letter</div>
         </div>
     </div>

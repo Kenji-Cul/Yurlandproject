@@ -388,6 +388,17 @@ section .error {
     position: relative;
 }
 
+.input-div textarea {
+    background: #ffffff;
+    border: 1px solid #bfbfbf;
+    border-radius: 8px;
+    padding: 18px 16px;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
 .password i {
     font-size: 30px;
     position: absolute;
@@ -397,7 +408,10 @@ section .error {
     cursor: pointer;
 }
 
-.email #createid {
+.email #createid,
+.email #createid2,
+.email #createid3,
+.email #createid4 {
     position: absolute;
     right: 15px;
     top: 40px;
@@ -1446,16 +1460,6 @@ section .error {
     height: 3em;
 }
 
-.navigation-div .offer {
-    background: #ffffff;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
-    border-radius: 8px;
-    text-align: center;
-    color: var(--secondary-color);
-    width: 150px;
-    padding: 0.3em 0.3em;
-}
-
 
 /* Profile details Styling */
 
@@ -1668,6 +1672,7 @@ section .error {
     cursor: pointer;
 }
 
+#firstimage,
 #passport {
     visibility: hidden;
 }
@@ -1728,8 +1733,8 @@ section .error {
     width: 80%;
     height: 5em;
     border-radius: 8px;
-    filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
     background: #ffffff;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1767,6 +1772,32 @@ section .error {
 .upload-state p {
     font-size: 14px;
     color: #5c5a5a;
+}
+
+
+/* Cart Styling */
+
+.cart {
+    position: relative;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-notify {
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ff6600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
 }
 
 
@@ -2001,6 +2032,7 @@ section .error {
     }
     .transaction-details2 {
         flex-direction: column;
+        /* gap: 2em !important; */
     }
     .btn,
     .btn-license {

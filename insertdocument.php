@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location:index.html");
+    header("Location:index.php");
 }
 
 ?>
@@ -38,7 +38,7 @@ if(!isset($_SESSION['unique_id'])){
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="index.html"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
         </div>
     </header>
 

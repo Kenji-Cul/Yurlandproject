@@ -3,17 +3,20 @@ $interval = "none";
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     if(isset($_POST['mode']) && !empty($_POST['mode'])){
         $interval = $_POST['mode'];
-        if($interval == "daily"){
-            echo "daily";
+        if($interval == "onemonth"){
+            echo "onemonth";
         } 
-        if($interval == "weekly"){
-            echo "weekly";
+        if($interval == "threemonths"){
+            echo "threemonths";
         } 
-        if($interval == "monthly"){
-            echo "monthly";
+        if($interval == "sixmonths"){
+            echo "sixmonths";
         } 
-        if($interval == "annually"){
-            echo "annually";
+        if($interval == "twelvemonths"){
+            echo "twelvemonths";
+        } 
+        if($interval == "eighteenmonths"){
+            echo "eighteenmonths";
         } 
     }
 }

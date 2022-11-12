@@ -1,7 +1,7 @@
 <?php 
 $ref = $_GET['ref'];
 if(!isset($ref)){
-  header("Location: index.html");
+  header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -31,7 +31,7 @@ if(!isset($ref)){
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="index.html"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
         </div>
     </header>
 

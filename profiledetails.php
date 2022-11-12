@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location:index.html");
+    header("Location:index.php");
 }
 
 ?>
@@ -71,7 +71,7 @@ if(!isset($_SESSION['unique_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.html"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
         </div>
 
         <div class="nav">
@@ -127,6 +127,10 @@ if(!isset($_SESSION['unique_id'])){
             <span><?php if(isset($thirduser['agent_name'])){
              echo $thirduser['agent_name'];
             }?></span>
+        </p>
+        <?php } else { ?>
+        <p class="referral colored-div">
+            <span>Referral:</span>&nbsp;<span><?php echo "Yurland Support";?></span>
         </p>
         <?php }?>
         <div class="referral">

@@ -46,7 +46,7 @@ include "signconstant.php";
           if($this->dbcon->affected_rows == 1){
             session_start();
             session_unset();
-            $_SESSION['unique_id'] = $uniqueid;
+            $_SESSION['uniquesupadmin_id'] = $uniqueid;
              echo "success";
           } else {
              echo $this->dbcon->error;
@@ -210,6 +210,8 @@ include "signconstant.php";
             return $row;
         }
     }
+
+    
 
     function selectReferralAgent($referralid){
         $sql = "SELECT * FROM agent_table WHERE referral_id = '{$referralid}'";
@@ -658,8 +660,506 @@ include "signconstant.php";
     }
 
 
+  
+    function uploadProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth,$uniqueid,$purpose,$unitprice,$unitnumber){
+        if(isset($_FILES['image'])){
+        $filename = $_FILES['image']['name'];
+        $filesize = $_FILES['image']['size'];
+        $filetype = $_FILES['image']['type'];
+        $file_error = $_FILES['image']['error'];
+        $filetmp = $_FILES['image']['tmp_name'];
+      // validate image
+        if($file_error > 0){
+            $error = "You have not selected a file";
+            return $error;
+        }
+    
+        if($filesize > 4194304){
+            $error = "Your file should be less than 4mb";
+            return $error;
+        }
+    
+        $extensions = array("gif", "png", "jpeg", "svg", "jpg");
+        $file_ext = explode(".",$filename);
+        $file_ext = end($file_ext);
+    
+        if(!in_array(strtolower($file_ext), $extensions)){
+            $error = $file_ext."File format not supported";
+            return $error;
+        }
+    
+        //upload document
+        //$folder = "userdocuments/";
+        $newfilename = time().rand().".".$file_ext;
+        $destination_path = getcwd().DIRECTORY_SEPARATOR;
+        $target_path = $destination_path . '../landimage/'. basename($newfilename);
+        //$destination = $folder.$newfilename;
+        if(move_uploaded_file($filetmp, $target_path)){
+         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,threemonth_price,sixmonth_price,twelvemonth_price,eighteen_price,purpose,product_unit,unit_price) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$threemonth}','{$sixmonth}','{$twelvemonth}','{$eighteenmonth}','{$purpose}','{$unitnumber}','{$unitprice}')";
+         $result = $this->dbcon->query($sql);
+      
+              //check if the connection runs successfully
+              if($this->dbcon->affected_rows==1){
+                //   echo "<h3 align='center'>Photo added successfully</h3>";
+                echo "success";
+              }else{
+            //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+              }
+     } 
+    }
+    }
 
 
+    function uploadOutrightProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$uniqueid,$purpose,$unitprice,$unitnumber){
+        if(isset($_FILES['image'])){
+        $filename = $_FILES['image']['name'];
+        $filesize = $_FILES['image']['size'];
+        $filetype = $_FILES['image']['type'];
+        $file_error = $_FILES['image']['error'];
+        $filetmp = $_FILES['image']['tmp_name'];
+      // validate image
+        if($file_error > 0){
+            $error = "You have not selected a file";
+            return $error;
+        }
+    
+        if($filesize > 4194304){
+            $error = "Your file should be less than 4mb";
+            return $error;
+        }
+    
+        $extensions = array("gif", "png", "jpeg", "svg", "jpg");
+        $file_ext = explode(".",$filename);
+        $file_ext = end($file_ext);
+    
+        if(!in_array(strtolower($file_ext), $extensions)){
+            $error = $file_ext."File format not supported";
+            return $error;
+        }
+    
+        //upload document
+        //$folder = "userdocuments/";
+        $newfilename = time().rand().".".$file_ext;
+        $destination_path = getcwd().DIRECTORY_SEPARATOR;
+        $target_path = $destination_path . '../landimage/'. basename($newfilename);
+        //$destination = $folder.$newfilename;
+        if(move_uploaded_file($filetmp, $target_path)){
+         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,purpose,product_unit,unit_price) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$purpose}','{$unitnumber}','{$unitprice}')";
+         $result = $this->dbcon->query($sql);
+      
+              //check if the connection runs successfully
+              if($this->dbcon->affected_rows==1){
+                //   echo "<h3 align='center'>Photo added successfully</h3>";
+                echo "success";
+              }else{
+            //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+              }
+     } 
+    }
+    }
+
+
+    function uploadSubProduct($productname,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth,$uniqueid,$purpose,$unitprice,$unitnumber){
+        if(isset($_FILES['image'])){
+        $filename = $_FILES['image']['name'];
+        $filesize = $_FILES['image']['size'];
+        $filetype = $_FILES['image']['type'];
+        $file_error = $_FILES['image']['error'];
+        $filetmp = $_FILES['image']['tmp_name'];
+      // validate image
+        if($file_error > 0){
+            $error = "You have not selected a file";
+            return $error;
+        }
+    
+        if($filesize > 4194304){
+            $error = "Your file should be less than 4mb";
+            return $error;
+        }
+    
+        $extensions = array("gif", "png", "jpeg", "svg", "jpg");
+        $file_ext = explode(".",$filename);
+        $file_ext = end($file_ext);
+    
+        if(!in_array(strtolower($file_ext), $extensions)){
+            $error = $file_ext."File format not supported";
+            return $error;
+        }
+    
+        //upload document
+        //$folder = "userdocuments/";
+        $newfilename = time().rand().".".$file_ext;
+        $destination_path = getcwd().DIRECTORY_SEPARATOR;
+        $target_path = $destination_path . '../landimage/'. basename($newfilename);
+        //$destination = $folder.$newfilename;
+        if(move_uploaded_file($filetmp, $target_path)){
+         $sql = "INSERT INTO land_product(unique_id,product_name,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,threemonth_price,sixmonth_price,twelvemonth_price,eighteen_price,purpose,product_unit,unit_price) VALUES('{$uniqueid}','{$productname}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$threemonth}','{$sixmonth}','{$twelvemonth}','{$eighteenmonth}','{$purpose}','{$unitnumber}','{$unitprice}')";
+         $result = $this->dbcon->query($sql);
+      
+              //check if the connection runs successfully
+              if($this->dbcon->affected_rows==1){
+                //   echo "<h3 align='center'>Photo added successfully</h3>";
+                echo "success";
+              }else{
+            //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+              }
+     } 
+    }
+    }
+
+
+
+    function uploadOtherOptions($uniqueid){
+        if(isset($_FILES['firstimage'])){
+        $filename = $_FILES['firstimage']['name'];
+        $filesize = $_FILES['firstimage']['size'];
+        $filetype = $_FILES['firstimage']['type'];
+        $file_error = $_FILES['firstimage']['error'];
+        $filetmp = $_FILES['firstimage']['tmp_name'];
+      // validate image
+        if($file_error > 0){
+            $error = "You have not selected a file";
+            return $error;
+        }
+
+       
+    
+        if($filesize > 4194304){
+            $error = "Your file should be less than 4mb";
+            return $error;
+        }
+
+    
+        $extensions = array("gif", "png", "jpeg", "svg", "jpg");
+        $file_ext = explode(".",$filename);
+        $file_ext = end($file_ext);
+    
+        if(!in_array(strtolower($file_ext), $extensions)){
+            $error = $file_ext."File format not supported";
+            return $error;
+        }
+    
+        //upload document
+        //$folder = "userdocuments/";
+        $newfilename = time().rand().".".$file_ext;
+        $destination_path = getcwd().DIRECTORY_SEPARATOR;
+        $target_path = $destination_path . '../landimage/'. basename($newfilename);
+        //$destination = $folder.$newfilename;
+        if(move_uploaded_file($filetmp, $target_path)){
+         $sql = "UPDATE land_product SET image_one ='{$newfilename}' WHERE unique_id='{$uniqueid}'";
+         $result = $this->dbcon->query($sql);
+      
+              //check if the connection runs successfully
+              if($this->dbcon->affected_rows==1){
+                //   echo "<h3 align='center'>Photo added successfully</h3>";
+                echo "success";
+              }else{
+            //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+              }
+     } 
+    }
+    }
+
+    function selectLand(){
+        $sql = "SELECT * FROM land_product";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
+    function selectLandPrime(){
+        $sql = "SELECT * FROM land_product ORDER BY rand() LIMIT 7";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
+    function selectLandImage($unique){
+        $sql = "SELECT * FROM land_product WHERE unique_id='{$unique}'";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
+    
+
+    function selectSixMonthPrice(){
+        $sql = "SELECT MAX(sixmonth_price) FROM land_product";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectMinPrice(){
+        $sql = "SELECT MIN(sixmonth_price) FROM land_product WHERE sixmonth_price > 0";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectOneMonthPrice(){
+        $sql = "SELECT MAX(onemonth_price) FROM land_product";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+
+    function selectMinOneMonthPrice(){
+        $sql = "SELECT MIN(onemonth_price) FROM land_product WHERE onemonth_price > 0";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+
+    function selectLowestPrice(){
+        $sql = "SELECT MIN(outright_price) FROM land_product WHERE outright_price > 0";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectHighestPrice(){
+        $sql = "SELECT MAX(outright_price) FROM land_product";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+
+    function searchForLand($price,$location,$purpose){
+        $sql = "SELECT * FROM land_product WHERE outright_price <= '{$price}' AND outright_price > 0 AND product_location = '{$location}' AND purpose = '{$purpose}'";
+        $result = $this->dbcon->query($sql);
+        $rows = array();
+            if($this->dbcon->affected_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    $rows[] = $row;
+                }
+                return $rows;
+            }else{
+                return $rows;
+            }
+    }
+
+
+    function insertPeriod($onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth){
+        $sql = "UPDATE land_product SET onemonth_period='{$onemonth}', threemonth_period='{$threemonth}', sixmonth_period='{$sixmonth}', twelvemonth_period='{$twelvemonth}', eighteen_period='{$eighteenmonth}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows > 0){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
+    function selectPeriod(){
+        $sql = "SELECT * FROM land_product";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectUnit($unique){
+        $sql = "SELECT * FROM land_product WHERE unique_id='{$unique}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+           echo $row['unit_price'];
+        }else{
+            return $row;
+        }
+    }
+
+    function updateUnit($productunit,$unique){
+        $sql = "UPDATE land_product SET product_unit ='{$productunit}' WHERE unique_id='{$unique}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+    }
+
+    function insertPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method){
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
+
+    function selectPayment($id){
+        $sql = "SELECT * FROM payment WHERE customer_id='{$id}'";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
+    function selectSubPayment($id){
+        $sql = "SELECT * FROM payment WHERE customer_id='{$id}' AND payment_method='Subscription'";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
+    function selectTotal($id){
+        $sql = "SELECT SUM(product_price) FROM payment WHERE customer_id='{$id}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectNums($user){
+        $sql = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectSubNum($user){
+        $sql = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$user}' AND payment_method='Subscription'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function addToCart($userid,$productid){
+        $sql = "INSERT INTO cart(user_id,product_id) VALUES('{$userid}','{$productid}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+    }
+
+    function selectCart($user){
+        $sql = "SELECT COUNT(product_id) FROM cart WHERE user_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectCartId($userid){
+        $sql = "SELECT product_id FROM cart WHERE user_id='{$userid}'";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
+    function DeleteCartId($userid,$user){
+        $sql = "DELETE  FROM cart WHERE product_id='{$userid}' AND user_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+            //   echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+          }else{
+        //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+          }
+    }
+
+    function DeleteCartId2($userid,$user){
+        $sql = "DELETE  FROM cart WHERE product_id='{$userid}' AND user_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+            //   echo "<h3 align='center'>Photo added successfully</h3>";
+           //echo "success";
+          }else{
+        //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+          }
+    }
 
  }
 
