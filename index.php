@@ -215,7 +215,7 @@ include "projectlog.php";
                 </button>
 
 
-                <div class="login-link">Already have an account? <a href="login.html">Log&nbsp;in</a></div>
+                <div class="login-link">Already have an account? <a href="login.php">Log&nbsp;in</a></div>
             </div>
 
             <div class="company">

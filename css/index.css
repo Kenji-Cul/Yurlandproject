@@ -78,6 +78,24 @@ section .error {
     visibility: hidden;
 }
 
+.success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 31px;
+    text-align: center;
+    color: #00e12d;
+    border: 1px solid #00e12d;
+    width: 30%;
+    padding: 10px 10px;
+    background-color: #e1dede;
+    visibility: hidden;
+}
+
 
 /*  Landing Form Section */
 

@@ -138,6 +138,9 @@ include "signconstant.php";
         }
      }
 
+
+   
+
      
 
 
@@ -1161,6 +1164,26 @@ include "signconstant.php";
           }
     }
 
+
+    function updatePassword($unique,$password){
+        $sql2 = "SELECT * FROM user WHERE token='{$unique}'";
+        $result = $this->dbcon->query($sql2);
+        $rows = $result->fetch_assoc();
+        if($result->num_rows == 1){
+                       $pwd = password_hash($password,PASSWORD_DEFAULT);
+                        $sql = "UPDATE user SET user_password='{$pwd}' WHERE token='{$unique}'";
+                        $result = $this->dbcon->query($sql);
+                        if($this->dbcon->affected_rows == 1){
+                            echo "success";
+                        }else{
+                            echo "Could not update password try again later";
+                        }
+           
+        }else{
+              echo "Invalid User";
+        }
+               
+    }
  }
 
  ?>

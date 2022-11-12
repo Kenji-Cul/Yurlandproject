@@ -85,7 +85,7 @@ if(!isset($_SESSION['unique_id'])){
     <div class="subscribed-lands">
         <?php 
              $land = new User;
-             $landview = $land->selectSubPayment($_SESSION['unique_id']);
+             $landview = $land->selectPayment($_SESSION['unique_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
