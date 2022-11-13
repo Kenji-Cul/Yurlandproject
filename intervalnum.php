@@ -63,7 +63,11 @@ if(isset($_POST['submit'])){
         $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
     }
 
+    $delete = $land->DeleteCartId($uniqueproduct,$_SESSION['unique_id']);
 
+    if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
+        // Remove the product from the shopping cart
+        unset($_SESSION['cart'][$uniqueproduct]);}
 
 $curl = curl_init();
 
@@ -101,7 +105,7 @@ $data = json_decode($result);
 
 $plan_code = $data->data->plan_code;
 $message = $data->message;
-include_once("initialize.php");
+include_once "initialize.php";
 }
 
 }
@@ -133,7 +137,12 @@ include_once("initialize.php");
         </div>
 
         <div class="nav">
-            <img src="images/cart.svg" alt="cart icon" />
+            <a href="cartreview.php">
+                <div class="cart">
+                    <div class="cart-notify"></div>
+                    <img src="images/cart.svg" alt="cart icon" />
+                </div>
+            </a>
             <img src="images/menu.svg" alt="menu icon" />
         </div>
     </header>
@@ -230,6 +239,27 @@ include_once("initialize.php");
         <?php }}?>
 
         <script src="js/main.js"></script>
+        <script>
+        setInterval(() => {
+            let xls = new XMLHttpRequest();
+            xls.open("GET", "getcart.php", true);
+            xls.onload = () => {
+                if (xls.readyState === XMLHttpRequest.DONE) {
+                    if (xls.status === 200) {
+                        let data = xls.response;
+                        let notify = document.querySelector('.cart-notify');
+                        if (data == 0) {
+                            notify.style.display = "none";
+                        }
+
+                        notify.innerHTML = data;
+                        //console.log(data);
+                    }
+                }
+            }
+            xls.send();
+        }, 100);
+        </script>
 </body>
 
 </html>

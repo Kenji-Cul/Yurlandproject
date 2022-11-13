@@ -51,6 +51,10 @@ if('success' == $trans->data->status){
    $user = new User;
    $update = $user->updateUnit($deductedunit,$unique);
    $delete = $user->DeleteCartId($unique,$_SESSION['unique_id']);
+   if (isset($unique) && is_numeric($unique) && isset($unique) && isset($_SESSION['cart'][$unique])) {
+    // Remove the product from the shopping cart
+    unset($_SESSION['cart'][$unique]);
+}
     // $email = $trans->data->customer->email;
     // $ref = $trans->data->reference;
     

@@ -3,13 +3,14 @@
 $user = new User;
 $selectuser = $user-> selectUser($_SESSION['unique_id']);
 $email = $selectuser['email'];
+$realprice = round($price * 100);
 
 if($message == "Plan created"){
   $url = "https://api.paystack.co/transaction/initialize";
 
   $fields = [
     'email' => $email,
-    'amount' => $price * 100,
+    'amount' => $realprice,
     'plan' => $plan_code
   ];
 
@@ -37,9 +38,9 @@ if($message == "Plan created"){
   $initialize_url = $initialize_data->data->authorization_url;
   if($result){
      header("Location: ".$initialize_url);
-     exit;
-  } else{
-    header("Location: unsubscribed.php");
-  }
+   exit;
+  } 
+
+  
 }
 ?>

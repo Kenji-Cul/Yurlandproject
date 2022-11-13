@@ -24,6 +24,7 @@ $selectuser = $user-> selectUser($_SESSION['unique_id']);
 if(isset($_POST["submit"])){
     $email = htmlspecialchars($selectuser['email']);
     $price = $_GET['tot'];
+    $realprice = round($price * 100);
     $uniqueperson = $_SESSION['unique_id'];
     $uniqueproduct = $_GET['uniqueid'];
     $product_name = $value['product_name'];
@@ -52,7 +53,7 @@ if(isset($_POST["submit"])){
     //Gather the body params
     $transaction_data = [
        "email" => $email,
-       "amount" => $price * 100,
+       "amount" => $realprice,
        "callback_url" => "http://localhost/Yurland/verify.php",
        "metadata" => [
           "custom_fields" => [

@@ -27,11 +27,30 @@ if(!isset($_SESSION['unique_id'])){
         flex-direction: column;
     }
 
+    .success {
+        position: absolute;
+        top: 8em;
+    }
+
     .no-lands p {
         font-style: normal;
         font-weight: 600;
         font-size: 24px;
         color: #1a0709;
+    }
+
+    .subscribed-land {
+        height: 26em;
+        gap: 2em;
+    }
+
+    .subscribed-img {
+        height: 19em;
+    }
+
+
+    .subscribed-details {
+        margin-top: 0;
     }
 
     .no-lands img {
@@ -103,20 +122,60 @@ if(!isset($_SESSION['unique_id'])){
                     <p class="land-name"><?php echo $value['product_name'];?></p>
                     <p class="land-location"><?php echo $value['product_location'];?></p>
                 </div>
+                <?php if($value['payment_method'] == "Subscription"){?>
                 <div class="price">&#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
-                             }
+                             } 
+            ?> &nbsp;<span>daily</span></div>
+                <?php }else {?>
+                <div class="price">&#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } 
             ?></div>
+                <?php }?>
+            </div>
+            <div class="subscribed-details"
+                style="flex-direction: column; align-items: center; justify-content: center; gap: 1em;">
+                <div class="balance" style="display: flex;
+                align-items: center; justify-content center; gap: 3em; text-align: center; width: 100%; ">
+                    <p class="amountpaid"><span>Amount
+                            Paid:</span>&nbsp;<span><?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } 
+            ?></span></p>
+                    <p class="balance"><span>Balance:</span>&nbsp;<span><?php if($value['payment_method'] == "Outright"){
+                        echo 0;
+                    }?></span></p>
+                </div>
+                <div class="balance" style="display: flex;
+                align-items: center; justify-content center; gap: 3em; text-align: center; width: 100%;">
+                    <p class="amountpaid"><span>Start
+                            Date:</span>&nbsp;<span><?php echo $value['payment_day'];?></span>-<span><?php echo $value['payment_month'];?></span>-<span><?php echo $value['payment_year'];?></span>
+                    </p>
+                    <?php if($value['payment_method'] == "Subscription"){  ?>
+                    <p class="balance"><span>Expected End Date:</span>&nbsp;<span>1-10-2023</span></p>
+                    <?php }?>
+                </div>
             </div>
         </div>
 
         <?php }} ?>
+
+
     </div>
 
-
-
+    <?php if(empty($landview)){?>
+    <div class="success">
+        <img src="images/asset_success.svg" alt="" />
+        <p>You currently have no lands!</p>
+    </div>
+    <?php }?>
 
     <script src="js/cart.js"></script>
 </body>
