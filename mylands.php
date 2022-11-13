@@ -112,9 +112,11 @@ if(!isset($_SESSION['unique_id'])){
             </div>
         </div>
 
-        <?php }}?>
-
+        <?php }} ?>
     </div>
+
+
+
 
     <script src="js/cart.js"></script>
 </body>
