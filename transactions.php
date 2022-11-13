@@ -120,7 +120,7 @@ if(!isset($_SESSION['unique_id'])){
         </div>
         <div class="price-detail"><?php 
             echo $value['product_unit'];
-            ?></div>
+            ?>&nbsp;<span>Units</span></div>
         <div class="price-detail"><?php 
             echo $value['payment_method'];
             ?></div>
