@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include "projectlog.php";
 if(!isset($_SESSION['uniquesupadmin_id'])){
     header("Location: index.php");

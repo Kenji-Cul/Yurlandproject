@@ -49,7 +49,6 @@ if(!isset($_SESSION['uniqueagent_id'])){
         </div>
 
         <div class="nav">
-            <img src="images/cart.svg" alt="cart icon" />
             <div class="menu">
                 <img src="images/menu.svg" alt="menu icon" />
             </div>
@@ -73,7 +72,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
     <ul class="dropdown-links">
-        <li><a href="newland.html">New Land</a></li>
+        <li><a href="preference.php">New Land</a></li>
         <li><a href="transactions.html">Transaction History</a></li>
         <li><a href="#">My Customer's Land</a></li>
         <li><a href="#">New Payment</a></li>

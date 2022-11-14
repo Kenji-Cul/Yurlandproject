@@ -1,5 +1,8 @@
 <?php 
 session_start();
+if(!isset($_SESSION['unique_id'])){
+    header("Location: login.php");
+}
 if(!isset($_GET['id'])){
     header("Location: index.php");
 }

@@ -1,9 +1,6 @@
 <?php 
 session_start();
 include "projectlog.php";
-if(!isset($_SESSION['unique_id'])){
-    header("Location: signup.html");
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +11,7 @@ if(!isset($_SESSION['unique_id'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <script src="bootstrap/js/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -25,6 +23,38 @@ if(!isset($_SESSION['unique_id'])){
 
 
 
+    .search-icon {
+        position: absolute;
+        right: 4em;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+
+
+    .search-icon img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .search-icon input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+    }
+
+    .search-icon input:focus {
+        border: none;
+    }
+
+
+
 
 
     .subscribed-land {
@@ -33,6 +63,14 @@ if(!isset($_SESSION['unique_id'])){
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+    }
+
+    .inputs {
+        display: none;
+    }
+
+    .inputs i {
+        font-size: 22px;
     }
 
     .estateinfo {
@@ -58,10 +96,6 @@ if(!isset($_SESSION['unique_id'])){
         </div>
 
         <div class="nav">
-            <div class="cart">
-                <div class="cart-notify"></div>
-                <img src="images/cart.svg" alt="cart icon" />
-            </div>
             <img src="images/menu.svg" alt="menu icon" />
         </div>
     </header>
@@ -70,10 +104,21 @@ if(!isset($_SESSION['unique_id'])){
         <a href="profile.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
-        <div style="display: flex !important; flex-direction: column !important">
+        <div style="display: flex !important; flex-direction: column !important" class="estatetext">
             <p>All Estates</p>
         </div>
+        <!-- <div class="search-icon">
+            <img src="images/search.svg" alt="search image" id="searchimg">
+            <div class="inputs">
+                <form action="" id="searchform">
+                    <input type="text" name="searchproduct" id="search">
+                </form>
+                <i class="ri-close-line" id="closeicon"></i>
+            </div>
+        </div> -->
     </div>
+
+
 
     <div class="subscribed-lands">
         <?php 
@@ -150,32 +195,50 @@ if(!isset($_SESSION['unique_id'])){
     </div>
 
     <div class="price-container">
-        <a href="cartreview.html">
+        <a href="cartreview.php">
             <div class="price">Continue</div>
         </a>
     </div>
 
     <script src="js/main.js"></script>
     <script>
-    setInterval(() => {
-        let xls = new XMLHttpRequest();
-        xls.open("GET", "getcart.php", true);
-        xls.onload = () => {
-            if (xls.readyState === XMLHttpRequest.DONE) {
-                if (xls.status === 200) {
-                    let data = xls.response;
-                    let notify = document.querySelector('.cart-notify');
-                    if (data == 0) {
-                        notify.style.display = "none";
-                    }
+    var searchimg = document.querySelector("#searchimg");
+    var close = document.querySelector("#closeicon");
+    var searchcontainer = document.querySelector('.inputs');
+    // var input = document.querySelector("#searchform input");
+    searchimg.onclick = () => {
+        searchcontainer.style.display = "block";
+        document.querySelector('.estatetext').style.display = "none";
+        document.querySelector('#searchimg').style.display = "none";
+    }
 
-                    notify.innerHTML = data;
-                    //console.log(data);
-                }
-            }
-        }
-        xls.send();
-    }, 100);
+
+    close.onclick = () => {
+        searchcontainer.style.display = "none";
+        document.querySelector('.estatetext').style.display = "block";
+        document.querySelector('#searchimg').style.display = "block";
+    }
+
+    // console.log(input.value);
+
+    // $("#searchform").submit(function(e) {
+    //     e.preventDefault();
+    // })
+
+    // $("#searchform input").keyup(function() {
+    //     // console.log(("#searchform input").val())
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "searching.php",
+    //         data: $("#searchform input"),
+    //         success: function(response) {
+    //             console.log(response);
+    //             $(".subscribed-lands").html(response);
+    //             //    console.log(response);
+    //         }
+
+    //     });
+    // })
     </script>
 </body>
 

@@ -1184,6 +1184,111 @@ include "signconstant.php";
         }
                
     }
- }
 
- ?>
+    
+    function updateAgentPassword($unique,$password){
+        $sql2 = "SELECT * FROM agent_table WHERE token='{$unique}'";
+        $result = $this->dbcon->query($sql2);
+        $rows = $result->fetch_assoc();
+        if($result->num_rows == 1){
+                       $pwd = password_hash($password,PASSWORD_DEFAULT);
+                        $sql = "UPDATE agent_table SET agent_password='{$pwd}' WHERE token='{$unique}'";
+                        $result = $this->dbcon->query($sql);
+                        if($this->dbcon->affected_rows == 1){
+                            echo "success";
+                        }else{
+                            echo "Could not update password try again later";
+                        }
+           
+        }else{
+              echo "Invalid User";
+        }
+               
+    }
+
+    function searchProduct($productname){
+        $sql = "SELECT * FROM land_product WHERE product_name ='{$productname}'";
+        $result = $this->dbcon->query($sql);
+        $output = "";
+		if($this->dbcon->affected_rows > 0){
+            while($row = $result->fetch_assoc()){
+              
+            
+            if(!empty($row)){
+                $output .= '
+                <div class="subscribed-land">
+            <div class="subscribed-img">
+                <?php if('.$row['product_unit'] != 0 .'){?>
+<a
+    href="estateinfo2.php?id=<?php echo'. $row['unique_id'].'?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+    <img src="landimage/<?php if(isset('.$row['product_image'].')){
+                        echo '.$row['product_image'].'
+                    }?>" alt="estate image" />
+</a>
+<?php } else {?>
+<img src="landimage/<?php if(isset('.$row['product_image'].')){
+                        echo '.$row['product_image'].'
+                    }?>" alt="estate image" />
+<?php }?>
+</div>
+
+<div class="subscribed-details">
+    <div class="sub-detail">
+        <div>
+            <p class="land-name"><?php echo '.$row['product_name'].'?></p>
+            <p class="land-location"><?php echo '.$row['product_location'].'?></p>
+        </div>
+    </div>
+    <div class="sub-detail">
+        <?php if('.$row['product_unit'] = 0 . '){ ?>
+        <?php if('.$row['outright_price'] = 0 .'){
+                      $outprice = '.$row['outright_price'].'
+                      $onemonthprice ='. $row['onemonth_price'].'
+                        ?>
+        <p class="land-name">No Outright Price</p>
+        <?php } else {?>
+        <div class="price-flex">
+            <p class="land-name">Outright Price:</p>
+            <p class="land-location">&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999){
+                          echo number_format($outprice);
+                        }?></p>
+        </div>
+        <?php }?>
+
+
+        <?php if('.$row['onemonth_price'] != 0 .'){
+                        $onemonthprice = '.$row['onemonth_price'].'
+                        ?>
+        <div>
+            <p class="land-name">Daily Price:</p>
+            <p class="land-location">&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
+                          echo number_format($onemonthprice);
+                        }?></p>
+        </div>
+        <?php } else {?>
+        <div>
+            <p class="land-name">No Daily Price</p>
+        </div>
+        <?php } } else {?>
+        <p class="land-name">Sold Out</p>
+        <?php }?>
+
+
+    </div>
+</div>
+</div>
+'; } else {
+$output = "Land not available";
+}
+echo $output;
+}}else{
+echo "Land not available yet";
+}
+
+}
+
+
+
+}
+
+?>
