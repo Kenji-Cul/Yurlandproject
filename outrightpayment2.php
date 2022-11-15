@@ -1,8 +1,7 @@
 <?php 
 session_start();
-if(!isset($_SESSION['unique_id'])){
-    header("Location: signup.html");
-}
+
+
 include "projectlog.php";
 if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
     header('Location: index.php');
@@ -11,7 +10,7 @@ if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
 <?php
 
 $user = new User;
-$selectuser = $user-> selectUser($_SESSION['unique_id']);
+$selectuser = $user-> selectUser($_SESSION['user']);
 
    
     $landview = $user->selectLandImage($_GET['uniqueid']);
@@ -25,7 +24,7 @@ if(isset($_POST["submit"])){
     $email = htmlspecialchars($selectuser['email']);
     $price = $_GET['tot'];
     $realprice = round($price * 100);
-    $uniqueperson = $_SESSION['unique_id'];
+    $uniqueperson = $_SESSION['user'];
     $uniqueproduct = $_GET['uniqueid'];
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];

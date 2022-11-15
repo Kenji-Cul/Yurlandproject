@@ -26,6 +26,16 @@ if(!isset($_SESSION['unique_id'])){
         overflow-x: hidden;
     }
 
+    .radius {
+        position: relative;
+    }
+
+    .radius img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
 
 
 
@@ -209,10 +219,60 @@ if(!isset($_SESSION['unique_id'])){
                     <p>Make new</p>
                     <p>Payment</p>
                 </div>
-                <img src="images/right_arrow.svg" alt="" />
             </div>
         </div>
     </div>
+
+
+
+    <div class="transactions">
+        <p>Current Transactions</p>
+        <a href="transactions.php">
+            <p class="more">See more</p>
+        </a>
+    </div>
+
+    <?php 
+             $land = new User;
+             $landview = $land->selectCurrentPayment($_SESSION['unique_id']);
+             if(!empty($landview)){
+                foreach($landview as $key => $value){
+                    
+              
+            ?>
+    <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/<?php echo $value['product_image'];?>" alt="">
+        </div>
+        <div class="details">
+            <p>Transaction</p>
+            <div class="inner-detail">
+                <div class="location"><?php echo $value['product_name'];?></div>
+                <p></p>
+                <div class="date">
+                    <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                </div>
+                <p></p>
+                <div class="time"><?php echo $value['payment_time'];?></div>
+            </div>
+        </div>
+        <div class="price-detail"><?php 
+            echo $value['product_unit'];
+            ?>&nbsp;<span>Units</span></div>
+        <div class="price-detail"><?php 
+            echo $value['payment_method'];
+            ?></div>
+        <div class="price-detail">&#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             }
+            ?></div>
+    </div>
+    <?php }}?>
+
+
+
 
     <script src="js/swiper-bundle.min.js" defer></script>
     <script src="js/profile.js" defer></script>

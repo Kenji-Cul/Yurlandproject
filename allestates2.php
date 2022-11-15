@@ -101,7 +101,7 @@ include "projectlog.php";
     </header>
 
     <div class="page-title2">
-        <a href="profile.php">
+        <a href="agentprofile.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <div style="display: flex !important; flex-direction: column !important" class="estatetext">
@@ -130,9 +130,10 @@ include "projectlog.php";
             ?>
         <div class="subscribed-land">
             <div class="subscribed-img">
-                <?php if($value['product_unit'] != 0){?>
+                <?php  if(isset($_SESSION['uniqueagent_id'])){
+                if($value['product_unit'] != 0){?>
                 <a
-                    href="estateinfo2.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+                    href="estateinfo3.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyunique=<?php echo $_GET['unique'];?>">
                     <img src="landimage/<?php if(isset($value['product_image'])){
                         echo $value['product_image'];
                     }?>" alt="estate image" />
@@ -141,8 +142,21 @@ include "projectlog.php";
                 <img src="landimage/<?php if(isset($value['product_image'])){
                         echo $value['product_image'];
                     }?>" alt="estate image" />
-                <?php }?>
+                <?php }}?>
 
+                <?php  if(isset($_SESSION['uniquesubadmin_id'])){
+                if($value['product_unit'] != 0){?>
+                <a
+                    href="estateinfo4.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyunique=<?php echo $_GET['unique'];?>">
+                    <img src="landimage/<?php if(isset($value['product_image'])){
+                        echo $value['product_image'];
+                    }?>" alt="estate image" />
+                </a>
+                <?php } else {?>
+                <img src="landimage/<?php if(isset($value['product_image'])){
+                        echo $value['product_image'];
+                    }?>" alt="estate image" />
+                <?php }}?>
 
             </div>
 

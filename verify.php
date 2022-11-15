@@ -50,10 +50,21 @@ if('success' == $trans->data->status){
     $deductedunit = $trans->data->metadata->custom_fields[1]->value;
    $user = new User;
    $update = $user->updateUnit($deductedunit,$unique);
+   if(isset($_SESSION['unique_id'])){
    $delete = $user->DeleteCartId($unique,$_SESSION['unique_id']);
    if (isset($unique) && is_numeric($unique) && isset($unique) && isset($_SESSION['cart'][$unique])) {
     // Remove the product from the shopping cart
     unset($_SESSION['cart'][$unique]);
+    
+}
+   }
+
+if(isset($_SESSION['uniqueagent_id'])){
+    $delete = $user->DeleteAgentCartId($unique,$_SESSION['uniqueagent_id']);
+    if (isset($unique) && is_numeric($unique) && isset($unique) && isset($_SESSION['agentcart'][$unique])) {
+     // Remove the product from the shopping cart
+     unset($_SESSION['agentcart'][$unique]);
+}
 }
     // $email = $trans->data->customer->email;
     // $ref = $trans->data->reference;
@@ -104,7 +115,15 @@ if('success' == $trans->data->status){
     <div class="success">
         <img src="images/asset_success.svg" alt="" />
         <p>Payment Successful!</p>
+        <?php if(isset($_SESSION['unique_id'])){?>
         <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <?php }?>
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
+        <a href="agentprofile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <?php }?>
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <a href="subadmin.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <?php }?>
     </div>
 
     <script src="js/main.js"></script>

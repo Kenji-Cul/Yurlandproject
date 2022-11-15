@@ -1,12 +1,22 @@
 <?php
 
 $user = new User;
-$selectuser = $user-> selectUser($_SESSION['unique_id']);
+$selectuser = $user-> selectUser($_SESSION['user']);
 $email = $selectuser['email'];
 $realprice = round($price * 100);
 
 if($message == "Plan created"){
   $url = "https://api.paystack.co/transaction/initialize";
+  if($url){
+    if($_GET['unit'] % 4 == 0){
+      $unit_added = $_GET['unit'] / 4;
+      $added_unit = $_GET['unit'] + $unit_added;
+ 
+ $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
+ } else {
+     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
+ }
+  }
 
   $fields = [
     'email' => $email,

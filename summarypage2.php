@@ -147,11 +147,11 @@ include "projectlog.php";
                     let data = xhr.response;
                     if (data == "outright payment") {
                         location.href =
-                            `outrightpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${total}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unit}&con=9298383737`;
+                            `outrightpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${total}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unit}&con=9298383737`;
                     }
                     if (data == "subscription payment") {
                         location.href =
-                            `subpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${total}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unit}&con=judu8272626`;
+                            `subpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${total}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unit}&con=judu8272626`;
                     }
                 }
             }

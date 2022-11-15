@@ -541,6 +541,18 @@ section .error {
     cursor: pointer;
 }
 
+.foot .profile-div {
+    background: #fee1e3;
+    width: 100px;
+    height: 100px;
+    margin: 1.5em 1.5em;
+    border-radius: 8px;
+    position: relative;
+    padding: 10px;
+    padding-left: 0;
+    cursor: pointer;
+}
+
 .profile-icon {
     position: absolute;
     left: 20px;
@@ -568,6 +580,10 @@ section .error {
 .navigate div {
     display: flex;
     flex-direction: column;
+}
+
+.foot .navigate p {
+    font-size: 15px;
 }
 
 .navigate p {

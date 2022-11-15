@@ -173,7 +173,7 @@ if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
                         console.log(data);
                         if (data) {
                             location.href =
-                                `intervalnum.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${total}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unit}&con=9298383737`;
+                                `intervalnum2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${total}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unit}&con=9298383737`;
                         }
 
                     }

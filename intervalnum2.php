@@ -1,9 +1,7 @@
 <?php 
 include "projectlog.php";
 session_start();
-if(!isset($_SESSION['unique_id'])){
-    header("Location: signup.html");
-}
+
 if(!isset($_GET['data'])){
     header("Location :index.php");
 }
@@ -41,7 +39,7 @@ if(isset($_POST['submit'])){
         }
 
     
-    $uniqueperson = $_SESSION['unique_id'];
+    $uniqueperson = $_SESSION['user'];;
     $uniqueproduct = $_GET['uniqueid'];
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
@@ -54,20 +52,23 @@ if(isset($_POST['submit'])){
     $paymenttime = date("h:i a");;
     $uniquesub = rand();
     $paymentmethod = "Subscription";
-    if($_GET['unit'] % 4 == 0){
-         $unit_added = $_GET['unit'] / 4;
-         $added_unit = $_GET['unit'] + $unit_added;
     
-    $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
-    } else {
-        $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
-    }
 
+    if(isset($_SESSION['unique_id'])){
     $delete = $land->DeleteCartId($uniqueproduct,$_SESSION['unique_id']);
 
     if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
         // Remove the product from the shopping cart
         unset($_SESSION['cart'][$uniqueproduct]);}
+    }
+
+    if(isset($_SESSION['uniqueagent_id'])){
+        $delete = $land->DeleteAgentCartId($uniqueproduct,$_SESSION['uniqueagent_id']);
+    
+        if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['agentcart'][$uniqueproduct])) {
+            // Remove the product from the shopping cart
+            unset($_SESSION['agentcart'][$uniqueproduct]);}
+        }
 
 $curl = curl_init();
 
@@ -138,12 +139,6 @@ include_once "initialize.php";
         </div>
 
         <div class="nav">
-            <a href="cartreview.php">
-                <div class="cart">
-                    <div class="cart-notify"></div>
-                    <img src="images/cart.svg" alt="cart icon" />
-                </div>
-            </a>
             <img src="images/menu.svg" alt="menu icon" />
         </div>
     </header>
@@ -240,27 +235,7 @@ include_once "initialize.php";
         <?php }}?>
 
         <script src="js/main.js"></script>
-        <script>
-        setInterval(() => {
-            let xls = new XMLHttpRequest();
-            xls.open("GET", "getcart.php", true);
-            xls.onload = () => {
-                if (xls.readyState === XMLHttpRequest.DONE) {
-                    if (xls.status === 200) {
-                        let data = xls.response;
-                        let notify = document.querySelector('.cart-notify');
-                        if (data == 0) {
-                            notify.style.display = "none";
-                        }
 
-                        notify.innerHTML = data;
-                        //console.log(data);
-                    }
-                }
-            }
-            xls.send();
-        }, 100);
-        </script>
 </body>
 
 </html>

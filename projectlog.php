@@ -239,6 +239,21 @@ include "signconstant.php";
         }
     }
 
+    function selectAgentCustomer($uniqueid){
+        $sql = "SELECT * FROM user WHERE referral_id = '{$uniqueid}'";
+        $result = $this->dbcon->query($sql);
+        $rows = array();
+            if($this->dbcon->affected_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    $rows[] = $row;
+                }
+                return $rows;
+            }else{
+                return $rows;
+            }
+    }
+
+
     function selectSubadmin($uniqueid){
         $sql = "SELECT * FROM sub_admin WHERE unique_id = '{$uniqueid}'";
         $result = $this->dbcon->query($sql);
@@ -877,6 +892,20 @@ include "signconstant.php";
 		}
     }
 
+    function selectAllUsers(){
+        $sql = "SELECT * FROM user";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
     function selectLandPrime(){
         $sql = "SELECT * FROM land_product ORDER BY rand() LIMIT 7";
         $result = $this->dbcon->query($sql);
@@ -1060,6 +1089,20 @@ include "signconstant.php";
 		}
     }
 
+    function selectCurrentPayment($id){
+        $sql = "SELECT * FROM payment WHERE customer_id='{$id}' ORDER BY customer_id DESC LIMIT 5";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
     function selectSubPayment($id){
         $sql = "SELECT * FROM payment WHERE customer_id='{$id}' AND payment_method='Subscription'";
         $result = $this->dbcon->query($sql);
@@ -1117,8 +1160,29 @@ include "signconstant.php";
         }
     }
 
+    function addAgentCart($userid,$productid){
+        $sql = "INSERT INTO cart(agent_id,product_id) VALUES('{$userid}','{$productid}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+    }
+
     function selectCart($user){
         $sql = "SELECT COUNT(product_id) FROM cart WHERE user_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectAgentCart($user){
+        $sql = "SELECT COUNT(product_id) FROM cart WHERE agent_id='{$user}'";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -1142,6 +1206,20 @@ include "signconstant.php";
 		}
     }
 
+    function selectCartId2($userid){
+        $sql = "SELECT product_id FROM cart WHERE agent_id='{$userid}'";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
     function DeleteCartId($userid,$user){
         $sql = "DELETE  FROM cart WHERE product_id='{$userid}' AND user_id='{$user}'";
         $result = $this->dbcon->query($sql);
@@ -1153,8 +1231,30 @@ include "signconstant.php";
           }
     }
 
+    function DeleteAgentCartId($userid,$user){
+        $sql = "DELETE  FROM cart WHERE product_id='{$userid}' AND agent_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+            //   echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+          }else{
+        //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+          }
+    }
+
     function DeleteCartId2($userid,$user){
         $sql = "DELETE  FROM cart WHERE product_id='{$userid}' AND user_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+            //   echo "<h3 align='center'>Photo added successfully</h3>";
+           //echo "success";
+          }else{
+        //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+          }
+    }
+
+    function DeleteCartId3($userid,$user){
+        $sql = "DELETE  FROM cart WHERE product_id='{$userid}' AND agent_id='{$user}'";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows==1){
             //   echo "<h3 align='center'>Photo added successfully</h3>";
@@ -1206,87 +1306,7 @@ include "signconstant.php";
                
     }
 
-    function searchProduct($productname){
-        $sql = "SELECT * FROM land_product WHERE product_name ='{$productname}'";
-        $result = $this->dbcon->query($sql);
-        $output = "";
-		if($this->dbcon->affected_rows > 0){
-            while($row = $result->fetch_assoc()){
-              
-            
-            if(!empty($row)){
-                $output .= '
-                <div class="subscribed-land">
-            <div class="subscribed-img">
-                <?php if('.$row['product_unit'] != 0 .'){?>
-<a
-    href="estateinfo2.php?id=<?php echo'. $row['unique_id'].'?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
-    <img src="landimage/<?php if(isset('.$row['product_image'].')){
-                        echo '.$row['product_image'].'
-                    }?>" alt="estate image" />
-</a>
-<?php } else {?>
-<img src="landimage/<?php if(isset('.$row['product_image'].')){
-                        echo '.$row['product_image'].'
-                    }?>" alt="estate image" />
-<?php }?>
-</div>
-
-<div class="subscribed-details">
-    <div class="sub-detail">
-        <div>
-            <p class="land-name"><?php echo '.$row['product_name'].'?></p>
-            <p class="land-location"><?php echo '.$row['product_location'].'?></p>
-        </div>
-    </div>
-    <div class="sub-detail">
-        <?php if('.$row['product_unit'] = 0 . '){ ?>
-        <?php if('.$row['outright_price'] = 0 .'){
-                      $outprice = '.$row['outright_price'].'
-                      $onemonthprice ='. $row['onemonth_price'].'
-                        ?>
-        <p class="land-name">No Outright Price</p>
-        <?php } else {?>
-        <div class="price-flex">
-            <p class="land-name">Outright Price:</p>
-            <p class="land-location">&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999){
-                          echo number_format($outprice);
-                        }?></p>
-        </div>
-        <?php }?>
-
-
-        <?php if('.$row['onemonth_price'] != 0 .'){
-                        $onemonthprice = '.$row['onemonth_price'].'
-                        ?>
-        <div>
-            <p class="land-name">Daily Price:</p>
-            <p class="land-location">&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
-                          echo number_format($onemonthprice);
-                        }?></p>
-        </div>
-        <?php } else {?>
-        <div>
-            <p class="land-name">No Daily Price</p>
-        </div>
-        <?php } } else {?>
-        <p class="land-name">Sold Out</p>
-        <?php }?>
-
-
-    </div>
-</div>
-</div>
-'; } else {
-$output = "Land not available";
-}
-echo $output;
-}}else{
-echo "Land not available yet";
-}
-
-}
-
+   
 
 
 }

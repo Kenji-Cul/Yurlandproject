@@ -50,7 +50,6 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         </div>
 
         <div class="nav">
-            <img src="images/cart.svg" alt="cart icon" />
             <div class="menu">
                 <img src="images/menu.svg" alt="menu icon" />
             </div>
@@ -68,7 +67,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <ul class="dropdown-links">
         <li><a href="#">New Land</a></li>
         <li><a href="#">Transaction History</a></li>
-        <li><a href="#">All Customers</a></li>
+        <li><a href="allcustomers.php">All Customers</a></li>
         <li><a href="#">All Customers Land</a></li>
         <li><a href="#">Edit Customer</a></li>
         <li><a href="#">New Payment</a></li>
