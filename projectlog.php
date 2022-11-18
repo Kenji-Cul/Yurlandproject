@@ -906,8 +906,23 @@ include "signconstant.php";
 		}
     }
 
+
+    function selectAllAgents(){
+        $sql = "SELECT * FROM agent_table";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
     function selectLandPrime(){
-        $sql = "SELECT * FROM land_product ORDER BY rand() LIMIT 7";
+        $sql = "SELECT * FROM land_product ORDER BY rand() LIMIT 5";
         $result = $this->dbcon->query($sql);
 	$rows = array();
 		if($this->dbcon->affected_rows > 0){
@@ -1020,8 +1035,8 @@ include "signconstant.php";
     }
 
 
-    function insertPeriod($onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth){
-        $sql = "UPDATE land_product SET onemonth_period='{$onemonth}', threemonth_period='{$threemonth}', sixmonth_period='{$sixmonth}', twelvemonth_period='{$twelvemonth}', eighteen_period='{$eighteenmonth}'";
+    function insertPeriod($onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth,$unique,$eighteenpercentage,$twelvepercentage,$sixpercentage,$threepercentage,$onepercentage){
+        $sql = "UPDATE land_product SET onemonth_period='{$onemonth}', threemonth_period='{$threemonth}', sixmonth_period='{$sixmonth}', twelvemonth_period='{$twelvemonth}', eighteen_period='{$eighteenmonth}',onemonth_percent='{$onepercentage}',threemonth_percent='{$threepercentage}', sixmonth_percent='{$sixpercentage}',twelvemonth_percent='{$twelvepercentage}',eighteen_percent='{$eighteenpercentage}' WHERE unique_id='{$unique}'";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows > 0){
            echo "success";
@@ -1090,7 +1105,7 @@ include "signconstant.php";
     }
 
     function selectCurrentPayment($id){
-        $sql = "SELECT * FROM payment WHERE customer_id='{$id}' ORDER BY customer_id DESC LIMIT 5";
+        $sql = "SELECT * FROM payment WHERE customer_id='{$id}' ORDER BY payment_id DESC LIMIT 5";
         $result = $this->dbcon->query($sql);
 	$rows = array();
 		if($this->dbcon->affected_rows > 0){
@@ -1293,6 +1308,46 @@ include "signconstant.php";
         if($result->num_rows == 1){
                        $pwd = password_hash($password,PASSWORD_DEFAULT);
                         $sql = "UPDATE agent_table SET agent_password='{$pwd}' WHERE token='{$unique}'";
+                        $result = $this->dbcon->query($sql);
+                        if($this->dbcon->affected_rows == 1){
+                            echo "success";
+                        }else{
+                            echo "Could not update password try again later";
+                        }
+           
+        }else{
+              echo "Invalid User";
+        }
+               
+    }
+
+    function updateSubPassword($unique,$password){
+        $sql2 = "SELECT * FROM sub_admin WHERE token='{$unique}'";
+        $result = $this->dbcon->query($sql2);
+        $rows = $result->fetch_assoc();
+        if($result->num_rows == 1){
+                       $pwd = password_hash($password,PASSWORD_DEFAULT);
+                        $sql = "UPDATE sub_admin SET subadmin_password='{$pwd}' WHERE token='{$unique}'";
+                        $result = $this->dbcon->query($sql);
+                        if($this->dbcon->affected_rows == 1){
+                            echo "success";
+                        }else{
+                            echo "Could not update password try again later";
+                        }
+           
+        }else{
+              echo "Invalid User";
+        }
+               
+    }
+
+    function updateSuperPassword($unique,$password){
+        $sql2 = "SELECT * FROM super_admin WHERE token='{$unique}'";
+        $result = $this->dbcon->query($sql2);
+        $rows = $result->fetch_assoc();
+        if($result->num_rows == 1){
+                       $pwd = password_hash($password,PASSWORD_DEFAULT);
+                        $sql = "UPDATE super_admin SET super_adminpassword='{$pwd}' WHERE token='{$unique}'";
                         $result = $this->dbcon->query($sql);
                         if($this->dbcon->affected_rows == 1){
                             echo "success";

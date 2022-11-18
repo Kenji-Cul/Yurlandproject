@@ -221,7 +221,9 @@ include "projectlog.php";
             <div class="company">
                 A Product of <span>Ilu-Oba Int.Ltd</span> in partnership with <span>Arklips</span>
             </div>
+
         </form>
+
 
     </section>
 

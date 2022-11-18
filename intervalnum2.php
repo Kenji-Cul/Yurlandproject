@@ -107,7 +107,7 @@ $data = json_decode($result);
 $plan_code = $data->data->plan_code;
 $message = $data->message;
 
-include_once "initialize.php";
+include_once "initialize2.php";
 }
 
 }

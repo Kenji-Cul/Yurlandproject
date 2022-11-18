@@ -4,6 +4,10 @@ include "projectlog.php";
 if(!isset($_SESSION['uniquesupadmin_id'])){
     header("Location: index.php");
 }
+
+if(!isset($_GET['unique'])){
+    header("Location: index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +23,8 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     <title>Yurland</title>
     <style>
     body {
-        height: 150vh;
+        height: 210vh;
+        padding-bottom: 5em;
     }
 
     section .error {
@@ -42,7 +47,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <div style="display: flex !important; flex-direction: column !important">
-            <p>Choose Product Period</p>
+            <p>Choose Plan Details</p>
         </div>
     </div>
 
@@ -53,33 +58,54 @@ $rest = $user->selectPeriod();
     <section class="login-form-container">
         <form action="" class="login-form" id="signup-form">
             <div class="input-div name">
+                <input type="hidden" id="unique" value="<?php if(isset($_GET['unique'])){
+                    echo $_GET['unique'];
+                }?>" name="unique" />
+            </div>
+
+            <div class="input-div name">
                 <label for="eighteen">Period For 18 months plan</label>
                 <input type="text" id="eighteen" placeholder="Input number of days" name="eighteen"
                     value="<?php if(!empty($rest)) {echo $rest['eighteen_period'] ;}?>" />
+                <label for="eighteenpercent">Percentage increase</label>
+                <input type="text" id="eighteenpercent" placeholder="Input percentage number for eighteen months plan"
+                    name="eighteenpercent" value="" />
             </div>
 
             <div class="input-div name">
                 <label for="twelve">Period For 12 months plan</label>
                 <input type="text" id="twelve" placeholder="Input number of days" name="twelve"
                     value="<?php if(!empty($rest)) {echo $rest['twelvemonth_period'] ;}?>" />
+                <label for="twelvepercent">Percentage increase</label>
+                <input type="text" id="twelvepercent" placeholder="Input percentage number for twelve months plan"
+                    name="twelvepercent" value="" />
             </div>
 
             <div class="input-div name">
                 <label for="six">Period For 6 months plan</label>
                 <input type="text" id="six" placeholder="Input number of days" name="six"
                     value="<?php if(!empty($rest)) {echo $rest['sixmonth_period'] ;}?>" />
+                <label for="sixpercent">Percentage increase</label>
+                <input type="text" id="sixpercent" placeholder="Input percentage number for six months plan"
+                    name="sixpercent" value="" />
             </div>
 
             <div class="input-div name">
                 <label for="three">Period For 3 months plan</label>
                 <input type="text" id="three" placeholder="Input number of days" name="three"
                     value="<?php if(!empty($rest)) {echo $rest['threemonth_period'] ;}?>" />
+                <label for="threepercent">Percentage increase</label>
+                <input type="text" id="threepercent" placeholder="Input percentage number for three months plan"
+                    name="threepercent" value="" />
             </div>
 
             <div class="input-div name">
                 <label for="one">Period For 1 month plan</label>
                 <input type="text" id="one" placeholder="Input number of days" name="one"
                     value="<?php if(!empty($rest)) {echo $rest['onemonth_period'] ;}?>" />
+                <label for="onepercent">Percentage increase</label>
+                <input type="text" id="onepercent" placeholder="Input percentage number for one month plan"
+                    name="onepercent" value="" />
             </div>
 
 
@@ -87,7 +113,7 @@ $rest = $user->selectPeriod();
 
             <p class="error">Please input all fields</p>
 
-            <button class="btn" type="submit">Update Period</button>
+            <button class="btn" type="submit">Update Plan</button>
             <div style="display: none">
                 <img src="images/loading.svg" alt="" class="loading-img" />
             </div>

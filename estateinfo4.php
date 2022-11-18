@@ -100,33 +100,75 @@ include "projectlog.php";
         <?php echo $value['product_description'];?>
     </div>
 
+    <input type="hidden" name="" id="unitnum" value=<?php echo $value['product_unit'];?>>
     <?php }}?>
 
-    <div class="units">
-        <p class="h1">How many units are you buying?</p>
-        <div class="measure">
-            <p>1 unit</p>
-            <p class="line"></p>
-            <p>half plot</p>
-        </div>
-    </div>
-
-    <form action="" id="unit-form">
-        <div class="estateinfo">
-            <div class="input-div">
-                <input type="number" placeholder="Input number of units" id="unit" name="unit" />
+    <div class="first-section">
+        <div class="units">
+            <p class="h1">How many units are you buying?</p>
+            <div class="measure">
+                <p>1 unit</p>
+                <p class="line"></p>
+                <p>half plot</p>
             </div>
         </div>
 
-        <p class="error">Please fill </p>
+        <form action="" id="unit-form">
+            <div class="estateinfo">
+                <div class="input-div">
+                    <input type="number" placeholder="Input number of units" id="unit" name="unit" />
+                </div>
+            </div>
 
-        <div class="btn-container">
-            <button class="estate_page_button" type="submit">Continue</button>
+            <p class="error">Please fill </p>
+
+            <div class="btn-container">
+                <button class="estate_page_button" type="submit">Continue</button>
+            </div>
+            <div style="display: none">
+                <img src="images/loading.svg" alt="" class="loading-img" />
+            </div>
+        </form>
+    </div>
+
+    <div class="success" style="display:none; padding-left: 4em;">
+        <p>We are sorry this land</p>
+        <p>is not up to that unit!</p>
+        <a href="cartreview.php"><button class="estate_page_button" type="submit">Go Back</button></a>
+    </div>
+
+
+    <div class="second-section" style="display:none; padding-left: 4em;">
+        <div class="cost" style="margin-bottom: 2em;">
+            <input type="hidden" name="tot" value="" id="tot">
+            <p>Total Cost:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
         </div>
-        <div style="display: none">
-            <img src="images/loading.svg" alt="" class="loading-img" />
-        </div>
-    </form>
+
+        <form action="" id="paymentplanform">
+            <div class="payment-plan">
+                <p>Choose payment plan</p>
+                <label class="radio" for="outright">
+                    <input type="radio" name="payment" id="outright" value="outright payment" />
+                    <span></span>
+                    <p>Outright payment</p>
+                </label>
+                <label class="radio" fo="sub">
+                    <input type="radio" name="payment" id="sub" value="subscription payment" />
+                    <span></span>
+                    <p>Payflex</p>
+                </label>
+            </div>
+
+
+
+            <div class="btn-container">
+                <button class="estate_page_button" type="submit">Continue</button>
+            </div>
+
+        </form>
+
+    </div>
+
 
     <script src="js/main.js"></script>
     <script>
@@ -135,6 +177,7 @@ include "projectlog.php";
     let error = document.querySelector(".error");
     let formbtn = document.querySelector("#unit-form .estate_page_button");
     let unitInput = document.querySelector("#unit")
+
 
 
 
@@ -160,6 +203,14 @@ include "projectlog.php";
     const params = new URLSearchParams(window.location.search)
     const unique = params.get('id')
 
+    let form1 = document.querySelector('.first-section');
+    let form2 = document.querySelector('.second-section');
+    let totalInput = document.querySelector('#tot');
+    let unitNum = document.querySelector("#unitnum")
+    let Successdiv = document.querySelector(".success")
+    let formatnum = document.querySelector('#numformat')
+
+
 
     function submitUnits() {
 
@@ -173,8 +224,18 @@ include "projectlog.php";
                     let realprice = data.replace('success', '')
                     if (data.includes(string)) {
                         let price = unitInput.value * realprice;
-                        location.href =
-                            `summarypage2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${price}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9938484747`;
+                        form1.style.display = "none";
+                        form2.style.display = "block";
+                        let first = parseInt(unitInput.value);
+                        let second = parseInt(unitNum.value);
+                        if (first > second) {
+                            Successdiv.style.display = "block";
+                            form2.innerHTML = Successdiv;
+                        }
+                        totalInput.value = price;
+                        formatnum.innerHTML = new Intl.NumberFormat().format(price);
+                        // location.href =
+                        //     `summarypage.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${price}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9938484747`;
                     } else {
                         error.textContent = data;
                         error.style.visibility = "visible";
@@ -198,6 +259,42 @@ include "projectlog.php";
     formbtn.onclick = () => {
         submitUnits();
     };
+
+
+    const planform = document.querySelector('#paymentplanform');
+    const paybtn = document.querySelector('#paymentplanform .estate_page_button');
+    planform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+
+    function checkPaymentMode() {
+        let xhr = new XMLHttpRequest(); //creating XML Object
+        xhr.open("POST", "getplan.php", true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    if (data == "outright payment") {
+                        location.href =
+                            `outrightpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737`;
+                    }
+                    if (data == "subscription payment") {
+                        location.href =
+                            `subpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=judu8272626`;
+                    }
+                }
+            }
+        }
+        // we have to send the information through ajax to php
+        let formData = new FormData(planform); //creating new formData Object
+
+        xhr.send(formData); //sending the form data to php
+    }
+
+    paybtn.onclick = () => {
+        checkPaymentMode();
+    }
     </script>
 </body>
 

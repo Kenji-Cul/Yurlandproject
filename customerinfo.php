@@ -101,9 +101,13 @@ if(!isset($_GET['unique'])){
             <?php }?>
         </div>
     </div>
-    <div class="land-btn-container">
+    <div class="land-btn-container" style="display: flex; gap: 2em;">
         <a href="allestates2.php?unique=<?php echo $newuser['unique_id'];?>">
             <button class="btn land-btn">Buy Land For Customer</button>
+        </a>
+
+        <a href="editcustomer.php?unique=<?php echo $newuser['unique_id'];?>">
+            <button class="btn land-btn">Edit Customer</button>
         </a>
     </div>
 

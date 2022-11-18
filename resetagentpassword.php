@@ -116,7 +116,7 @@ if(isset($_SESSION['unique_id'])){
 
     <!-- Landing Page Text -->
     <div class="page-title2">
-        <a href="login.php">
+        <a href="agentlogin.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <p>Reset Password</p>

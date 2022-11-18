@@ -55,7 +55,16 @@ if(!isset($_SESSION['unique_id'])){
         border-radius: 8px;
     }
 
-    @media only screen and (max-width: 500px) {
+    .transaction-details {
+        border-radius: 8px;
+        /* border: 2px solid black; */
+        padding: 1em 2em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 90%;
+    }
+
+
+    @media only screen and (max-width: 700px) {
         .transaction-details {
             flex-direction: column;
             gap: 2em !important;

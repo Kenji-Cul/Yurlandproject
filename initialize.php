@@ -1,7 +1,7 @@
 <?php
 
 $user = new User;
-$selectuser = $user-> selectUser($_SESSION['user']);
+$selectuser = $user->selectUser($_SESSION['unique_id']);
 $email = $selectuser['email'];
 $realprice = round($price * 100);
 
@@ -13,8 +13,10 @@ if($message == "Plan created"){
       $added_unit = $_GET['unit'] + $unit_added;
  
  $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
+ $update = $land->updateUnit($deducted_unit,$uniqueproduct);
  } else {
      $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
+     $update = $land->updateUnit($deducted_unit,$uniqueproduct);
  }
   }
 
@@ -48,7 +50,8 @@ if($message == "Plan created"){
   $initialize_url = $initialize_data->data->authorization_url;
   if($result){
      header("Location: ".$initialize_url);
-   exit;
+     header("Location: verify2.php");
+   //exit;
   } 
 
   

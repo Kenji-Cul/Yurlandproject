@@ -29,6 +29,89 @@ if(!isset($_SESSION['uniqueagent_id'])){
         height: 20em;
     }
 
+    /* .land_estate_container {
+        display: flex;
+        gap: 2em;
+    } */
+
+
+    @media only screen and (min-width: 1300px) {
+
+        .land-estate {
+            border: 1px solid #d4d1d1;
+            width: 320px;
+            height: 290px;
+            padding-top: 8px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: top;
+            align-items: center;
+            gap: 1em;
+            flex-direction: column;
+            border-radius: 8px;
+            margin-bottom: 1.6em;
+        }
+
+        .dropdown-links {
+            width: 10%;
+            height: 90vh;
+            border-radius: 0 8px 8px 0;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            justify-content: top;
+            align-items: top;
+            gap: 3em;
+            background: rgba(255, 255, 255, 0.9);
+            filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999999 !important;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            width: 95%;
+            text-transform: capitalize;
+            font-size: 17px;
+        }
+
+        .transaction-details {
+            width: 80%;
+        }
+
+
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            padding-top: 2em;
+            height: 70vh;
+        }
+
+        .estates {
+            padding-top: 6em;
+            position: absolute;
+            right: 0;
+
+        }
+
+        .profile-container {
+            position: absolute;
+            left: 10em;
+            padding: 0;
+            width: 88%;
+        }
+
+        .close {
+            display: none;
+        }
+
+
+
+    }
+
 
 
 
@@ -75,95 +158,99 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
 
-    <ul class="dropdown-links">
-        <li><a href="preference.php">New Land</a></li>
-        <li><a href="mycustomers.php">Customers</a></li>
-        <li><a href="newcustomer.php">New Customer</a></li>
-        <li><a href="referral.php">Referrals</a></li>
-        <li>
-            <a href="agentprofileinfo.php">Profile</a>
-        </li>
-        <li><a href="logout.php">Logout</a></li>
+    <div class="flex-container">
+        <ul class="dropdown-links">
+            <li><a href="preference.php">New Land</a></li>
+            <li><a href="mycustomers.php">Customers</a></li>
+            <li><a href="newcustomer.php">New Customer</a></li>
+            <li><a href="referral.php">Referrals</a></li>
+            <li>
+                <a href="agentprofileinfo.php">Profile</a>
+            </li>
+            <li><a href="logout.php">Logout</a></li>
 
-        <div class="close">
-            <i class="ri-close-fill"></i>
-        </div>
-    </ul>
-
-    <div class="profile-info">
-        <div class="details">
-            <p>Welcome Back!</p>
-            <h3><?php if(isset($newuser['agent_name'])){  ?>
-                <span><?php echo $newuser['agent_name']; ?></span>&nbsp;
-                <?php }?>
-            </h3>
-        </div>
-
-        <div class="profile-image">
-            <?php if(!empty($newuser['agent_img'])){?>
-            <img src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" />
-            <?php }?>
-            <?php if(empty($newuser['agent_img'])){?>
-            <div class="empty-img">
-                <i class="ri-user-fill"></i>
+            <div class="close">
+                <i class="ri-close-fill"></i>
             </div>
-            <?php }?>
-        </div>
-    </div>
+        </ul>
 
+        <div class="profile-container">
+            <div class="profile-info">
+                <div class="details">
+                    <p>Welcome Back!</p>
+                    <h3><?php if(isset($newuser['agent_name'])){  ?>
+                        <span><?php echo $newuser['agent_name']; ?></span>&nbsp;
+                        <?php }?>
+                    </h3>
+                </div>
 
-    <div class="profile-div-container">
-
-        <a href="mycustomers.php">
-            <div class="profile-div">
-                <img class="profile-icon" src="images/Wallet.svg" alt="land-icon-image" />
-
-                <div class="navigate">
-                    <p>Customer Count</p>
-                    <img src="images/right_arrow.svg" alt="" />
+                <div class="profile-image">
+                    <?php if(!empty($newuser['agent_img'])){?>
+                    <img src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" />
+                    <?php }?>
+                    <?php if(empty($newuser['agent_img'])){?>
+                    <div class="empty-img">
+                        <i class="ri-user-fill"></i>
+                    </div>
+                    <?php }?>
                 </div>
             </div>
-        </a>
 
-        <a href="referral.php">
-            <div class="profile-div">
-                <img class="profile-icon" src="images/Chart.svg" alt="land-icon-image" />
 
-                <div class="navigate">
-                    <p>Referral</p>
-                    <img src="images/right_arrow.svg" alt="" />
+            <div class="profile-div-container">
+
+                <a href="mycustomers.php">
+                    <div class="profile-div">
+                        <img class="profile-icon" src="images/Wallet.svg" alt="land-icon-image" />
+
+                        <div class="navigate">
+                            <p>Customer Count</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </div>
+                </a>
+
+                <a href="referral.php">
+                    <div class="profile-div">
+                        <img class="profile-icon" src="images/Chart.svg" alt="land-icon-image" />
+
+                        <div class="navigate">
+                            <p>Referral</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </div>
+                </a>
+
+
+
+
+                <div class="profile-div">
+                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+                    <a href="earnings.php">
+                        <div class="navigate">
+                            <p>Earnings</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
                 </div>
+
+
+                <div class="profile-div">
+                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+                    <a href="#">
+                        <div class="navigate">
+                            <p>Paid Earnings</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
+                </div>
+
+
+
             </div>
-        </a>
-
-
-
-
-        <div class="profile-div">
-            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
-
-            <a href="earnings.php">
-                <div class="navigate">
-                    <p>Earnings</p>
-                    <img src="images/right_arrow.svg" alt="" />
-                </div>
-            </a>
         </div>
-
-
-        <div class="profile-div">
-            <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
-
-            <a href="#">
-                <div class="navigate">
-                    <p>Paid Earnings</p>
-                    <img src="images/right_arrow.svg" alt="" />
-                </div>
-            </a>
-        </div>
-
-
-
     </div>
 
     <div class="swiper estates swiper-counter">
@@ -208,22 +295,25 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
 
+
     <script src="js/swiper-bundle.min.js"></script>
     <script src="js/profile.js"></script>
     <!--========== SWIPER JS ============  -->
     <script>
-    let dropdownnav = document.querySelector(".dropdown-links");
-    dropdownnav.style.display = "none";
-
-    let menu = document.querySelector(".menu");
-    menu.onclick = () => {
-        dropdownnav.style.display = "block";
-    };
-
-    let close = document.querySelector(".close");
-    close.onclick = () => {
+    if (window.innerWidth < 1300) {
+        let dropdownnav = document.querySelector(".dropdown-links");
         dropdownnav.style.display = "none";
-    };
+
+        let menu = document.querySelector(".menu");
+        menu.onclick = () => {
+            dropdownnav.style.display = "block";
+        };
+
+        let close = document.querySelector(".close");
+        close.onclick = () => {
+            dropdownnav.style.display = "none";
+        };
+    }
 
     setInterval(() => {
         let xls = new XMLHttpRequest();

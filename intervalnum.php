@@ -24,19 +24,29 @@ if(!empty($landview)){
 if(isset($_POST['submit'])){
 
     if($_GET['data'] == "onemonth"){
-        $price = $_GET['tot'] / $value['onemonth_period'];
+        $percent = $value['onemonth_percent'] / 100 * $value['outright_price'];
+        $totprice = $_GET['tot'] + $percent ;
+        $price = $totprice / $value['onemonth_period'];
         $limit = $value['onemonth_period'];
         } else if($_GET['data'] == "threemonths"){
-        $price =$_GET['tot'] / $value['threemonth_period'];
+            $percent = $value['threemonth_percent'] / 100 * $value['outright_price'];
+        $totprice = $_GET['tot'] + $percent ;
+        $price =$totprice / $value['threemonth_period'];
         $limit = $value['threemonth_period'];
         } else if($_GET['data'] == "sixmonths"){
-        $price = $_GET['tot'] / $value['sixmonth_period'];
+            $percent = $value['sixmonth_percent'] / 100 * $value['outright_price'];
+            $totprice = $_GET['tot'] + $percent ;
+        $price = $totprice / $value['sixmonth_period'];
         $limit = $value['sixmonth_period'];
         } else if($_GET['data'] == "twelvemonths"){
-        $price = $_GET['tot'] / $value['twelvemonth_period'];
+            $percent = $value['twelvemonth_percent'] / 100 * $value['outright_price'];
+            $totprice = $_GET['tot'] + $percent ;
+        $price = $totprice / $value['twelvemonth_period'];
         $limit = $value['twelvemonth_period'];
         } else if($_GET['data'] == "eighteenmonths"){
-        $price = $_GET['tot'] / $value['eighteen_period'];
+            $percent = $value['eighteen_percent'] / 100 * $value['outright_price'];
+            $totprice = $_GET['tot'] + $percent ;
+        $price = $totprice / $value['eighteen_period'];
         $limit = $value['eighteen_period'];
         }
 
@@ -54,14 +64,7 @@ if(isset($_POST['submit'])){
     $paymenttime = date("h:i a");;
     $uniquesub = rand();
     $paymentmethod = "Subscription";
-    if($_GET['unit'] % 4 == 0){
-         $unit_added = $_GET['unit'] / 4;
-         $added_unit = $_GET['unit'] + $unit_added;
     
-    $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
-    } else {
-        $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
-    }
 
     $delete = $land->DeleteCartId($uniqueproduct,$_SESSION['unique_id']);
 
@@ -173,7 +176,9 @@ include_once "initialize.php";
             <?php if($_GET['data'] == "onemonth"){?>
             <div class="input-div">
                 <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['onemonth_period'];
+                $percent = $value['onemonth_percent'] / 100 * $value['outright_price'];
+                $totprice = $_GET['tot'] + $percent ;
+                $dailycost = $totprice / $value['onemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 }
@@ -187,7 +192,9 @@ include_once "initialize.php";
             <div class="input-div">
                 <div class="input-div">
                     <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['threemonth_period'];
+                     $percent = $value['threemonth_percent'] / 100 * $value['outright_price'];
+                     $totprice = $_GET['tot'] + $percent ;
+                $dailycost = $totprice / $value['threemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 }
@@ -198,8 +205,10 @@ include_once "initialize.php";
                 <?php if($_GET['data'] == "sixmonths"){?>
                 <div class="input-div">
                     <div class="input-div">
-                        <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['sixmonth_period'];
+                        <label for="day">Daily Cost: &#8358;<?php
+                         $percent = $value['sixmonth_percent'] / 100 * $value['outright_price'];
+                         $totprice = $_GET['tot'] + $percent ; 
+                $dailycost = $totprice / $value['sixmonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 }
@@ -211,7 +220,9 @@ include_once "initialize.php";
                     <div class="input-div">
                         <div class="input-div">
                             <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['twelvemonth_period'];
+                             $percent = $value['twelvemonth_percent'] / 100 * $value['outright_price'];
+                             $totprice = $_GET['tot'] + $percent ;
+                $dailycost = $totprice / $value['twelvemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 }
@@ -222,8 +233,10 @@ include_once "initialize.php";
                         <?php if($_GET['data'] == "eighteenmonths"){?>
                         <div class="input-div">
                             <div class="input-div">
-                                <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['eighteen_period'];
+                                <label for="day">Daily Cost: &#8358;<?php
+                                 $percent = $value['eighteen_percent'] / 100 * $value['outright_price'];
+                                 $totprice = $_GET['tot'] + $percent ; 
+                $dailycost = $totprice / $value['eighteen_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 }

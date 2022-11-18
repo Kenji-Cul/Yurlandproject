@@ -199,6 +199,8 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         xhr.send(formData);
     }
 
+    let uniqueInput = document.querySelector('#unique');
+
 
     submitbtn.onclick = () => {
         let xhr = new XMLHttpRequest();
@@ -210,7 +212,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                     if (data === "success") {
                         //console.log("uploaded");
                         submitbtn.onclick = () => {
-                            location.href = "productperiod.php";
+                            location.href = `productperiod.php?unique=${uniqueInput.value}`;
                         };
                     } else {
                         error.textContent = data;

@@ -4,6 +4,7 @@ include_once "projectlog.php";
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $email = $_POST['supadminemail'];
     $password = $_POST['password'];
+    $remember = $_POST['remember'];
 
 if(empty($email) || empty($password)){
     $errormsg = "Please input all fields";
@@ -15,6 +16,18 @@ if(empty($email) || empty($password)){
             session_start();
             session_unset();
             $_SESSION['uniquesupadmin_id'] = $insertuser['unique_id'];
+            if(!empty($remember)){
+                setcookie("superadmin_login",$email,time() + (10 * 365 * 24 * 60 * 60));
+                setcookie("superadmin_password",$password,time() + (10 * 365 * 24 * 60 * 60));
+            } else {
+                if(!isset($_COOKIE['superadmin_login'])){
+                    setcookie('superadmin_login',"");
+                }
+    
+                if(!isset($_COOKIE['superadmin_password'])){
+                    setcookie('superadmin_password',"");
+                }
+            }
             echo "success";
         } else {
             $errormsg = "Invalid Details Try Again";

@@ -117,6 +117,9 @@ include "projectlog.php";
                         }?> per unit</div>
         <form action="" id="cartform">
             <div class="price" id="cart-btn">Add to Cart</div>
+            <div id="otherbtn" class="price" style="visibility:hidden;"> <a href="cartreview2.php"
+                    style="color: #7e252b;">View In Cart </a>
+            </div>
             <input type="hidden" name="productid" value="<?php echo $value['unique_id']?>">
             <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="agent" value="<?php echo $_SESSION['uniqueagent_id'];?>">
@@ -166,7 +169,8 @@ include "projectlog.php";
                 if (xhr.status === 200) {
                     let data = xhr.response;
                     if (data) {
-                        document.location.reload();
+                        document.querySelector('#cart-btn').style.display = "none";
+                        document.querySelector('#otherbtn').style.visibility = "visible";
                     } else {
                         //console.log(data);
                     }
