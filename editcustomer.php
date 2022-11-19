@@ -1,3 +1,10 @@
+<?php 
+session_start();
+include "projectlog.php";
+if(!isset($_GET['unique'])){
+  header("Location: agentprofile.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,13 +36,27 @@
         </div>
     </header>
 
+    <?php 
+             $user = new User;
+             $newuser = $user->selectUser($_GET['unique']);
+            ?>
+
     <!-- Landing Page Text -->
     <div class="page-title2">
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <a href="superadmin.php">
+            <img src="images/arrowleft.svg" alt="" />
+        </a>
+        <?php }?>
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
         <a href="subadmin.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
+        <?php }?>
         <div style="display: flex !important; flex-direction: column !important" class="estatetext">
-            <p>Edit Gideon Teibo</p>
+            <p>Edit
+                <span><?php if(isset($newuser['first_name'])){echo $newuser['first_name'];}?></span>&nbsp;<span><?php if(isset($newuser['last_name'])){echo $newuser['last_name'];}?></span>
+            </p>
         </div>
     </div>
 
@@ -43,23 +64,43 @@
         <form action="" class="login-form" id="signup-form">
             <div class="input-div name">
                 <label for="firstname">First Name</label>
-                <input type="text" id="firstname" placeholder="Edit first name" name="firstname" />
+                <input type="text" id="firstname" placeholder="Edit first name" name="firstname"
+                    value="<?php if(isset($newuser['first_name'])){echo $newuser['first_name'];}?>" />
             </div>
 
             <div class="input-div name">
                 <label for="lastname">Last Name</label>
-                <input type="text" id="lastname" placeholder="Edit last name" name="lastname" />
+                <input type="text" id="lastname" placeholder="Edit last name" name="lastname"
+                    value="<?php if(isset($newuser['first_name'])){echo $newuser['last_name'];}?>" />
             </div>
 
             <div class="input-div email">
                 <label for="email">Email</label>
-                <input type="text" id="email" placeholder="Edit email address" name="email" />
+                <input type="text" id="email" placeholder="Edit email address" name="email"
+                    value="<?php if(isset($newuser['email'])){echo $newuser['email'];}?>" />
             </div>
 
             <div class="input-div number">
                 <label for="number">Phone number</label>
-                <input type="number" id="number" placeholder="Edit phone number" name="number" />
+                <input type="number" id="number" placeholder="Edit phone number" name="number"
+                    value="<?php if(isset($newuser['phone_number'])){echo $newuser['phone_number'];}?>" />
             </div>
+
+
+            <div class="input-div number">
+                <label for="earning">Earning Percentage</label>
+                <input type="number" id="earning" placeholder="Enter earning percentage" name="earning"
+                    value="<?php if(isset($newuser['earning_percentage'])){echo $newuser['earning_percentage'];}?>" />
+            </div>
+
+
+            <div class="input-div email">
+                <input type="hidden" name="uniqueuser" value="<?php if(isset($_GET['unique'])){
+                    echo $_GET['unique'];
+                }?>">
+            </div>
+
+
 
 
 
@@ -72,7 +113,7 @@
         </form>
     </section>
 
-    <script src="js/login.js"></script>
+
     <script>
     $(document).ready(function() {
         $("#signup-form").submit(function(e) {
@@ -81,32 +122,22 @@
             $(".btn").html(loadingImg);
         });
 
-        function createRandomString(string_length) {
-            var random_string = "";
-            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678910";
-            for (var i, i = 0; i < string_length; i++) {
-                random_string += characters.charAt(
-                    Math.floor(Math.random() * characters.length)
-                );
-            }
-            $("#referral").val(random_string);
-        }
+
 
         $("#signup-form .btn").click(function() {
-            createRandomString(8);
             $.ajax({
                 type: "POST",
-                url: "inserters/insertuser.php",
+                url: "inserters/edituser.php",
                 data: $("#signup-form input"),
                 success: function(response) {
                     if (response === "success") {
-                        location.href = "successpage/usersuccess.html";
+                        location.href = "successpage/editsuccess.php";
                     } else {
                         $("section .error").html(response);
                         $("section .error").css({
                             visibility: "visible",
                         });
-                        $(".btn").html("Sign Up");
+                        $(".btn").html("Edit Customer");
                         // console.log(response);
                     }
                 },

@@ -42,16 +42,7 @@ if(isset($_POST["submit"])){
 
     //Initiate Paystack
     $url = "https://api.paystack.co/transaction/initialize";
-    if($url){
-        if($_GET['unit'] % 4 == 0){
-            $unit_added = $_GET['unit'] / 4;
-            $added_unit = $_GET['unit'] + $unit_added;
-       
-       $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
-       } else {
-           $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
-       }
-    }
+    
 
     //Gather the body params
     $transaction_data = [
@@ -109,13 +100,26 @@ if(isset($_POST["submit"])){
     // Check for errors
     $errors = curl_error($ch);
     if($errors){
-        die(" Curl-returned some errors: ". $errors);
+        $error = "You are not connected to the internet";
+        header("Location: verify3.php?error=".$error."");
     }
 
-    // var_dump($result);
+    if($result){
     $transaction = json_decode($result);
     //Automatically redirect customers to the payment page
     header("Location: ".$transaction->data->authorization_url);
+    if($_GET['unit'] % 4 == 0){
+        $unit_added = $_GET['unit'] / 4;
+        $added_unit = $_GET['unit'] + $unit_added;
+   
+   $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
+   } else {
+       $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
+   }
+    } else {
+        $error = "You are not connected to the internet";
+        header("Location: verify3.php?error=".$error."");
+    }
 } 
 ?>
 

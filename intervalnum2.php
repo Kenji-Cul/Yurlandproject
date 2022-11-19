@@ -54,22 +54,7 @@ if(isset($_POST['submit'])){
     $paymentmethod = "Subscription";
     
 
-    if(isset($_SESSION['unique_id'])){
-    $delete = $land->DeleteCartId($uniqueproduct,$_SESSION['unique_id']);
-
-    if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
-        // Remove the product from the shopping cart
-        unset($_SESSION['cart'][$uniqueproduct]);}
-    }
-
-    if(isset($_SESSION['uniqueagent_id'])){
-        $delete = $land->DeleteAgentCartId($uniqueproduct,$_SESSION['uniqueagent_id']);
-    
-        if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['agentcart'][$uniqueproduct])) {
-            // Remove the product from the shopping cart
-            unset($_SESSION['agentcart'][$uniqueproduct]);}
-        }
-
+   
 $curl = curl_init();
 
 curl_setopt_array($curl, array(

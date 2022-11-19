@@ -1,7 +1,9 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-
+if(!isset($_SESSION['unique_id'])){
+    header("Location:index.php");
+}
 
 ?>
 <!DOCTYPE html>
@@ -38,6 +40,19 @@ include_once "projectlog.php";
         border-radius: 8px;
     }
 
+
+    .success {
+        position: absolute;
+        left: 50%;
+        top: 90%;
+        transform: translate(-50%, -50%);
+        height: 10em;
+    }
+
+    .success img {
+        width: 36em;
+        height: 36em;
+    }
 
 
     .account-detail2 {
@@ -82,17 +97,10 @@ include_once "projectlog.php";
     </header>
 
     <div class="page-title2">
-        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
-        <a href="superadmin.php">
+        <a href="profile.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
-        <?php }?>
-        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
-        <a href="subadmin.php">
-            <img src="images/arrowleft.svg" alt="" />
-        </a>
-        <?php }?>
-        <p>All Customers</p>
+        <p>My Wallet</p>
     </div>
 
 
@@ -101,33 +109,36 @@ include_once "projectlog.php";
 
         <?php 
     $user = new User;
-   
-    $customer = $user ->selectAllUsers();
+    $users = $user->selectUser($_SESSION['unique_id']);
+    $customer = $user ->selectAgentCustomer($users['referral_id']);
     if(!empty($customer)){
         foreach($customer as $key => $value){
+            $earning = $user->selectPayment($value['unique_id']);
+            if(!empty($earning)){
+                foreach($earning as $key => $value){
     ?>
-        <div class="account-detail2">
-            <div class="radius">
-                <?php if(!empty($value['photo'])){?>
-                <img src="profileimage/<?php echo $value['photo'];?>" alt="profile image" />
-                <?php }?>
-                <?php if(empty($value['photo'])){?>
-                <div class="empty-img">
-                    <i class="ri-user-fill"></i>
-                </div>
-                <?php }?>
-            </div>
+        <div class="account-detail2"
+            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
             <div class="flex">
-                <p style="text-transform: capitalize;">
-                    <span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
+                <p style="text-transform: capitalize;"><span>Hello <?php echo $users['first_name'];?></span></p>
+                <p style="text-transform: uppercase;">
+                    <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $users['earning_percentage'];
+                    $earnedprice = $percent / 100 * $value['product_price'];
+                    echo $earnedprice;
+                    ?>
+                    </span>
                 </p>
-                <span><?php echo $value['email'];?></span>
             </div>
-            <a href="customerinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939"
-                style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>
         </div>
 
-        <?php }}?>
+        <?php }} }}?>
+
+        <?php if(empty($customer)){?>
+        <div class="success">
+            <img src="images/asset_success.svg" alt="" />
+            <p>You have no earnings yet!</p>
+        </div>
+        <?php }?>
 
         <div class="account-detail3">
             <a href="logout.php">

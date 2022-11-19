@@ -39,9 +39,25 @@ if(!isset($_SESSION['unique_id'])){
         color: #1a0709;
     }
 
+    .deleted-div {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 8px;
+        background-color: #808080;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
     .subscribed-land {
         height: 26em;
         gap: 2em;
+        position: relative;
     }
 
     .subscribed-img {
@@ -111,6 +127,11 @@ if(!isset($_SESSION['unique_id'])){
               
             ?>
         <div class="subscribed-land">
+            <?php if($value['payment_status'] == "Deleted"){?>
+            <div class="deleted-div">
+                <div class="price">Deleted</div>
+            </div>
+            <?php }?>
             <div class="subscribed-img">
                 <img src="landimage/<?php echo $value['product_image'];?>" alt="estate image" />
                 <div class="ellipse">

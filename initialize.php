@@ -7,18 +7,7 @@ $realprice = round($price * 100);
 
 if($message == "Plan created"){
   $url = "https://api.paystack.co/transaction/initialize";
-  if($url){
-    if($_GET['unit'] % 4 == 0){
-      $unit_added = $_GET['unit'] / 4;
-      $added_unit = $_GET['unit'] + $unit_added;
- 
- $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
- $update = $land->updateUnit($deducted_unit,$uniqueproduct);
- } else {
-     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
-     $update = $land->updateUnit($deducted_unit,$uniqueproduct);
- }
-  }
+  
 
   $fields = [
     'email' => $email,
@@ -51,6 +40,22 @@ if($message == "Plan created"){
   if($result){
      header("Location: ".$initialize_url);
      header("Location: verify2.php");
+     if($_GET['unit'] % 4 == 0){
+      $unit_added = $_GET['unit'] / 4;
+      $added_unit = $_GET['unit'] + $unit_added;
+ 
+ $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
+ $update = $land->updateUnit($deducted_unit,$uniqueproduct);
+ } else {
+     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
+     $update = $land->updateUnit($deducted_unit,$uniqueproduct);
+ }
+
+ $delete = $land->DeleteCartId($uniqueproduct,$_SESSION['unique_id']);
+
+ if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
+     // Remove the product from the shopping cart
+     unset($_SESSION['cart'][$uniqueproduct]);}
    //exit;
   } 
 

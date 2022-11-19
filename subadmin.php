@@ -146,9 +146,8 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             <li><a href="#">New Land</a></li>
             <li><a href="#">Transaction History</a></li>
             <li><a href="allcustomers.php">All Customers</a></li>
-            <li><a href="#">Edit Customer</a></li>
             <li><a href="createagent.html">Create Agent</a></li>
-            <li><a href="allagents.php">View Agent's Earning</a></li>
+            <li><a href="allagents.php">All Agents</a></li>
             <li><a href="subadmininfo.php">Profile</a></li>
             <li><a href="logout.php">Logout</a></li>
 
@@ -278,73 +277,42 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <div class="swiper estates swiper-counter">
         <p class="available">Available Estates</p>
         <div class="land_estate_container swiper-wrapper">
+            <?php 
+             $land = new User;
+             $landview = $land->selectLandPrime();
+             if(!empty($landview)){
+                foreach($landview as $key => $value){
+            ?>
             <div class="land-estate swiper-slide">
                 <div class="land-image">
-                    <a href="estateinfo.html">
-                        <img src="images/estate1.jpg" alt="estate image" />
+                    <a
+                        href="estateinfo2.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+                        <img src="landimage/<?php if(isset($value['product_image'])){
+                            echo $value['product_image'];
+                        }?>" alt="estate image" />
                     </a>
                 </div>
                 <div class="land-details">
                     <div class="land-name">
-                        <p>Isinmi Eko</p>
+                        <p><?php echo $value['product_name'];?></p>
                     </div>
                     <div class="land-location">
-                        <p>Epe,Lagos</p>
+                        <p><?php echo $value['product_location'];?></p>
                     </div>
                 </div>
             </div>
 
-            <div class="land-estate swiper-slide">
-                <div class="land-image">
-                    <a href="estateinfo.html">
-                        <img src="images/estate2.jpg" alt="estate image" />
-                    </a>
-                </div>
-                <div class="land-details">
-                    <div class="land-name">
-                        <p>Isinmi Eko</p>
-                    </div>
-                    <div class="land-location">
-                        <p>Epe,Lagos</p>
-                    </div>
-                </div>
-            </div>
+            <?php   }
+             } ?>
 
-            <div class="land-estate swiper-slide">
-                <div class="land-image">
-                    <a href="estateinfo.html">
-                        <img src="images/estate3.jpg" alt="estate image" />
-                    </a>
-                </div>
-                <div class="land-details">
-                    <div class="land-name">
-                        <p>Isinmi Eko</p>
-                    </div>
-                    <div class="land-location">
-                        <p>Epe,Lagos</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="land-estate swiper-slide">
-                <div class="land-image">
-                    <a href="estateinfo.html">
-                        <img src="images/estate4.jpg" alt="estate image" />
-                    </a>
-                </div>
-                <div class="land-details">
-                    <div class="land-name">
-                        <p>Isinmi Eko</p>
-                    </div>
-                    <div class="land-location">
-                        <p>Epe,Lagos</p>
-                    </div>
-                </div>
-            </div>
+
+
+
+
         </div>
         <div class="swiper-pagination"></div>
     </div>
-
 
 
     <script src="js/swiper-bundle.min.js"></script>

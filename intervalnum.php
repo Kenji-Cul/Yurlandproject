@@ -66,11 +66,7 @@ if(isset($_POST['submit'])){
     $paymentmethod = "Subscription";
     
 
-    $delete = $land->DeleteCartId($uniqueproduct,$_SESSION['unique_id']);
-
-    if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
-        // Remove the product from the shopping cart
-        unset($_SESSION['cart'][$uniqueproduct]);}
+   
 
 $curl = curl_init();
 
@@ -101,7 +97,8 @@ $err = curl_error($curl);
 curl_close($curl);
 
 if ($err) {
-echo "cURL Error #:" . $err;
+    $error = "You are not connected to the internet";
+    header("Location: verify3.php?error=".$error."");
 } else {
 //echo $response;
 $data = json_decode($result);

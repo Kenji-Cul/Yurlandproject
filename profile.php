@@ -41,6 +41,35 @@ if(!isset($_SESSION['unique_id'])){
         border-radius: 8px;
     }
 
+    .foot {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .foot .profile-div {
+        width: 156px;
+        height: 60px;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative;
+        gap: 4em !important;
+    }
+
+    .foot .navigate {
+        width: 100% !important;
+        height: 80%;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .navigate div {
+        margin-left: 3.5em;
+    }
+
     .transaction-details {
         border-radius: 8px;
         /* border: 2px solid black; */
@@ -85,6 +114,7 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (min-width: 1300px) {
+
         .land-estate {
             border: 1px solid #d4d1d1;
             width: 280px;
@@ -328,14 +358,16 @@ if(!isset($_SESSION['unique_id'])){
                     </a>
                 </div>
 
-                <div class="profile-div">
-                    <img class="profile-icon" src="images/Wallet.svg" alt="land-icon-image" />
+                <a href="userwallet.php">
+                    <div class="profile-div">
+                        <img class="profile-icon" src="images/Wallet.svg" alt="land-icon-image" />
 
-                    <div class="navigate">
-                        <p>Wallet</p>
-                        <img src="images/right_arrow.svg" alt="" />
+                        <div class="navigate">
+                            <p>Wallet</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
                     </div>
-                </div>
+                </a>
 
                 <a href="payment.php">
                     <div class="profile-div">
@@ -419,7 +451,11 @@ if(!isset($_SESSION['unique_id'])){
                              }
             ?></div>
             </div>
-            <?php }}?>
+            <?php }} else {?>
+            <div class="transaction-details" style="display: flex; align-items: center; justify-content: center;">
+                <p>You have not done any transactions yet</p>
+            </div>
+            <?php }?>
 
         </div>
 

@@ -75,7 +75,27 @@ if(!isset($_SESSION['unique_id'])){
             <img src="images/image2.svg" alt="payment image" />
             <div class="payment-desc2">
                 <p>Referral Earnings</p>
-                <div class="payment-count">&#8358;300,000</div>
+                <div class="payment-count">&#8358; <?php 
+    $user = new User;
+    $agent = $user->selectUser($_SESSION['unique_id']);
+    $customer = $user ->selectAgentCustomer($agent['referral_id']);
+    if(!empty($customer)){
+        foreach($customer as $key => $value){
+         $total = $user->selectTotal($value['unique_id']);
+         foreach($total as $key => $value){
+            $percent = $agent['earning_percentage'];
+            $earnedprice = $percent / 100 * $value;
+            $unitprice = $earnedprice;
+            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                              echo number_format($unitprice);
+                            }  else {
+                                echo $unitprice;
+                            }
+         } 
+        }} else {
+            echo "0";
+        }
+            ?></div>
             </div>
         </div>
 

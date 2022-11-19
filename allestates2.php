@@ -101,9 +101,16 @@ include "projectlog.php";
     </header>
 
     <div class="page-title2">
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
         <a href="agentprofile.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
+        <?php }?>
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <a href="superadmin.php">
+            <img src="images/arrowleft.svg" alt="" />
+        </a>
+        <?php }?>
         <div style="display: flex !important; flex-direction: column !important" class="estatetext">
             <p>All Estates</p>
         </div>
@@ -139,6 +146,14 @@ include "projectlog.php";
                     }?>" alt="estate image" />
                 </a>
                 <?php } else {?>
+                <img src="landimage/<?php if(isset($value['product_image'])){
+                        echo $value['product_image'];
+                    }?>" alt="estate image" />
+                <?php }}?>
+
+                <?php  if(isset($_SESSION['uniquesupadmin_id'])){
+                if($value['product_unit'] != 0){?>
+
                 <img src="landimage/<?php if(isset($value['product_image'])){
                         echo $value['product_image'];
                     }?>" alt="estate image" />
@@ -210,11 +225,13 @@ include "projectlog.php";
 
     </div>
 
+    <?php if(!isset($_SESSION['uniquesupadmin_id'])){?>
     <div class="price-container">
         <a href="cartreview.php">
             <div class="price">Continue</div>
         </a>
     </div>
+    <?php }?>
 
     <script src="js/main.js"></script>
     <script>

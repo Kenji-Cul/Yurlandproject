@@ -41,16 +41,7 @@ if(isset($_POST["submit"])){
 
     //Initiate Paystack
     $url = "https://api.paystack.co/transaction/initialize";
-    if($url){
-        if($_GET['unit'] % 4 == 0){
-            $unit_added = $_GET['unit'] / 4;
-            $added_unit = $_GET['unit'] + $unit_added;
-       
-       $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
-       } else {
-           $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
-       }
-    }
+    
 
     //Gather the body params
     $transaction_data = [
@@ -115,6 +106,14 @@ if(isset($_POST["submit"])){
     $transaction = json_decode($result);
     //Automatically redirect customers to the payment page
     header("Location: ".$transaction->data->authorization_url);
+    if($_GET['unit'] % 4 == 0){
+        $unit_added = $_GET['unit'] / 4;
+        $added_unit = $_GET['unit'] + $unit_added;
+   
+   $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
+   } else {
+       $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
+   }
 } 
 ?>
 

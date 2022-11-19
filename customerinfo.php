@@ -31,6 +31,22 @@ if(!isset($_GET['unique'])){
         height: 20em;
     }
 
+    .deleted-div {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 8px;
+        background-color: #808080;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
+
     .center {
         width: 100%;
         display: flex;
@@ -50,6 +66,11 @@ if(!isset($_GET['unique'])){
     .success img {
         width: 36em;
         height: 36em;
+    }
+
+    .subscribed-land {
+        height: 25em;
+        position: relative;
     }
 
 
@@ -83,7 +104,14 @@ if(!isset($_GET['unique'])){
 
     <div class="profile-info">
         <div class="details">
-            <p>Customer Details!</p>
+            <p> <?php $newuser2 = $user->selectReferredCustomer($newuser['personal_ref']);
+               foreach ($newuser2 as $key => $value) {
+                if($value > 0){
+                    echo "Referral Customer Details";
+                } else {
+                    echo "Customer Details";
+                }
+               }; ?></p>
             <h3 style="color: black;"><?php if(isset($newuser['first_name'])){  ?>
                 <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
                 <?php }?>
@@ -106,9 +134,11 @@ if(!isset($_GET['unique'])){
             <button class="btn land-btn">Buy Land For Customer</button>
         </a>
 
+        <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
         <a href="editcustomer.php?unique=<?php echo $newuser['unique_id'];?>">
             <button class="btn land-btn">Edit Customer</button>
         </a>
+        <?php }?>
     </div>
 
 
@@ -126,6 +156,53 @@ if(!isset($_GET['unique'])){
               
             ?>
         <div class="subscribed-land">
+            <?php if($value['payment_status'] == "Deleted"){?>
+            <div class="deleted-div">
+                <?php 
+            $name = $value['product_id'];
+            if(isset($_SESSION['uniquesubadmin_id'])){
+            ?>
+                <form action="" class="deletep-form" method="POST">
+                    <input class="price" type="submit" value="Delete Product" name="deletep<?php echo $name?>"
+                        style="background-color: #7e252b; color: #fff;" />
+
+                </form>
+                <?php 
+            
+                
+                if(isset($_POST["deletep".$name])){
+                    $insertuser = $user->DeleteProductP($name,$_GET['unique']);
+                    $deletedp = "deletedp";
+                        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+                    
+                
+            }
+            ?>
+                <?php }?>
+                <?php 
+            $name = $value['product_id'];
+            if(isset($_SESSION['uniquesubadmin_id'])){
+            ?>
+                <form action="" class="restore-form" method="POST">
+                    <input class="price" type="submit" value="Restore" name="restore<?php echo $name?>"
+                        style="background-color: #7e252b; color: #fff;" />
+
+                </form>
+                <?php 
+            
+                
+                if(isset($_POST["restore".$name])){
+                    $insertuser = $user->updateProductStat($name,$_GET['unique']);
+                    $restored = "restored";
+                        header("Location: successpage/deletesuccess.php?detect=".$restored."");
+                    
+                
+            }
+            ?>
+                <?php }?>
+                <div class="price">Deleted</div>
+            </div>
+            <?php }?>
             <div class="subscribed-img">
                 <a href="estateinfo.html">
                     <img src="landimage/<?php echo $value['product_image'];?>" alt="estate image" />
@@ -137,6 +214,27 @@ if(!isset($_GET['unique'])){
                     <p class="land-location"><?php echo $value['product_location'];?></p>
                 </div>
             </div>
+            <?php 
+            $name = $value['product_id'];
+            if(isset($_SESSION['uniquesubadmin_id'])){
+            ?>
+            <form action="" class="delete-form" method="POST">
+                <input class="price" type="submit" value="Delete" name="delete<?php echo $name?>"
+                    style="background-color: #7e252b; color: #fff;" />
+
+            </form>
+            <?php 
+             
+                
+                if(isset($_POST["delete".$name])){
+                    $insertuser = $user->DeleteProduct($value['product_id'],$_GET['unique']);
+                    $deleted = "deleted";
+                        header("Location: successpage/deletesuccess.php?detect=".$deleted."");
+                    
+                }
+            
+            ?>
+            <?php }?>
         </div>
 
         <?php }}?>

@@ -149,12 +149,11 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     <div class="flex-container">
 
         <ul class="dropdown-links">
-            <li><a href="#">Estates</a></li>
-            <li><a href="#">All Customers Land</a></li>
-            <li><a href="#">Edit Customer</a></li>
+            <li><a href="allestates2.php">Estates</a></li>
+            <li><a href="allcustomers.php">All Customers</a></li>
             <li><a href="#">New Payment</a></li>
             <li><a href="selectprice.php">Create Product</a></li>
-            <li><a href="#">New Agent</a></li>
+            <li><a href="createagent.html">New Agent</a></li>
             <li><a href="#">Executives</a></li>
             <li><a href="#">View All Earnings</a></li>
             <li><a href="#">Pay Earnings</a></li>
@@ -198,7 +197,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/land.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="allcustomers.php">
                         <div class="navigate">
                             <p>Total Customer Count</p>
                             <img src="images/right_arrow.svg" alt="" />
@@ -209,10 +208,12 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/Wallet.svg" alt="land-icon-image" />
 
-                    <div class="navigate">
-                        <p>Land</p>
-                        <img src="images/right_arrow.svg" alt="" />
-                    </div>
+                    <a href="allestates2.php">
+                        <div class="navigate">
+                            <p>Land</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
                 </div>
 
                 <a href="#">

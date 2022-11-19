@@ -101,6 +101,16 @@ include "signconstant.php";
         }
      }
 
+     function updateUserInfo($firstname,$lastname,$email,$unique,$phonenum,$earning){
+        $sql = "UPDATE user SET first_name='{$firstname}', last_name='{$lastname}', email='{$email}',phone_number='{$phonenum}',earning_percentage='{$earning}' WHERE unique_id='{$unique}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+     }
+
      function updateUserForReferral($firstname, $lastname, $email, $phonenum,$password,$referralid,$personalref){
         $pwd = password_hash($password,PASSWORD_DEFAULT);
         $uniqueid = rand();
@@ -1237,6 +1247,40 @@ include "signconstant.php";
 
     function DeleteCartId($userid,$user){
         $sql = "DELETE  FROM cart WHERE product_id='{$userid}' AND user_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+            //   echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+          }else{
+        //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+          }
+    }
+
+    
+    function DeleteProduct($userid,$user){
+        $sql = "UPDATE payment SET payment_status='Deleted' WHERE product_id='{$userid}' AND customer_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+            //   echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+          }else{
+        //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+          }
+    }
+
+    function DeleteProductP($userid,$user){
+        $sql = "DELETE  FROM payment WHERE product_id='{$userid}' AND customer_id='{$user}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+            //   echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+          }else{
+        //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+          }
+    }
+
+    function updateProductStat($userid,$user){
+        $sql = "UPDATE payment SET payment_status='Restored' WHERE product_id='{$userid}' AND customer_id='{$user}'";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows==1){
             //   echo "<h3 align='center'>Photo added successfully</h3>";
