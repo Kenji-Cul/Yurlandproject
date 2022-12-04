@@ -13,6 +13,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 if(empty($firstname) || empty($lastname) || empty($email) || empty($number) || empty($unique) || empty($earning)){
     $errormsg = "Please input all fields";
 }  
+else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errormsg = "Invalid email format";
+      }
+
     else {
     $user = new User;
     $insertuser = $user->updateUserInfo(check_input($firstname),check_input($lastname),check_input($email),check_input($unique),check_input($number),check_input($earning));

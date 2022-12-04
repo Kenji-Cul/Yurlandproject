@@ -25,6 +25,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
         overflow-x: hidden;
     }
 
+    .update-data {
+        position: fixed;
+        top: -2em;
+    }
+
     .dropdown-links {
         height: 20em;
     }
@@ -116,9 +121,31 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
 
-    @media only screen and (min-width: 800px) {
+    @media only screen and (max-width: 800px) {
         body {
             height: 90vh;
+        }
+
+
+        .dropdown-links {
+            margin-top: -7.4em !important;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 200px;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
+
+        .update-data {
+            position: absolute;
+            top: -3em;
         }
     }
     </style>
@@ -297,21 +324,46 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
     <script src="js/swiper-bundle.min.js"></script>
-    <script src="js/profile.js"></script>
+
     <!--========== SWIPER JS ============  -->
     <script>
+    let swiperVerse = new Swiper(".swiper-counter", {
+        loop: true,
+        spaceBetween: 24,
+        slidesPerView: "auto",
+        grabCursor: true,
+        autoplay: true,
+        pagination: {
+            el: ".swiper-pagination",
+            dynamicBullets: true,
+            autoplay: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                spaceBetween: 48,
+            },
+        },
+    });
     if (window.innerWidth < 1300) {
         let dropdownnav = document.querySelector(".dropdown-links");
-        dropdownnav.style.display = "none";
+        // dropdownnav.style.display = "none";
+
 
         let menu = document.querySelector(".menu");
         menu.onclick = () => {
-            dropdownnav.style.display = "block";
+            dropdownnav.style = `
+            transform: translateX(0);
+            `;
         };
 
         let close = document.querySelector(".close");
         close.onclick = () => {
-            dropdownnav.style.display = "none";
+            dropdownnav.style = `
+            transform: translateX(100%);
+            `;
         };
     }
 

@@ -17,6 +17,7 @@ if(!isset($_SESSION['unique_id'])){
     <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
 
     <!-- ========= SWIPER CSS ======== -->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -26,9 +27,45 @@ if(!isset($_SESSION['unique_id'])){
         overflow-x: hidden;
     }
 
-    .profile-container {
-        padding: 2em;
+   
+    header{
+        background: #fee1e3;
     }
+
+
+    .land-image {
+        width: 100%;
+        border-radius: 8px 8px 0px 0px !important;
+    }
+
+    .land-estate {
+        padding-top: 0;
+    }
+
+    .land-image img {
+        border-radius: 8px 8px 0px 0px !important;
+    }
+
+    .price {
+        height: 25px;
+    }
+
+
+
+
+
+    .update-data {
+        position: fixed;
+        top: -2em;
+        z-index: 1000;
+    }
+
+
+
+
+
+
+
 
     .radius {
         position: relative;
@@ -58,6 +95,8 @@ if(!isset($_SESSION['unique_id'])){
         gap: 4em !important;
     }
 
+
+
     .foot .navigate {
         width: 100% !important;
         height: 80%;
@@ -82,23 +121,97 @@ if(!isset($_SESSION['unique_id'])){
         gap: 2em;
     }
 
-    @media only screen and (max-width: 800px) {
+    @media only screen and (max-width: 1300px) {
+        .user,#openicon{
+            display: none;
+        }
+        .links img{
+            display: none;
+        }
         .transaction-details {
-            flex-direction: column;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
         }
 
+        .detail3 {
+            display: none;
+        }
+
+        .update-data {
+            position: absolute;
+            top: -3em;
+        }
+
+        .land_estate_container {
+            display: flex;
+            flex-direction: row;
+            gap: 1em;
+        }
+
+        .estate1 {
+            display: block !important;
+        }
+
+        .dropdown-links {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 2em;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
+
+        .land-estate{
+            width: 290px;
+        }
+
+
+        .profile-div-container {
+            margin: auto;
+            width: 100%;
+        }
+
+        .close{
+            position: absolute;
+            top: 1em;
+            right: 1em;
+        }
 
     }
 
     @media only screen and (max-width: 500px) {
+        .close{
+            position: absolute;
+            top: 1em;
+            right: 1em;
+        }
+        .links img{
+            display: none;
+        }
+        .user,#openicon{
+            display: none;
+        }
         .land_estate_container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 2em;
         }
 
         .land-estate {
-            width: 100%;
+            width: 290px;
             height: 18em;
             position: relative;
         }
@@ -111,15 +224,93 @@ if(!isset($_SESSION['unique_id'])){
             position: absolute;
             bottom: 1em;
         }
+
+        .profile-div-container {
+            margin: auto;
+            width: 100%;
+        }
+
     }
 
     @media only screen and (min-width: 1300px) {
+        .center{
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            text-align: center;
+        }
+        .menu{
+            display: none;
+        }
+         .profile-image2{
+            display: none!important;
+         }
+
+         .user{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+    }
+
+    .user p{
+        font-weight: 600;
+      font-size: 20px;
+        color: #1A0709;
+    }
+    .user .profile-image{
+        width: 45px;
+        height: 45px;
+    }
+
+   
+
+    .signup .nav{
+        position: absolute;
+    right: 40px;
+    top: 30px;
+    }
+
+         .details2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6em;
+         }
+
+         .details2 p{
+            color: #808080;
+         }
+
+         .details2 p,
+         .details2 h3
+         {
+            font-size: 22px;
+         }
+
+         .land-btn-container{
+            padding-left: 1em;
+         }
+
+         .land-btn-container .btn{
+            width: 500px;
+         }
+       
+        .menu {
+            display: none;
+        }
+
+        .estate2 {
+            display: block !important;
+        }
 
         .land-estate {
-            border: 1px solid #d4d1d1;
-            width: 280px;
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            width: 290px;
             height: 270px;
-            padding-top: 8px;
+            padding-top: 0;
             padding-bottom: 10px;
             display: flex;
             justify-content: top;
@@ -131,28 +322,67 @@ if(!isset($_SESSION['unique_id'])){
         }
 
         .dropdown-links {
-            width: 10%;
+            width: 6%;
             height: 90vh;
-            border-radius: 0 8px 8px 0;
-            padding: 1em;
+            border-radius: 0px!important;
+            padding: 1em 0;
             display: flex;
             flex-direction: column;
             justify-content: top;
             align-items: top;
-            gap: 3em;
-            background: rgba(255, 255, 255, 0.9);
-            filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
+            gap: 1.3em;
+            background: #7e252b;
+          filter: none;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 9999999 !important;
+            transition: all 0.7s;
         }
-
         .dropdown-links li {
             height: 1em;
             width: 95%;
             text-transform: capitalize;
-            font-size: 17px;
+            font-size: 14px;
+        }
+
+        .dropdown-links .select-link{
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links{
+            width: 100%;
+        }
+
+        .dropdown-links .links img{
+             width: 20px;
+             height: 20px;
+             margin-right: 6px;
+             cursor: pointer;
+        }
+
+        .dropdown-links .links{
+            width: 100%;
+            display: flex!important;
+            align-items: center;
+            justify-content: center;
+            padding: 1em 0;
+            transition: 1s;
+        }
+
+        .dropdown-links .links:hover{
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links .link{
+            visibility: hidden;
+            display: none;
+        }
+
+       
+        .dropdown-links li a{
+            color: #fff;
+            
         }
 
         .transaction-details {
@@ -172,13 +402,16 @@ if(!isset($_SESSION['unique_id'])){
             position: absolute;
             right: 0;
             width: 20%;
+            background: #fee1e3;
+            min-height: 150vh;
         }
 
         .profile-container {
             position: absolute;
-            left: 10em;
+            left: 5em;
             padding: 0;
             width: 60%;
+            transition: all 0.5s;
         }
 
         .close {
@@ -268,9 +501,16 @@ if(!isset($_SESSION['unique_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
+            <?php if(isset($_SESSION['unique_id'])){?>
+            <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
             <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <?php }?>
         </div>
-
+        <?php 
+             $user = new User;
+             $newuser = $user->selectUser($_SESSION['unique_id']);
+            ?>
         <div class="nav">
             <a href="cartreview.php">
                 <div class="cart">
@@ -278,49 +518,99 @@ if(!isset($_SESSION['unique_id'])){
                     <img src="images/cart.svg" alt="cart icon" />
                 </div>
             </a>
-            <img src="images/menu.svg" alt="menu icon" class="menu" />
+            <img src="images/menu.svg" alt="menu icon" class="menu"/>
+            <div class="user">
+                <p><?php if(isset($newuser['first_name'])){  ?>
+                        <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
+                        <?php }?></p>
+                <div class="profile-image"> 
+                <?php if(!empty($newuser['photo'])){?>
+                    <a href="updatedetails.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['photo'])){?>
+                    <a href="updatedetails.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
         </div>
     </header>
-    <?php 
-             $user = new User;
-             $newuser = $user->selectUser($_SESSION['unique_id']);
-            ?>
+   
 
-    <?php if(empty($newuser['driver_license']) || empty($newuser['passport']) || empty($newuser['nin'])){
+    <?php if(empty($newuser['photo'])){
     ?>
+
     <div class="update-data">
-        <div class="notice-div">
-            <p>Please Update Your Data For Verification</p>
-        </div>
+        <a href="updatedetails.php" style="width: 100%; display: flex; align-items:center; justify-content:center;">
+            <div class="notice-div">
+                <p>Please Update Your Data For Verification</p>
+            </div>
+        </a>
     </div>
+
 
     <?php }?>
 
 
     <div class="flex-container">
 
-        <ul class="dropdown-links">
-            <li><a href="preference.php">New Land</a></li>
-            <li><a href="transactions.php">Transaction History</a></li>
-            <li><a href="mylands.php">My Land</a></li>
-            <li><a href="payment.php">New Payment</a></li>
-            <li><a href="userreferral.php">Referral</a></li>
-            <li><a href="documents.html">Documents</a></li>
-            <li>
-                <a href="profiledetails.php">Profile</a> and
-                <a href="settings.php">Settings</a>
+    <ul class="dropdown-links">
+    <div class="center">
+        <li  id="openicon" style="cursor: pointer;">
+                <img src="images/home.svg" style="width: 20px; height: 20px;"/>
             </li>
-            <li><a href="logout.php">Logout</a></li>
-            <div class="close">
-                <i class="ri-close-fill"></i>
-            </div>
+
+            <li  id="closeicon" style="display: none; cursor: pointer; font-size:14px;" >
+                <img src="images/home.svg" style="width: 20px; height: 20px;"/>
+            </li>
+                    </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+            <a href="profile.php"><img src="images/home3.svg" /></a>
+            <a href="profile.php" class="link">Home</a></li>
+            <li class="links">
+            <a href="preference.php"><img src="images/land2.svg" /></a>
+            <a href="preference.php" class="link">New Land</a></li>
+            <li class="links">
+            <a href="transactions.php"><img src="images/updown.svg"  /> </a>
+            <a href="transactions.php" class="link">Transaction History</a></li>
+            <li class="links">
+            <a href="mylands.php"><img src="images/land2.svg" /></a>
+                <a href="mylands.php" class="link">My Land</a></li>
+            <li class="links">
+            <a href="payment.php"><img src="images/chart2.svg"  /> </a>
+                <a href="payment.php" class="link">New Payment</a></li>
+            <li class="links">
+            <a href="userreferral.php"><img src="images/referral.svg" /></a>
+                <a href="userreferral.php" class="link">Referral</a></li>
+            <li class="links">
+            <a href="documents.php"><img src="images/folder.svg"  /></a> 
+                <a href="documents.php" class="link">Documentation</a></li>
+            <li class="links">
+            <a href="profiledetails.php"><img src="images/settings.svg" /></a>
+                <div>
+                <a href="profiledetails.php" class="link">Profile&nbsp;<span style="color: #808080;">and</span></a>
+                <a href="settings.php" class="link">Settings</a>
+                </div>
+            </li>
+            <li class="links">
+            <a href="logout.php"><img src="images/exit.svg"/></a>
+                <a href="logout.php" class="link">Logout</a></li>
         </ul>
+
+
 
 
 
         <div class="profile-container">
             <div class="profile-info">
-                <div class="details">
+                <div class="details2">
                     <p>Welcome Back!</p>
                     <h3><?php if(isset($newuser['first_name'])){  ?>
                         <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
@@ -328,14 +618,17 @@ if(!isset($_SESSION['unique_id'])){
                     </h3>
                 </div>
 
-                <div class="profile-image">
+                <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['photo'])){?>
-                    <img src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" />
+                    <a href="updatedetails.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['photo'])){?>
-                    <div class="empty-img">
-                        <i class="ri-user-fill"></i>
-                    </div>
+                    <a href="updatedetails.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
                     <?php }?>
                 </div>
             </div>
@@ -393,16 +686,21 @@ if(!isset($_SESSION['unique_id'])){
             </div>
 
             <div class="foot">
-                <div class="profile-div">
-                    <img class="profile-icon" src="images/paystack.svg" alt="land-icon-image" />
+                <a href="mylands.php">
+                    <div class="profile-div">
+                        <img class="profile-icon" src="images/paystack.svg" alt="land-icon-image" />
 
-                    <div class="navigate">
-                        <div>
-                            <p>Make new</p>
-                            <p>Payment</p>
+
+
+                        <div class="navigate">
+                            <div>
+                                <p>Make new</p>
+                                <p>Payment</p>
+                            </div>
                         </div>
+
                     </div>
-                </div>
+                </a>
             </div>
 
 
@@ -427,21 +725,17 @@ if(!isset($_SESSION['unique_id'])){
                     <img src="landimage/<?php echo $value['product_image'];?>" alt="">
                 </div>
                 <div class="details">
-                    <p>Transaction</p>
+                    <p><?php echo $value['product_name'];?></p>
                     <div class="inner-detail">
-                        <div class="location"><?php echo $value['product_name'];?></div>
-                        <p></p>
                         <div class="date">
                             <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
                         </div>
-                        <p></p>
-                        <div class="time"><?php echo $value['payment_time'];?></div>
                     </div>
                 </div>
-                <div class="price-detail"><?php 
+                <div class="price-detail detail3"><?php 
             echo $value['product_unit'];
             ?>&nbsp;<span>Units</span></div>
-                <div class="price-detail"><?php 
+                <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
                 <div class="price-detail">&#8358;<?php 
@@ -460,7 +754,7 @@ if(!isset($_SESSION['unique_id'])){
         </div>
 
 
-        <div class="swiper estates swiper-counter">
+        <div class="swiper estates swiper-counter estate1" style="display:none;">
             <p class="available">Available Estates</p>
             <div class="land_estate_container swiper-wrapper">
                 <?php 
@@ -469,14 +763,33 @@ if(!isset($_SESSION['unique_id'])){
              if(!empty($landview)){
                 foreach($landview as $key => $value){
             ?>
-                <div class="land-estate swiper-slide">
-                    <div class="land-image">
-                        <a
-                            href="estateinfo2.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+                <?php if($value['land_status'] == "Closed"){?>
+                <div class="nodisplay" style="display: none;">
+                    <div class="land-estate swiper-slide">
+                        <div class="land-image">
+
                             <img src="landimage/<?php if(isset($value['product_image'])){
                             echo $value['product_image'];
                         }?>" alt="estate image" />
-                        </a>
+
+                        </div>
+                        <div class="land-details">
+                            <div class="land-name">
+                                <p><?php echo $value['product_name'];?></p>
+                            </div>
+                            <div class="land-location">
+                                <p><?php echo $value['product_location'];?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php } else {?>
+                <div class="land-estate swiper-slide" style="height: 480px;">
+                    <div class="land-image">
+
+                        <img src="landimage/<?php if(isset($value['product_image'])){
+                            echo $value['product_image'];
+                        }?>" alt="estate image" />
                     </div>
                     <div class="land-details">
                         <div class="land-name">
@@ -486,12 +799,155 @@ if(!isset($_SESSION['unique_id'])){
                             <p><?php echo $value['product_location'];?></p>
                         </div>
                     </div>
+                    <div class="subscribed-details" style="flex-direction: column;  gap: 1em; margin-top: 60px;">
+                        <div class="price"> <a
+                                href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej"
+                                style="color: #7e252b;">View Details </a>
+                        </div>
+                        <div class="sub-detail">
+                            <?php if($value['product_unit'] != 0){?>
+                            <?php if($value['outright_price'] != 0){
+                      $outprice = $value['outright_price'];
+                      $onemonthprice = $value['onemonth_price'];
+                        ?>
+                            <div class="price-flex">
+                                <p class="land-name">Outright Price:</p>
+                                <p class="land-location">&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999){
+                          echo number_format($outprice);
+                        }?></p>
+                            </div>
+                            <?php } else {?>
+                            <p class="land-name">No Outright Price</p>
+                            <?php }?>
+
+
+                            <?php if($value['onemonth_price'] != 0){
+                        $onemonthprice = $value['onemonth_price'];
+                        ?>
+                            <div>
+                                <p class="land-name">Daily Price:</p>
+                                <p class="land-location">&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
+                          echo number_format($onemonthprice);
+                        }?></p>
+                            </div>
+                            <?php } else {?>
+                            <div>
+                                <p class="land-name">No Daily Price</p>
+                            </div>
+                            <?php } } else {?>
+                            <p class="land-name">Sold Out</p>
+                            <?php }?>
+
+
+                        </div>
+                    </div>
                 </div>
+                <?php }?>
 
                 <?php   }
              } ?>
             </div>
             <div class="swiper-pagination"></div>
+        </div>
+
+
+        <div class="estates estate2" style="display:none;">
+            <p class="available">Available Estates</p>
+            <div class="land_estate_container">
+                <?php 
+             $land = new User;
+             $landview = $land->selectLandPrime();
+             if(!empty($landview)){
+                foreach($landview as $key => $value){
+            ?>
+                <?php if($value['land_status'] == "Closed"){?>
+                <div class="nodisplay" style="display: none;">
+                    <div class="land-estate">
+                        <div class="land-image">
+
+                            <img src="landimage/<?php if(isset($value['product_image'])){
+                            echo $value['product_image'];
+                        }?>" alt="estate image" />
+
+                        </div>
+                        <div class="land-details">
+                            <div class="land-name">
+                                <p><?php echo $value['product_name'];?></p>
+                            </div>
+                            <div class="land-location">
+                                <p><?php echo $value['product_location'];?></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <?php } else {?>
+                <div class="land-estate" style="height: 420px;">
+                    <div class="land-image">
+
+                        <img src="landimage/<?php if(isset($value['product_image'])){
+                            echo $value['product_image'];
+                        }?>" alt="estate image" />
+                    </div>
+                    <div class="land-details">
+                        <div class="land-name">
+                            <p><?php echo $value['product_name'];?></p>
+                        </div>
+                        <div class="land-location">
+                            <p><?php echo $value['product_location'];?></p>
+                        </div>
+                    </div>
+
+                    <div class="subscribed-details" style="flex-direction: column;  gap: 1em; margin-top: 15px;">
+                        <div class="price"> <a
+                                href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej"
+                                style="color: #7e252b;">View Details </a>
+                        </div>
+                        <div class="sub-detail">
+                            <?php if($value['product_unit'] != 0){?>
+                            <?php if($value['outright_price'] != 0){
+                      $outprice = $value['outright_price'];
+                      $onemonthprice = $value['onemonth_price'];
+                        ?>
+                            <div class="price-flex">
+                                <p class="land-name">Outright Price:</p>
+                                <p class="land-location">&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999){
+                          echo number_format($outprice);
+                        }?></p>
+                            </div>
+                            <?php } else {?>
+                            <p class="land-name">No Outright Price</p>
+                            <?php }?>
+
+
+                            <?php if($value['onemonth_price'] != 0){
+                        $onemonthprice = $value['onemonth_price'];
+                        ?>
+                            <div>
+                                <p class="land-name">Daily Price:</p>
+                                <p class="land-location">&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
+                          echo number_format($onemonthprice);
+                        }?></p>
+                            </div>
+                            <?php } else {?>
+                            <div>
+                                <p class="land-name">No Daily Price</p>
+                            </div>
+                            <?php } } else {?>
+                            <p class="land-name">Sold Out</p>
+                            <?php }?>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <?php }?>
+
+                <?php   }
+             } ?>
+            </div>
         </div>
 
 
@@ -504,21 +960,83 @@ if(!isset($_SESSION['unique_id'])){
     <script src="js/profile.js" defer></script>
     <script src="js/cart.js" defer></script>
     <!--========== SWIPER JS ============  -->
+    <script src="js/swiper-bundle.min.js"></script>
     <script>
+        
+        if (window.innerWidth > 1200) { 
+            let dropdownnav = document.querySelector(".dropdown-links");
+       let open = document.querySelector('#openicon');
+       let closeicon = document.querySelector('#closeicon');
+       open.onclick = () => {
+        dropdownnav.style = `
+        width: 14%;
+        `;
+        open.style.display = "none";
+        closeicon.style.display = "block";
+        document.querySelector(".profile-container").style = `
+         padding-left: 7em;
+        `;
+        let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+
+        let allLink = document.querySelectorAll(".dropdown-links .links");
+        allLink.forEach((element) => {
+        element.style = `
+        gap: 10px;
+        `;
+       
+    });
+        allLinks.forEach((element) => {
+        element.style = `
+         visibility: visible;
+         display: block;
+        `;
+    });
+       }
+
+       closeicon.onclick = () =>{
+        dropdownnav.style = `
+        width: 6%;
+        `;
+        open.style.display = "block";
+        closeicon.style.display = "none";
+        document.querySelector(".profile-container").style = `
+         padding-left: 1em;
+        `;
+
+         let allLink = document.querySelectorAll(".dropdown-links .links");
+        allLink.forEach((element) => {
+        element.style = `
+        justify-content: center
+        `;
+    });
+        
+        let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+        allLinks.forEach((element) => {
+        element.style = `
+         visibility: hidden;
+         display:none;
+        `;
+    });
+       }
+    }
     if (window.innerWidth < 1300) {
         let dropdownnav = document.querySelector(".dropdown-links");
-        dropdownnav.style.display = "none";
-
         let menu = document.querySelector(".menu");
         menu.onclick = () => {
-            dropdownnav.style.display = "block";
+            dropdownnav.style = `
+            transform: translateX(0);
+            `;
         };
 
         let close = document.querySelector(".close");
         close.onclick = () => {
-            dropdownnav.style.display = "none";
+            dropdownnav.style = `
+            transform: translateX(100%);
+            `;
         };
     }
+
+   
 
     setInterval(() => {
         let xls = new XMLHttpRequest();

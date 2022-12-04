@@ -20,8 +20,15 @@ header("Location:index.php");
     <title>Yurland</title>
     <style>
     body {
-        height: 200vh;
+        position: relative;
+        height: 180vh;
         background-image: none;
+    }
+
+    .footerdiv {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 
     @media only screen (max-width: 800px) {
@@ -29,12 +36,28 @@ header("Location:index.php");
             height: 260vh !important;
             background-image: none;
         }
+
+        .footerdiv {
+            display: none;
+        }
+
+
+
+        .select-container {
+            display: flex;
+            flex-direction: column !important;
+            border: 1px solid black;
+        }
     }
 
     @media only screen (max-width: 500px) {
         body {
             height: 260vh !important;
             background-image: none;
+        }
+
+        .footerdiv {
+            display: none;
         }
     }
 
@@ -62,13 +85,7 @@ header("Location:index.php");
     }
 
     .select-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        align-items: center;
-        justify-content: center;
-        flex-direction: row;
-        width: 100% !important;
-        gap: 4em;
+        height: 30em;
     }
     </style>
 </head>
@@ -156,6 +173,15 @@ header("Location:index.php");
             </div>
         </form>
     </section>
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
     <script src="js/main.js"></script>
     <script>

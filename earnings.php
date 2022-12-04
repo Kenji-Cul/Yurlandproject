@@ -124,7 +124,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <p style="text-transform: uppercase;">
                     <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $agent['earning_percentage'];
                     $earnedprice = $percent / 100 * $value['product_price'];
-                    echo $earnedprice;
+                    $unitprice = $earnedprice;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                      echo number_format(floor($unitprice));
+                                    } else {
+                                        echo $unitprice;
+                                    }
                     ?>
                     </span>
                 </p>

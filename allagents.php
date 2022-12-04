@@ -1,9 +1,7 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['uniquesubadmin_id'])){
-    header("Location:index.php");
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -84,9 +82,11 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     </header>
 
     <div class="page-title2">
-        <a href="subadmin.php">
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <a href="superadmin.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
+        <?php }?>
         <p>All Agents</p>
     </div>
 

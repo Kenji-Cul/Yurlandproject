@@ -6,12 +6,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
     $referral = $_POST['referral'];
+    $inforeferral = $_POST['inforeferral'];
     $phone_num = $_POST['number'];
     $password = $_POST['password'];
 
 if(empty($firstname) || empty($lastname) || empty($email) || empty($phone_num) || empty($password)){
     $errormsg = "Please input all fields";
 }  
+
+
+
+
+else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errormsg = "Invalid email format";
+  }
+  
 else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     $errormsg = "Password must contain a special character";
     }
@@ -23,7 +32,7 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     $errormsg = "Email Address already exists";
     }else{
     $insertuser =
-    $user->createUser(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral));
+    $user->createUser(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral));
     }
 
     }

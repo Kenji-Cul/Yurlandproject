@@ -111,9 +111,25 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
 
 
-    @media only screen and (min-width: 800px) {
+    @media only screen and (max-width: 800px) {
         body {
             height: 90vh;
+        }
+
+        .dropdown-links {
+            margin-top: 5em !important;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 200px;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
         }
     }
     </style>
@@ -143,11 +159,9 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <div class="flex-container">
 
         <ul class="dropdown-links">
-            <li><a href="#">New Land</a></li>
-            <li><a href="#">Transaction History</a></li>
+            <li><a href="preference.php">New Land</a></li>
             <li><a href="allcustomers.php">All Customers</a></li>
-            <li><a href="createagent.html">Create Agent</a></li>
-            <li><a href="allagents.php">All Agents</a></li>
+            <li><a href="createagent.php">Create Agent</a></li>
             <li><a href="subadmininfo.php">Profile</a></li>
             <li><a href="logout.php">Logout</a></li>
 
@@ -177,11 +191,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     <?php }?>
                 </div>
             </div>
-            <div class="land-btn-container">
-                <a href="allestates.html">
-                    <button class="btn land-btn">Buy a new land</button>
-                </a>
-            </div>
+           
 
             <div class="profile-div-container">
                 <div class="profile-div">
@@ -316,21 +326,45 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
 
     <script src="js/swiper-bundle.min.js"></script>
-    <script src="js/profile.js"></script>
     <!--========== SWIPER JS ============  -->
     <script>
+    let swiperVerse = new Swiper(".swiper-counter", {
+        loop: true,
+        spaceBetween: 24,
+        slidesPerView: "auto",
+        grabCursor: true,
+        autoplay: true,
+        pagination: {
+            el: ".swiper-pagination",
+            dynamicBullets: true,
+            autoplay: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                spaceBetween: 48,
+            },
+        },
+    });
     if (window.innerWidth < 1300) {
         let dropdownnav = document.querySelector(".dropdown-links");
-        dropdownnav.style.display = "none";
+        // dropdownnav.style.display = "none";
+
 
         let menu = document.querySelector(".menu");
         menu.onclick = () => {
-            dropdownnav.style.display = "block";
+            dropdownnav.style = `
+            transform: translateX(0);
+            `;
         };
 
         let close = document.querySelector(".close");
         close.onclick = () => {
-            dropdownnav.style.display = "none";
+            dropdownnav.style = `
+            transform: translateX(100%);
+            `;
         };
     }
     </script>

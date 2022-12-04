@@ -9,7 +9,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 if(empty($name) || empty($password) || empty($email)){
     $errormsg = "Please input all fields";
-} else {
+} 
+else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errormsg = "Invalid email format";
+  }
+
+else {
      $supadmin = new User;
      $checksupadmin = $supadmin->checkSuperadminEmailAddress($email);
      if(!empty($checksupadmin)){

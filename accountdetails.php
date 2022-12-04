@@ -55,7 +55,11 @@ if(!isset($_SESSION['unique_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+        <?php if(isset($_SESSION['unique_id'])){?>
+            <a href="profile.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a> 
+            <?php } else {?>
+                <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+                <?php }?>
         </div>
 
         <div class="nav">

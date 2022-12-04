@@ -56,6 +56,7 @@ if(isset($_POST['submit'])){
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
     $deducted_unit = $value['product_unit'] - $_GET['unit'];
+    $boughtunit = $_GET['unit']  + $value['bought_units'];
     $productlocation = $value['product_location'];
     $image = $value['product_image'];
     $paymentmonth = date("M");
@@ -64,6 +65,7 @@ if(isset($_POST['submit'])){
     $paymenttime = date("h:i a");;
     $uniquesub = rand();
     $paymentmethod = "Subscription";
+    
     
 
    
@@ -79,11 +81,10 @@ CURLOPT_TIMEOUT => 30,
 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 CURLOPT_CUSTOMREQUEST => "POST",
 CURLOPT_POSTFIELDS => [
-"name" => "Subscription".$uniquesub,
+"name" => "Subscription".$uniqueproduct,
 "interval" => "daily",
 "amount" => $price * 100,
 "invoice_limit" => $limit
-
 ],
 CURLOPT_HTTPHEADER => array(
 "Authorization: Bearer sk_test_f573634d7c3451fe37a335d9bc66bf969cdbe1e4",
@@ -105,7 +106,10 @@ $data = json_decode($result);
 
 $plan_code = $data->data->plan_code;
 $message = $data->message;
-
+$delete = $land->DeleteCartId($uniqueproduct,$_SESSION['unique_id']);
+if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
+    // Remove the product from the shopping cart
+    unset($_SESSION['cart'][$uniqueproduct]);}
 include_once "initialize.php";
 }
 
@@ -236,6 +240,8 @@ include_once "initialize.php";
                 $dailycost = $totprice / $value['eighteen_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } if($dailycost < 999){
+                    echo $dailycost;
                 }
                 ?></label>
                             </div>
@@ -248,29 +254,39 @@ include_once "initialize.php";
                             </div>
         </form>
         <?php }}?>
+    </div>
 
-        <script src="js/main.js"></script>
-        <script>
-        setInterval(() => {
-            let xls = new XMLHttpRequest();
-            xls.open("GET", "getcart.php", true);
-            xls.onload = () => {
-                if (xls.readyState === XMLHttpRequest.DONE) {
-                    if (xls.status === 200) {
-                        let data = xls.response;
-                        let notify = document.querySelector('.cart-notify');
-                        if (data == 0) {
-                            notify.style.display = "none";
-                        }
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
-                        notify.innerHTML = data;
-                        //console.log(data);
+    <script src="js/main.js"></script>
+    <script>
+    setInterval(() => {
+        let xls = new XMLHttpRequest();
+        xls.open("GET", "getcart.php", true);
+        xls.onload = () => {
+            if (xls.readyState === XMLHttpRequest.DONE) {
+                if (xls.status === 200) {
+                    let data = xls.response;
+                    let notify = document.querySelector('.cart-notify');
+                    if (data == 0) {
+                        notify.style.display = "none";
                     }
+
+                    notify.innerHTML = data;
+                    //console.log(data);
                 }
             }
-            xls.send();
-        }, 100);
-        </script>
+        }
+        xls.send();
+    }, 100);
+    </script>
 </body>
 
 </html>

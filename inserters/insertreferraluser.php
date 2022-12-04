@@ -14,6 +14,10 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     $errormsg = "Password must contain a special character";
     }
 
+    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errormsg = "Invalid email format";
+    }
+
     else {
     $user = new User;
     $emailuser = $user->checkReferral(check_input($referralID), check_input($email));
@@ -21,7 +25,7 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     $errormsg = "You have not being Referred";
     }else{
     $insertuser =
-    $user->updateUser(check_input($email),check_input($password),check_input($referralID),check_input($personalref));
+    $user->updateUser(check_input($email),check_input($password),check_input($referralID),check_input($personalref),$emailuser['unique_id']);
     }
 
     }

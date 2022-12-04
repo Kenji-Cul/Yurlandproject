@@ -39,11 +39,12 @@ if(isset($_POST['submit'])){
         }
 
     
-    $uniqueperson = $_SESSION['user'];;
+    $uniqueperson = $_GET['user'];
     $uniqueproduct = $_GET['uniqueid'];
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
     $deducted_unit = $value['product_unit'] - $_GET['unit'];
+    $boughtunit = $_GET['unit']  + $value['bought_units'];
     $productlocation = $value['product_location'];
     $image = $value['product_image'];
     $paymentmonth = date("M");
@@ -91,6 +92,22 @@ $data = json_decode($result);
 
 $plan_code = $data->data->plan_code;
 $message = $data->message;
+
+if(isset($_SESSION['unique_id'])){
+    $delete = $land->DeleteCartId($uniqueproduct,$_SESSION['unique_id']);
+  
+    if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
+        // Remove the product from the shopping cart
+        unset($_SESSION['cart'][$uniqueproduct]);}
+    }
+  
+    if(isset($_SESSION['uniqueagent_id']) || $_SESSION['uniquesubadmin_id']){
+        $delete = $land->DeleteCartId($uniqueproduct,$uniqueperson);
+    
+        if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
+            // Remove the product from the shopping cart
+            unset($_SESSION['cart'][$uniqueproduct]);}
+        }
 
 include_once "initialize2.php";
 }

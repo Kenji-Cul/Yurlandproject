@@ -20,7 +20,28 @@ include "projectlog.php";
         flex-direction: column;
     }
 
+    .subscribed-lands {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-around;
+        min-height: 30vh;
+    }
 
+
+    .success {
+        position: absolute;
+        left: 50%;
+        top: 30em;
+        transform: translate(-50%, -50%);
+        height: 10em;
+    }
+
+    .success img {
+        width: 36em;
+        height: 36em;
+    }
 
 
     .search-icon {
@@ -33,6 +54,7 @@ include "projectlog.php";
         align-items: center;
         justify-content: center;
     }
+
 
 
 
@@ -85,6 +107,173 @@ include "projectlog.php";
         display: grid;
         gap: 1em;
     }
+
+
+
+    .updated-land {
+        position: relative;
+        width: 350px;
+        height: 620px;
+        background: #FFFFFF;
+        border-radius: 8px;
+        filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .updated-img {
+        width: 350px;
+        height: 341px;
+        border-radius: 8px 8px 0px 0px;
+    }
+
+    .updated-details {
+        display: flex;
+        flex-direction: column;
+        padding: 1em 1.5em;
+    }
+
+    .detail-one,
+    .detail-two {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .detail-three {
+        display: flex;
+        gap: 12px;
+        padding-top: 2em;
+    }
+
+    .detail-three p {
+        color: #808080;
+        font-weight: 500;
+    }
+
+    .detail-four {
+        display: flex;
+        flex-direction: column;
+        padding-top: 1.5em;
+        gap: 0.3em;
+    }
+
+    .detail-four p {
+        color: #808080;
+        font-size: 15px;
+    }
+
+    .detail-five {
+        display: flex;
+        justify-content: right;
+        padding-top: 1em;
+    }
+
+    .detail-five .cartbutton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6em;
+        width: 160px;
+        height: 37.91px;
+        color: #7E252B;
+        border: 1px solid #7E252B;
+        border-radius: 45px;
+        cursor: pointer;
+    }
+
+    .detail-four .detail {
+        display: flex;
+        gap: 6px;
+    }
+
+    .unit-detail {
+        display: flex;
+        gap: 10px;
+    }
+
+    .unit-detail2 {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding-top: 1em;
+    }
+
+    .detail-name p {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 32px;
+        color: #1A0709;
+    }
+
+    .detail-location {
+        display: flex;
+        gap: 15px;
+    }
+
+    .detail-location a {
+        color: #ff6600;
+        text-decoration: underline;
+    }
+
+    .detail-btn {
+        width: 9em;
+        height: 26px;
+        background: #7E252B;
+        border-radius: 8px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .detail-btn p {
+        font-size: 12px;
+        text-transform: capitalize;
+    }
+
+    .updated-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px 8px 0px 0px;
+    }
+
+
+    @media only screen and (max-width: 500px) {
+
+        .detail-btn p {
+            font-size: 9px;
+            text-transform: capitalize;
+        }
+
+        .updated-land {
+            width: 80%;
+        }
+
+        .updated-img {
+            width: 100%;
+        }
+    }
+
+
+
+    @media only screen and (max-width: 800px) {
+        .success img {
+            width: 20em;
+            height: 20em;
+        }
+
+        .subscribed-land {
+            height: 35em;
+        }
+
+
+        .subscribed-details {
+            padding-top: 4em;
+        }
+
+    }
     </style>
 </head>
 
@@ -96,26 +285,31 @@ include "projectlog.php";
         </div>
 
         <div class="nav">
+            <a href="cartreview.php">
+                <div class="cart">
+                    <div class="cart-notify"></div>
+                    <img src="images/cart.svg" alt="cart icon" />
+                </div>
+            </a>
             <img src="images/menu.svg" alt="menu icon" />
         </div>
     </header>
 
     <div class="page-title2">
+        <?php if(isset($_SESSION['unique_id'])){?>
         <a href="profile.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <div style="display: flex !important; flex-direction: column !important" class="estatetext">
             <p>All Estates</p>
         </div>
-        <!-- <div class="search-icon">
+
+
+        <div class="search-icon">
             <img src="images/search.svg" alt="search image" id="searchimg">
-            <div class="inputs">
-                <form action="" id="searchform">
-                    <input type="text" name="searchproduct" id="search">
-                </form>
-                <i class="ri-close-line" id="closeicon"></i>
-            </div>
-        </div> -->
+        </div>
+        <?php ?>
+
     </div>
 
 
@@ -124,123 +318,244 @@ include "projectlog.php";
         <?php 
              $land = new User;
              $landview = $land->selectLand();
+             if(isset($_SESSION['unique_id'])){
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
             ?>
-        <div class="subscribed-land">
-            <div class="subscribed-img">
+        <div class="updated-land">
+            <div class="updated-img">
                 <?php if($value['product_unit'] != 0){?>
                 <a
-                    href="estateinfo2.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+                    href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
                     <img src="landimage/<?php if(isset($value['product_image'])){
                         echo $value['product_image'];
-                    }?>" alt="estate image" />
+                    }?>" alt="<?php echo $value['product_name'];?>" />
                 </a>
                 <?php } else {?>
                 <img src="landimage/<?php if(isset($value['product_image'])){
                         echo $value['product_image'];
-                    }?>" alt="estate image" />
+                    }?>" alt="<?php echo $value['product_name'];?>" />
                 <?php }?>
-
-
             </div>
-
-            <div class="subscribed-details">
-                <div class="sub-detail">
-                    <div>
-                        <p class="land-name"><?php echo $value['product_name'];?></p>
-                        <p class="land-location"><?php echo $value['product_location'];?></p>
+            <div class="updated-details">
+                <div class="detail-one">
+                    <div class="unit-detail">
+                        <div class="detail-btn">
+                            <p>Limited Units Available</p>
+                        </div>
+                        <div class="detail-btn" style="background: #9B51E0;">
+                            <p>Half plot per Unit</p>
+                        </div>
                     </div>
                 </div>
-                <div class="sub-detail">
+                <div class="detail-two">
+                    <div class="unit-detail2">
+                        <div class="detail-name">
+                            <p><?php echo $value['product_name'];?></p>
+                        </div>
+                        <div class="detail-location">
+                            <p style="color: #808080;"><?php echo $value['product_location'];?></p>
+                            <p><a
+                                    href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
+                                    here to view</a></p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="detail-four">
                     <?php if($value['product_unit'] != 0){?>
                     <?php if($value['outright_price'] != 0){
-                      $outprice = $value['outright_price'];
-                      $onemonthprice = $value['onemonth_price'];
+                     $outprice = $value['outright_price'];
+                    $onemonthprice = $value['onemonth_price'];
                         ?>
-                    <div class="price-flex">
-                        <p class="land-name">Outright Price:</p>
-                        <p class="land-location">&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999){
+                    <p><span>Outright Price:&nbsp;&nbsp;</span>&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999 || $outprice > 9999999){
                           echo number_format($outprice);
                         }?></p>
-                    </div>
                     <?php } else {?>
-                    <p class="land-name">No Outright Price</p>
+                    <p>No Outright Price</p>
                     <?php }?>
-
-
                     <?php if($value['onemonth_price'] != 0){
                         $onemonthprice = $value['onemonth_price'];
+
                         ?>
-                    <div>
-                        <p class="land-name">Daily Price:</p>
-                        <p class="land-location">&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
+                    <p><span>Daily Price:&nbsp;&nbsp;</span>&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
                           echo number_format($onemonthprice);
                         }?></p>
-                    </div>
-                    <?php } else {?>
-                    <div>
-                        <p class="land-name">No Daily Price</p>
-                    </div>
-                    <?php } } else {?>
-                    <p class="land-name">Sold Out</p>
-                    <?php }?>
 
+                    <?php } else {?>
+                    <p>No Daily Price</p>
+                    <?php }} else {?>
+                    <p>Sold Out</p>
+                    <?php }?>
+                </div>
+
+
+                <?php if($value['product_unit'] != 0){?>
+                <div class="detail-five">
+                    <div class="uni<?php echo $value['unique_id'];?>" style="visibility:hidden;">
+
+                        <?php echo $value['unique_id'];?>
+                    </div>
+                    <form action="" id="cartform<?php echo $value['unique_id'];?>">
+                        <?php 
+                    $cart = $land->checkCartId($_SESSION['unique_id'],$value['unique_id']);
+                    if(empty($cart)){
+                    ?>
+                        <div class="cartbutton" id="cart-btn<?php echo $value['unique_id'];?>">
+                            <img src="images/cart.svg" alt="">
+                            <p>Add To Cart</p>
+                        </div>
+
+                        <div id="otherbtn<?php echo $value['unique_id'];?>" class="cartbutton"
+                            style="visibility:hidden;"> <a
+                                href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej"
+                                style="color: #7e252b;">View In Cart </a>
+                        </div>
+                        <?php } else {?>
+                        <div class="cartbutton" id="cart-btn<?php echo $value['unique_id'];?>"
+                            style="visibility:hidden;">
+                            <img src="images/cart.svg" alt="">
+                            <p>Add To Cart</p>
+                        </div>
+                        <div id="otherbtn<?php echo $value['unique_id'];?>" class="cartbutton"> <a
+                                href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej"
+                                style="color: #7e252b;">View In Cart </a>
+                        </div>
+                        <?php }?>
+
+
+                        <input type="hidden" name="productid" value="<?php echo $value['unique_id']?>">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="user" value="<?php echo $_SESSION['unique_id'];?>">
+                    </form>
 
                 </div>
+                <?php } else {?>
+                <div class="detail-five">
+                    <div class="cartbutton" id="cart-btn<?php echo $value['unique_id'];?>" style="visibility:hidden;">
+                    </div>
+                    <div class="cartbutton">
+                        <p>Sold Out</p>
+                    </div>
+                </div>
+                <?php }?>
             </div>
         </div>
+
+
+
+        <script>
+        let unique<?php echo $value['unique_id']?> = document.querySelector(
+            `.uni<?php echo $value['unique_id'];?>`);
+
+        const intervalform<?php echo $value['unique_id'];?> = document.querySelector(
+            `#cartform<?php echo $value['unique_id'];?>`);
+        const paybtn<?php echo $value['unique_id'];?> = document.querySelector(
+            `#cart-btn<?php echo $value['unique_id'];?>`);
+
+
+        intervalform<?php echo $value['unique_id'];?>.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+
+
+
+
+        function addToCart<?php echo $value['unique_id'];?>() {
+            let xhr = new XMLHttpRequest(); //creating XML Object
+            xhr.open("POST", "inserters/checkproduct.php", true);
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        if (data) {
+                            document.querySelector(`#cart-btn<?php echo $value['unique_id'];?>`).style.display =
+                                "none";
+                            document.querySelector(`#otherbtn<?php echo $value['unique_id'];?>`).style.visibility =
+                                "visible";
+                        } else {
+                            //console.log(data);
+                        }
+
+                    }
+                }
+            }
+            // we have to send the information through ajax to php
+            let formData = new FormData(intervalform<?php echo $value['unique_id'];?>); //creating new formData Object
+
+            xhr.send(formData); //sending the form data to php
+        }
+
+        paybtn<?php echo $value['unique_id'];?>.onclick = () => {
+            addToCart<?php echo $value['unique_id'];?>();
+        }
+        </script>
+
+
         <?php }}?>
-
-
     </div>
 
+    <?php if(isset($_SESSION['unique_id'])){?>
     <div class="price-container">
         <a href="cartreview.php">
             <div class="price">Continue</div>
         </a>
     </div>
+    <?php }?>
 
-    <script src="js/main.js"></script>
+    <?php }}else {?>
+
+    <div class="success">
+        <img src="images/asset_success.svg" alt="" />
+        <p>
+        <div class="estate_page_button action" onClick="load()" style="width: 200px; height: 30px;">Sign Up</div>
+        </p>
+    </div>
+    <?php }?>
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
+
     <script>
-    var searchimg = document.querySelector("#searchimg");
-    var close = document.querySelector("#closeicon");
-    var searchcontainer = document.querySelector('.inputs');
-    // var input = document.querySelector("#searchform input");
-    searchimg.onclick = () => {
-        searchcontainer.style.display = "block";
-        document.querySelector('.estatetext').style.display = "none";
-        document.querySelector('#searchimg').style.display = "none";
+    let searchIcon = document.querySelector('.search-icon');
+    searchIcon.onclick = () => {
+        location.href = "searchresult.php";
+    }
+
+    function load() {
+        location.href = "signup.html";
     }
 
 
-    close.onclick = () => {
-        searchcontainer.style.display = "none";
-        document.querySelector('.estatetext').style.display = "block";
-        document.querySelector('#searchimg').style.display = "block";
-    }
 
-    // console.log(input.value);
+    setInterval(() => {
+        let xls = new XMLHttpRequest();
+        xls.open("GET", "getcart.php", true);
+        xls.onload = () => {
+            if (xls.readyState === XMLHttpRequest.DONE) {
+                if (xls.status === 200) {
+                    let data = xls.response;
+                    let notify = document.querySelector('.cart-notify');
+                    if (data == 0) {
+                        notify.style.display = "none";
+                    }
 
-    // $("#searchform").submit(function(e) {
-    //     e.preventDefault();
-    // })
-
-    // $("#searchform input").keyup(function() {
-    //     // console.log(("#searchform input").val())
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "searching.php",
-    //         data: $("#searchform input"),
-    //         success: function(response) {
-    //             console.log(response);
-    //             $(".subscribed-lands").html(response);
-    //             //    console.log(response);
-    //         }
-
-    //     });
-    // })
+                    notify.innerHTML = data;
+                    //console.log(data);
+                }
+            }
+        }
+        xls.send();
+    }, 100);
     </script>
 </body>
 

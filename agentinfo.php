@@ -130,7 +130,12 @@ if(!isset($_GET['unique'])){
                     <span style="color: #000000!important; font-size: 16px;"><?php echo $agent['agent_name'];?> has
                         earned &#8358;<?php $percent = $agent['earning_percentage'];
                     $earnedprice = $percent / 100 * $value['product_price'];
-                    echo $earnedprice;
+                    $unitprice = $earnedprice;
+            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                              echo number_format($unitprice);
+                            } else {
+                                echo $unitprice;
+                            }
                     ?>
                     </span>
                 </p>

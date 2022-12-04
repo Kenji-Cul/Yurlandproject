@@ -1,5 +1,7 @@
 <?php 
-
+if(!isset($_GET['rand'])){
+    header("Location: index.php");
+}
 
 ?>
 <!DOCTYPE html>
@@ -78,9 +80,9 @@
     }
 
     input {
-        width: 2rem;
-        height: 2rem;
-        font-size: 1rem;
+        width: 5rem;
+        height: 5rem;
+        font-size: 3rem;
         text-align: center;
         border: none;
         border: 2px solid #808080;
@@ -89,14 +91,18 @@
         box-shadow: 28px 28px 56px #d9d9d9, -28px -28px 56px #ffffff; */
     }
 
-    @media only screen and (min-width: 600px) {
+    input {
+            margin-left: 1rem;
+        }
+
+    @media only screen and (max-width: 600px) {
         form {
             padding: 4rem 3rem;
         }
 
         input {
-            width: 4rem;
-            height: 4rem;
+            width: 2rem;
+            height: 2rem;
             font-size: 3rem;
         }
 

@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +39,18 @@
         <?php if($_GET['detect'] == "deletedp"){?>
         <p>Product Deleted Permanently!</p>
         <?php }?>
-        <a href="../subadmin.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <?php if($_GET['detect'] == "closed"){?>
+        <p>Product Closed Successfully!</p>
+        <?php }?>
+        <?php if($_GET['detect'] == "opened"){?>
+        <p>Product Opened Successfully!</p>
+        <?php }?>
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <a href="../allcustomers.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <?php }?>
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <a href="../allcustomers.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <?php }?>
     </div>
 </body>
 

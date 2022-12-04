@@ -12,6 +12,10 @@ if(empty($name) || empty($referralid) || empty($earningpercent) || empty($agent_
     $errormsg = "Please input all fields";
 }
 
+else if (!filter_var($agentemail, FILTER_VALIDATE_EMAIL)) {
+    $errormsg = "Invalid email format";
+  }
+
 else {
      $agent = new User;
      $checkagent = $agent->checkAgentEmailAddress($agentemail);

@@ -20,12 +20,24 @@ if(!isset($_SESSION['unique_id'])){
     <title>Yurland</title>
     <style>
     body {
-        height: 150vh;
+        position: relative;
+        height: 140vh;
         background-image: none;
+    }
+
+    .footerdiv {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 
     section .error {
         width: 60%;
+    }
+
+    .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
     }
 
     .btn {
@@ -63,11 +75,30 @@ if(!isset($_SESSION['unique_id'])){
                 }?>" />
             </div>
 
+            <div class="select-box">
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" class="radio" id="pass" name="docs" value="Passport" />
+                        <label for="pass">Passport</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" class="radio" id="drive" name="docs" value="License" />
+                        <label for="drive">Driver's license</label>
+                    </div>
+
+                </div>
+                <div class="selected">Choose Document</div>
+            </div>
+
+            <div class="input-div">
+                <input type="hidden" name="docsinput" value="" id="docsinput">
+            </div>
+
             <div class="input-div email">
-                <label>Passport</label>
-                <input type="text" name="text" placeholder="Upload your passport" disabled />
-                <input type="file" id="passport" placeholder="Upload your passport" name="passport" hidden="hidden"
-                    accept="image/*" />
+                <label>Document</label>
+                <input type="text" name="text" placeholder="Upload your document" disabled />
+                <input type="file" id="passport" placeholder="Upload your document" name="passport" hidden="hidden" />
                 <div id="createid">Upload</div>
             </div>
 
@@ -91,6 +122,16 @@ if(!isset($_SESSION['unique_id'])){
         </form>
     </section>
 
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
+
+    <script src="js/main.js"></script>
     <script>
     const form = document.querySelector("#upload-form"),
         fileInput = form.querySelector("#passport"),
@@ -103,6 +144,14 @@ if(!isset($_SESSION['unique_id'])){
     const error = document.querySelector(".error");
     uploadbtn.addEventListener("click", () => {
         uploaddiv.style.display = "block";
+    });
+
+    let valuecon = document.getElementById('docsinput')
+    let locations = document.getElementsByName("docs");
+    locations.forEach((element) => {
+        element.onclick = () => {
+            valuecon.value = element.value;
+        };
     });
 
     form.onsubmit = (e) => {
@@ -203,7 +252,7 @@ if(!isset($_SESSION['unique_id'])){
                     if (data === "success") {
                         //console.log("uploaded");
                         submitbtn.onclick = () => {
-                            location.href = "license.html";
+                            location.href = "successpage/docsuccess.html";
                         };
                     } else {
                         error.textContent = data;

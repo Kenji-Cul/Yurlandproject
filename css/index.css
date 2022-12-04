@@ -14,10 +14,6 @@
     --primary-main: #7e252b;
 }
 
-body {
-    height: 120vh;
-}
-
 a {
     text-decoration: none;
 }
@@ -52,7 +48,26 @@ header {
 header .logo {
     position: absolute;
     left: 24px;
-    top: 40px;
+    top: 30px;
+}
+
+.footerdiv {
+    height: 120px;
+    width: 100%;
+    background: #fee1e3;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    margin-top: 6em;
+    padding: 1em 0;
+}
+
+.footerdiv p {
+    font-weight: 400;
 }
 
 .landing_text_container {
@@ -167,7 +182,7 @@ section .error {
 }
 
 .estate_page_button {
-    margin: 1.7em 0;
+    margin: auto;
     margin-bottom: 1em;
     display: flex;
     flex-direction: row;
@@ -477,9 +492,7 @@ section .error {
 }
 
 .close {
-    position: absolute;
-    top: 1em;
-    right: 2em;
+    margin: 0 auto;
     cursor: pointer;
 }
 
@@ -495,7 +508,7 @@ section .error {
     padding: 2em;
     display: grid;
     grid-gap: 0.8em;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--primary-main);
     filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
     position: fixed;
     right: 0;
@@ -507,7 +520,7 @@ section .error {
 }
 
 .dropdown-links li a {
-    color: #ff6600;
+    color: #fff;
 }
 
 .profile-info {
@@ -645,7 +658,7 @@ section .error {
 .land-estate {
     border: 1px solid #d4d1d1;
     width: 240px;
-    height: 250px;
+    height: 350px;
     padding-top: 8px;
     display: flex;
     justify-content: top;
@@ -707,6 +720,7 @@ section .error {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    gap: 3em;
 }
 
 .subscribed-land {
@@ -731,6 +745,7 @@ section .error {
     justify-content: space-between;
     align-items: center;
     gap: 3em;
+    margin-top: -3em;
 }
 
 .subscribe-div .lands-count {
@@ -745,7 +760,7 @@ section .error {
     filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
     border-radius: 8px;
     width: 90%;
-    height: 150px;
+    height: 220px;
     position: relative;
 }
 
@@ -989,6 +1004,7 @@ section .error {
     grid-template-columns: repeat(2, 1fr);
     position: relative;
     margin: 0 2em;
+    gap: 1.5em;
 }
 
 .payment-image-div img {
@@ -1561,7 +1577,7 @@ section .error {
 
 .search-input {
     position: fixed;
-    top: 6em;
+    top: 8em;
     right: 2em;
     z-index: 20000;
     display: flex;
@@ -1749,7 +1765,7 @@ section .error {
 
 .update-data .notice-div {
     width: 80%;
-    height: 5em;
+    height: 3em;
     border-radius: 8px;
     background: #ffffff;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.12);
@@ -1939,6 +1955,15 @@ section .error {
     }
 }
 
+@media only screen and (max-width: 800px) {
+    .footerdiv p {
+        font-size: 10px;
+    }
+    .footerdiv {
+        margin-top: 10em;
+    }
+}
+
 @media only screen and (max-width: 500px) {
     .select-container {
         display: flex;
@@ -1996,6 +2021,27 @@ section .error {
     .company {
         position: absolute;
         bottom: -12em;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .price-desc {
+        padding: 2em 0.8em;
+    }
+    .subscribed-land {
+        height: 15em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
+    }
+    .subscribed-img {
+        filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
+        border-radius: 8px;
+        width: 100%;
+        height: 250px;
+        position: relative;
     }
 }
 

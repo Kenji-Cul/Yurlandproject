@@ -70,33 +70,35 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <div class="payment-count">15</div>
             </div>
         </div>
-
-        <div>
-            <img src="images/image2.svg" alt="payment image" />
-            <div class="payment-desc2">
-                <p>Referral Earnings</p>
-                <div class="payment-count">&#8358;
-                    <?php 
+        <?php 
     $user = new User;
     $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
     $customer = $user ->selectAgentCustomer($agent['referral_id']);
     if(!empty($customer)){
-        foreach($customer as $key => $value){
-         $total = $user->selectTotal($value['unique_id']);
+       
+       
+         $percent = $agent['earning_percentage'] / 100;
+         foreach($customer as $key => $value){
+              $total = $user->selectTotal($value['unique_id']);
          foreach($total as $key => $value){
-            $percent = $agent['earning_percentage'];
-            $earnedprice = $percent / 100 * $value;
-            $unitprice = $earnedprice;
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                              echo number_format($unitprice);
-                            } else {
-                                echo $unitprice;
-                            }
+            $earnedprice = $percent * $value;
+            $unitprice = $earnedprice; ?>
+        <input type="text" name="price" style="display:none;" value="<?php 
+        echo $unitprice;
+        ?>">
+        <?php
+            
          }
         }} else {
             echo "0";
         }
             ?>
+        <div>
+            <img src="images/image2.svg" alt="payment image" />
+            <div class="payment-desc2">
+                <p>Referral Earnings</p>
+                <div class="payment-count">&#8358;
+                    <span class="total"></span>
                 </div>
             </div>
         </div>
@@ -136,7 +138,25 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
     <script>
+    let total = document.getElementsByName("price");
+    let values = [];
+    total.forEach(element => {
+
+        values.push(parseInt(element.value));
+    });
+
+    let sum = 0;
+
+    for (let i = 0; i < values.length; i++) {
+        sum += values[i];
+    }
+    document.querySelector('.total').innerHTML = new Intl.NumberFormat().format(sum);
+
+
+
+
     let copybtn = document.querySelector('.copy-div');
+
 
     copybtn.onclick = () => {
         copyFunction();

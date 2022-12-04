@@ -10,7 +10,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 if(empty($name) || empty($password) || empty($number) || empty($email)){
     $errormsg = "Please input all fields";
-} else {
+}  else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errormsg = "Invalid email format";
+  }
+
+else {
     $agent = new User;
      $checksubadmin = $agent->checkSubadminEmailAddress($email);
      if(!empty($checksubadmin)){

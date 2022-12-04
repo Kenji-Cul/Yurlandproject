@@ -74,6 +74,27 @@ if(!isset($_SESSION['unique_id'])){
         width: 30em;
         height: 30em;
     }
+
+    .balance span {
+        font-size: 15px;
+    }
+
+    @media only screen and (max-width: 700px) {
+        .price {
+            min-width: 90px;
+            height: 30px;
+        }
+
+        .subscribed-img {
+            width: 100%;
+        }
+
+        .subscribed-land {
+            min-height: 30em;
+        }
+
+
+    }
     </style>
 </head>
 
@@ -81,7 +102,11 @@ if(!isset($_SESSION['unique_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
+            <?php if(isset($_SESSION['unique_id'])){?>
+            <a href="profile.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <?php } else {?>
             <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <?php }?>
         </div>
 
         <div class="nav">
@@ -91,7 +116,6 @@ if(!isset($_SESSION['unique_id'])){
                     <img src="images/cart.svg" alt="cart icon" />
                 </div>
             </a>
-            <img src="images/menu.svg" alt="menu icon" class="menu" />
         </div>
     </header>
 
@@ -99,15 +123,16 @@ if(!isset($_SESSION['unique_id'])){
         <div class="flex">
             <a href="profile.php"><img src="images/arrowleft.svg" alt="" /></a>
             <p>Lands</p>
+
         </div>
         <div class="subscribe-div">
             <p>No of Subscribed Lands</p>
             <div class="lands-count"><?php 
               $user = new User;
                 $nums = $user->selectSubNum($_SESSION['unique_id']);
-               foreach ($nums as $key => $value) {
-                echo $value;
-               }
+                $nums2 = $user->selectNewPaymentNum($_SESSION['unique_id']);
+               $nums3 =  $nums + $nums2;
+               echo $nums3;
                 ?></div>
         </div>
     </div>
@@ -123,15 +148,13 @@ if(!isset($_SESSION['unique_id'])){
              $landview = $land->selectPayment($_SESSION['unique_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
-                    
-              
+                  
+                   
             ?>
-        <div class="subscribed-land">
-            <?php if($value['payment_status'] == "Deleted"){?>
-            <div class="deleted-div">
-                <div class="price">Deleted</div>
-            </div>
-            <?php }?>
+
+        <?php if($value['payment_status'] == "Deleted"){?>
+        <div class="subscribed-land" style="display:none;">
+
             <div class="subscribed-img">
                 <img src="landimage/<?php echo $value['product_image'];?>" alt="estate image" />
                 <div class="ellipse">
@@ -150,43 +173,250 @@ if(!isset($_SESSION['unique_id'])){
                                echo number_format($unitprice);
                              } 
             ?> &nbsp;<span>daily</span></div>
-                <?php }else {?>
+
+                <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
                 <div class="price">&#8358;<?php 
+             $unitprice = $value['sub_payment'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } 
+            ?> &nbsp;<span>daily</span></div>
+
+                <?php    }
+                else {?>
+                <div class="price"><?php 
+            if($value['balance'] != "0" && $value['payment_method'] == "NewPayment"){ ?>
+                    <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&remprice=<?php echo $value['balance'];?>"
+                        style="color: #7e252b;">Pay Up</a>
+                    <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
+                    <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
+                    <form id="priceform">
+                        <input type="hidden" value="<?php 
+                        $increase = 2 / 100 * $value['sub_payment'];
+                        $priceincrement = $increase + $value['sub_payment'];
+                        echo $priceincrement;
+                        ?>" id="increase" name="increase">
+                        <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
+                        <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
+                    </form>
+                    <script>
+                    let dateInput = document.querySelector('#date');
+                    let checkBal = document.querySelector('#check');
+                    var countDownDate = new Date(dateInput.value).getTime();
+                    var now = new Date().getTime();
+                    var timeleft = countDownDate - now;
+
+                    var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                    //console.log(timeleft);
+                    if (timeleft < 0 && checkBal.value != 0) {
+                        let priceform = document.querySelector('#priceform');
+
+
+                        function increasePrice() {
+                            let xhr = new XMLHttpRequest(); //creating XML Object
+                            xhr.open("POST", "increase.php", true);
+                            xhr.onload = () => {
+                                if (xhr.readyState === XMLHttpRequest.DONE) {
+                                    if (xhr.status === 200) {
+                                        let data = xhr.response;
+                                        console.log(data);
+                                    }
+                                }
+                            }
+                            // we have to send the information through ajax to php
+                            let formData = new FormData(priceform); //creating new formData Object
+
+                            xhr.send(formData);
+                        }
+                        // 2592000
+
+                        setInterval(() => {
+                            increasePrice();
+                        }, 2592000000);
+                    }
+                    </script>
+                    <?php    } else {
+            ?>
+
+
+                    &#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } 
-            ?></div>
+                            }?> &nbsp;
+                </div>
                 <?php }?>
+
             </div>
             <div class="subscribed-details"
                 style="flex-direction: column; align-items: center; justify-content: center; gap: 1em;">
                 <div class="balance" style="display: flex;
                 align-items: center; justify-content center; gap: 3em; text-align: center; width: 100%; ">
                     <p class="amountpaid"><span>Amount
-                            Paid:</span>&nbsp;<span><?php 
+                            Paid:</span>&nbsp;&#8358;<span><?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } 
             ?></span></p>
-                    <p class="balance"><span>Balance:</span>&nbsp;<span><?php if($value['payment_method'] == "Outright"){
-                        echo 0;
-                    }?></span></p>
+                    <p class="balance"><span>Balance:</span>&nbsp;&#8358;<span><?php 
+                        $unprice = $value['balance'];
+                        if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
+                                          echo number_format($unprice);
+                                        } 
+                                        if($unprice == "0"){
+                                            echo "0";
+                                        }
+                    ?></span></p>
                 </div>
                 <div class="balance" style="display: flex;
                 align-items: center; justify-content center; gap: 3em; text-align: center; width: 100%;">
                     <p class="amountpaid"><span>Start
                             Date:</span>&nbsp;<span><?php echo $value['payment_day'];?></span>-<span><?php echo $value['payment_month'];?></span>-<span><?php echo $value['payment_year'];?></span>
                     </p>
-                    <?php if($value['payment_method'] == "Subscription"){  ?>
-                    <p class="balance"><span>Expected End Date:</span>&nbsp;<span>1-10-2023</span></p>
+                    <?php if($value['payment_method'] == "Subscription" || $value['payment_status'] == "Payed"){  ?>
+                    <p class="balance"><span>Expected End
+                            Date:</span>&nbsp;<span><?php echo $value['sub_period'];?></span></p>
                     <?php }?>
                 </div>
             </div>
         </div>
+        <?php } else {?>
 
-        <?php }} ?>
+        <div class="subscribed-land">
+
+            <div class="subscribed-img">
+                <img src="landimage/<?php echo $value['product_image'];?>" alt="estate image" />
+                <div class="ellipse">
+                    <i class="ri-heart-fill"></i>
+                </div>
+            </div>
+            <div class="subscribed-details">
+                <div>
+                    <p class="land-name"><?php echo $value['product_name'];?></p>
+                    <p class="land-location"><?php echo $value['product_location'];?></p>
+                </div>
+                <?php if($value['payment_method'] == "Subscription"){?>
+                <div class="price">&#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } 
+            ?> &nbsp;<span>daily</span></div>
+
+                <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
+                <div class="price">&#8358;<?php 
+             $unitprice = $value['sub_payment'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } 
+            ?> &nbsp;<span>daily</span></div>
+
+                <?php    }
+                else {?>
+                <div class="price"><?php 
+            if($value['balance'] != "0" && $value['payment_method'] == "NewPayment"){ ?>
+                    <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&remprice=<?php echo $value['balance'];?>"
+                        style="color: #7e252b;">Pay Up</a>
+                    <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
+                    <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
+                    <form id="priceform">
+                        <input type="hidden" value="<?php 
+                        $increase = 2 / 100 * $value['sub_payment'];
+                        $priceincrement = $increase + $value['sub_payment'];
+                        echo $priceincrement;
+                        ?>" id="increase" name="increase">
+                        <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
+                        <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
+                    </form>
+                    <script>
+                    let dateInput = document.querySelector('#date');
+                    let checkBal = document.querySelector('#check');
+                    var countDownDate = new Date(dateInput.value).getTime();
+                    var now = new Date().getTime();
+                    var timeleft = countDownDate - now;
+
+                    var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                    //console.log(timeleft);
+                    if (timeleft < 0 && checkBal.value != 0) {
+                        let priceform = document.querySelector('#priceform');
+
+
+                        function increasePrice() {
+                            let xhr = new XMLHttpRequest(); //creating XML Object
+                            xhr.open("POST", "increase.php", true);
+                            xhr.onload = () => {
+                                if (xhr.readyState === XMLHttpRequest.DONE) {
+                                    if (xhr.status === 200) {
+                                        let data = xhr.response;
+                                        console.log(data);
+                                    }
+                                }
+                            }
+                            // we have to send the information through ajax to php
+                            let formData = new FormData(priceform); //creating new formData Object
+
+                            xhr.send(formData);
+                        }
+                        // 2592000
+
+                        setInterval(() => {
+                            increasePrice();
+                        }, 2592000000);
+                    }
+                    </script>
+                    <?php    } else {
+            ?>
+
+
+                    &#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } 
+                            }?> &nbsp;
+                </div>
+                <?php }?>
+
+            </div>
+            <div class="subscribed-details"
+                style="flex-direction: column; align-items: center; justify-content: center; gap: 1em;">
+                <div class="balance" style="display: flex;
+                align-items: center; justify-content center; gap: 3em; text-align: center; width: 100%; ">
+                    <p class="amountpaid"><span>Amount
+                            Paid:</span>&nbsp;&#8358;<span><?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } 
+            ?></span></p>
+                    <p class="balance"><span>Balance:</span>&nbsp;&#8358;<span><?php 
+                        $unprice = $value['balance'];
+                        if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
+                                          echo number_format($unprice);
+                                        } 
+                                        if($unprice == "0"){
+                                            echo "0";
+                                        }
+                    ?></span></p>
+                </div>
+                <div class="balance" style="display: flex;
+                align-items: center; justify-content center; gap: 3em; text-align: center; width: 100%;">
+                    <p class="amountpaid"><span>Start
+                            Date:</span>&nbsp;<span><?php echo $value['payment_day'];?></span>-<span><?php echo $value['payment_month'];?></span>-<span><?php echo $value['payment_year'];?></span>
+                    </p>
+                    <?php if($value['payment_method'] == "Subscription" || $value['payment_status'] == "Payed"){  ?>
+                    <p class="balance"><span>Expected End
+                            Date:</span>&nbsp;<span><?php echo $value['sub_period'];?></span></p>
+                    <?php }?>
+                </div>
+            </div>
+        </div>
+        <?php }?>
+        <?php  } ?>
+        <?php }?>
+
 
 
     </div>

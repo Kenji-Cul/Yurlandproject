@@ -18,7 +18,33 @@ include "projectlog.php";
         background-repeat: no-repeat;
         background-size: 100%;
         overflow-x: hidden;
-        height: 120vh;
+    }
+
+    .price {
+        border: none;
+        border-radius: 45px;
+        padding: 8.45588px 13.5294px;
+        width: 140px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background-color: var(--primary-main);
+        cursor: pointer;
+    }
+
+    .price a {
+        color: #fff;
+    }
+
+
+
+
+    @media only screen and (max-width: 800px) {
+        .company {
+            margin-top: 100px !important;
+        }
     }
     </style>
 </head>
@@ -26,10 +52,11 @@ include "projectlog.php";
 <body class="body">
 
     <!-- Header -->
-    <header>
+    <header class="signup">
         <div class="logo">
             <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
         </div>
+
     </header>
 
     <!-- Landing Page Text -->
@@ -37,18 +64,13 @@ include "projectlog.php";
     <section class="landing_text_container">
         <p class="landing_text">
             Welcome, let's help you</p>
-        <p class="landing_text">find yurland</p>
+        <p class="landing_text">find yur<span style="text-transform: uppercase;">land</span></p>
     </section>
 
     <!-- Landing Form Container -->
     <?php 
     $user = new User;
-    $lowest = $user->selectLowestPrice(); 
-    $highest = $user->selectHighestPrice(); 
-    $random = $user->selectMinOneMonthPrice(); 
-    $random2 = $user->selectSixMonthPrice(); 
-    $random3 = $user->selectOneMonthPrice(); 
-    $random4 = $user->selectMinPrice(); ?>
+    ?>
     <div class="value" style="visibility: hidden"></div>
     <div class="value2" style="visibility: hidden"></div>
     <div class="value3" style="visibility: hidden"></div>
@@ -58,123 +80,31 @@ include "projectlog.php";
                 <div class="select-box">
                     <div class="options-container">
                         <div class="option">
-                            <input type="radio" class="radio" id="priceone" name="price" value="<?php 
-                              if(!empty($lowest)){
-                                foreach ($lowest as $key => $value) {
-                                        echo $value;
-                                   };
-                              }
-                            ?>" />
-                            <label for="priceone">&#8358;<?php 
-                              if(!empty($lowest)){
-                                foreach ($lowest as $key => $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo number_format($value);
-                                      }
-                                   };
-                              }
-                            ?></label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" class="radio" id="pricetwo" name="price" value="<?php 
-                              if(!empty($random)){
-                                foreach ($random as  $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo $value;
-                                      }
-                                   };
-                              }
-                            ?>" />
-                            <label for="pricetwo">&#8358;<?php 
-                              if(!empty($random)){
-                                foreach ($random as  $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo number_format($value);
-                                      }
-                                   };
-                              }
-                            ?></label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" class="radio" id="pricethree" name="price" value="<?php 
-                              if(!empty($random2)){
-                                foreach ($random2 as $key => $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo $value;
-                                      }
-                                   };
-                              }
-                            ?>" />
-                            <label for="pricethree">&#8358;<?php 
-                              if(!empty($random2)){
-                                foreach ($random2 as $key => $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo number_format($value);
-                                      }
-                                   };
-                              }
-                            ?></label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" class="radio" id="art" name="price" value="<?php 
-                              if(!empty($random3)){
-                                foreach ($random3 as $key => $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo $value;
-                                      }
-                                   };
-                              }
-                            ?>" />
-                            <label for="pricefour">&#8358;<?php 
-                              if(!empty($random3)){
-                                foreach ($random3 as $key => $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo number_format($value);
-                                      }
-                                   };
-                              }
-                            ?></label>
+                            <input type="radio" class="radio" id="budget1" name="budget" value="250,000 - 500,000" />
+                            <label for="budget1">250,000 - 500,000</label>
                         </div>
 
                         <div class="option">
-                            <input type="radio" class="radio" id="art" name="price" value="<?php 
-                              if(!empty($random4)){
-                                foreach ($random4 as $key => $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo $value;
-                                      }
-                                   };
-                              }
-                            ?>" />
-                            <label for="pricefour">&#8358;<?php 
-                              if(!empty($random4)){
-                                foreach ($random4 as $key => $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo number_format($value);
-                                      }
-                                   };
-                              }
-                            ?></label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" class="radio" id="pricefive" name="price" value="<?php 
-                              if(!empty($highest)){
-                                foreach ($highest as $key => $value) {
-                                        echo $value;
-                                   };
-                              }
-                            ?>" />
-                            <label for="pricefive">&#8358;<?php 
-                              if(!empty($highest)){
-                                foreach ($highest as $key => $value) {
-                                     if($value > 999 || $value > 9999 || $value > 99999 || $value > 999999){
-                                        echo number_format($value);
-                                      }
-                                   };
-                              }
-                            ?></label>
+                            <input type="radio" class="radio" id="budget2" name="budget" value="500,000 - 1,500,000" />
+                            <label for="budget2">500,000 - 1,500,000</label>
                         </div>
 
+                        <div class="option">
+                            <input type="radio" class="radio" id="budget3" name="budget"
+                                value="1,500,000 - 3,000,000" />
+                            <label for="budget3">1,500,000 - 3,000,000</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="budget4" name="budget"
+                                value="3,000,000 - 5,000,000" />
+                            <label for="budget4">3,000,000 - 5,000,000</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="budget5" name="budget" value="5,000,000 - Above" />
+                            <label for="budget5">5,000,000 - Above</label>
+                        </div>
                     </div>
                     <div class="selected">Budget</div>
                 </div>
@@ -225,67 +155,73 @@ include "projectlog.php";
         </form>
 
 
+
     </section>
 
-    <script src="js/main.js"></script>
-    <script>
-    let formbtn = document.querySelector('.landing_form .landing_page_button');
-    let form = document.querySelector('#landing-form');
-    let valuediv = document.querySelector(".value");
-    let valuediv2 = document.querySelector(".value2");
-    let valuediv3 = document.querySelector(".value3");
-
-    form.onsubmit = (e) => {
-        e.preventDefault();
-    }
 
 
-    let price = document.getElementsByName("price");
-    price.forEach((element) => {
-        element.onclick = () => {
-            valuediv.innerHTML = element.value;
-        };
-    });
-
-    let locations = document.getElementsByName("location");
-    locations.forEach((element) => {
-        element.onclick = () => {
-            valuediv2.innerHTML = element.value;
-        };
-    });
-
-    let purpose = document.getElementsByName("purpose");
-    purpose.forEach((element) => {
-        element.onclick = () => {
-            valuediv3.innerHTML = element.value;
-        };
-    });
 
 
-    // function checkPriceMode() {
-    //     let xhr = new XMLHttpRequest(); //creating XML Object
-    //     xhr.onload = () => {
-    //         if (xhr.readyState === XMLHttpRequest.DONE) {
-    //             if (xhr.status === 200) {
-    //                  {;
-    //                 }
 
-    //             }
-    //         }
-    //     };
-    //     // we have to send the information through ajax to php
-    //     let formData = new FormData(form); //creating new formData Object
-
-    //     xhr.send(formData); //sending the form data to php
-    // }
-
-    formbtn.onclick = () => {
-        if ((valuediv.innerHTML != "") || (valuediv2.innerHTML != "") || (valuediv3.innerHTML != "")) {
-            location.href =
-                `preference.php?cost=${valuediv.innerHTML}&loc=${valuediv2.innerHTML}&pose=${valuediv3.innerHTML}&hver=0838784920182800201oajfnfkfakjaifihfaiyeyywwmcmhshsj&name=0202002028484`;
-        }
-    };
-    </script>
 </body>
+<script src="js/main.js"></script>
+<script>
+let formbtn = document.querySelector('.landing_form .landing_page_button');
+let form = document.querySelector('#landing-form');
+let valuediv = document.querySelector(".value");
+let valuediv2 = document.querySelector(".value2");
+let valuediv3 = document.querySelector(".value3");
+
+form.onsubmit = (e) => {
+    e.preventDefault();
+}
+
+
+let price = document.getElementsByName("budget");
+price.forEach((element) => {
+    element.onclick = () => {
+        valuediv.innerHTML = element.value;
+    };
+});
+
+let locations = document.getElementsByName("location");
+locations.forEach((element) => {
+    element.onclick = () => {
+        valuediv2.innerHTML = element.value;
+    };
+});
+
+let purpose = document.getElementsByName("purpose");
+purpose.forEach((element) => {
+    element.onclick = () => {
+        valuediv3.innerHTML = element.value;
+    };
+});
+
+
+// function checkPriceMode() {
+//     let xhr = new XMLHttpRequest(); //creating XML Object
+//     xhr.onload = () => {
+//         if (xhr.readyState === XMLHttpRequest.DONE) {
+//             if (xhr.status === 200) {
+//                  {;
+//                 }
+
+//             }
+//         }
+//     };
+//     // we have to send the information through ajax to php
+//     let formData = new FormData(form); //creating new formData Object
+
+//     xhr.send(formData); //sending the form data to php
+// }
+
+formbtn.onclick = () => {
+    if ((valuediv.innerHTML != "") || (valuediv2.innerHTML != "") || (valuediv3.innerHTML != "")) {
+        location.href =
+            `preference.php?cost=${valuediv.innerHTML}&loc=${valuediv2.innerHTML}&pose=${valuediv3.innerHTML}&hver=0838784920182800201oajfnfkfakjaifihfaiyeyywwmcmhshsj&name=0202002028484`;
+    }
+};
+</script>
 
 </html>

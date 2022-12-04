@@ -20,8 +20,15 @@ if(!isset($_SESSION['unique_id'])){
     <title>Yurland</title>
     <style>
     body {
-        height: 170vh;
+        position: relative;
+        height: 180vh;
         background-image: none;
+    }
+
+    .footerdiv {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 
     .select-box {
@@ -151,6 +158,15 @@ if(!isset($_SESSION['unique_id'])){
             </div>
         </form>
     </section>
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
     <script src="js/main.js"></script>
     <script>

@@ -67,128 +67,90 @@ if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
             </div>
         </div>
 
-        <div class="payment-mode">
-            <form action="" id="intervalform">
-                <div class="select-box">
-                    <div class="options-container">
-                        <div class="option">
-                            <input type="radio" class="radio" id="onemonth" name="mode" value="onemonth" />
-                            <label for="onemonth">One Month</label>
-                        </div>
 
-                        <div class="option">
-                            <input type="radio" class="radio" id="threemonth" name="mode" value="threemonths" />
-                            <label for="threemonth">Three Months</label>
-                        </div>
+        <?php }}?>
 
-                        <div class="option">
-                            <input type="radio" class="radio" id="sixmonth" name="mode" value="sixmonths" />
-                            <label for="sixmonth">Six Months</label>
-                        </div>
-
-
-                        <div class="option">
-                            <input type="radio" class="radio" id="twelvemonth" name="mode" value="twelvemonths" />
-                            <label for="twelvemonth">Twelve Months</label>
-                        </div>
-
-                        <div class="option">
-                            <input type="radio" class="radio" id="eighteenmonth" name="mode" value="eighteenmonths" />
-                            <label for="eighteenmonth">Eighteen Months</label>
-                        </div>
-                    </div>
-                    <div class="selected">Payment Interval</div>
-                </div>
-
-                <div class="btn-container">
-                    <button class="estate_page_button" type="submit">Subscribe</button>
-                </div>
-
-            </form>
-
-            <?php }}?>
-
-        </div>
+    </div>
 
 
 
 
-        <script src="js/main.js"></script>
-        <script>
-        const intervalform = document.querySelector('#intervalform');
-        const paybtn = document.querySelector('.estate_page_button');
-        intervalform.onsubmit = (e) => {
-            e.preventDefault();
-        }
-        // const selectedAll = document.querySelectorAll(".selected");
+    <script src="js/main.js"></script>
+    <script>
+    const intervalform = document.querySelector('#intervalform');
+    const paybtn = document.querySelector('.estate_page_button');
+    intervalform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+    // const selectedAll = document.querySelectorAll(".selected");
 
-        // selectedAll.forEach((selected) => {
-        //     const optionsContainer = selected.previousElementSibling;
-        //     const searchBox = selected.nextElementSibling;
+    // selectedAll.forEach((selected) => {
+    //     const optionsContainer = selected.previousElementSibling;
+    //     const searchBox = selected.nextElementSibling;
 
-        //     const optionsList = optionsContainer.querySelectorAll(".option");
+    //     const optionsList = optionsContainer.querySelectorAll(".option");
 
-        //     selected.addEventListener("click", () => {
-        //         if (optionsContainer.classList.contains("active")) {
-        //             optionsContainer.classList.remove("active");
-        //         } else {
-        //             let currentActive = document.querySelector(".options-container.active");
+    //     selected.addEventListener("click", () => {
+    //         if (optionsContainer.classList.contains("active")) {
+    //             optionsContainer.classList.remove("active");
+    //         } else {
+    //             let currentActive = document.querySelector(".options-container.active");
 
-        //             if (currentActive) {
-        //                 currentActive.classList.remove("active");
-        //             }
+    //             if (currentActive) {
+    //                 currentActive.classList.remove("active");
+    //             }
 
-        //             optionsContainer.classList.add("active");
-        //         }
+    //             optionsContainer.classList.add("active");
+    //         }
 
 
 
-        //     });
+    //     });
 
-        //     optionsList.forEach((o) => {
-        //         o.addEventListener("click", () => {
-        //             selected.innerHTML = o.querySelector("label").innerHTML;
-        //             optionsContainer.classList.remove("active");
-        //         });
-        //     });
+    //     optionsList.forEach((o) => {
+    //         o.addEventListener("click", () => {
+    //             selected.innerHTML = o.querySelector("label").innerHTML;
+    //             optionsContainer.classList.remove("active");
+    //         });
+    //     });
 
 
 
 
 
-        // });
+    // });
 
-        const params = new URLSearchParams(window.location.search)
-        const unique = params.get('uniqueid')
-        const unit = params.get('unit')
-        const total = params.get('tot')
+    const params = new URLSearchParams(window.location.search)
+    const unique = params.get('uniqueid')
+    const unit = params.get('unit')
+    const total = params.get('tot')
 
-        function checkInterval() {
-            let xhr = new XMLHttpRequest(); //creating XML Object
-            xhr.open("POST", "getdata.php", true);
-            xhr.onload = () => {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        let data = xhr.response;
-                        console.log(data);
-                        if (data) {
-                            location.href =
-                                `intervalnum.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${total}&pice=029283837iiagj098655454&unit=${unit}&con=9298383737`;
-                        }
-
+    function checkInterval() {
+        let xhr = new XMLHttpRequest(); //creating XML Object
+        xhr.open("POST", "getdata.php", true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    console.log(data);
+                    if (data) {
+                        location.href =
+                            `intervalnum.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${total}&pice=029283837iiagj098655454&unit=${unit}&con=9298383737`;
                     }
+
                 }
             }
-            // we have to send the information through ajax to php
-            let formData = new FormData(intervalform); //creating new formData Object
-
-            xhr.send(formData); //sending the form data to php
         }
+        // we have to send the information through ajax to php
+        let formData = new FormData(intervalform); //creating new formData Object
 
-        paybtn.onclick = () => {
-            checkInterval();
-        }
-        </script>
+        xhr.send(formData); //sending the form data to php
+    }
+
+    paybtn.onclick = () => {
+        checkInterval();
+    }
+    </script>
 </body>
 
 </html>

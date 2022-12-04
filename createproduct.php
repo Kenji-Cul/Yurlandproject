@@ -88,6 +88,36 @@ if(!isset($_GET['pose'])){
                 <div class="selected">Select Location</div>
             </div>
 
+            <div class="select-box">
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" class="radio" id="budget1" name="budget" value="250,000 - 500,000" />
+                        <label for="budget1">250,000 - 500,000</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" class="radio" id="budget2" name="budget" value="500,000 - 1,500,000" />
+                        <label for="budget2">500,000 - 1,500,000</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" class="radio" id="budget3" name="budget" value="1,500,000 - 3,000,000" />
+                        <label for="budget3">1,500,000 - 3,000,000</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" class="radio" id="budget4" name="budget" value="3,000,000 - 5,000,000" />
+                        <label for="budget4">3,000,000 - 5,000,000</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="radio" class="radio" id="budget5" name="budget" value="5,000,000 - Above" />
+                        <label for="budget5">5,000,000 - Above</label>
+                    </div>
+                </div>
+                <div class="selected">Select Budget</div>
+            </div>
+
             <div class="input-div name">
                 <label for="size">Estate Size</label>
                 <input type="text" id="size" placeholder="Input land size" name="size" />
@@ -128,7 +158,7 @@ if(!isset($_GET['pose'])){
 
             <?php  if($_GET['mode'] ==="outsub"){?>
             <div class="input-div name">
-                <label for="outrightprice">Outright Price</label>
+                <label for="outrytprice">Outright Price</label>
                 <input type="number" id="outrytprice" placeholder="Input outright price" name="outrightprice" />
             </div>
 
@@ -181,6 +211,7 @@ if(!isset($_GET['pose'])){
             <p class="error">Please input all fields</p>
             <button class="btn" type="submit">Create Land</button>
             <div class="value" style="visibility: hidden"></div>
+            <div class="value2" style="visibility: hidden"></div>
 
             <div style="display: none">
                 <img src="images/loading.svg" alt="" class="loading-img" />
@@ -201,6 +232,7 @@ if(!isset($_GET['pose'])){
     const error = document.querySelector(".error");
     let radio = document.querySelector('.rad input');
     let valuediv = document.querySelector(".value");
+    let valuediv2 = document.querySelector(".value2");
     uploadbtn.addEventListener("click", () => {
         uploaddiv.style.display = "block";
     });
@@ -209,6 +241,13 @@ if(!isset($_GET['pose'])){
     locations.forEach((element) => {
         element.onclick = () => {
             valuediv.innerHTML = element.value;
+        };
+    });
+
+    let budgets = document.getElementsByName("budget");
+    budgets.forEach((element) => {
+        element.onclick = () => {
+            valuediv2.innerHTML = element.value;
         };
     });
 
@@ -329,16 +368,19 @@ if(!isset($_GET['pose'])){
         createRandomString(10);
         let xhr = new XMLHttpRequest();
         if (document.body.contains(document.querySelector("#outrightprice"))) {
-            xhr.open("POST", `inserters/uploadproduct2.php?state=${valuediv.innerHTML}`);
+            xhr.open("POST",
+                `inserters/uploadproduct2.php?state=${valuediv.innerHTML}&budget=${valuediv2.innerHTML}`);
         }
 
         if (document.body.contains(document.querySelector("#eighteenmonthprice"))) {
-            xhr.open("POST", `inserters/uploadproduct3.php?state=${valuediv.innerHTML}`);
+            xhr.open("POST",
+                `inserters/uploadproduct3.php?state=${valuediv.innerHTML}&budget=${valuediv2.innerHTML}`);
         }
 
         if (document.body.contains(document.querySelector("#outrytprice")) && document.body.contains(document
-                .querySelector("#threemonthprice"))) {
-            xhr.open("POST", `inserters/uploadproduct.php?state=${valuediv.innerHTML}`);
+                .querySelector("#eighteenmonthprice"))) {
+            xhr.open("POST",
+                `inserters/uploadproduct.php?state=${valuediv.innerHTML}&budget=${valuediv2.innerHTML}`);
         }
 
 

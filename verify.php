@@ -48,8 +48,69 @@ if('success' == $trans->data->status){
     $unique = $trans->data->metadata->custom_fields[0]->value;
 
     $deductedunit = $trans->data->metadata->custom_fields[1]->value;
+    $boughtunit = $trans->data->metadata->custom_fields[2]->value;
+    $uniqueperson = $trans->data->metadata->custom_fields[3]->value;
+    $product_name = $trans->data->metadata->custom_fields[4]->value;
+    $paymentmonth = $trans->data->metadata->custom_fields[5]->value;
+    $paymentday = $trans->data->metadata->custom_fields[6]->value;
+    $paymentyear = $trans->data->metadata->custom_fields[7]->value;
+    $paymenttime = $trans->data->metadata->custom_fields[8]->value;
+    $productlocation = $trans->data->metadata->custom_fields[9]->value;
+    $price = $trans->data->metadata->custom_fields[10]->value;
+    $image = $trans->data->metadata->custom_fields[11]->value;
+    $paymentmethod = $trans->data->metadata->custom_fields[12]->value;
+    $unit = $trans->data->metadata->custom_fields[13]->value;
+    $paymenttype = $trans->data->metadata->custom_fields[14]->value;
+   
    $user = new User;
-   $update = $user->updateUnit($deductedunit,$unique);
+   if($paymenttype == "outrightpayment"){
+   if($unit % 4 == 0){
+    $unit_added = $unit / 4;
+    $added_unit = $unit + $unit_added;
+
+$insertpayment = $user->insertPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
+} else {
+   $insertpayment = $user->insertPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod);
+}
+   }
+
+   if($paymenttype == "newpayment"){
+    $newprice = $trans->data->metadata->custom_fields[15]->value;
+    $newpay = $trans->data->metadata->custom_fields[16]->value;
+    $period = $trans->data->metadata->custom_fields[17]->value;
+    $subperiod = $trans->data->metadata->custom_fields[18]->value;
+   
+    
+  
+if($unit % 4 == 0){
+    $unit_added = $unit / 4;
+    $added_unit = $unit + $unit_added;
+
+$checklastpayment = $user->selectLastPay($uniqueperson,$unique);
+if(empty($checklastpayment)){
+    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay);
+} else {
+    $addedprice = $checklastpayment['product_price'] + $newpay;
+$updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$added_unit,$payment_method,$newprice,$period,$subperiod);
+      
+}
+
+$updatenewpayment = $user->updatePayment($unique,$uniqueperson);
+} else {
+    $checklastpayment = $user->selectLastPay($uniqueperson,$unique);
+    if(empty($checklastpayment)){
+   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay);
+    } else {
+        $addedprice = $checklastpayment['product_price'] + $newpay;
+    $updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$newprice,$period,$subperiod);
+          
+    }
+    
+   $updatenewpayment = $user->updatePayment($unique,$uniqueperson);
+}
+   }
+
+   $update = $user->updateUnit($deductedunit,$unique,$boughtunit);
    if(isset($_SESSION['unique_id'])){
    $delete = $user->DeleteCartId($unique,$_SESSION['unique_id']);
    if (isset($unique) && is_numeric($unique) && isset($unique) && isset($_SESSION['cart'][$unique])) {
@@ -59,11 +120,11 @@ if('success' == $trans->data->status){
 }
    }
 
-if(isset($_SESSION['uniqueagent_id'])){
-    $delete = $user->DeleteAgentCartId($unique,$_SESSION['uniqueagent_id']);
-    if (isset($unique) && is_numeric($unique) && isset($unique) && isset($_SESSION['agentcart'][$unique])) {
+if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
+    $delete = $user->DeleteCartId($unique,$uniqueperson);
+    if (isset($unique) && is_numeric($unique) && isset($unique) && isset($_SESSION['cart'][$unique])) {
      // Remove the product from the shopping cart
-     unset($_SESSION['agentcart'][$unique]);
+     unset($_SESSION['cart'][$unique]);
 }
 }
     // $email = $trans->data->customer->email;
@@ -119,10 +180,10 @@ if(isset($_SESSION['uniqueagent_id'])){
         <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>
         <?php if(isset($_SESSION['uniqueagent_id'])){?>
-        <a href="agentprofile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <a href="mycustomers.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>
         <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
-        <a href="subadmin.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <a href="allcustomers.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>
     </div>
 

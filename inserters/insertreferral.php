@@ -12,6 +12,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 if(empty($referral) || empty($email) || empty($firstname) || empty($lastname) || empty($phone_num)){
     $errormsg = "Please Fill in your Data";
 }  
+
+else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errormsg = "Invalid email format";
+  }
     else {
     $user = new User;
     $emailuser = $user->checkEmailAddress(check_input($email));

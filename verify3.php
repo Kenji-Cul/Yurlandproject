@@ -38,9 +38,16 @@ session_start();
         <?php if(isset($_GET['error'])){?>
         <p>No Internet Connection!</p>
         <?php }?>
-        <?php if(isset($_SESSION['unique_id'])){?>
-        <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <?php if(isset($_GET['message'])){?>
+        <p>Please complete your land payment</p>
         <?php }?>
+        <?php if(isset($_SESSION['unique_id'])){
+            if(isset($_GET['message'])){
+            ?>
+        <a href="mylands.php"><button class="landing_page_button2">Make Payment</button></a>
+        <?php } else { ?>
+            <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+     <?php   }}?>
         <?php if(isset($_SESSION['uniqueagent_id'])){?>
         <a href="agentprofile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>

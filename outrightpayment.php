@@ -30,6 +30,7 @@ if(isset($_POST["submit"])){
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
     $deducted_unit = $value['product_unit'] - $_GET['unit'];
+    $boughtunit = $_GET['unit']  + $value['bought_units'];
     $productlocation = $value['product_location'];
     $image = $value['product_image'];
     $paymentmonth = date("M");
@@ -61,6 +62,83 @@ if(isset($_POST["submit"])){
                 "display_name" => "Deducted Unit",
                 "variable_name" => "unit",
                 "value" => $deducted_unit
+            ],
+
+            [
+                "display_name" => "Bought Units",
+                "variable_name" => "boughtunit",
+                "value" => $boughtunit
+            ],
+
+            [
+                "display_name" => "Unique Person",
+                "variable_name" => "person",
+                "value" => $uniqueperson
+            ],
+
+            [
+                "display_name" => "Product Name",
+                "variable_name" => "productname",
+                "value" => $product_name
+            ],
+
+            [
+                "display_name" => "Payment Month",
+                "variable_name" => "paymonth",
+                "value" => $paymentmonth
+            ],
+
+            [
+                "display_name" => "Payment Day",
+                "variable_name" => "payday",
+                "value" => $paymentday
+            ],
+
+            [
+                "display_name" => "Payment Year",
+                "variable_name" => "payyear",
+                "value" => $paymentyear
+            ],
+
+            [
+                "display_name" => "Payment Time",
+                "variable_name" => "paytime",
+                "value" => $paymenttime
+            ],
+
+            [
+                "display_name" => "Product Location",
+                "variable_name" => "productlocation",
+                "value" => $productlocation
+            ],
+
+            [
+                "display_name" => "Price",
+                "variable_name" => "price",
+                "value" => $price
+            ],
+
+            [
+                "display_name" => "Product Image",
+                "variable_name" => "prodimage",
+                "value" => $image
+            ],
+            [
+                "display_name" => "Payment Method",
+                "variable_name" => "paymethod",
+                "value" => $paymentmethod
+            ],
+
+            [
+                "display_name" => "Payment Unit",
+                "variable_name" => "payunit",
+                "value" => $_GET['unit']
+            ],
+
+            [
+                "display_name" => "Payment Type",
+                "variable_name" => "payunit",
+                "value" => "outrightpayment"
             ],
 
           ]
@@ -107,15 +185,8 @@ if(isset($_POST["submit"])){
     if($result){
     $transaction = json_decode($result);
     //Automatically redirect customers to the payment page
-    header("Location: ".$transaction->data->authorization_url);
-    if($_GET['unit'] % 4 == 0){
-        $unit_added = $_GET['unit'] / 4;
-        $added_unit = $_GET['unit'] + $unit_added;
-   
-   $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
-   } else {
-       $insertpayment = $user->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
-   }
+header("Location: ".$transaction->data->authorization_url);
+    
     } else {
         $error = "You are not connected to the internet";
         header("Location: verify3.php?error=".$error."");
@@ -138,6 +209,10 @@ if(isset($_POST["submit"])){
     <style>
     body {
         height: 70vh !important;
+    }
+
+    .footerdiv {
+        width: 100%;
     }
     </style>
 </head>
@@ -202,6 +277,14 @@ if(isset($_POST["submit"])){
 
         <?php }}?>
 
+        <footer class="footerdiv">
+            <p>YurLAND &#169; 2022 | All Right Reserved</p>
+            <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+            <p>Connect with us Facebook, Twitter, Instagram</p>
+            <p style="font-size: 30px">
+                <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+            </p>
+        </footer>
         <script src="js/main.js"></script>
 </body>
 

@@ -11,12 +11,19 @@
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
     <style>
-        body {
-            height: 150vh;
-        }
-        
         section .error {
             width: 60%;
+        }
+        
+        body {
+            position: relative;
+            height: 180vh;
+        }
+        
+        .footerdiv {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
@@ -49,12 +56,17 @@
 
             <div class="input-div email">
                 <label for="email">Email</label>
-                <input type="text" id="email" placeholder="Input your email address" name="email" />
+                <input type="email" id="email" placeholder="Input your email address" name="email" />
             </div>
 
             <div class="input-div number">
                 <label for="number">Phone number</label>
                 <input type="number" id="number" placeholder="Input your phone number" name="number" />
+            </div>
+
+            <div class="input-div name">
+                <label for="inforeferral">Referral - Optional</label>
+                <input type="text" id="inforeferral" placeholder="Input referral code" name="inforeferral" />
             </div>
 
             <div class="input-div email">
@@ -79,6 +91,16 @@
             </div>
         </form>
     </section>
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i
+        ><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
     <script src="js/login.js"></script>
     <script>

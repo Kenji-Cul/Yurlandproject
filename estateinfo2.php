@@ -90,7 +90,7 @@ include "projectlog.php";
             <div class="info-details">
                 <div class="info1">
                     <img src="landimage/<?php if(isset($value['product_image'])){
-                echo $value['image_one'];
+            echo $value['image_one'];
             }?>" alt="" />
                 </div>
                 <div class="info2">
@@ -112,6 +112,7 @@ include "projectlog.php";
         if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                           echo number_format($unitprice);
                         }?> per unit</div>
+        <?php if($value['product_unit'] != 0){?>
         <form action="" id="cartform">
             <div class="price" id="cart-btn">Add to Cart</div>
 
@@ -123,6 +124,10 @@ include "projectlog.php";
             <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="user" value="<?php echo $_SESSION['unique_id'];?>">
         </form>
+        <?php } else {?>
+
+        <div class="price">Sold Out</div>
+        <?php }?>
     </div>
 
     <div class="land-desc">
