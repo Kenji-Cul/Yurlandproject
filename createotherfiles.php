@@ -212,7 +212,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                     if (data === "success") {
                         //console.log("uploaded");
                         submitbtn.onclick = () => {
-                            location.href = `productperiod.php?unique=${uniqueInput.value}`;
+                            location.href = `successpage/landsuccess.html`;
                         };
                     } else {
                         error.textContent = data;

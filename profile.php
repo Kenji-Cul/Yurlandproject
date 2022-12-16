@@ -27,8 +27,30 @@ if(!isset($_SESSION['unique_id'])){
         overflow-x: hidden;
     }
 
-   
-    header{
+
+
+
+
+
+
+
+    ::-webkit-scrollbar {
+        width: 0.7rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+    }
+
+
+    header {
         background: #fee1e3;
     }
 
@@ -36,6 +58,10 @@ if(!isset($_SESSION['unique_id'])){
     .land-image {
         width: 100%;
         border-radius: 8px 8px 0px 0px !important;
+    }
+
+    .land-estate {
+        min-height: 480px !important;
     }
 
     .land-estate {
@@ -122,12 +148,17 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
-        .user,#openicon{
+
+
+        .user,
+        #openicon {
             display: none;
         }
-        .links img{
+
+        .links img {
             display: none;
         }
+
         .transaction-details {
             display: flex;
             align-items: center;
@@ -161,6 +192,7 @@ if(!isset($_SESSION['unique_id'])){
             align-items: left;
             justify-content: center;
             gap: 2em;
+            background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
             width: 40%;
@@ -174,7 +206,7 @@ if(!isset($_SESSION['unique_id'])){
             grid-gap: 0;
         }
 
-        .land-estate{
+        .land-estate {
             width: 290px;
         }
 
@@ -184,7 +216,7 @@ if(!isset($_SESSION['unique_id'])){
             width: 100%;
         }
 
-        .close{
+        .close {
             position: absolute;
             top: 1em;
             right: 1em;
@@ -193,17 +225,21 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 500px) {
-        .close{
+        .close {
             position: absolute;
             top: 1em;
             right: 1em;
         }
-        .links img{
+
+        .links img {
             display: none;
         }
-        .user,#openicon{
+
+        .user,
+        #openicon {
             display: none;
         }
+
         .land_estate_container {
             display: flex;
             flex-direction: row;
@@ -233,69 +269,88 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (min-width: 1300px) {
-        .center{
+        .estates {
+            overflow-y: auto;
+            direction: rtl;
+        }
+
+        .dropdown-links {
+            overflow-y: auto;
+        }
+
+        .estates div {
+            direction: ltr;
+        }
+
+        /* .dropdown-links {
+            overflow-y: auto;
+        } */
+
+        .center {
             display: flex;
             align-items: center;
-            justify-content:center;
+            justify-content: center;
             text-align: center;
         }
-        .menu{
+
+        .menu {
             display: none;
         }
-         .profile-image2{
-            display: none!important;
-         }
 
-         .user{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1em;
-    }
+        .profile-image2 {
+            display: none !important;
+        }
 
-    .user p{
-        font-weight: 600;
-      font-size: 20px;
-        color: #1A0709;
-    }
-    .user .profile-image{
-        width: 45px;
-        height: 45px;
-    }
+        .user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
 
-   
+        .user p {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+        }
 
-    .signup .nav{
-        position: absolute;
-    right: 40px;
-    top: 30px;
-    }
+        .user .profile-image {
+            width: 45px;
+            height: 45px;
+        }
 
-         .details2 {
+
+
+        .signup .nav {
+            position: absolute;
+            right: 40px;
+            top: 30px;
+        }
+
+        .details2 {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.6em;
-         }
+        }
 
-         .details2 p{
+        .details2 p {
             color: #808080;
-         }
+        }
 
-         .details2 p,
-         .details2 h3
-         {
+        .details2 p,
+        .details2 h3 {
             font-size: 22px;
-         }
+        }
 
-         .land-btn-container{
+        .land-btn-container {
             padding-left: 1em;
-         }
+        }
 
-         .land-btn-container .btn{
+        .land-btn-container .btn {
             width: 500px;
-         }
-       
+        }
+
         .menu {
             display: none;
         }
@@ -324,7 +379,7 @@ if(!isset($_SESSION['unique_id'])){
         .dropdown-links {
             width: 6%;
             height: 90vh;
-            border-radius: 0px!important;
+            border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
             flex-direction: column;
@@ -332,13 +387,14 @@ if(!isset($_SESSION['unique_id'])){
             align-items: top;
             gap: 1.3em;
             background: #7e252b;
-          filter: none;
+            filter: none;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 9999999 !important;
             transition: all 0.7s;
         }
+
         .dropdown-links li {
             height: 1em;
             width: 95%;
@@ -346,43 +402,43 @@ if(!isset($_SESSION['unique_id'])){
             font-size: 14px;
         }
 
-        .dropdown-links .select-link{
+        .dropdown-links .select-link {
             background-color: #1a0709;
         }
 
-        .dropdown-links .links{
+        .dropdown-links .links {
             width: 100%;
         }
 
-        .dropdown-links .links img{
-             width: 20px;
-             height: 20px;
-             margin-right: 6px;
-             cursor: pointer;
+        .dropdown-links .links img {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            cursor: pointer;
         }
 
-        .dropdown-links .links{
+        .dropdown-links .links {
             width: 100%;
-            display: flex!important;
+            display: flex !important;
             align-items: center;
             justify-content: center;
             padding: 1em 0;
             transition: 1s;
         }
 
-        .dropdown-links .links:hover{
+        .dropdown-links .links:hover {
             background-color: #1a0709;
         }
 
-        .dropdown-links .links .link{
+        .dropdown-links .links .link {
             visibility: hidden;
             display: none;
         }
 
-       
-        .dropdown-links li a{
+
+        .dropdown-links li a {
             color: #fff;
-            
+
         }
 
         .transaction-details {
@@ -403,7 +459,7 @@ if(!isset($_SESSION['unique_id'])){
             right: 0;
             width: 20%;
             background: #fee1e3;
-            min-height: 150vh;
+            height: 150vh !important;
         }
 
         .profile-container {
@@ -504,7 +560,7 @@ if(!isset($_SESSION['unique_id'])){
             <?php if(isset($_SESSION['unique_id'])){?>
             <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
         <?php 
@@ -518,13 +574,14 @@ if(!isset($_SESSION['unique_id'])){
                     <img src="images/cart.svg" alt="cart icon" />
                 </div>
             </a>
-            <img src="images/menu.svg" alt="menu icon" class="menu"/>
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
                 <p><?php if(isset($newuser['first_name'])){  ?>
-                        <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
-                        <?php }?></p>
-                <div class="profile-image"> 
-                <?php if(!empty($newuser['photo'])){?>
+                    <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['photo'])){?>
                     <a href="updatedetails.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
                     <?php }?>
@@ -539,7 +596,7 @@ if(!isset($_SESSION['unique_id'])){
             </div>
         </div>
     </header>
-   
+
 
     <?php if(empty($newuser['photo'])){
     ?>
@@ -558,50 +615,58 @@ if(!isset($_SESSION['unique_id'])){
 
     <div class="flex-container">
 
-    <ul class="dropdown-links">
-    <div class="center">
-        <li  id="openicon" style="cursor: pointer;">
-                <img src="images/home.svg" style="width: 20px; height: 20px;"/>
-            </li>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
 
-            <li  id="closeicon" style="display: none; cursor: pointer; font-size:14px;" >
-                <img src="images/home.svg" style="width: 20px; height: 20px;"/>
-            </li>
-                    </div>
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
             <li class="links select-link">
-            <a href="profile.php"><img src="images/home3.svg" /></a>
-            <a href="profile.php" class="link">Home</a></li>
+                <a href="profile.php"><img src="images/home3.svg" /></a>
+                <a href="profile.php" class="link">Home</a>
+            </li>
             <li class="links">
-            <a href="preference.php"><img src="images/land2.svg" /></a>
-            <a href="preference.php" class="link">New Land</a></li>
+                <a href="allestates.php"><img src="images/land2.svg" /></a>
+                <a href="allestates.php" class="link">New Land</a>
+            </li>
             <li class="links">
-            <a href="transactions.php"><img src="images/updown.svg"  /> </a>
-            <a href="transactions.php" class="link">Transaction History</a></li>
+                <a href="transactions.php"><img src="images/updown.svg" /> </a>
+                <a href="transactions.php" class="link">Transaction History</a>
+            </li>
             <li class="links">
-            <a href="mylands.php"><img src="images/land2.svg" /></a>
-                <a href="mylands.php" class="link">My Land</a></li>
+                <a href="mylands.php"><img src="images/land2.svg" /></a>
+                <a href="mylands.php" class="link">My Land</a>
+            </li>
             <li class="links">
-            <a href="payment.php"><img src="images/chart2.svg"  /> </a>
-                <a href="payment.php" class="link">New Payment</a></li>
+                <a href="mylands.php"><img src="images/chart2.svg" /> </a>
+                <a href="mylands.php" class="link">New Payment</a>
+            </li>
             <li class="links">
-            <a href="userreferral.php"><img src="images/referral.svg" /></a>
-                <a href="userreferral.php" class="link">Referral</a></li>
+                <a href="userreferral.php"><img src="images/referral.svg" /></a>
+                <a href="userreferral.php" class="link">Referral</a>
+            </li>
             <li class="links">
-            <a href="documents.php"><img src="images/folder.svg"  /></a> 
-                <a href="documents.php" class="link">Documentation</a></li>
+                <a href="documents.php"><img src="images/folder.svg" /></a>
+                <a href="documents.php" class="link">Documentation</a>
+            </li>
             <li class="links">
-            <a href="profiledetails.php"><img src="images/settings.svg" /></a>
+                <a href="profiledetails.php"><img src="images/settings.svg" /></a>
                 <div>
-                <a href="profiledetails.php" class="link">Profile&nbsp;<span style="color: #808080;">and</span></a>
-                <a href="settings.php" class="link">Settings</a>
+                    <a href="profiledetails.php" class="link">Profile&nbsp;<span style="color: #808080;">and</span></a>
+                    <a href="settings.php" class="link">Settings</a>
                 </div>
             </li>
             <li class="links">
-            <a href="logout.php"><img src="images/exit.svg"/></a>
-                <a href="logout.php" class="link">Logout</a></li>
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
+            </li>
         </ul>
 
 
@@ -742,6 +807,8 @@ if(!isset($_SESSION['unique_id'])){
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
+                             } else {
+                                echo $unitprice;
                              }
             ?></div>
             </div>
@@ -817,7 +884,7 @@ if(!isset($_SESSION['unique_id'])){
                         }?></p>
                             </div>
                             <?php } else {?>
-                            <p class="land-name">No Outright Price</p>
+                            <p class="land-name">Subscription Only</p>
                             <?php }?>
 
 
@@ -916,7 +983,7 @@ if(!isset($_SESSION['unique_id'])){
                         }?></p>
                             </div>
                             <?php } else {?>
-                            <p class="land-name">No Outright Price</p>
+                            <p class="land-name">Subscription Only</p>
                             <?php }?>
 
 
@@ -931,7 +998,7 @@ if(!isset($_SESSION['unique_id'])){
                             </div>
                             <?php } else {?>
                             <div>
-                                <p class="land-name">No Daily Price</p>
+                                <p class="land-name">Outright Only</p>
                             </div>
                             <?php } } else {?>
                             <p class="land-name">Sold Out</p>
@@ -962,62 +1029,61 @@ if(!isset($_SESSION['unique_id'])){
     <!--========== SWIPER JS ============  -->
     <script src="js/swiper-bundle.min.js"></script>
     <script>
-        
-        if (window.innerWidth > 1200) { 
-            let dropdownnav = document.querySelector(".dropdown-links");
-       let open = document.querySelector('#openicon');
-       let closeicon = document.querySelector('#closeicon');
-       open.onclick = () => {
-        dropdownnav.style = `
+    if (window.innerWidth > 1200) {
+        let dropdownnav = document.querySelector(".dropdown-links");
+        let open = document.querySelector('#openicon');
+        let closeicon = document.querySelector('#closeicon');
+        open.onclick = () => {
+            dropdownnav.style = `
         width: 14%;
         `;
-        open.style.display = "none";
-        closeicon.style.display = "block";
-        document.querySelector(".profile-container").style = `
+            open.style.display = "none";
+            closeicon.style.display = "block";
+            document.querySelector(".profile-container").style = `
          padding-left: 7em;
         `;
-        let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
 
-        let allLink = document.querySelectorAll(".dropdown-links .links");
-        allLink.forEach((element) => {
-        element.style = `
+            let allLink = document.querySelectorAll(".dropdown-links .links");
+            allLink.forEach((element) => {
+                element.style = `
         gap: 10px;
         `;
-       
-    });
-        allLinks.forEach((element) => {
-        element.style = `
+
+            });
+            allLinks.forEach((element) => {
+                element.style = `
          visibility: visible;
          display: block;
         `;
-    });
-       }
+            });
+        }
 
-       closeicon.onclick = () =>{
-        dropdownnav.style = `
+        closeicon.onclick = () => {
+            dropdownnav.style = `
         width: 6%;
         `;
-        open.style.display = "block";
-        closeicon.style.display = "none";
-        document.querySelector(".profile-container").style = `
+            open.style.display = "block";
+            closeicon.style.display = "none";
+            document.querySelector(".profile-container").style = `
          padding-left: 1em;
         `;
 
-         let allLink = document.querySelectorAll(".dropdown-links .links");
-        allLink.forEach((element) => {
-        element.style = `
+            let allLink = document.querySelectorAll(".dropdown-links .links");
+            allLink.forEach((element) => {
+                element.style = `
         justify-content: center
         `;
-    });
-        
-        let allLinks = document.querySelectorAll(".dropdown-links .links .link");
-        allLinks.forEach((element) => {
-        element.style = `
+            });
+
+            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            allLinks.forEach((element) => {
+                element.style = `
          visibility: hidden;
          display:none;
         `;
-    });
-       }
+            });
+        }
     }
     if (window.innerWidth < 1300) {
         let dropdownnav = document.querySelector(".dropdown-links");
@@ -1036,7 +1102,7 @@ if(!isset($_SESSION['unique_id'])){
         };
     }
 
-   
+
 
     setInterval(() => {
         let xls = new XMLHttpRequest();

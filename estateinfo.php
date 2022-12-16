@@ -22,6 +22,265 @@ include "projectlog.php";
         min-height: 100vh;
     }
 
+    header {
+        background: #fee1e3;
+    }
+
+    @media only screen and (max-width: 1300px) {
+
+        .user,
+        #openicon {
+            display: none;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .links img {
+            display: none;
+        }
+
+        .detail3 {
+            display: none;
+        }
+
+        .dropdown-links {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 2em;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
+    }
+
+    @media only screen and (min-width: 1300px) {
+        .page-title2 a {
+            display: none;
+        }
+
+        .page-title2 {
+            justify-content: left;
+        }
+
+        .page-title2 p {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 40px;
+            color: #1A0709;
+        }
+
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .profile-image2 {
+            display: none !important;
+        }
+
+        .user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
+
+        .user p {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+        }
+
+        .user .profile-image {
+            width: 45px;
+            height: 45px;
+        }
+
+
+
+        .signup .nav {
+            position: absolute;
+            right: 40px;
+            top: 30px;
+        }
+
+        .details2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6em;
+        }
+
+        .details2 p {
+            color: #808080;
+        }
+
+        .details2 p,
+        .details2 h3 {
+            font-size: 22px;
+        }
+
+        .land-btn-container {
+            padding-left: 1em;
+        }
+
+        .land-btn-container .btn {
+            width: 500px;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .estate2 {
+            display: block !important;
+        }
+
+        .land-estate {
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            width: 290px;
+            height: 270px;
+            padding-top: 0;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: top;
+            align-items: center;
+            gap: 1em;
+            flex-direction: column;
+            border-radius: 8px;
+            margin-bottom: 1.6em;
+        }
+
+        .dropdown-links {
+            width: 6%;
+            height: 90vh;
+            border-radius: 0px !important;
+            padding: 1em 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: top;
+            align-items: top;
+            gap: 1.3em;
+            background: #7e252b;
+            filter: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999999 !important;
+            transition: all 0.7s;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            width: 95%;
+            text-transform: capitalize;
+            font-size: 14px;
+        }
+
+        .dropdown-links .select-link {
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links {
+            width: 100%;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 1em 0;
+            transition: 1s;
+        }
+
+        .dropdown-links .links:hover {
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links img {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .dropdown-links .links .link {
+            visibility: hidden;
+            display: none;
+        }
+
+
+        .dropdown-links li a {
+            color: #fff;
+
+        }
+
+        .transaction-details {
+            width: 80%;
+            transition: all 1.5s;
+        }
+
+
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            padding-top: 2em;
+        }
+
+        .trans-container {
+            width: 90%;
+            padding-left: 5em;
+        }
+
+
+        .close {
+            display: none;
+        }
+
+
+    }
+
+
+
+
+    .detail-four {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3em;
+        margin-top: -2em;
+        margin-bottom: 1em;
+    }
+
+    .detail {
+        display: flex;
+        flex-direction: row;
+        gap: 0.8em;
+    }
+
+    .detail-four p {
+        color: #1a0709;
+        font-size: 17px;
+    }
+
     .cart-info {
         display: flex;
         align-items: center;
@@ -72,6 +331,19 @@ include "projectlog.php";
         border-radius: 8px;
         margin-bottom: 3em;
     }
+
+    .land-info {
+        justify-content: center;
+        gap: 2em;
+    }
+
+    .cart-info {
+        justify-content: center;
+    }
+
+
+
+
 
 
     .error,
@@ -130,6 +402,11 @@ include "projectlog.php";
             flex-direction: column;
             gap: 2em;
         }
+
+        #intervalform2 {
+            width: 90%
+        }
+
     }
     </style>
 </head>
@@ -138,19 +415,100 @@ include "projectlog.php";
     <!-- Header -->
     <header class="signup">
         <div class="logo">
+            <?php if(isset($_SESSION['unique_id'])){?>
+            <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
             <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <?php }?>
         </div>
-
+        <?php 
+             $user = new User;
+             if(isset($_SESSION['unique_id'])){
+             $newuser = $user->selectUser($_SESSION['unique_id']);
+             }
+             if(isset($_SESSION['uniqueagent_id'])){
+             $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
+             }
+             if(isset($_SESSION['uniquesubadmin_id'])){
+                $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+                }
+            ?>
         <div class="nav">
+            <?php if(!isset($_SESSION['uniqueagent_id']) || !isset($_SESSION['uniquesubadmin_id'])){?>
             <a href="cartreview.php">
                 <div class="cart">
                     <div class="cart-notify"></div>
                     <img src="images/cart.svg" alt="cart icon" />
                 </div>
             </a>
-            <img src="images/menu.svg" alt="menu icon" />
+            <?php }?>
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
+            <?php if(isset($_SESSION['unique_id'])){?>
+            <div class="user">
+                <p><?php if(isset($newuser['first_name'])){  ?>
+                    <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['photo'])){?>
+                    <a href="updatedetails.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['photo'])){?>
+                    <a href="updatedetails.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
+            <?php }?>
+            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+            <div class="user">
+                <p><?php if(isset($newuser['first_name'])){  ?>
+                    <span><?php echo $newuser['agent_name']; ?></span>
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['agent_img'])){?>
+                    <a href="updatedetails.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['agent_img'])){?>
+                    <a href="updatedetails.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
+            <?php }?>
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <div class="user">
+                <p><?php if(isset($newuser['subadmin_name'])){  ?>
+                    <span><?php echo $newuser['subdamin_name']; ?></span>
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['subadmin_image'])){?>
+                    <a href="updatedetails.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['subadmin_image'])){?>
+                    <a href="updatedetails.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
+            <?php }?>
         </div>
     </header>
+
 
     <?php 
     $land = new User;
@@ -185,13 +543,42 @@ include "projectlog.php";
             <p class="location"><?php echo $value['product_name'];?></p>
             <p><?php echo $value['product_location'];?></p>
         </div>
-        <div class="unit-price">&#8358;<?php
-        $unitprice = $value['unit_price'];
+        <?php
+        if($value['onemonth_price'] != 0  && $value['outright_price'] !=0){ ?>
+        <div class="unit-price" style="display:flex; flex-direction: column; gap: 1em;"><span>
+                Outright:&nbsp;&nbsp;&#8358;<?php
+        $unitprice = $value['outright_price'];
         if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                           echo number_format($unitprice);
-                        }?> per unit</div>
-    </div>
+                        }?> per unit
+            </span><span>
+                Subscription:&nbsp;&nbsp;&#8358;<?php
+       $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
+       $unitprice = $overallprice + $value['onemonth_price'];
+        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                          echo number_format($unitprice);
+                        }?> per unit for 18 months
+            </span>
+        </div>
+        <?php } else {?>
+        <div class="unit-price">&#8358;<?php
+        if($value['onemonth_price'] != 0){
+            $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
+            $unitprice = $overallprice + $value['onemonth_price'];
+            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                echo number_format($unitprice)." per unit for 18 months";
+              }
+            
+        } else {
+        $unitprice = $value['outright_price'];
+        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+            echo number_format($unitprice)." per unit";
+          }
+        }
+        ?></div>
 
+        <?php }?>
+    </div>
 
     <?php 
    
@@ -265,7 +652,8 @@ include "projectlog.php";
                         if (data) {
                             document.querySelector(`#cart-btn<?php echo $value['unique_id'];?>`).style.display =
                                 "none";
-                            document.querySelector(`#otherbtn<?php echo $value['unique_id'];?>`).style.visibility =
+                            document.querySelector(`#otherbtn<?php echo $value['unique_id'];?>`).style
+                                .visibility =
                                 "visible";
                         } else {
                             //console.log(data);
@@ -275,7 +663,8 @@ include "projectlog.php";
                 }
             }
             // we have to send the information through ajax to php
-            let formData = new FormData(intervalform<?php echo $value['unique_id'];?>); //creating new formData Object
+            let formData = new FormData(
+                intervalform<?php echo $value['unique_id'];?>); //creating new formData Object
 
             xhr.send(formData); //sending the form data to php
         }
@@ -342,7 +731,8 @@ include "projectlog.php";
         <form action="" id="unit-form">
             <div class="estateinfo">
                 <div class="input-div">
-                    <input type="number" placeholder="Input number of units" id="unit" name="unit" />
+                    <input type="number" placeholder="Input number of units and click outside the box when done"
+                        id="unit" name="unit" />
                 </div>
             </div>
             <p class="error">Please fill </p>
@@ -363,7 +753,9 @@ include "projectlog.php";
             <?php if(isset($_GET['remprice'])){?>
             <p>Remaining Price:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
             <?php }else {?>
+
             <p>Total Cost:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
+
             <?php }?>
         </div>
         <form action="" id="newpaymentform">
@@ -382,8 +774,9 @@ include "projectlog.php";
            
              if(!empty($landuse)){
                  foreach($landuse as $key => $value){ ?>
-                    <input type="hidden" name="" id="realprice" value=<?php echo $value['sub_payment'];?>>
+                    <input type="hidden" name="" id="realprice" value=<?php echo $value['sub_price'];?>>
                     <input type="hidden" name="" id="realperiod" value=<?php echo $value['period_num'];?>>
+                    <input type="hidden" name="" id="realbalance" value=<?php echo $value['balance'];?>>
                     <input type="hidden" name="" id="realdate" value=<?php echo $value['sub_period'];?>>
                     <p style="color: #808080; font-weight: bold;">End Date:&nbsp;&nbsp;&nbsp;<span
                             id="subformat"><?php echo $value['sub_period'];?></span></p>
@@ -416,35 +809,97 @@ include "projectlog.php";
     </div>
 
 
+    <div class="fifthsection">
+        <div class="payment-mode" style="display:none; margin-top: 3em; padding-left: 3em;">
+            <form action="" id="intervalform">
+                <div class="select-box">
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" class="radio" id="onemonth" name="mode" value="onemonth" />
+                            <label for="onemonth">One Month</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="threemonth" name="mode" value="threemonths" />
+                            <label for="threemonth">Three Months</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="sixmonth" name="mode" value="sixmonths" />
+                            <label for="sixmonth">Six Months</label>
+                        </div>
+
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="twelvemonth" name="mode" value="twelvemonths" />
+                            <label for="twelvemonth">Twelve Months</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="eighteenmonth" name="mode" value="eighteenmonths" />
+                            <label for="eighteenmonth">Eighteen Months</label>
+                        </div>
+                    </div>
+                    <div class="selected">Payment Plan</div>
+                </div>
+
+
+                <div class="detail-four" style="visibility: hidden;">
+                    <span id="data" style="visibility: hidden;"></span>
+                    <span id="data2" style="display: none;"></span>
+                    <div class="detail">
+                        <img src="images/ellipse.svg" alt="">
+                        <p>Total Price: &#8358;<span id="pricetot"></span></p>
+                    </div>
+                    <div class="detail">
+                        <img src="images/ellipse.svg" alt="">
+                        <p>Daily Price: &#8358;<span id="pricedaily"></span></p>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button class="estate_page_button subbutton" type="submit">Continue</button>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+
 
 
     <div class="second-section" style="display:none;">
-
-
-        <div class="cost" style="margin-bottom: 2em;">
-            <input type="hidden" name="tot" value="" id="tot">
-            <p>Total Cost:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
-        </div>
 
         <?php 
         foreach($landview as $key => $value){
            
         ?>
+        <div class="cost" style="margin-bottom: 2em;">
+            <input type="hidden" name="tot" value="" id="tot">
+            <?php if($value['onemonth_price'] !=0 && $value['outright_price'] != 0){?>
+            <p></p>
+            <?php } else {?>
+            <p>Total Cost:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
+            <?php }?>
+        </div>
+
+
         <?php if(($value['outright_price'] != 0) && $value['onemonth_price'] == 0 ){?>
-        <form action="" id="outrightform">
+        <div action="" id="outrightform">
             <div class="btn-container">
                 <button class="estate_page_button" type="submit">Continue</button>
             </div>
-        </form>
+        </div>
         <?php } else if(($value['onemonth_price'] != 0) && $value['outright_price'] == 0){?>
+
 
 
 
         <div class="fourthsection">
             <form action="" id="submethod-form">
-
                 <div class="payment-plan">
-                    <p>Choose Susbcription Plan</p>
+                    <p>Payment Type</p>
                     <label class="radio" for="autodebit">
                         <input type="radio" name="submethod" id="autodebit" value="autodebit" />
                         <span></span>
@@ -453,7 +908,7 @@ include "projectlog.php";
                     <label class="radio" fo="manually">
                         <input type="radio" name="submethod" id="manually" value="manually" />
                         <span></span>
-                        <p>Manually</p>
+                        <p>Manual</p>
                     </label>
                 </div>
 
@@ -597,11 +1052,11 @@ include "projectlog.php";
 
 
 
+
         <div class="fourthsection" style="display: none;">
             <form action="" id="submethod-form">
-
                 <div class="payment-plan">
-                    <p>Choose Susbcription Plan</p>
+                    <p>Payment Type</p>
                     <label class="radio" for="autodebit">
                         <input type="radio" name="submethod" id="autodebit" value="autodebit" />
                         <span></span>
@@ -610,7 +1065,7 @@ include "projectlog.php";
                     <label class="radio" fo="manually">
                         <input type="radio" name="submethod" id="manually" value="manually" />
                         <span></span>
-                        <p>Manually</p>
+                        <p>Manual</p>
                     </label>
                 </div>
 
@@ -779,6 +1234,7 @@ include "projectlog.php";
     let form2 = document.querySelector('.second-section');
     let form3 = document.querySelector('.thirdsection');
     let form4 = document.querySelector('.fourthsection');
+    let form5 = document.querySelector('.fifthsection');
     let totalInput = document.querySelector('#tot');
     let unitNum = document.querySelector("#unitnum")
     let Successdiv = document.querySelector(".success")
@@ -796,6 +1252,7 @@ include "projectlog.php";
                     let data = xhr.response;
                     let string = "success";
                     let realprice = data.replace('success', '')
+
                     if (data.includes(string)) {
                         let price = unitInput.value * realprice;
                         if (params.get('payment')) {
@@ -814,13 +1271,19 @@ include "projectlog.php";
                                 form3.innerHTML = Successdiv;
                             }
                         }
+
                         totalInput.value = price;
+
                         if (params.get('payment')) {
                             let formatnum = document.querySelector('.thirdsection #numformat')
                             formatnum.innerHTML = new Intl.NumberFormat().format(price);
                         } else {
+                            <?php if($value['onemonth_price'] != 0 && $value['outright_price'] != 0){?>
+
+                            <?php }else {?>
                             let formatnum = document.querySelector('.second-section #numformat')
                             formatnum.innerHTML = new Intl.NumberFormat().format(price);
+                            <?php }?>
                         }
 
                         // location.href =
@@ -896,6 +1359,9 @@ include "projectlog.php";
             e.preventDefault();
         }
 
+
+
+
         function checkNewPayment() {
             let error2 = document.querySelector(".error2");
 
@@ -906,14 +1372,18 @@ include "projectlog.php";
                 
                 ?>
             let periodNum = document.querySelector('#realperiod');
+            let balanceNum = document.querySelector('#realbalance');
             let amountNum = document.querySelector('#realprice');
             let dateNum = document.querySelector('#realdate');
             let periodValue = parseInt(periodNum.value);
+            let balanceValue = parseInt(balanceNum.value);
 
             let manualerror = document.querySelector('#newpaymentform .error2');
             let pricevalue = amountNum.value * manualInput.value;
 
             let endDate = dateNum.value;
+
+
             if (manualNum > periodValue) {
                 manualerror.textContent = "Limit Reached";
                 manualerror.style.visibility = "visible";
@@ -934,6 +1404,20 @@ include "projectlog.php";
 
             }
 
+            if ((periodValue == 0) && (balanceValue != 0)) {
+                manualerror.style.visibility = "hidden";
+                <?php if(isset($_SESSION['unique_id'])){?>
+                location.href =
+                    `newpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${balanceValue}&subperiod=0`;
+                <?php }?>
+
+                <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                location.href =
+                    `newpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${balanceValue}&subperiod=0&user=<?php echo $_GET['unique'];?>`;
+                <?php }?>
+
+            }
+
 
 
 
@@ -950,34 +1434,33 @@ include "projectlog.php";
     }
 
 
-    const planform = document.querySelector('#paymentplanform');
-    const paybtn = document.querySelector('#paymentplanform .estate_page_button');
-    planform.onsubmit = (e) => {
-        e.preventDefault();
+    <?php if(($value['outright_price'] != 0) && $value['onemonth_price'] == 0 ){?>
+
+    const paybtn = document.querySelector('#outrightform .estate_page_button');
+
+
+
+
+    function checkOutrightMode() {
+
+        <?php if(isset($_SESSION['unique_id'])){?>
+        let startDate = new Date().toDateString();
+        location.href =
+            `outrightpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&startdate=${startDate}`;
+        <?php }?>
+        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+        location.href =
+            `outrightpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
+        <?php }?>
     }
 
 
-
-    function checkOutrMode() {
-        let xhr = new XMLHttpRequest(); //creating XML Object
-        xhr.onload = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    let data = xhr.response;
-
-
-                }
-            }
-        }
-        // we have to send the information through ajax to php
-        let formData = new FormData(planform); //creating new formData Object
-
-        xhr.send(formData); //sending the form data to php
-    }
 
     paybtn.onclick = () => {
-        checkPaymentMode();
+        checkOutrightMode();
     }
+
+    <?php }?>
 
 
 
@@ -1000,18 +1483,165 @@ include "projectlog.php";
                     if (data == "outright payment") {
                         <?php if(isset($_SESSION['unique_id'])){?>
                         let startDate = new Date().toDateString();
+                        let totprice = <?php foreach($landview as $key => $value){
+                            echo $value['outright_price'];
+                        }?>;
                         location.href =
-                            `outrightpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&startdate=${startDate}`;
+                            `outrightpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice *unitInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&startdate=${startDate}`;
                         <?php }?>
                         <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        let totprice = <?php foreach($landview as $key => $value){
+                            echo $value['outright_price'];
+                        }?>;
                         location.href =
-                            `outrightpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
+                            `outrightpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice *unitInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
                         <?php }?>
                     }
                     if (data == "subscription payment") {
                         paybtn.style.display = "none";
                         document.querySelector('#paymentplanform').style.display = "none";
-                        form4.style.display = "block";
+                        document.querySelector('.fifthsection .payment-mode').style.display = "block";
+                        form5.style.display = "block";
+                        let purpose = document.getElementsByName("mode");
+                        <?php 
+                                        if(!empty($landview)){
+                                            foreach($landview as $key => $value){  ?>
+                        purpose.forEach((element) => {
+
+                            element.onclick = () => {
+
+                                if (element.value == "onemonth") {
+
+                                    document.querySelector('#data').innerHTML = "onemonth";
+                                    let percent = <?php echo $value['onemonth_percent'];?>;
+                                    let viewperiod = <?php echo $value['onemonth_period'];?>;
+                                    let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                    let percentvalue = percent / 100 * viewprice;
+                                    let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
+                                    console.log(totprice);
+                                    document.querySelector('#data2').innerHTML = totprice;
+                                    let realprice = new Intl.NumberFormat().format(Math.round(totprice /
+                                        viewperiod));
+                                    let totalprice = new Intl.NumberFormat().format(
+                                        totprice);
+
+                                    document.querySelector('.fifthsection .detail-four').style =
+                                        "visibility: visible;";
+                                    document.querySelector('#pricedaily').innerHTML = realprice;
+                                    document.querySelector('#pricetot').innerHTML = totalprice;
+                                    let formatnum = document.querySelector('.second-section #numformat')
+                                    formatnum.innerHTML = totalprice;
+                                }
+
+                                if (element.value == "threemonths") {
+                                    document.querySelector('#data').innerHTML = "threemonths";
+                                    let percent = <?php echo $value['threemonth_percent'];?>;
+                                    let viewperiod = <?php echo $value['threemonth_period'];?>;
+                                    let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                    let percentvalue = percent / 100 * viewprice;
+                                    let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
+                                    document.querySelector('#data2').innerHTML = totprice
+                                    let realprice = new Intl.NumberFormat().format(Math.round(totprice /
+                                        viewperiod));
+                                    let totalprice = new Intl.NumberFormat().format(
+                                        totprice);
+
+
+                                    document.querySelector('.fifthsection .detail-four').style =
+                                        "visibility: visible;";
+                                    document.querySelector('#pricedaily').innerHTML = realprice;
+                                    document.querySelector('#pricetot').innerHTML = totalprice;
+                                    let formatnum = document.querySelector('.second-section #numformat')
+                                    formatnum.innerHTML = totalprice;
+                                }
+
+                                if (element.value == "sixmonths") {
+                                    document.querySelector('#data').innerHTML = "sixmonths";
+                                    let percent = <?php echo $value['sixmonth_percent'];?>;
+                                    let viewperiod = <?php echo $value['sixmonth_period'];?>;
+                                    let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                    let percentvalue = percent / 100 * viewprice;
+                                    let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
+                                    document.querySelector('#data2').innerHTML = totprice
+                                    let realprice = new Intl.NumberFormat().format(Math.round(totprice /
+                                        viewperiod));
+                                    let totalprice = new Intl.NumberFormat().format(
+                                        totprice);
+
+
+                                    document.querySelector('.fifthsection .detail-four').style =
+                                        "visibility: visible;";
+                                    document.querySelector('#pricedaily').innerHTML = realprice;
+                                    document.querySelector('#pricetot').innerHTML = totalprice;
+                                    let formatnum = document.querySelector('.second-section #numformat')
+                                    formatnum.innerHTML = totalprice;
+                                }
+
+                                if (element.value == "twelvemonths") {
+                                    document.querySelector('#data').innerHTML = "twelvemonths";
+                                    let percent = <?php echo $value['twelvemonth_percent'];?>;
+                                    let viewperiod = <?php echo $value['twelvemonth_period'];?>;
+                                    let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                    let percentvalue = percent / 100 * viewprice;
+                                    let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
+                                    document.querySelector('#data2').innerHTML = totprice
+                                    let realprice = new Intl.NumberFormat().format(Math.round(totprice /
+                                        viewperiod));
+                                    let totalprice = new Intl.NumberFormat().format(
+                                        totprice);
+
+
+                                    document.querySelector('.fifthsection .detail-four').style =
+                                        "visibility: visible;";
+                                    document.querySelector('#pricedaily').innerHTML = realprice;
+                                    document.querySelector('#pricetot').innerHTML = totalprice;
+                                    let formatnum = document.querySelector('.second-section #numformat')
+                                    formatnum.innerHTML = totalprice;
+                                }
+
+                                if (element.value == "eighteenmonths") {
+                                    document.querySelector('#data').innerHTML = "eighteenmonths";
+                                    let percent = <?php echo $value['eighteen_percent'];?>;
+                                    let viewperiod = <?php echo $value['eighteen_period'];?>;
+                                    let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                    let percentvalue = percent / 100 * viewprice;
+                                    let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
+                                    document.querySelector('#data2').innerHTML = totprice
+                                    let realprice = new Intl.NumberFormat().format(Math.round(totprice /
+                                        viewperiod));
+                                    let totalprice = new Intl.NumberFormat().format(
+                                        totprice);
+
+
+                                    document.querySelector('.fifthsection .detail-four').style =
+                                        "visibility: visible;";
+                                    document.querySelector('#pricedaily').innerHTML = realprice;
+                                    document.querySelector('#pricetot').innerHTML = totalprice;
+                                    let formatnum = document.querySelector('.second-section #numformat')
+                                    formatnum.innerHTML = totalprice;
+                                }
+
+
+                            };
+
+                        });
+                        <?php }} ?>
+                        const modebtn = document.querySelector('.fifthsection .estate_page_button');
+
+                        function GoToPaymentMode() {
+                            form5.style.display = "none";
+                            form4.style.display = "block";
+                        }
+
+                        modebtn.onclick = () => {
+                            GoToPaymentMode();
+                        }
+
                     }
 
                 }
@@ -1044,14 +1674,28 @@ include "projectlog.php";
                 if (xhr.status === 200) {
                     let data = xhr.response;
                     if (data == "autodebit") {
-                        submethodform.style.display = "none";
-                        document.querySelector('.payment-mode').style.display = "block";
+                        let subprice = document.querySelector('#data2').innerHTML;
+                        <?php if(isset($_SESSION['unique_id'])){?>
+                        location.href =
+                            `intervalnum.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                        <?php }?>
+
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        location.href =
+                            `intervalnum2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
+                        <?php }?>
                     }
                     if (data == "manually") {
-                        submethodform.style.display = "none";
-                        document.querySelector('.payment-mode2').style.display = "block";
-                        //                     location.href =
-                        // `newpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&newpay=${payInput.value}&con=9298383737`;+
+                        let totprice = document.querySelector('#data2').innerHTML;
+                        <?php if(isset($_SESSION['unique_id'])){?>
+                        location.href =
+                            `newpayment.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                        <?php }?>
+
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        location.href =
+                            `newpayment2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
+                        <?php }?>
                     }
 
                 }
@@ -1083,16 +1727,19 @@ include "projectlog.php";
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     let data = xhr.response;
+                    let subprice = <?php foreach($landview as $key => $value){
+                            echo $value['onemonth_price'];
+                        }?>;
                     //console.log(data);
                     if (data) {
                         <?php if(isset($_SESSION['unique_id'])){?>
                         location.href =
-                            `intervalnum.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                            `intervalnum.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
                         <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
                         location.href =
-                            `intervalnum2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
+                            `intervalnum2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
                         <?php }?>
                     }
 
@@ -1124,16 +1771,19 @@ include "projectlog.php";
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     let data = xhr.response;
+                    let totprice = <?php foreach($landview as $key => $value){
+                            echo $value['outright_price'];
+                        }?>;
                     //console.log(data);
                     if (data) {
                         <?php if(isset($_SESSION['unique_id'])){?>
                         location.href =
-                            `newpayment.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                            `newpayment.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
                         <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
                         location.href =
-                            `newpayment2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
+                            `newpayment2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
                         <?php }?>
                     }
 
@@ -1156,6 +1806,232 @@ include "projectlog.php";
 
 
     <?php if(($value['onemonth_price'] != 0) && $value['outright_price'] == 0){?>
+
+    function submitUnits() {
+
+        let xhr = new XMLHttpRequest(); //creating XML Object
+        xhr.open("POST", `inserters/calcunit.php?uniqueid=${unique}`, true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    let string = "success";
+                    let realprice = data.replace('success', '')
+
+                    if (data.includes(string)) {
+                        let price = unitInput.value * realprice;
+                        if (params.get('payment')) {
+                            form1.style.display = "none";
+                            form3.style.display = "block";
+                        } else {
+                            form1.style.display = "none";
+                            document.querySelector('.fifthsection .payment-mode').style.display = "block";
+                            form5.style.display = "block";
+                            let purpose = document.getElementsByName("mode");
+
+                            <?php 
+                                        if(!empty($landview)){
+                                            foreach($landview as $key => $value){  ?>
+                            purpose.forEach((element) => {
+
+                                element.onclick = () => {
+
+                                    if (element.value == "onemonth") {
+
+                                        document.querySelector('#data').innerHTML = "onemonth";
+                                        let percent = <?php echo $value['onemonth_percent'];?>;
+                                        let viewperiod = <?php echo $value['onemonth_period'];?>;
+                                        let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                        let percentvalue = percent / 100 * viewprice;
+                                        let totprice = parseInt(totalInput.value) + parseInt(
+                                            percentvalue);
+                                        console.log(totprice);
+                                        document.querySelector('#data2').innerHTML = totprice;
+                                        let realprice = new Intl.NumberFormat().format(Math.round(
+                                            totprice /
+                                            viewperiod));
+                                        let totalprice = new Intl.NumberFormat().format(
+                                            totprice);
+
+                                        document.querySelector('.fifthsection .detail-four').style =
+                                            "visibility: visible;";
+                                        document.querySelector('#pricedaily').innerHTML = realprice;
+                                        document.querySelector('#pricetot').innerHTML = totalprice;
+                                        let formatnum = document.querySelector(
+                                            '.second-section #numformat')
+                                        formatnum.innerHTML = totalprice;
+                                    }
+
+                                    if (element.value == "threemonths") {
+                                        document.querySelector('#data').innerHTML = "threemonths";
+                                        let percent = <?php echo $value['threemonth_percent'];?>;
+                                        let viewperiod = <?php echo $value['threemonth_period'];?>;
+                                        let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                        let percentvalue = percent / 100 * viewprice;
+                                        let totprice = parseInt(totalInput.value) + parseInt(
+                                            percentvalue);
+                                        document.querySelector('#data2').innerHTML = totprice
+                                        let realprice = new Intl.NumberFormat().format(Math.round(
+                                            totprice /
+                                            viewperiod));
+                                        let totalprice = new Intl.NumberFormat().format(
+                                            totprice);
+
+
+                                        document.querySelector('.fifthsection .detail-four').style =
+                                            "visibility: visible;";
+                                        document.querySelector('#pricedaily').innerHTML = realprice;
+                                        document.querySelector('#pricetot').innerHTML = totalprice;
+                                        let formatnum = document.querySelector(
+                                            '.second-section #numformat')
+                                        formatnum.innerHTML = totalprice;
+                                    }
+
+                                    if (element.value == "sixmonths") {
+                                        document.querySelector('#data').innerHTML = "sixmonths";
+                                        let percent = <?php echo $value['sixmonth_percent'];?>;
+                                        let viewperiod = <?php echo $value['sixmonth_period'];?>;
+                                        let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                        let percentvalue = percent / 100 * viewprice;
+                                        let totprice = parseInt(totalInput.value) + parseInt(
+                                            percentvalue);
+                                        document.querySelector('#data2').innerHTML = totprice
+                                        let realprice = new Intl.NumberFormat().format(Math.round(
+                                            totprice /
+                                            viewperiod));
+                                        let totalprice = new Intl.NumberFormat().format(
+                                            totprice);
+
+
+                                        document.querySelector('.fifthsection .detail-four').style =
+                                            "visibility: visible;";
+                                        document.querySelector('#pricedaily').innerHTML = realprice;
+                                        document.querySelector('#pricetot').innerHTML = totalprice;
+                                        let formatnum = document.querySelector(
+                                            '.second-section #numformat')
+                                        formatnum.innerHTML = totalprice;
+                                    }
+
+                                    if (element.value == "twelvemonths") {
+                                        document.querySelector('#data').innerHTML = "twelvemonths";
+                                        let percent = <?php echo $value['twelvemonth_percent'];?>;
+                                        let viewperiod = <?php echo $value['twelvemonth_period'];?>;
+                                        let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                        let percentvalue = percent / 100 * viewprice;
+                                        let totprice = parseInt(totalInput.value) + parseInt(
+                                            percentvalue);
+                                        document.querySelector('#data2').innerHTML = totprice
+                                        let realprice = new Intl.NumberFormat().format(Math.round(
+                                            totprice /
+                                            viewperiod));
+                                        let totalprice = new Intl.NumberFormat().format(
+                                            totprice);
+
+
+                                        document.querySelector('.fifthsection .detail-four').style =
+                                            "visibility: visible;";
+                                        document.querySelector('#pricedaily').innerHTML = realprice;
+                                        document.querySelector('#pricetot').innerHTML = totalprice;
+                                        let formatnum = document.querySelector(
+                                            '.second-section #numformat')
+                                        formatnum.innerHTML = totalprice;
+                                    }
+
+                                    if (element.value == "eighteenmonths") {
+                                        document.querySelector('#data').innerHTML = "eighteenmonths";
+                                        let percent = <?php echo $value['eighteen_percent'];?>;
+                                        let viewperiod = <?php echo $value['eighteen_period'];?>;
+                                        let viewprice = <?php echo $value['onemonth_price'];?>;
+
+                                        let percentvalue = percent / 100 * viewprice;
+                                        let totprice = parseInt(totalInput.value) + parseInt(
+                                            percentvalue);
+                                        document.querySelector('#data2').innerHTML = totprice
+                                        let realprice = new Intl.NumberFormat().format(Math.round(
+                                            totprice /
+                                            viewperiod));
+                                        let totalprice = new Intl.NumberFormat().format(
+                                            totprice);
+
+
+                                        document.querySelector('.fifthsection .detail-four').style =
+                                            "visibility: visible;";
+                                        document.querySelector('#pricedaily').innerHTML = realprice;
+                                        document.querySelector('#pricetot').innerHTML = totalprice;
+                                        let formatnum = document.querySelector(
+                                            '.second-section #numformat')
+                                        formatnum.innerHTML = totalprice;
+                                    }
+
+
+                                };
+
+                            });
+                            <?php }} ?>
+                            const modebtn = document.querySelector('.fifthsection .estate_page_button');
+
+                            function GoToPaymentMode() {
+                                form5.style.display = "none";
+                                form2.style.display = "block";
+                                form4.style.display = "block";
+                            }
+
+                            modebtn.onclick = () => {
+                                GoToPaymentMode();
+                            }
+                        }
+                        let first = parseInt(unitInput.value);
+                        let second = parseInt(unitNum.value);
+                        if (first > second) {
+                            Successdiv.style.display = "block";
+                            form2.innerHTML = Successdiv;
+                            if (params.get('payment')) {
+                                form3.innerHTML = Successdiv;
+                            }
+                        }
+                        totalInput.value = price;
+                        if (params.get('payment')) {
+                            let formatnum = document.querySelector('.thirdsection #numformat')
+                            formatnum.innerHTML = new Intl.NumberFormat().format(price);
+                        } else {
+                            <?php if($value['onemonth_price'] != 0 && $value['outright_price'] != 0){?>
+
+                            <?php }else {?>
+                            let formatnum = document.querySelector('.second-section #numformat')
+                            formatnum.innerHTML = new Intl.NumberFormat().format(price);
+                            <?php }?>
+                        }
+
+                        // location.href =
+                        //     `summarypage.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${price}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9938484747`;
+                    } else {
+                        error.textContent = data;
+                        error.style.visibility = "visible";
+                        formbtn.textContent = "Continue";
+                    }
+                    // if (data) {
+                    //     console.log(data);
+
+                    // } else {
+                    //     
+                    // }
+                }
+            }
+        };
+        // we have to send the information through ajax to php
+        let formData = new FormData(form); //creating new formData Object
+
+        xhr.send(formData); //sending the form data to php
+    }
+
+    unitInput.onblur = () => {
+        submitUnits();
+    };
+
     const submethodform = document.querySelector('#submethod-form');
     const submethodbtn = document.querySelector('#submethod-form .estate_page_button');
     submethodform.onsubmit = (e) => {
@@ -1172,15 +2048,30 @@ include "projectlog.php";
                 if (xhr.status === 200) {
                     let data = xhr.response;
                     if (data == "autodebit") {
-                        submethodform.style.display = "none";
-                        document.querySelector('.payment-mode').style.display = "block";
+                        let subprice = document.querySelector('#data2').innerHTML;
+                        <?php if(isset($_SESSION['unique_id'])){?>
+                        location.href =
+                            `intervalnum.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                        <?php }?>
+
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        location.href =
+                            `intervalnum2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
+                        <?php }?>
                     }
                     if (data == "manually") {
-                        submethodform.style.display = "none";
-                        document.querySelector('.payment-mode2').style.display = "block";
-                        //                     location.href =
-                        // `newpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&newpay=${payInput.value}&con=9298383737`;+
+                        let totprice = document.querySelector('#data2').innerHTML;
+                        <?php if(isset($_SESSION['unique_id'])){?>
+                        location.href =
+                            `newpayment.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                        <?php }?>
+
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        location.href =
+                            `newpayment2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
+                        <?php }?>
                     }
+
 
                 }
             }

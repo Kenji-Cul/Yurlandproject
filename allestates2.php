@@ -162,7 +162,7 @@ if(!isset($_GET['unique'])){
 
     .detail-four p {
         color: #808080;
-        font-size: 15px;
+        font-size: 13px;
     }
 
     .detail-five {
@@ -329,7 +329,7 @@ if(!isset($_GET['unique'])){
             <div class="updated-img">
                 <?php if($value['product_unit'] != 0){?>
                 <a
-                    href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+                    href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej&unique=<?php echo $_GET['unique']?>">
                     <img src="landimage/<?php if(isset($value['product_image'])){
                         echo $value['product_image'];
                     }?>" alt="<?php echo $value['product_name'];?>" />
@@ -359,7 +359,7 @@ if(!isset($_GET['unique'])){
                         <div class="detail-location">
                             <p style="color: #808080;"><?php echo $value['product_location'];?></p>
                             <p><a
-                                    href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
+                                    href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej&unique=<?php echo $_GET['unique']?>">click
                                     here to view</a></p>
                         </div>
                     </div>
@@ -367,32 +367,41 @@ if(!isset($_GET['unique'])){
 
 
                 <div class="detail-four">
-                    <?php if($value['product_unit'] != 0){?>
-                    <?php if($value['outright_price'] != 0){
+                            <?php if($value['product_unit'] != 0){?>
+                            <?php if($value['outright_price'] != 0){
                      $outprice = $value['outright_price'];
                     $onemonthprice = $value['onemonth_price'];
                         ?>
-                    <p><span>Outright Price:&nbsp;&nbsp;</span>&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999 || $outprice > 9999999){
+                            <p><span>Outright Price:&nbsp;&nbsp;</span>&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999 || $outprice > 9999999){
                           echo number_format($outprice);
                         }?></p>
-                    <?php } else {?>
-                    <p>No Outright Price</p>
-                    <?php }?>
-                    <?php if($value['onemonth_price'] != 0){
-                        $onemonthprice = $value['onemonth_price'];
+                            <?php } else {?>
+                            <p style="color: #ff6600;">Subscription Only</p>
+                            <?php }?>
+                            <?php if($value['onemonth_price'] != 0){
+                       
+                        $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
+                        $totalprice = $overallprice + $value['onemonth_price'];
+                        $onemonthprice = $totalprice / 540;
+          
+              
 
                         ?>
-                    <p><span>Daily Price:&nbsp;&nbsp;</span>&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
+                            <p><span>Subscription Price(18 Months):&nbsp;&nbsp;</span>&#8358;<?php if($totalprice > 999 || $totalprice > 9999 || $totalprice > 99999 || $totalprice > 999999){
+                          echo number_format($totalprice);
+                        }?></p>
+                            <p><span>Daily Price:&nbsp;&nbsp;</span>&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
                           echo number_format($onemonthprice);
+                        } else {
+                            echo round($onemonthprice);
                         }?></p>
 
-                    <?php } else {?>
-                    <p>No Daily Price</p>
-                    <?php }} else {?>
-                    <p>Sold Out</p>
-                    <?php }?>
-                </div>
-
+                            <?php } else {?>
+                            <p style="color: #ff6600;">Outright Only</p>
+                            <?php }} else {?>
+                            <p>Sold Out</p>
+                            <?php }?>
+                        </div>
 
                 <?php if($value['product_unit'] != 0){?>
                 <div class="detail-five">
@@ -521,7 +530,7 @@ if(!isset($_GET['unique'])){
     <script>
     let searchIcon = document.querySelector('.search-icon');
     searchIcon.onclick = () => {
-        location.href = "searchresult.php";
+        location.href = "searchresult.php?unique=<?php echo $_GET['unique']?>";
     }
 
     function load() {

@@ -23,6 +23,15 @@ if(!isset($_SESSION['uniqueagent_id'])){
         min-height: 100vh;
     }
 
+    .success img {
+        width: 15em;
+        height: 15em;
+    }
+
+    .dropdown-links {
+        display: none;
+    }
+
     .radius {
         position: relative;
     }
@@ -35,10 +44,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
         height: 10em;
     }
 
-    .success img {
-        width: 36em;
-        height: 36em;
-    }
+
 
 
     .radius img {
@@ -81,6 +87,48 @@ if(!isset($_SESSION['uniqueagent_id'])){
         text-align: center;
         color: #eb5757;
     }
+
+    @media only screen and (min-width: 1300px) {
+        .menu {
+            display: none;
+        }
+    }
+
+    @media only screen and (max-width: 1300px) {
+        body {
+            height: 90vh;
+        }
+
+
+
+
+        .dropdown-links {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 2em;
+            background: #7e252b;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
+
+
+        .update-data {
+            position: absolute;
+            top: -3em;
+        }
+    }
     </style>
 </head>
 
@@ -92,67 +140,110 @@ if(!isset($_SESSION['uniqueagent_id'])){
         </div>
 
         <div class="nav">
-            <img src="images/cart.svg" alt="cart icon" />
-            <img src="images/menu.svg" alt="menu icon" />
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
         </div>
+
+
+
     </header>
 
-    <div class="page-title2">
-        <a href="agentprofile.php">
-            <img src="images/arrowleft.svg" alt="" />
-        </a>
-        <p>My Customers</p>
-    </div>
+    <div class="flex-container">
+        <ul class="dropdown-links">
+            <div class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </div>
+            <li><a href="preference.php">New Land</a></li>
+            <li><a href="mycustomers.php">Customers</a></li>
+            <li><a href="newcustomer.php">New Customer</a></li>
+            <li><a href="referral.php">Referrals</a></li>
+            <li>
+                <a href="agentprofileinfo.php">Profile</a>
+            </li>
+            <li><a href="logout.php">Logout</a></li>
 
 
-    <div class="details-container">
+        </ul>
+
+        <div class="profile-container">
+            <div class="page-title2">
+                <a href="agentprofile.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <p>My Customers</p>
+            </div>
 
 
-        <?php 
+            <div class="details-container">
+
+
+                <?php 
     $user = new User;
     $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
     $customer = $user ->selectAgentCustomer($agent['referral_id']);
     if(!empty($customer)){
         foreach($customer as $key => $value){
     ?>
-        <div class="account-detail2">
-            <div class="radius">
-                <?php if(!empty($value['photo'])){?>
-                <img src="profileimage/<?php echo $value['photo'];?>" alt="profile image" />
-                <?php }?>
-                <?php if(empty($value['photo'])){?>
-                <div class="empty-img">
-                    <i class="ri-user-fill"></i>
+                <div class="account-detail2">
+                    <div class="radius">
+                        <?php if(!empty($value['photo'])){?>
+                        <img src="profileimage/<?php echo $value['photo'];?>" alt="profile image" />
+                        <?php }?>
+                        <?php if(empty($value['photo'])){?>
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                        <?php }?>
+                    </div>
+                    <div class="flex">
+                        <p style="text-transform: capitalize;">
+                            <span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
+                        </p>
+                        <span><?php echo $value['email'];?></span>
+                    </div>
+                    <a href="customerinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939"
+                        style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>
+                </div>
+
+                <?php }}?>
+
+                <?php if(empty($customer)){?>
+                <div class="success">
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>You have no customers yet!</p>
                 </div>
                 <?php }?>
+
+                <div class="account-detail3">
+                    <a href="logout.php">
+                        <p>Sign Out</p>
+                    </a>
+                </div>
             </div>
-            <div class="flex">
-                <p style="text-transform: capitalize;">
-                    <span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
-                </p>
-                <span><?php echo $value['email'];?></span>
-            </div>
-            <a href="customerinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939"
-                style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>
-        </div>
-
-        <?php }}?>
-
-        <?php if(empty($customer)){?>
-        <div class="success">
-            <img src="images/asset_success.svg" alt="" />
-            <p>You have no customers yet!</p>
-        </div>
-        <?php }?>
-
-        <div class="account-detail3">
-            <a href="logout.php">
-                <p>Sign Out</p>
-            </a>
         </div>
     </div>
 
     <script src="js/main.js"></script>
+    <script>
+    if (window.innerWidth < 1300) {
+        let dropdownnav = document.querySelector(".dropdown-links");
+        // dropdownnav.style.display = "none";
+
+
+        let menu = document.querySelector(".menu");
+        menu.onclick = () => {
+            dropdownnav.style = `
+            transform: translateX(0);
+            `;
+        };
+
+        let close = document.querySelector(".close");
+        close.onclick = () => {
+            dropdownnav.style = `
+            transform: translateX(100%);
+            `;
+        };
+    }
+    </script>
 </body>
 
 </html>

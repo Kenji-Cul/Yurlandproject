@@ -7,14 +7,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $budget = $_GET['budget'];
     $landsize = $_POST['size'];
     $unique= $_POST['unique'];
-    $eighteenmonthprice = $_POST['eighteenmonth'];
+    $onemonthprice = $_POST['eighteenmonth'];
     $desc = $_POST['productdesc'];
     $feature = $_POST['estatefeature'];
     $filename = $_FILES['image']['name'];
     $purpose = $_POST['purpose'];
-    $unitprice = $_POST['unitprice'];
     $unitnumber = $_POST['noofunit'];
-if(empty($landname) || ($location == "") || ($budget == "") || empty($landsize) || empty($desc) || empty($feature)  || empty($eighteenmonthprice) || empty($unitprice) || empty($unitnumber)){
+if(empty($landname) || ($location == "") || ($budget == "") || empty($landsize) || empty($desc) || empty($feature)  || empty($onemonthprice)  || empty($unitnumber)){
     $errormsg = "Please input all fields";
 }  else if(empty($filename)){
     $errormsg = "Please Select Your File";
@@ -23,11 +22,7 @@ if(empty($landname) || ($location == "") || ($budget == "") || empty($landsize) 
 
 else {
      $superadmin = new User;
-     $twelvemonthprice = intdiv($eighteenmonthprice,2);
-     $sixmonthprice = intdiv($twelvemonthprice,2);
-     $threemonthprice = intdiv($sixmonthprice,2);
-     $onemonthprice = intdiv($threemonthprice,2);
-        $insertland = $superadmin->uploadSubProduct(check_input($landname),check_input($desc),check_input($feature),check_input($landsize),check_input($location),check_input($onemonthprice),check_input($threemonthprice),check_input($sixmonthprice),check_input($twelvemonthprice),check_input($eighteenmonthprice), $unique,$purpose,check_input($unitprice),check_input($unitnumber),check_input($budget));
+        $insertland = $superadmin->uploadSubProduct(check_input($landname),check_input($desc),check_input($feature),check_input($landsize),check_input($location),check_input($onemonthprice),$unique,$purpose,check_input($unitnumber),check_input($budget));
      
     
 

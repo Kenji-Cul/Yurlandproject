@@ -22,6 +22,31 @@ if(!isset($_SESSION['uniqueagent_id'])){
     body {
         min-height: 100vh;
     }
+
+    .success img {
+        width: 15em;
+        height: 15em;
+    }
+
+    @media only screen and (max-width: 800px) {
+        .success {
+            position: absolute;
+            left: 50%;
+            top: 60em;
+            transform: translate(-50%, -50%);
+            height: 10em;
+        }
+
+        .success p {
+            text-align: center;
+        }
+
+
+        .success img {
+            width: 15em;
+            height: 15em;
+        }
+    }
     </style>
 </head>
 
@@ -90,7 +115,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
             
          }
         }} else {
-            echo "0";
+            //echo "0";
         }
             ?>
         <div>
@@ -136,48 +161,89 @@ if(!isset($_SESSION['uniqueagent_id'])){
         </div>
     </div>
 
-
-    <script>
-    let total = document.getElementsByName("price");
-    let values = [];
-    total.forEach(element => {
-
-        values.push(parseInt(element.value));
-    });
-
-    let sum = 0;
-
-    for (let i = 0; i < values.length; i++) {
-        sum += values[i];
-    }
-    document.querySelector('.total').innerHTML = new Intl.NumberFormat().format(sum);
+    <div class="details-container">
 
 
+        <?php 
+    $user = new User;
+    $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
+    $customer = $user ->selectAgentCustomer($agent['referral_id']);
+    if(!empty($customer)){
+        foreach($customer as $key => $value){
+            $earning = $user->selectPayment($value['unique_id']);
+            if(!empty($earning)){
+                foreach($earning as $key => $value){
+    ?>
+        <div class="account-detail2"
+            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+            <div class="flex">
+                <p style="text-transform: capitalize;"><span>Hello <?php echo $agent['agent_name'];?></span></p>
+                <p style="text-transform: uppercase;">
+                    <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $agent['earning_percentage'];
+                    $earnedprice = $percent / 100 * $value['product_price'];
+                    $unitprice = $earnedprice;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                      echo number_format(floor($unitprice));
+                                    } else {
+                                        echo $unitprice;
+                                    }
+                    ?>
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <?php }} }}?>
+
+        <?php if(empty($customer)){?>
+        <div class="success">
+            <img src="images/asset_success.svg" alt="" />
+            <p>You have no earnings yet!</p>
+        </div>
+        <?php }?>
 
 
-    let copybtn = document.querySelector('.copy-div');
+        <script>
+        let total = document.getElementsByName("price");
+        let values = [];
+        total.forEach(element => {
+
+            values.push(parseInt(element.value));
+        });
+
+        let sum = 0;
+
+        for (let i = 0; i < values.length; i++) {
+            sum += values[i];
+        }
+        document.querySelector('.total').innerHTML = new Intl.NumberFormat().format(sum);
 
 
-    copybtn.onclick = () => {
-        copyFunction();
-    }
+
+
+        let copybtn = document.querySelector('.copy-div');
+
+
+        copybtn.onclick = () => {
+            copyFunction();
+        }
 
 
 
-    function copyFunction() {
-        // Get the text field
-        var copyText = document.querySelector('.copy-text');
+        function copyFunction() {
+            // Get the text field
+            var copyText = document.querySelector('.copy-text');
 
-        // Select the text field
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); // For mobile devices
+            // Select the text field
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
 
-        // Copy the text inside the text field
-        let referralLink =
-            `http://localhost/Yurland/referralsignup.php?ref=${copyText.value}&key=ajfhagfag16253553&refkey=785e7156hfagf&rex=l737727277272277`;
-        navigator.clipboard.writeText(referralLink);
-    }
-    </script>
+            // Copy the text inside the text field
+            let referralLink =
+                `http://localhost/Yurland/referralsignup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
+            navigator.clipboard.writeText(referralLink);
+        }
+        </script>
 </body>
 
 </html>

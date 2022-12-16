@@ -11,20 +11,20 @@
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
     <style>
-        section .error {
-            width: 60%;
-        }
-        
-        body {
-            position: relative;
-            height: 180vh;
-        }
-        
-        .footerdiv {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
+    section .error {
+        width: 60%;
+    }
+
+    body {
+        position: relative;
+        height: 180vh;
+    }
+
+    .footerdiv {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
     </style>
 </head>
 
@@ -32,7 +32,7 @@
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
     </header>
 
@@ -84,7 +84,12 @@
 
             <button class="btn" type="submit">Sign Up</button>
             <div class="login-link">
+                <?php if(isset($_GET['cost']) || isset($_GET['loc']) || isset($_GET['pose'])){?>
+                Already have an account? <a
+                    href="login.php?cost=<?php echo $_GET['cost'];?>&loc=<?php echo $_GET['loc'];?>&pose=<?php echo $_GET['pose'];?>&hver=0838784920182800201oajfnfkfakjaifihfaiyeyywwmcmhshsj&name=0202002028484">Log&nbsp;in</a>
+                <?php } else {?>
                 Already have an account? <a href="login.php">Log&nbsp;in</a>
+                <?php }?>
             </div>
             <div style="display: none">
                 <img src="images/loading.svg" alt="" class="loading-img" />
@@ -92,57 +97,80 @@
         </form>
     </section>
 
+    <div class="successmodal">
+        <div class="modalcon">
+          <div class="modaldiv">
+            <div>
+            <img src="images/asset_success.svg" alt="" />
+            <p>Success!</p>
+           <p>You're all set!</p>
+       <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a
+      >
+            </div>
+          </div>
+        </div>
+    </div>
+
     <footer class="footerdiv">
         <p>YurLAND &#169; 2022 | All Right Reserved</p>
         <p>A product of Ilu-oba International Limited and Arklips Limited</p>
         <p>Connect with us Facebook, Twitter, Instagram</p>
         <p style="font-size: 30px">
-            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i
-        ><i class="ri-twitter-line"></i>
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
         </p>
     </footer>
 
     <script src="js/login.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#signup-form").submit(function(e) {
-                e.preventDefault();
-                var loadingImg = $(".loading-img");
-                $(".btn").html(loadingImg);
-            });
+    
+    $(document).ready(function() {
+        $("#signup-form").submit(function(e) {
+            e.preventDefault();
+            var loadingImg = $(".loading-img");
+            $(".btn").html(loadingImg);
+        });
 
-            function createRandomString(string_length) {
-                var random_string = "";
-                var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678910";
-                for (var i, i = 0; i < string_length; i++) {
-                    random_string += characters.charAt(
-                        Math.floor(Math.random() * characters.length)
-                    );
-                }
-                $("#referral").val(random_string);
+        function createRandomString(string_length) {
+            var random_string = "";
+            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678910";
+            for (var i, i = 0; i < string_length; i++) {
+                random_string += characters.charAt(
+                    Math.floor(Math.random() * characters.length)
+                );
             }
+            $("#referral").val(random_string);
+        }
 
-            $("#signup-form .btn").click(function() {
-                createRandomString(8);
-                $.ajax({
-                    type: "POST",
-                    url: "inserters/insertuser.php",
-                    data: $("#signup-form input"),
-                    success: function(response) {
-                        if (response === "success") {
-                            location.href = "successpage/usersuccess.html";
-                        } else {
-                            $("section .error").html(response);
-                            $("section .error").css({
-                                visibility: "visible",
-                            });
+      
+        
+
+        $("#signup-form .btn").click(function() {
+            createRandomString(8);
+            $.ajax({
+                type: "POST",
+                url: "inserters/insertuser.php",
+                data: $("#signup-form input"),
+                success: function(response) {
+                    if (response === "success") {
+                        <?php if(isset($_GET['cost']) || isset($_GET['loc']) || isset($_GET['pose'])){?>
+                        location.href =
+                            `preference.php?cost=<?php echo $_GET['cost'];?>&loc=<?php echo $_GET['loc'];?>&pose=<?php echo $_GET['pose'];?>&hver=0838784920182800201oajfnfkfakjaifihfaiyeyywwmcmhshsj&name=0202002028484`;
+                        <?php }else {?>
+                            document.querySelector('.successmodal').style.visibility = "visible";
                             $(".btn").html("Sign Up");
-                            // console.log(response);
-                        }
-                    },
-                });
+                        <?php }?>
+                    } else {
+                        $("section .error").html(response);
+                        $("section .error").css({
+                            visibility: "visible",
+                        });
+                        $(".btn").html("Sign Up");
+                        // console.log(response);
+                    }
+                },
             });
         });
+    });
     </script>
 </body>
 

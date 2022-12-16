@@ -23,35 +23,34 @@ $selectuser = $user->selectUser($_GET['user']);
 
 // Integrate Paystack
 if(isset($_POST["submit"])){
+    if($_POST['period'] > $_POST['dayno']){
+        $error = "Limit Reached";
+        header("Location: verify3.php?error=".$error."");
+    } else {
     $email = htmlspecialchars($selectuser['email']);
     if(!isset($_GET['remprice'])){
-    if($_GET['data'] == "onemonth"){
-        $percent = $value['onemonth_percent'] / 100 * $value['outright_price'];
-        $totprice = $_GET['tot'] + $percent ;
-        $realprice = $totprice / $value['onemonth_period'];
-        $limit = $value['onemonth_period'];
-        } else if($_GET['data'] == "threemonths"){
-            $percent = $value['threemonth_percent'] / 100 * $value['outright_price'];
-        $totprice = $_GET['tot'] + $percent;
-        $realprice =$totprice / $value['threemonth_period'];
-        $limit = $value['threemonth_period'];
-        } else if($_GET['data'] == "sixmonths"){
-            $percent = $value['sixmonth_percent'] / 100 * $value['outright_price'];
-            $totprice = $_GET['tot'] + $percent ;
-        $realprice = $totprice / $value['sixmonth_period'];
-        $limit = $value['sixmonth_period'];
-        } else if($_GET['data'] == "twelvemonths"){
-            $percent = $value['twelvemonth_percent'] / 100 * $value['outright_price'];
-            $totprice = $_GET['tot'] + $percent ;
-        $realprice = $totprice / $value['twelvemonth_period'];
-        $limit = $value['twelvemonth_period'];
-        } else if($_GET['data'] == "eighteenmonths"){
-            $percent = $value['eighteen_percent'] / 100 * $value['outright_price'];
-            $totprice = $_GET['tot'] + $percent ;
-        $realprice = $totprice / $value['eighteen_period'];
-        $limit = $value['eighteen_period'];
+        if($_GET['data'] == "onemonth"){
+            $realprice = $_GET['tot'] * $_POST['period'] / $value['onemonth_period'];
+            $subprice = $_GET['tot'] / $value['onemonth_period'];
+            $limit = $value['onemonth_period'];
+            } else if($_GET['data'] == "threemonths"){
+            $realprice =$_GET['tot'] * $_POST['period'] / $value['threemonth_period'];
+            $subprice = $_GET['tot'] / $value['threemonth_period'];
+            $limit = $value['threemonth_period'];
+            } else if($_GET['data'] == "sixmonths"){
+            $realprice = $_GET['tot'] * $_POST['period'] / $value['sixmonth_period'];
+            $subprice = $_GET['tot'] / $value['sixmonth_period'];
+            $limit = $value['sixmonth_period'];
+            } else if($_GET['data'] == "twelvemonths"){
+            $realprice = $_GET['tot'] * $_POST['period'] / $value['twelvemonth_period'];
+            $subprice = $_GET['tot'] / $ $value['twelvemonth_period'];
+            $limit = $value['twelvemonth_period'];
+            } else if($_GET['data'] == "eighteenmonths"){
+            $realprice = $_GET['tot'] * $_POST['period'] / $value['eighteen_period'];
+            $subprice = $_GET['tot'] / $value['eighteen_period'];
+            $limit = $value['eighteen_period'];
+            }
         }
-    }
 
     $price = $_GET['tot'];
     if(isset($_GET['newpay'])){
@@ -78,6 +77,7 @@ if(isset($_POST["submit"])){
     $time2 = date_add($date2, date_interval_create_from_date_string("".$time." days"));
     $period = date_format($time2, "M-d-Y");
     $subperiod = $limit - $_GET['unit'];
+    $chosenplan = $_GET['data'];
     }
     
     $product_name = $value['product_name'];
@@ -102,7 +102,8 @@ if(isset($_POST["submit"])){
     $paymentmonth = date("M");
     $paymentday = date("d");
     $paymentyear = date("Y");
-    $paymenttime = date("h:i a");;
+    $paymenttime = date("h:i a");
+    $paymentdate = date("M-d-Y");
     $paymentmethod = "NewPayment";
    
 
@@ -231,6 +232,23 @@ if(isset($_POST["submit"])){
                 "value" => $subperiod
             ],
 
+            [
+                "display_name" => "Payment Date",
+                "variable_name" => "paydate",
+                "value" => $paymentdate
+            ],
+
+            [
+                "display_name" => "Chosen Plan",
+                "variable_name" => "chosenplan",
+                "value" => $chosenplan
+            ],
+
+            [
+                "display_name" => "Sub Price",
+                "variable_name" => "subprice",
+                "value" => $subprice
+            ],
           
            
 
@@ -277,7 +295,7 @@ if(isset($_POST["submit"])){
 
     if($result){
     
-        echo $result;
+        //echo $result;
         $transaction = json_decode($result);
       //Automatically redirect customers to the payment page
         header("Location: ".$transaction->data->authorization_url);
@@ -288,6 +306,7 @@ if(isset($_POST["submit"])){
         $error = "You are not connected to the internet";
         header("Location: verify3.php?error=".$error."");
     }
+}
 } 
 ?>
 
@@ -306,6 +325,47 @@ if(isset($_POST["submit"])){
     <style>
     body {
         height: 70vh !important;
+    }
+
+    .input-div {
+
+        width: 100%;
+    }
+
+    #paymentform {
+        width: 70em;
+
+    }
+
+    .price-desc {
+        justify-content: center;
+    }
+
+    .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
+        width: 60%;
+        margin-bottom: 1em;
+    }
+
+    @media only screen and (max-width: 1000px) {
+        .select-box {
+            border: 1px solid #808080;
+            border-radius: 8px;
+            width: 90%;
+            margin-bottom: 1em;
+        }
+    }
+
+    .input-div input {
+        width: 20em !important;
+    }
+
+    .land-location p {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--inactive-grey);
     }
     </style>
 </head>
@@ -339,10 +399,28 @@ if(isset($_POST["submit"])){
     <div class="price-desc">
         <div>
             <div class="land-name">
-                <p><?php echo $value['product_name'];?></p>
+                <p><span>Estate Name:&nbsp;</span><?php echo $value['product_name'];?></p>
             </div>
             <div class="land-location">
-                <p><?php echo $value['product_location'];?></p>
+                <p><span>Estate Location:&nbsp;</span><?php echo $value['product_location'];?></p>
+            </div>
+            <?php if(!isset($_GET['remprice'])){?>
+            <div class="land-location">
+                <p style="text-transform: capitalize;"><span>Chosen Plan:&nbsp;</span><?php echo $_GET['data'];?></p>
+            </div>
+            <?php }?>
+            <div class="land-location">
+                <p style="text-transform: capitalize;"><span>Unit:&nbsp;</span><?php echo $_GET['unit'];?></p>
+            </div>
+            <div class="land-location">
+                <p><span>Total Cost: &#8358;</span><?php 
+                $totalcost =  $_GET['tot'];
+                if($totalcost > 999 || $totalcost > 9999 || $totalcost > 99999 || $totalcost > 999999){
+                    echo number_format(round($totalcost));
+                    } else {
+                        echo round($totalcost);
+                    }
+                ?></p>
             </div>
         </div>
 
@@ -350,8 +428,7 @@ if(isset($_POST["submit"])){
         <form action="" method="POST">
             <?php if(isset($_GET['remprice'])){  ?>
             <div class="input-div">
-                <label for="day" style="width: 20em; padding-bottom: 3em;">Subscription
-                    Cost: &#8358;<?php if(isset($_GET['newpay'])){
+                <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php if(isset($_GET['newpay'])){
                             $cost = round($_GET['newpay']);
                             if($cost > 999 || $cost > 9999 || $cost > 99999 || $cost > 999999){
                                 echo number_format(round($cost));
@@ -361,14 +438,16 @@ if(isset($_POST["submit"])){
             <?php   } else {?>
             <?php if($_GET['data'] == "onemonth"){?>
             <div class="input-div">
-                <label for="day" style="width: 20em; padding-bottom: 3em;">Subscription Cost: &#8358;<?php 
-                $percent = $value['onemonth_percent'] / 100 * $value['outright_price'];
-                $totprice = $_GET['tot'] + $percent ;
-                $dailycost = $totprice / $value['onemonth_period'];
+                <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php 
+                $dailycost = $_GET['tot'] / $value['onemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
+                <input type="number" id="dayno" name="dayno" value="<?php echo $value['onemonth_period'];?>"
+                    style="display: none;" />
                 <!-- <input type="number" id="day" value="" /> -->
             </div>
             <?php }?>
@@ -377,61 +456,77 @@ if(isset($_POST["submit"])){
             <?php if($_GET['data'] == "threemonths"){?>
             <div class="input-div">
                 <div class="input-div">
-                    <label for="day" style="width: 20em; padding-bottom: 3em;">Subscription
-                        Cost: &#8358;<?php 
-                     $percent = $value['threemonth_percent'] / 100 * $value['outright_price'];
-                     $totprice = $_GET['tot'] + $percent ;
-                $dailycost = $totprice / $value['threemonth_period'];
+                    <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php 
+                      $dailycost = $_GET['tot'] / $value['threemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
+                    <input type="number" id="dayno" name="dayno" value="<?php echo $value['threemonth_period'];?>"
+                        style="display: none;" />
                 </div>
                 <?php }?>
 
                 <?php if($_GET['data'] == "sixmonths"){?>
                 <div class="input-div">
                     <div class="input-div">
-                        <label for="day" style="width: 20em; padding-bottom: 3em;">Subscription Cost: &#8358;<?php
-                         $percent = $value['sixmonth_percent'] / 100 * $value['outright_price'];
-                         $totprice = $_GET['tot'] + $percent ; 
-                $dailycost = $totprice / $value['sixmonth_period'];
+                        <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php
+                          $dailycost = $_GET['tot'] / $value['sixmonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
+                        <input type="number" id="dayno" name="dayno" value="<?php echo $value['sixmonth_period'];?>"
+                            style="display: none;" />
                     </div>
                     <?php }?>
 
                     <?php if($_GET['data'] == "twelvemonths"){?>
                     <div class="input-div">
                         <div class="input-div">
-                            <label for="day" style="width: 20em; padding-bottom: 3em;">Subscription Cost: &#8358;<?php 
-                             $percent = $value['twelvemonth_percent'] / 100 * $value['outright_price'];
-                             $totprice = $_GET['tot'] + $percent ;
-                $dailycost = $totprice / $value['twelvemonth_period'];
+                            <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php 
+                             $dailycost = $_GET['tot'] / $value['twelvemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                }  else {
+                    echo round($dailycost);
                 }
                 ?></label>
+                            <input type="number" id="dayno" name="dayno"
+                                value="<?php echo $value['twelvemonth_period'];?>" style="display: none;" />
                         </div>
                         <?php }?>
 
                         <?php if($_GET['data'] == "eighteenmonths"){?>
                         <div class="input-div">
                             <div class="input-div" style="width: 20em; padding-bottom: 3em;">
-                                <label for="day">Subscription Cost: &#8358;<?php
-                                 $percent = $value['eighteen_percent'] / 100 * $value['outright_price'];
+                                <label for="day">Amount Due Today: &#8358;<?php
+                                 $percent = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
                                  $totprice = $_GET['tot'] + $percent ; 
                 $dailycost = $totprice / $value['eighteen_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
-                } if($dailycost < 999){
-                    echo $dailycost;
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
+                                <input type="number" id="dayno" name="dayno"
+                                    value="<?php echo $value['eighteen_period'];?>" style="display: none;" />
                             </div>
                             <?php } }?>
+
+                            <?php if(!isset($_GET['remprice'])){?>
+                            <div class="input-div">
+                                <input type="number" style="margin-bottom: 2em;"
+                                    placeholder="Input number of days you want to pay for" value="1" id="period"
+                                    name="period" />
+
+                            </div>
+                            <?php }?>
 
 
                             <div class="btn-container">

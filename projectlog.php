@@ -86,7 +86,8 @@ include "signconstant.php";
      function createUser($firstname, $lastname, $email, $phonenum,$password,$referral,$inforeferral){
         $pwd = password_hash($password,PASSWORD_DEFAULT);
         $uniqueid = rand();
-        $sql = "INSERT INTO user(unique_id,first_name,last_name,email,phone_number,user_password,personal_ref, referral_id) VALUES('{$uniqueid}','{$firstname}', '{$lastname}', '{$email}', '{$phonenum}', '{$pwd}','{$referral}','{$inforeferral}')";
+        $userdate = date("M-d-Y");
+        $sql = "INSERT INTO user(unique_id,first_name,last_name,email,phone_number,user_password,personal_ref, referral_id,user_date) VALUES('{$uniqueid}','{$firstname}', '{$lastname}', '{$email}', '{$phonenum}', '{$pwd}','{$referral}','{$inforeferral}','{$userdate}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
             session_start();
@@ -136,7 +137,8 @@ include "signconstant.php";
      function updateUserForReferral($firstname, $lastname, $email, $phonenum,$password,$referralid,$personalref){
         $pwd = password_hash($password,PASSWORD_DEFAULT);
         $uniqueid = rand();
-        $sql = "INSERT INTO user(first_name,last_name,phone_number,unique_id,user_password,email,referral_id, personal_ref) VALUES('{$firstname}','{$lastname}','{$phonenum}','{$uniqueid}','{$pwd}','{$email}','{$referralid}','{$personalref}')";
+        $userdate = date("M-d-Y");
+        $sql = "INSERT INTO user(first_name,last_name,phone_number,unique_id,user_password,email,referral_id, personal_ref,user_date) VALUES('{$firstname}','{$lastname}','{$phonenum}','{$uniqueid}','{$pwd}','{$email}','{$referralid}','{$personalref}','{$userdate}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
             session_start();
@@ -536,7 +538,7 @@ include "signconstant.php";
     }
 
 
-    function updateUserDetails($uniqueid, $gender, $occupation, $day, $month, $year){
+    function updateUserDetails($uniqueid, $gender, $occupation, $date){
         if(isset($_FILES['image'])){
         $filename = $_FILES['image']['name'];
         $filesize = $_FILES['image']['size'];
@@ -570,7 +572,7 @@ include "signconstant.php";
         $target_path = $destination_path . '../profileimage/'. basename($newfilename);
         //$destination = $folder.$newfilename;
         if(move_uploaded_file($filetmp, $target_path)){
-         $sql = "UPDATE user SET photo='{$newfilename}', gender='{$gender}', occupation='{$occupation}', dayof='{$day}', monthof='{$month}', yearof='{$year}' WHERE unique_id='{$uniqueid}'";
+         $sql = "UPDATE user SET photo='{$newfilename}', gender='{$gender}', occupation='{$occupation}', dateofbirth='{$date}' WHERE unique_id='{$uniqueid}'";
          $result = $this->dbcon->query($sql);
       
               //check if the connection runs successfully
@@ -808,7 +810,12 @@ include "signconstant.php";
 
 
   
-    function uploadProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth,$uniqueid,$purpose,$unitprice,$unitnumber,$budget){
+    function uploadProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$uniqueid,$purpose,$unitnumber,$budget){
+        $onemonthperiod = 30;
+        $threemonthperiod = 90;
+        $sixmonthperiod = 180;
+        $twelvemonthperiod = 360;
+        $eighteenmonthperiod = 540;
         if(isset($_FILES['image'])){
         $filename = $_FILES['image']['name'];
         $filesize = $_FILES['image']['size'];
@@ -842,7 +849,7 @@ include "signconstant.php";
         $target_path = $destination_path . '../landimage/'. basename($newfilename);
         //$destination = $folder.$newfilename;
         if(move_uploaded_file($filetmp, $target_path)){
-         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,threemonth_price,sixmonth_price,twelvemonth_price,eighteen_price,purpose,product_unit,unit_price,product_budget) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$threemonth}','{$sixmonth}','{$twelvemonth}','{$eighteenmonth}','{$purpose}','{$unitnumber}','{$unitprice}','{$budget}')";
+         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,purpose,product_unit,product_budget,onemonth_period,threemonth_period,sixmonth_period,twelvemonth_period,eighteen_period) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$purpose}','{$unitnumber}','{$budget}','{$onemonthperiod}','{$threemonthperiod}','{$sixmonthperiod}','{$twelvemonthperiod}','{$eighteenmonthperiod}')";
          $result = $this->dbcon->query($sql);
       
               //check if the connection runs successfully
@@ -857,7 +864,7 @@ include "signconstant.php";
     }
 
 
-    function uploadOutrightProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$uniqueid,$purpose,$unitprice,$unitnumber,$budget){
+    function uploadOutrightProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$uniqueid,$purpose,$unitnumber,$budget){
         if(isset($_FILES['image'])){
         $filename = $_FILES['image']['name'];
         $filesize = $_FILES['image']['size'];
@@ -891,7 +898,7 @@ include "signconstant.php";
         $target_path = $destination_path . '../landimage/'. basename($newfilename);
         //$destination = $folder.$newfilename;
         if(move_uploaded_file($filetmp, $target_path)){
-         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,purpose,product_unit,unit_price,product_budget) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$purpose}','{$unitnumber}','{$unitprice}','{$budget}')";
+         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,purpose,product_unit,product_budget) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$purpose}','{$unitnumber}','{$budget}')";
          $result = $this->dbcon->query($sql);
       
               //check if the connection runs successfully
@@ -906,7 +913,12 @@ include "signconstant.php";
     }
 
 
-    function uploadSubProduct($productname,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth,$uniqueid,$purpose,$unitprice,$unitnumber,$budget){
+    function uploadSubProduct($productname,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$uniqueid,$purpose,$unitnumber,$budget){
+        $onemonthperiod = 30;
+        $threemonthperiod = 90;
+        $sixmonthperiod = 180;
+        $twelvemonthperiod = 360;
+        $eighteenmonthperiod = 540;
         if(isset($_FILES['image'])){
         $filename = $_FILES['image']['name'];
         $filesize = $_FILES['image']['size'];
@@ -940,7 +952,7 @@ include "signconstant.php";
         $target_path = $destination_path . '../landimage/'. basename($newfilename);
         //$destination = $folder.$newfilename;
         if(move_uploaded_file($filetmp, $target_path)){
-         $sql = "INSERT INTO land_product(unique_id,product_name,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,threemonth_price,sixmonth_price,twelvemonth_price,eighteen_price,purpose,product_unit,unit_price,product_budget) VALUES('{$uniqueid}','{$productname}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$threemonth}','{$sixmonth}','{$twelvemonth}','{$eighteenmonth}','{$purpose}','{$unitnumber}','{$unitprice}','{$budget}')";
+         $sql = "INSERT INTO land_product(unique_id,product_name,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,purpose,product_unit,product_budget,onemonth_period,threemonth_period,sixmonth_period,twelvemonth_period,eighteen_period) VALUES('{$uniqueid}','{$productname}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$purpose}','{$unitnumber}','{$budget}','{$onemonthperiod}','{$threemonthperiod}','{$sixmonthperiod}','{$twelvemonthperiod}','{$eighteenmonthperiod}')";
          $result = $this->dbcon->query($sql);
       
               //check if the connection runs successfully
@@ -1001,14 +1013,14 @@ include "signconstant.php";
                 //   echo "<h3 align='center'>Photo added successfully</h3>";
                 echo "success";
               }else{
-            //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+            echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
               }
      } 
     }
     }
 
     function selectLand(){
-        $sql = "SELECT * FROM land_product";
+        $sql = "SELECT * FROM land_product ORDER BY product_id DESC";
         $result = $this->dbcon->query($sql);
 	$rows = array();
 		if($this->dbcon->affected_rows > 0){
@@ -1178,8 +1190,8 @@ include "signconstant.php";
     }
 
 
-    function insertPeriod($onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth,$unique,$eighteenpercentage,$twelvepercentage,$sixpercentage,$threepercentage,$onepercentage){
-        $sql = "UPDATE land_product SET onemonth_period='{$onemonth}', threemonth_period='{$threemonth}', sixmonth_period='{$sixmonth}', twelvemonth_period='{$twelvemonth}', eighteen_period='{$eighteenmonth}',onemonth_percent='{$onepercentage}',threemonth_percent='{$threepercentage}', sixmonth_percent='{$sixpercentage}',twelvemonth_percent='{$twelvepercentage}',eighteen_percent='{$eighteenpercentage}' WHERE unique_id='{$unique}'";
+    function insertPeriod($onemonth,$threemonth,$sixmonth,$twelvemonth,$eighteenmonth,$eighteenpercentage,$twelvepercentage,$sixpercentage,$threepercentage,$onepercentage){
+        $sql = "UPDATE land_product SET onemonth_period='{$onemonth}', threemonth_period='{$threemonth}', sixmonth_period='{$sixmonth}', twelvemonth_period='{$twelvemonth}', eighteen_period='{$eighteenmonth}',onemonth_percent='{$onepercentage}',threemonth_percent='{$threepercentage}', sixmonth_percent='{$sixpercentage}',twelvemonth_percent='{$twelvepercentage}',eighteen_percent='{$eighteenpercentage}' WHERE onemonth_price != 0";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows > 0){
            echo "success";
@@ -1190,7 +1202,7 @@ include "signconstant.php";
     }
 
     function selectPeriod(){
-        $sql = "SELECT * FROM land_product";
+        $sql = "SELECT * FROM land_product WHERE onemonth_price !=0 ORDER BY product_id LIMIT 1";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -1205,7 +1217,13 @@ include "signconstant.php";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
-           echo $row['unit_price'];
+          if($row['onemonth_price'] != 0){
+            $overallprice = $row['eighteen_percent'] / 100 * $row['onemonth_price'];
+            $totalprice = $overallprice + $row['onemonth_price'];
+            echo $totalprice;
+          } else {
+            echo $row['outright_price'];
+          }
         }else{
             return $row;
         }
@@ -1221,8 +1239,8 @@ include "signconstant.php";
         }
     }
 
-    function insertPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method){
-        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}')";
+    function insertPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan){
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1232,8 +1250,19 @@ include "signconstant.php";
 
     }
 
-    function insertNewPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay){
-        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}')";
+    function insertOutPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate){
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
+    function insertNewPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice){
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1938,55 +1967,64 @@ $output .= '<div class="updated-land">
 
 
         if($data['product_unit'] != 0){
-
+        if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
+            $uniquep = $_GET['unique'];
         $output1 ='<a
-            href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
-            <img src="landimage/'.$data['product_image']
+            href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej&unique='.$uniquep.'">
+<img src="landimage/'.$data['product_image']
                     .'" alt="estate image" />
-        </a>';
+</a>';
+} else {
+$output1 ='<a
+    href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+    <img src="landimage/'.$data['product_image']
+                    .'" alt="estate image" />
+</a>';
+}
 
-        $output3 ='</div>';
+$output3 ='</div>';
 
-    $output4 ='<div class="updated-details">
+$output4 ='<div class="updated-details">
     <div class="detail-one">
-    <div class="unit-detail">
-        <div class="detail-btn">
-            <p>Limited Units Available</p>
+        <div class="unit-detail">
+            <div class="detail-btn">
+                <p>Limited Units Available</p>
+            </div>
+            <div class="detail-btn" style="background: #9B51E0;">
+                <p>Half plot per Unit</p>
+            </div>
         </div>
-        <div class="detail-btn" style="background: #9B51E0;">
-            <p>Half plot per Unit</p>
-        </div>
-    </div>
     </div>
     <div class="detail-two">
-    <div class="unit-detail2">
-        <div class="detail-name">
-            <p>'.$data['product_name'].'</p>
+        <div class="unit-detail2">
+            <div class="detail-name">
+                <p>'.$data['product_name'].'</p>
+            </div>
+            <div class="detail-location">
+                <p style="color: #808080;">'.$data['product_location'].'</p>
+                <p><a
+                        href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
+                        here to view</a></p>
+            </div>
+        </div>
     </div>
-    <div class="detail-location">
-        <p style="color: #808080;">'.$data['product_location'].'</p>
-    <p><a
-            href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
-    here to view</a></p>
-    </div>
-    </div>
-    </div>
-            ';
-
-
-
-           
-            
-            
-            
-           
+    ';
 
 
 
 
 
-            $output11 ='</div>
-    </div>
+
+
+
+
+
+
+
+
+    $output11 ='
+</div>
+</div>
 </div>
 </div>';
 
@@ -2000,28 +2038,45 @@ $output6 = number_format($outprice);
 
 $output5 = '
 <div class="detail-four" style="gap: 1em;">
-<p style="color: #808080; font-size: 15px; padding-top: 1em;"><span>Outright Price:&nbsp;&nbsp;</span>&#8358;'.$output6.'</p>';
+    <p style="color: #808080; font-size: 13px; padding-top: 1em;"><span>Outright
+            Price:&nbsp;&nbsp;</span>&#8358;'.$output6.'</p>';
 
 
-} else {
-$output5 = '<p style="color: #808080; font-size: 15px; padding-top: 1em;">No Outright Price</p>';
-}
+    } else {
+    $output5 = '<p style="color: #ff6600; font-size: 13px; padding-top: 1em;">Subscription Only</p>';
+    }
 
 
-if($data['onemonth_price'] != 0){
-$onemonthprice = $data['onemonth_price'];
-if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
-$outinprice = number_format($onemonthprice);
-}
-$output7 = '<p style="color: #808080; font-size: 15px;"><span>Daily Price:&nbsp;&nbsp;</span>&#8358;'.$outinprice.'</p></div>';
+    if($data['onemonth_price'] != 0){
+        $overallprice = $data['eighteen_percent'] / 100 * $data['onemonth_price'];
+    $totprice = $overallprice + $data['onemonth_price'];
+    $totalprice = number_format($totprice);
+    $onemonthprice = $totprice / 540;
+    if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
+    $outinprice = number_format($onemonthprice);
+    
+    } else {
+        $outinprice = round($onemonthprice);
+    }
+    $output7 = '<p style="color: #808080; font-size: 13px;"><span>Daily Price:&nbsp;&nbsp;</span>&#8358;'.$outinprice.'
+    </p>
+</div>';
+
+$output8 = '<p style="color: #808080; font-size: 13px;"><span>Subscription Price(18 Months):&nbsp;&nbsp;</span>&#8358;'.$totalprice.'</p>';
+
+$output .= '<div class="updated-land">
+    <div class="updated-img">'.$output1.''.$output3.''.$output4.''.$output5.''.$output8.''.$output7.''.$output11.'';
+
 } else {
 $output7 = '
-    <p style="color: #808080; font-size: 15px;">No Daily Price</p>
+<p style="color: #ff6600; font-size: 13px;">Outright Only</p>
 </div>';
-}
 
 $output .= '<div class="updated-land">
     <div class="updated-img">'.$output1.''.$output3.''.$output4.''.$output5.''.$output7.''.$output11.'';
+}
+
+
         }
 
 

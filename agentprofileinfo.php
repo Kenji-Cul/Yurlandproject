@@ -52,10 +52,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
             <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
         </div>
 
-        <div class="nav">
-            <img src="images/cart.svg" alt="cart icon" />
-            <img src="images/menu.svg" alt="menu icon" />
-        </div>
+
     </header>
 
     <div class="page-title2">
@@ -140,7 +137,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         // Copy the text inside the text field
         let referralLink =
-            `http://localhost/Yurland/referralsignup.php?ref=${copyText.value}&key=ajfhagfag16253553&refkey=785e7156hfagf&rex=l737727277272277`;
+            `http://localhost/Yurland/referralsignup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
         navigator.clipboard.writeText(referralLink);
         if (navigator.clipboard.writeText(referralLink)) {
             setTimeout(() => {

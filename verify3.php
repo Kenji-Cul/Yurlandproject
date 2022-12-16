@@ -24,7 +24,7 @@ session_start();
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
 
         <div class="nav">
@@ -36,7 +36,7 @@ session_start();
     <div class="success">
         <img src="images/asset_success.svg" alt="" />
         <?php if(isset($_GET['error'])){?>
-        <p>No Internet Connection!</p>
+        <p><?php echo $_GET['error'];?></p>
         <?php }?>
         <?php if(isset($_GET['message'])){?>
         <p>Please complete your land payment</p>
@@ -46,8 +46,10 @@ session_start();
             ?>
         <a href="mylands.php"><button class="landing_page_button2">Make Payment</button></a>
         <?php } else { ?>
-            <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
-     <?php   }}?>
+
+        <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+
+        <?php   }}?>
         <?php if(isset($_SESSION['uniqueagent_id'])){?>
         <a href="agentprofile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>

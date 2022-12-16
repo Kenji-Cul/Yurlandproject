@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include "projectlog.php";
 ?>
 <!DOCTYPE html>
@@ -54,7 +55,7 @@ include "projectlog.php";
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
 
     </header>
@@ -144,8 +145,9 @@ include "projectlog.php";
                     Continue
                 </button>
 
-
+                <?php if(!isset($_SESSION['unique_id'])){?>
                 <div class="login-link">Already have an account? <a href="login.php">Log&nbsp;in</a></div>
+                <?php }?>
             </div>
 
             <div class="company">
@@ -218,8 +220,13 @@ purpose.forEach((element) => {
 
 formbtn.onclick = () => {
     if ((valuediv.innerHTML != "") || (valuediv2.innerHTML != "") || (valuediv3.innerHTML != "")) {
+        <?php if(isset($_SESSION['unique_id'])){?>
         location.href =
             `preference.php?cost=${valuediv.innerHTML}&loc=${valuediv2.innerHTML}&pose=${valuediv3.innerHTML}&hver=0838784920182800201oajfnfkfakjaifihfaiyeyywwmcmhshsj&name=0202002028484`;
+        <?php }else {?>
+        location.href =
+            `signup.php?cost=${valuediv.innerHTML}&loc=${valuediv2.innerHTML}&pose=${valuediv3.innerHTML}&hver=0838784920182800201oajfnfkfakjaifihfaiyeyywwmcmhshsj&name=0202002028484`;
+        <?php }?>
     }
 };
 </script>

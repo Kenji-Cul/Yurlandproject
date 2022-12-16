@@ -22,7 +22,7 @@ if(!isset($_SESSION['unique_id'])){
         min-height: 100vh;
     }
 
-    header{
+    header {
         background: #fee1e3;
     }
 
@@ -80,14 +80,17 @@ if(!isset($_SESSION['unique_id'])){
         width: 90%;
     }
 
-    @media only screen and (max-width: 1300px){
-        .user,#openicon{
+    @media only screen and (max-width: 1300px) {
+
+        .user,
+        #openicon {
             display: none;
         }
-        .links img{
+
+        .links img {
             display: none;
         }
-       
+
         .detail3 {
             display: none;
         }
@@ -113,83 +116,87 @@ if(!isset($_SESSION['unique_id'])){
         }
     }
 
-    @media only screen and (min-width: 1300px){
-        .page-title2 a{
+    @media only screen and (min-width: 1300px) {
+        .page-title2 a {
             display: none;
         }
-        .page-title2{
+
+        .page-title2 {
             justify-content: left;
         }
 
-        .page-title2 p{
+        .page-title2 p {
             font-style: normal;
-font-weight: 600;
-font-size: 40px;
-color: #1A0709;
+            font-weight: 600;
+            font-size: 40px;
+            color: #1A0709;
         }
-        .center{
+
+        .center {
             display: flex;
             align-items: center;
-            justify-content:center;
+            justify-content: center;
             text-align: center;
         }
-        .menu{
+
+        .menu {
             display: none;
         }
-         .profile-image2{
-            display: none!important;
-         }
 
-         .user{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1em;
-    }
+        .profile-image2 {
+            display: none !important;
+        }
 
-    .user p{
-        font-weight: 600;
-      font-size: 20px;
-        color: #1A0709;
-    }
-    .user .profile-image{
-        width: 45px;
-        height: 45px;
-    }
+        .user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
 
-   
+        .user p {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+        }
 
-    .signup .nav{
-        position: absolute;
-    right: 40px;
-    top: 30px;
-    }
+        .user .profile-image {
+            width: 45px;
+            height: 45px;
+        }
 
-         .details2 {
+
+
+        .signup .nav {
+            position: absolute;
+            right: 40px;
+            top: 30px;
+        }
+
+        .details2 {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.6em;
-         }
+        }
 
-         .details2 p{
+        .details2 p {
             color: #808080;
-         }
+        }
 
-         .details2 p,
-         .details2 h3
-         {
+        .details2 p,
+        .details2 h3 {
             font-size: 22px;
-         }
+        }
 
-         .land-btn-container{
+        .land-btn-container {
             padding-left: 1em;
-         }
+        }
 
-         .land-btn-container .btn{
+        .land-btn-container .btn {
             width: 500px;
-         }
-       
+        }
+
         .menu {
             display: none;
         }
@@ -218,7 +225,7 @@ color: #1A0709;
         .dropdown-links {
             width: 6%;
             height: 90vh;
-            border-radius: 0px!important;
+            border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
             flex-direction: column;
@@ -226,7 +233,7 @@ color: #1A0709;
             align-items: top;
             gap: 1.3em;
             background: #7e252b;
-          filter: none;
+            filter: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -241,39 +248,39 @@ color: #1A0709;
             font-size: 14px;
         }
 
-        .dropdown-links .select-link{
+        .dropdown-links .select-link {
             background-color: #1a0709;
         }
 
-        .dropdown-links .links{
+        .dropdown-links .links {
             width: 100%;
-            display: flex!important;
+            display: flex !important;
             align-items: center;
             justify-content: center;
             padding: 1em 0;
             transition: 1s;
         }
 
-        .dropdown-links .links:hover{
+        .dropdown-links .links:hover {
             background-color: #1a0709;
         }
 
-        .dropdown-links .links img{
-             width: 20px;
-             height: 20px;
-             margin-right: 6px;
-             cursor: pointer;
+        .dropdown-links .links img {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            cursor: pointer;
         }
 
-        .dropdown-links .links .link{
+        .dropdown-links .links .link {
             visibility: hidden;
             display: none;
         }
 
-       
-        .dropdown-links li a{
+
+        .dropdown-links li a {
             color: #fff;
-            
+
         }
 
         .transaction-details {
@@ -289,7 +296,7 @@ color: #1A0709;
             padding-top: 2em;
         }
 
-        .pay-container{
+        .pay-container {
             width: 90%;
             padding-left: 5em;
         }
@@ -306,11 +313,18 @@ color: #1A0709;
 
 
     @media only screen and (max-width: 700px) {
+        .payment-image-div {
+
+            width: 100%;
+        }
+
+
         .transaction-details {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-direction: row;
+            width: 90%;
         }
 
         .success {
@@ -359,13 +373,14 @@ color: #1A0709;
                     <img src="images/cart.svg" alt="cart icon" />
                 </div>
             </a>
-            <img src="images/menu.svg" alt="menu icon" class="menu"/>
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
                 <p><?php if(isset($newuser['first_name'])){  ?>
-                        <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
-                        <?php }?></p>
-                <div class="profile-image"> 
-                <?php if(!empty($newuser['photo'])){?>
+                    <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['photo'])){?>
                     <a href="updatedetails.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
                     <?php }?>
@@ -382,106 +397,116 @@ color: #1A0709;
     </header>
 
     <div class="flex-container">
-    <ul class="dropdown-links">
-    <div class="center">
-        <li  id="openicon" style="cursor: pointer;">
-                <img src="images/home.svg" style="width: 20px; height: 20px;"/>
-            </li>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
 
-            <li  id="closeicon" style="display: none; cursor: pointer; font-size:14px;" >
-                <img src="images/home.svg" style="width: 20px; height: 20px;"/>
-            </li>
-                    </div>
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
             <li class="links">
-            <a href="profile.php"><img src="images/home3.svg" /></a>
-            <a href="profile.php" class="link">Home</a></li>
+                <a href="profile.php"><img src="images/home3.svg" /></a>
+                <a href="profile.php" class="link">Home</a>
+            </li>
             <li class="links">
-            <a href="preference.php"><img src="images/land2.svg" /></a>
-            <a href="preference.php" class="link">New Land</a></li>
+                <a href="preference.php"><img src="images/land2.svg" /></a>
+                <a href="preference.php" class="link">New Land</a>
+            </li>
             <li class="links">
-            <a href="transactions.php"><img src="images/updown.svg"  /> </a>
-            <a href="transactions.php" class="link">Transaction History</a></li>
+                <a href="transactions.php"><img src="images/updown.svg" /> </a>
+                <a href="transactions.php" class="link">Transaction History</a>
+            </li>
             <li class="links">
-            <a href="mylands.php"><img src="images/land2.svg" /></a>
-                <a href="mylands.php" class="link">My Land</a></li>
+                <a href="mylands.php"><img src="images/land2.svg" /></a>
+                <a href="mylands.php" class="link">My Land</a>
+            </li>
             <li class="links select-link">
-            <a href="payment.php"><img src="images/chart2.svg"  /> </a>
-                <a href="payment.php" class="link">New Payment</a></li>
+                <a href="payment.php"><img src="images/chart2.svg" /> </a>
+                <a href="payment.php" class="link">New Payment</a>
+            </li>
             <li class="links">
-            <a href="userreferral.php"><img src="images/referral.svg" /></a>
-                <a href="userreferral.php" class="link">Referral</a></li>
+                <a href="userreferral.php"><img src="images/referral.svg" /></a>
+                <a href="userreferral.php" class="link">Referral</a>
+            </li>
             <li class="links">
-            <a href="documents.php"><img src="images/folder.svg"  /></a> 
-                <a href="documents.php" class="link">Documentation</a></li>
+                <a href="documents.php"><img src="images/folder.svg" /></a>
+                <a href="documents.php" class="link">Documentation</a>
+            </li>
             <li class="links">
-            <a href="profiledetails.php"><img src="images/settings.svg" /></a>
+                <a href="profiledetails.php"><img src="images/settings.svg" /></a>
                 <div>
-                <a href="profiledetails.php" class="link">Profile&nbsp;<span style="color: #808080;">and</span></a>
-                <a href="settings.php" class="link">Settings</a>
+                    <a href="profiledetails.php" class="link">Profile&nbsp;<span style="color: #808080;">and</span></a>
+                    <a href="settings.php" class="link">Settings</a>
                 </div>
             </li>
             <li class="links">
-            <a href="logout.php"><img src="images/exit.svg"/></a>
-                <a href="logout.php" class="link">Logout</a></li>
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
+            </li>
         </ul>
 
 
         <div class="pay-container">
-    <div class="page-title2">
-        <a href="profile.php">
-            <img src="images/arrowleft.svg" alt="" />
-        </a>
-        <p>Payment</p>
-    </div>
+            <div class="page-title2">
+                <a href="profile.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <p>Payment</p>
+            </div>
 
-    <div class="payment-image-div">
-        <div>
-            <img src="images/image1.svg" alt="payment image" />
-            <div class="payment-desc">
-                <p>Amount Paid</p>
-                <div class="price-div">&#8358;<?php 
+            <div class="payment-image-div">
+                <div>
+                    <img src="images/image1.svg" alt="payment image" />
+                    <div class="payment-desc">
+                        <p>Amount Paid</p>
+                        <div class="price-div">&#8358;<?php 
                 $user = new User;
                 $total = $user->selectTotal($_SESSION['unique_id']);
                foreach ($total as $key => $value) {
                 $unitprice = $value;
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
+                             } else {
+                                echo $unitprice;
                              }
                }
                 ?></div>
-            </div>
-        </div>
+                    </div>
+                </div>
 
-        <div>
-            <img src="images/image2.svg" alt="payment image" />
-            <div class="payment-desc">
-                <p>Payment Count</p>
-                <div class="payment-count"><?php 
+                <div>
+                    <img src="images/image2.svg" alt="payment image" />
+                    <div class="payment-desc">
+                        <p>Payment Count</p>
+                        <div class="payment-count"><?php 
                 $nums = $user->selectNums($_SESSION['unique_id']);
                foreach ($nums as $key => $value) {
                 echo $value;
                }
                 ?></div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <!-- <div class="no-lands">
+            <!-- <div class="no-lands">
         <img src="images/asset_success.svg" alt="success image" />
         <p>You have not done any transaction yet!!</p>
     </div> -->
 
-    <div class="transactions">
-        <p>Transactions</p>
-        <a href="transactions.php">
-            <p class="more">See more</p>
-        </a>
-    </div>
+            <div class="transactions">
+                <p>Transactions</p>
+                <a href="transactions.php">
+                    <p class="more">See more</p>
+                </a>
+            </div>
 
-    <?php 
+            <?php 
              $land = new User;
              $landview = $land->selectPayment($_SESSION['unique_id']);
              if(!empty($landview)){
@@ -489,42 +514,44 @@ color: #1A0709;
                     
               
             ?>
-    <div class="transaction-details">
-        <div class="radius">
-            <img src="landimage/<?php echo $value['product_image'];?>" alt="">
-        </div>
-        <div class="details">
-            <p><?php echo $value['product_name'];?></p>
-            <div class="inner-detail">
-                <div class="date">
-                    <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+            <div class="transaction-details">
+                <div class="radius">
+                    <img src="landimage/<?php echo $value['product_image'];?>" alt="">
                 </div>
-            </div>
-        </div>
-        <div class="price-detail detail3"><?php 
+                <div class="details">
+                    <p><?php echo $value['product_name'];?></p>
+                    <div class="inner-detail">
+                        <div class="date">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        </div>
+                    </div>
+                </div>
+                <div class="price-detail detail3"><?php 
             echo $value['product_unit'];
             ?>&nbsp;<span>Units</span></div>
-        <div class="price-detail detail3"><?php 
+                <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
-        <div class="price-detail">&#8358;<?php 
+                <div class="price-detail">&#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
+                             } else {
+                                echo $unitprice;
                              }
             ?></div>
-    </div>
+            </div>
 
 
 
-    <?php }}?>
+            <?php }}?>
 
-    <?php if(empty($landview)){?>
-    <div class="success">
-        <img src="images/whoops.svg" alt="" />
-        <p>You have not done any transaction yet</p>
-    </div>
-    </div>
+            <?php if(empty($landview)){?>
+            <div class="success">
+                <img src="images/whoops.svg" alt="" />
+                <p>You have not done any transaction yet</p>
+            </div>
+        </div>
     </div>
 
     <?php }?>
@@ -532,61 +559,61 @@ color: #1A0709;
 
     <script src="js/cart.js"></script>
     <script>
-        if (window.innerWidth > 1200) { 
-            let dropdownnav = document.querySelector(".dropdown-links");
-       let open = document.querySelector('#openicon');
-       let closeicon = document.querySelector('#closeicon');
-       open.onclick = () => {
-        dropdownnav.style = `
+    if (window.innerWidth > 1200) {
+        let dropdownnav = document.querySelector(".dropdown-links");
+        let open = document.querySelector('#openicon');
+        let closeicon = document.querySelector('#closeicon');
+        open.onclick = () => {
+            dropdownnav.style = `
         width: 14%;
         `;
-        open.style.display = "none";
-        closeicon.style.display = "block";
-        document.querySelector(".pay-container").style = `
+            open.style.display = "none";
+            closeicon.style.display = "block";
+            document.querySelector(".pay-container").style = `
          padding-left: 13em;
         `;
-        let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
 
-        let allLink = document.querySelectorAll(".dropdown-links .links");
-        allLink.forEach((element) => {
-        element.style = `
+            let allLink = document.querySelectorAll(".dropdown-links .links");
+            allLink.forEach((element) => {
+                element.style = `
         gap: 10px;
         `;
-       
-    });
-        allLinks.forEach((element) => {
-        element.style = `
+
+            });
+            allLinks.forEach((element) => {
+                element.style = `
          visibility: visible;
          display: block;
         `;
-    });
-       }
+            });
+        }
 
-       closeicon.onclick = () =>{
-        dropdownnav.style = `
+        closeicon.onclick = () => {
+            dropdownnav.style = `
         width: 6%;
         `;
-        open.style.display = "block";
-        closeicon.style.display = "none";
-        document.querySelector(".pay-container").style = `
+            open.style.display = "block";
+            closeicon.style.display = "none";
+            document.querySelector(".pay-container").style = `
          padding-left: 5em;
         `;
 
-         let allLink = document.querySelectorAll(".dropdown-links .links");
-        allLink.forEach((element) => {
-        element.style = `
+            let allLink = document.querySelectorAll(".dropdown-links .links");
+            allLink.forEach((element) => {
+                element.style = `
         justify-content: center
         `;
-    });
-        
-        let allLinks = document.querySelectorAll(".dropdown-links .links .link");
-        allLinks.forEach((element) => {
-        element.style = `
+            });
+
+            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            allLinks.forEach((element) => {
+                element.style = `
          visibility: hidden;
          display:none;
         `;
-    });
-       }
+            });
+        }
     }
 
     if (window.innerWidth < 1300) {
@@ -605,9 +632,6 @@ color: #1A0709;
             `;
         };
     }
-
-    
-
     </script>
 </body>
 

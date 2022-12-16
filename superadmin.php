@@ -178,6 +178,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             <li><a href="createexecutive.php">Create Executive</a></li>
             <li><a href="createagent.php">Create Agent</a></li>
             <li><a href="createsubadmin.php">Create Subadmin</a></li>
+            <li><a href="productperiod.php">Create Plan</a></li>
             <li><a href="selectprice.php">Create Product</a></li>
             <li><a href="#">Pay Earnings</a></li>
             <li><a href="supadmininfo.php">Profile</a></li>

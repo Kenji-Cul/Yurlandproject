@@ -329,7 +329,9 @@ if(!isset($_SESSION['unique_id'])){
             align-items: center;
             justify-content: space-between;
             flex-direction: row;
+            width: 90%;
         }
+
 
         .success {
             position: absolute;
@@ -419,8 +421,8 @@ if(!isset($_SESSION['unique_id'])){
                 <a href="profile.php" class="link">Home</a>
             </li>
             <li class="links">
-                <a href="preference.php"><img src="images/land2.svg" /></a>
-                <a href="preference.php" class="link">New Land</a>
+                <a href="allestates.php"><img src="images/land2.svg" /></a>
+                <a href="allestates.php" class="link">New Land</a>
             </li>
             <li class="links">
                 <a href="transactions.php"><img src="images/updown.svg" /> </a>
@@ -431,8 +433,8 @@ if(!isset($_SESSION['unique_id'])){
                 <a href="mylands.php" class="link">My Land</a>
             </li>
             <li class="links">
-                <a href="payment.php"><img src="images/chart2.svg" /> </a>
-                <a href="payment.php" class="link">New Payment</a>
+                <a href="mylands.php"><img src="images/chart2.svg" /> </a>
+                <a href="mylands.php" class="link">New Payment</a>
             </li>
             <li class="links">
                 <a href="userreferral.php"><img src="images/referral.svg" /></a>
@@ -474,7 +476,9 @@ if(!isset($_SESSION['unique_id'])){
                         <div class="offer">Offer letter</div>
                     </a>
                     <div class="payment">Payment Receipt</div>
+                    <a href="allocation.php">
                     <div class="allocation">Allocation letter</div>
+                    </a>
                 </div>
             </div>
 
@@ -508,6 +512,8 @@ if(!isset($_SESSION['unique_id'])){
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
+                             } else {
+                                echo round($unitprice);
                              }
             ?></div>
             </div>

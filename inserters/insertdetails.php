@@ -4,19 +4,17 @@ include_once "../projectlog.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $occupation= $_POST['occupation'];
-    $gender = $_POST['gender'];
-    $day = $_POST['day'];
-    $month = $_POST['month'];
-    $year = $_POST['year'];
+    $gender = $_GET['gender'];
+    $date = $_POST['date'];
     $filename = $_FILES['image']['name'];
-    if(empty($occupation) || empty($gender) || empty($day) || empty($month) || empty($year)){
+    if(empty($occupation) || empty($gender) || empty($date)){
         $errormsg = "Please input all fields";
     }
     else if(empty($filename)){
         $errormsg = "Please Select Your File";
     } else {
      $user = new User;
-     $insertdocument = $user->updateUserDetails($_SESSION['unique_id'],check_input($gender),check_input($occupation),check_input($day), check_input($month), check_input($year));
+     $insertdocument = $user->updateUserDetails($_SESSION['unique_id'],check_input($gender),check_input($occupation),check_input($date));
     }
 
 }

@@ -264,6 +264,14 @@ if(!isset($_SESSION['unique_id'])){
 
 
     @media only screen and (max-width: 700px) {
+        .payment-image-div2 {
+            display: grid;
+            width: 100%;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+        }
+
         .transaction-details {
             display: flex;
             align-items: center;
@@ -359,8 +367,8 @@ if(!isset($_SESSION['unique_id'])){
                 <a href="profile.php" class="link">Home</a>
             </li>
             <li class="links">
-                <a href="preference.php"><img src="images/land2.svg" /></a>
-                <a href="preference.php" class="link">New Land</a>
+                <a href="allestates.php"><img src="images/land2.svg" /></a>
+                <a href="allestates.php" class="link">New Land</a>
             </li>
             <li class="links">
                 <a href="transactions.php"><img src="images/updown.svg" /> </a>
@@ -371,8 +379,8 @@ if(!isset($_SESSION['unique_id'])){
                 <a href="mylands.php" class="link">My Land</a>
             </li>
             <li class="links">
-                <a href="payment.php"><img src="images/chart2.svg" /> </a>
-                <a href="payment.php" class="link">New Payment</a>
+                <a href="mylands.php"><img src="images/chart2.svg" /> </a>
+                <a href="mylands.php" class="link">New Payment</a>
             </li>
             <li class="links select-link">
                 <a href="userreferral.php"><img src="images/referral.svg" /></a>
@@ -440,7 +448,9 @@ if(!isset($_SESSION['unique_id'])){
          foreach($total as $key => $value){
             
             $percent = $agent['earning_percentage'];
+             
             ?>
+
                 <input type="text" name="price" style="display:none;" value="<?php 
                  if($percent != ""){
                     $earnedprice = $percent / 100 * $value;
@@ -454,7 +464,7 @@ if(!isset($_SESSION['unique_id'])){
                        
          } 
         }} else {
-            echo "0";
+            // echo "0";
         } 
             ?>
                 <div>
@@ -469,7 +479,7 @@ if(!isset($_SESSION['unique_id'])){
                 <div>
                     <img src="images/image1.svg" alt="payment image" />
                     <div class="payment-desc3">
-                        <p>Referral Withdrawal</p>
+                        <p style="font-size: 15px;">Referral Withdrawal</p>
                         <div class="payment-count">
                             <img class="desc-img" src="images/roundleft.svg" alt="" />
                         </div>
@@ -513,13 +523,16 @@ if(!isset($_SESSION['unique_id'])){
                 foreach($earning as $key => $value){
                     
     ?>
-                <?php if($users['earning_percentage'] != ""){?>
+                <?php 
+                 if($users['user_date'] >= $value['payment_date']){
+                if($users['earning_percentage'] != ""){?>
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
                         <p style="text-transform: capitalize;"><span>Hello <?php echo $users['first_name'];?></span></p>
                         <p style="text-transform: uppercase;">
                             <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $users['earning_percentage'];
+                           
                     if($percent != ""){
                     $earnedprice = $percent / 100 * $value['product_price'];
                     $unitprice = $earnedprice;
@@ -530,13 +543,14 @@ if(!isset($_SESSION['unique_id'])){
                             } }else {
                                 echo "0";
                             }
+                        
                     ?>
                             </span>
                         </p>
                     </div>
                 </div>
 
-                <?php }}} }}?>
+                <?php }}} }}}?>
 
                 <?php if(empty($customer) || $users['earning_percentage'] == ""){?>
                 <div class="success">
@@ -581,7 +595,7 @@ if(!isset($_SESSION['unique_id'])){
 
             // Copy the text inside the text field
             let referralLink =
-                `http://localhost/Yurland/customerreferral.php?ref=${copyText.value}&key=ajfhagfag16253553&refkey=785e7156hfagf&rex=l737727277272277`;
+                `http://localhost/Yurland/customerreferral.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
             navigator.clipboard.writeText(referralLink);
         }
 

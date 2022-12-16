@@ -23,6 +23,17 @@ include "projectlog.php";
         background: #fee1e3;
     }
 
+    .success {
+        position: absolute;
+        top: 20em;
+        width: 90%;
+    }
+
+    .success img {
+        width: 25em;
+        height: 25em;
+    }
+
         
         .no-lands {
             width: 100%;
@@ -62,6 +73,21 @@ include "projectlog.php";
         }
 
         @media only screen and (max-width: 1300px){
+            .success {
+            position: absolute;
+            top: 40%;
+            height: 10em;
+            width: 100%;
+        }
+
+        .success img {
+            width: 20em;
+            height: 20em;
+        }
+
+        .success p {
+            text-align: center;
+        }
         .user,#openicon{
             display: none;
         }
@@ -348,8 +374,8 @@ color: #1A0709;
             <a href="profile.php"><img src="images/home3.svg" /></a>
             <a href="profile.php" class="link">Home</a></li>
             <li class="links">
-            <a href="preference.php"><img src="images/land2.svg" /></a>
-            <a href="preference.php" class="link">New Land</a></li>
+            <a href="allestates.php"><img src="images/land2.svg" /></a>
+            <a href="allestates.php" class="link">New Land</a></li>
             <li class="links">
             <a href="transactions.php"><img src="images/updown.svg"  /> </a>
             <a href="transactions.php" class="link">Transaction History</a></li>
@@ -357,8 +383,8 @@ color: #1A0709;
             <a href="mylands.php"><img src="images/land2.svg" /></a>
                 <a href="mylands.php" class="link">My Land</a></li>
             <li class="links">
-            <a href="payment.php"><img src="images/chart2.svg"  /> </a>
-                <a href="payment.php" class="link">New Payment</a></li>
+            <a href="mylands.php"><img src="images/chart2.svg"  /> </a>
+                <a href="mylands.php" class="link">New Payment</a></li>
             <li class="links">
             <a href="userreferral.php"><img src="images/referral.svg" /></a>
                 <a href="userreferral.php" class="link">Referral</a></li>
@@ -397,9 +423,30 @@ color: #1A0709;
             <a href="paymentreceipt.php">
                 <div class="payment">Payment Receipt</div>
             </a>
+            <a href="allocation.php">
             <div class="allocation">Allocation letter</div>
+                    </a>
         </div>
     </div>
+
+    <?php 
+             $land = new User;
+             $landview = $land->selectPayment($_SESSION['unique_id']);
+             if(!empty($landview)){
+                foreach($landview as $key => $value){
+                    
+            ?>
+
+           
+            <?php }}?>
+
+            <?php if(empty($landview['offer_letter'])){?>
+            <div class="success">
+                <img src="images/whoops.svg" alt="" />
+                <p>Whoops You don't have  offer letters yet</p>
+            </div>
+            <?php }?>
+
                     </div>
                     </div>
 

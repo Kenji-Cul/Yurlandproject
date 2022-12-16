@@ -25,7 +25,7 @@ if(isset($_POST['submit'])){
         $price = $_GET['tot'] / $value['onemonth_period'];
         $limit = $value['onemonth_period'];
         } else if($_GET['data'] == "threemonths"){
-        $price =$_GET['tot'] / $value['threemonth_period'];
+            $price = $_GET['tot'] / $value['threemonth_period'];
         $limit = $value['threemonth_period'];
         } else if($_GET['data'] == "sixmonths"){
         $price = $_GET['tot'] / $value['sixmonth_period'];
@@ -50,7 +50,8 @@ if(isset($_POST['submit'])){
     $paymentmonth = date("M");
     $paymentday = date("d");
     $paymentyear = date("Y");
-    $paymenttime = date("h:i a");;
+    $paymenttime = date("h:i a");
+    $paymentdate = date("M-d-Y");
     $uniquesub = rand();
     $paymentmethod = "Subscription";
     
@@ -85,7 +86,9 @@ $err = curl_error($curl);
 curl_close($curl);
 
 if ($err) {
-echo "cURL Error #:" . $err;
+// echo "cURL Error #:" . $err;
+$error = "You are not connected to the internet";
+        header("Location: verify3.php?error=".$error."");
 } else {
 //echo $response;
 $data = json_decode($result);
@@ -130,6 +133,30 @@ include_once "initialize2.php";
     body {
         height: 120vh !important;
     }
+
+    
+.select-box {
+border: 1px solid #808080;
+border-radius: 8px;
+width: 60%;
+margin-bottom: 1em;
+}
+
+@media only screen and (max-width: 1000px) {
+.select-box {
+    border: 1px solid #808080;
+    border-radius: 8px;
+    width: 90%;
+    margin-bottom: 1em;
+}
+}
+
+.land-location p {
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+color: var(--inactive-grey);
+}
     </style>
 </head>
 
@@ -149,7 +176,7 @@ include_once "initialize2.php";
         <div>
             <img src="images/orange-cart-icon.svg" alt="" />
         </div>
-        <p>Subscription Payment</p>
+        <p>Review Subscription Payment</p>
     </div>
 
     <div class="image-desc">
@@ -158,21 +185,39 @@ include_once "initialize2.php";
 
     <div class="price-desc">
         <div>
-            <div class="land-name">
-                <p><?php echo $value['product_name'];?></p>
+        <div class="land-name">
+                <p><span>Estate Name:&nbsp;</span><?php echo $value['product_name'];?></p>
             </div>
             <div class="land-location">
-                <p><?php echo $value['product_location'];?></p>
+                <p><span>Estate Location:&nbsp;</span><?php echo $value['product_location'];?></p>
+            </div>
+            <div class="land-location">
+                <p style="text-transform: capitalize;"><span>Chosen Plan:&nbsp;</span><?php echo $_GET['data'];?></p>
+            </div>
+            <div class="land-location">
+                <p style="text-transform: capitalize;"><span>Unit:&nbsp;</span><?php echo $_GET['unit'];?></p>
+            </div>
+            <div class="land-location">
+                <p><span>Total Cost: &#8358;</span><?php 
+                $totalcost =  $_GET['tot'];
+                if($totalcost > 999 || $totalcost > 9999 || $totalcost > 99999 || $totalcost > 999999){
+                    echo number_format(round($totalcost));
+                    } else {
+                        echo round($totalcost);
+                    }
+                ?></p>
             </div>
         </div>
 
-        <form action="" method="POST">
+        <form action="" method="POST" id="paymentform">
             <?php if($_GET['data'] == "onemonth"){?>
             <div class="input-div">
                 <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['onemonth_period'];
+                 $dailycost = $_GET['tot'] / $value['onemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
                 <!-- <input type="number" id="day" value="" /> -->
@@ -184,9 +229,11 @@ include_once "initialize2.php";
             <div class="input-div">
                 <div class="input-div">
                     <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['threemonth_period'];
+                     $dailycost = $_GET['tot'] / $value['threemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
                 </div>
@@ -195,10 +242,12 @@ include_once "initialize2.php";
                 <?php if($_GET['data'] == "sixmonths"){?>
                 <div class="input-div">
                     <div class="input-div">
-                        <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['sixmonth_period'];
+                        <label for="day">Daily Cost: &#8358;<?php
+                         $dailycost = $_GET['tot'] / $value['sixmonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
                     </div>
@@ -208,9 +257,11 @@ include_once "initialize2.php";
                     <div class="input-div">
                         <div class="input-div">
                             <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['twelvemonth_period'];
+                             $dailycost = $_GET['tot'] / $value['twelvemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
                         </div>
@@ -219,14 +270,41 @@ include_once "initialize2.php";
                         <?php if($_GET['data'] == "eighteenmonths"){?>
                         <div class="input-div">
                             <div class="input-div">
-                                <label for="day">Daily Cost: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['eighteen_period'];
+                                <label for="day">Daily Cost: &#8358;<?php
+                                  $dailycost = $_GET['tot'] / $value['eighteen_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
                 }
                 ?></label>
                             </div>
                             <?php }?>
+
+                            <div class="select-box">
+                                <div class="options-container">
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="daily" name="interval" value="daily" />
+                                        <label for="daily">Daily</label>
+                                    </div>
+
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="weekly" name="interval" value="weekly" />
+                                        <label for="weekly">Weekly</label>
+                                    </div>
+
+                                    <div class="option">
+                                        <input type="radio" class="radio" id="monthly" name="interval"
+                                            value="monthly" />
+                                        <label for="monthly">Monthly</label>
+                                    </div>
+
+                                </div>
+                                <div class="selected">Payment Interval</div>
+                            </div>
+
+                            <input type="text" style="display: none;" name="intervalinput" value="" id="input">
+
 
 
                             <div class="btn-container">
@@ -235,8 +313,28 @@ include_once "initialize2.php";
                             </div>
         </form>
         <?php }}?>
+        </div>
+    </div>
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
         <script src="js/main.js"></script>
+        <script>
+            let purpose = document.getElementsByName("interval");
+    purpose.forEach((element) => {
+        element.onclick = () => {
+            document.querySelector('#input').value = element.value;
+            console.log(document.querySelector('#input').value)
+        };
+    });
+        </script>
 
 </body>
 

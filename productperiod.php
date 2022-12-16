@@ -5,9 +5,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     header("Location: index.php");
 }
 
-if(!isset($_GET['unique'])){
-    header("Location: index.php");
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +41,7 @@ if(!isset($_GET['unique'])){
 
     <!-- Landing Page Text -->
     <div class="page-title2">
-        <a href="createotherfiles.php">
+        <a href="superadmin.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <div style="display: flex !important; flex-direction: column !important">
@@ -57,11 +55,6 @@ $rest = $user->selectPeriod();
 ?>
     <section class="login-form-container">
         <form action="" class="login-form" id="signup-form">
-            <div class="input-div name">
-                <input type="hidden" id="unique" value="<?php if(isset($_GET['unique'])){
-                    echo $_GET['unique'];
-                }?>" name="unique" />
-            </div>
 
             <div class="input-div name">
                 <label for="eighteen">Period For 18 months plan</label>
@@ -69,7 +62,7 @@ $rest = $user->selectPeriod();
                     value="<?php if(!empty($rest)) {echo $rest['eighteen_period'] ;}?>" />
                 <label for="eighteenpercent">Percentage increase</label>
                 <input type="text" id="eighteenpercent" placeholder="Input percentage number for eighteen months plan"
-                    name="eighteenpercent" value="" />
+                    name="eighteenpercent" value="<?php if(!empty($rest)) {echo $rest['eighteen_percent'] ;}?>" />
             </div>
 
             <div class="input-div name">
@@ -78,7 +71,7 @@ $rest = $user->selectPeriod();
                     value="<?php if(!empty($rest)) {echo $rest['twelvemonth_period'] ;}?>" />
                 <label for="twelvepercent">Percentage increase</label>
                 <input type="text" id="twelvepercent" placeholder="Input percentage number for twelve months plan"
-                    name="twelvepercent" value="" />
+                    name="twelvepercent" value="<?php if(!empty($rest)) {echo $rest['twelvemonth_percent'] ;}?>" />
             </div>
 
             <div class="input-div name">
@@ -87,7 +80,7 @@ $rest = $user->selectPeriod();
                     value="<?php if(!empty($rest)) {echo $rest['sixmonth_period'] ;}?>" />
                 <label for="sixpercent">Percentage increase</label>
                 <input type="text" id="sixpercent" placeholder="Input percentage number for six months plan"
-                    name="sixpercent" value="" />
+                    name="sixpercent" value="<?php if(!empty($rest)) {echo $rest['sixmonth_percent'] ;}?>" />
             </div>
 
             <div class="input-div name">
@@ -96,7 +89,7 @@ $rest = $user->selectPeriod();
                     value="<?php if(!empty($rest)) {echo $rest['threemonth_period'] ;}?>" />
                 <label for="threepercent">Percentage increase</label>
                 <input type="text" id="threepercent" placeholder="Input percentage number for three months plan"
-                    name="threepercent" value="" />
+                    name="threepercent" value="<?php if(!empty($rest)) {echo $rest['threemonth_percent'] ;}?>" />
             </div>
 
             <div class="input-div name">
@@ -105,7 +98,7 @@ $rest = $user->selectPeriod();
                     value="<?php if(!empty($rest)) {echo $rest['onemonth_period'] ;}?>" />
                 <label for="onepercent">Percentage increase</label>
                 <input type="text" id="onepercent" placeholder="Input percentage number for one month plan"
-                    name="onepercent" value="" />
+                    name="onepercent" value="<?php if(!empty($rest)) {echo $rest['onemonth_percent'] ;}?>" />
             </div>
 
 
@@ -139,13 +132,13 @@ $rest = $user->selectPeriod();
                 success: function(response) {
                     if (response == "success") {
                         console.log("success")
-                        location.href = "successpage/landsuccess.html";
+                        location.href = "successpage/landedit.html";
                     } else {
                         $("section .error").html(response);
                         $("section .error").css({
                             visibility: "visible",
                         });
-                        $(".btn").html("Update Period");
+                        $(".btn").html("Update Plan");
                         // console.log(response);
                     }
                 },

@@ -32,6 +32,10 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
     @media only screen and (min-width: 1300px) {
 
+        .dropdown-links li a {
+            color: #ff6600;
+        }
+
         .land-estate {
             border: 1px solid #d4d1d1;
             width: 320px;

@@ -34,19 +34,25 @@ if($message == "Plan created"){
   
   //execute post
   $result = curl_exec($ch);
+  $err = curl_error($ch);
+  
+  if($err){
+    $error = "You are not connected to the internet";
+    header("Location: verify3.php?error=".$error."");
+  } else{
   //echo $result;
   $initialize_data = json_decode($result);
   $initialize_url = $initialize_data->data->authorization_url;
-  if($result){
-     header("Location: ".$initialize_url);
+  
+    header("Location: ".$initialize_url);
      if($_GET['unit'] % 4 == 0){
       $unit_added = $_GET['unit'] / 4;
-      $added_unit = $_GET['unit'] + $unit_added;
+    $added_unit = $_GET['unit'] + $unit_added;
  
- $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
+ $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,round($price),$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data']);
  $update = $land->updateUnit($deducted_unit,$uniqueproduct,$boughtunit);
  } else {
-     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod);
+     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,round($price),$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data']);
      $update = $land->updateUnit($deducted_unit,$uniqueproduct,$boughtunit);
  }
 

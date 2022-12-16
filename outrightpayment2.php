@@ -35,7 +35,8 @@ if(isset($_POST["submit"])){
     $paymentmonth = date("M");
     $paymentday = date("d");
     $paymentyear = date("Y");
-    $paymenttime = date("h:i a");;
+    $paymenttime = date("h:i a");
+    $paymentdate = date("M-d-Y");
     $paymentmethod = "Outright";
    
 
@@ -140,6 +141,12 @@ if(isset($_POST["submit"])){
                 "value" => "outrightpayment"
             ],
 
+            [
+                "display_name" => "Payment Date",
+                "variable_name" => "paydate",
+                "value" => $paymentdate
+            ],
+
 
 
           ]
@@ -179,13 +186,16 @@ if(isset($_POST["submit"])){
     // Check for errors
     $errors = curl_error($ch);
     if($errors){
-        die(" Curl-returned some errors: ". $errors);
+        $error = "You are not connected to the internet";
+        header("Location: verify3.php?error=".$error."");
     }
 
-    // var_dump($result);
+    if($result){
+        // var_dump($result);
     $transaction = json_decode($result);
     //Automatically redirect customers to the payment page
     header("Location: ".$transaction->data->authorization_url);
+    }
    
 } 
 ?>
@@ -205,6 +215,13 @@ if(isset($_POST["submit"])){
     <style>
     body {
         height: 70vh !important;
+    }
+
+    .land-location p {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--inactive-grey);
     }
     </style>
 </head>
@@ -237,11 +254,14 @@ if(isset($_POST["submit"])){
 
     <div class="price-desc">
         <div>
-            <div class="land-name">
-                <p><?php echo $value['product_name'];?></p>
+        <div class="land-name">
+                <p><span>Estate Name:&nbsp;</span><?php echo $value['product_name'];?></p>
             </div>
             <div class="land-location">
-                <p><?php echo $value['product_location'];?></p>
+                <p><span>Estate Location:&nbsp;</span><?php echo $value['product_location'];?></p>
+            </div>
+            <div class="land-location">
+                <p style="text-transform: capitalize;"><span>Unit:&nbsp;</span><?php echo $_GET['unit'];?></p>
             </div>
         </div>
 

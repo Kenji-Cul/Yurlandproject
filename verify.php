@@ -61,6 +61,7 @@ if('success' == $trans->data->status){
     $paymentmethod = $trans->data->metadata->custom_fields[12]->value;
     $unit = $trans->data->metadata->custom_fields[13]->value;
     $paymenttype = $trans->data->metadata->custom_fields[14]->value;
+    $paymentdate = $trans->data->metadata->custom_fields[15]->value;
    
    $user = new User;
    if($paymenttype == "outrightpayment"){
@@ -68,9 +69,9 @@ if('success' == $trans->data->status){
     $unit_added = $unit / 4;
     $added_unit = $unit + $unit_added;
 
-$insertpayment = $user->insertPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod);
+$insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate);
 } else {
-   $insertpayment = $user->insertPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod);
+   $insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate);
 }
    }
 
@@ -79,6 +80,8 @@ $insertpayment = $user->insertPayment($uniqueperson,$unique,$product_name,$payme
     $newpay = $trans->data->metadata->custom_fields[16]->value;
     $period = $trans->data->metadata->custom_fields[17]->value;
     $subperiod = $trans->data->metadata->custom_fields[18]->value;
+    $paymentdate = $trans->data->metadata->custom_fields[19]->value;
+    
    
     
   
@@ -88,7 +91,9 @@ if($unit % 4 == 0){
 
 $checklastpayment = $user->selectLastPay($uniqueperson,$unique);
 if(empty($checklastpayment)){
-    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay);
+    $chosenplan = $trans->data->metadata->custom_fields[20]->value;
+    $subprice = $trans->data->metadata->custom_fields[21]->value;
+    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice);
 } else {
     $addedprice = $checklastpayment['product_price'] + $newpay;
 $updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$added_unit,$payment_method,$newprice,$period,$subperiod);
@@ -99,7 +104,9 @@ $updatenewpayment = $user->updatePayment($unique,$uniqueperson);
 } else {
     $checklastpayment = $user->selectLastPay($uniqueperson,$unique);
     if(empty($checklastpayment)){
-   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay);
+        $chosenplan = $trans->data->metadata->custom_fields[20]->value;
+        $subprice = $trans->data->metadata->custom_fields[21]->value;
+   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice);
     } else {
         $addedprice = $checklastpayment['product_price'] + $newpay;
     $updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$newprice,$period,$subperiod);
@@ -164,7 +171,7 @@ if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
 
         <div class="nav">

@@ -40,7 +40,7 @@ if(isset($_SESSION['unique_id'])){
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
     </header>
 
@@ -89,7 +89,7 @@ if(isset($_SESSION['unique_id'])){
                 <img src="images/loading.svg" alt="" class="loading-img" />
             </div>
             <div class="login-link">
-                Don't have an account? <a href="signup.html">Sign&nbsp;up</a>
+                Don't have an account? <a href="signup.php">Sign&nbsp;up</a>
             </div>
         </form>
 
@@ -101,7 +101,7 @@ if(isset($_SESSION['unique_id'])){
         <p>A product of Ilu-oba International Limited and Arklips Limited</p>
         <p>Connect with us Facebook, Twitter, Instagram</p>
         <p style="font-size: 30px;">
-            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+<a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i class="ri-instagram-line"></a></i><a href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
         </p>
     </footer>
 
@@ -121,7 +121,12 @@ if(isset($_SESSION['unique_id'])){
                 data: $("#login-form input"),
                 success: function(response) {
                     if (response === "success") {
+                        <?php if(isset($_GET['cost']) || isset($_GET['loc']) || isset($_GET['pose'])){?>
+                        location.href =
+                            `preference.php?cost=<?php echo $_GET['cost'];?>&loc=<?php echo $_GET['loc'];?>&pose=<?php echo $_GET['pose'];?>&hver=0838784920182800201oajfnfkfakjaifihfaiyeyywwmcmhshsj&name=0202002028484`;
+                        <?php }else {?>
                         location.href = "profile.php";
+                        <?php }?>
                     } else {
                         $("section .error").html(response);
                         $("section .error").css({

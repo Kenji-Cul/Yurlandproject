@@ -128,10 +128,7 @@ if(!isset($_GET['pose'])){
                 <input type="number" id="units" placeholder="Input number of units" name="noofunit" />
             </div>
 
-            <div class="input-div name">
-                <label for="priceunit">Price per unit</label>
-                <input type="number" id="priceunit" placeholder="Input price per unit" name="unitprice" />
-            </div>
+
 
             <div class="input-div name">
                 <input type="hidden" id="unique" value="" name="unique" />
@@ -150,8 +147,8 @@ if(!isset($_GET['pose'])){
 
             <?php if($_GET['mode'] === "sub"){?>
             <div class="input-div name dailyprice">
-                <label for="dailyprice">Subscription</label>
-                <input type="number" id="eighteenmonthprice" placeholder="Price for 18 months plan"
+                <label for="dailyprice">Subscription Price Per Unit</label>
+                <input type="number" id="eighteenmonthprice" placeholder="subcription price per unit"
                     name="eighteenmonth" />
             </div>
             <?php }?>
@@ -163,8 +160,8 @@ if(!isset($_GET['pose'])){
             </div>
 
             <div class="input-div name dailyprice">
-                <label for="dailyprice">Subscription</label>
-                <input type="number" id="eighteenmonthprice" placeholder="Price for 18 months plan"
+                <label for="dailyprice">Subscription Price Per Unit</label>
+                <input type="number" id="eighteenmonthprice" placeholder="subcription price per unit"
                     name="eighteenmonth" />
             </div>
             <?php }?>

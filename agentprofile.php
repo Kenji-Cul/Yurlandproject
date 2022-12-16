@@ -34,6 +34,8 @@ if(!isset($_SESSION['uniqueagent_id'])){
         height: 20em;
     }
 
+
+
     /* .land_estate_container {
         display: flex;
         gap: 2em;
@@ -41,6 +43,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
     @media only screen and (min-width: 1300px) {
+
+        .menu {
+            display: none;
+        }
 
         .land-estate {
             border: 1px solid #d4d1d1;
@@ -80,6 +86,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
             width: 95%;
             text-transform: capitalize;
             font-size: 17px;
+        }
+
+        .dropdown-links li a {
+            color: #ff6600;
         }
 
         .transaction-details {
@@ -126,16 +136,20 @@ if(!isset($_SESSION['uniqueagent_id'])){
             height: 90vh;
         }
 
-
         .dropdown-links {
-            margin-top: -7.4em !important;
             height: 90vh;
             display: flex;
             flex-direction: column;
+            align-items: left;
+            justify-content: center;
             gap: 2em;
+            background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
-            width: 200px;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
         }
 
         .dropdown-links li {
@@ -159,14 +173,9 @@ if(!isset($_SESSION['uniqueagent_id'])){
         </div>
 
         <div class="nav">
-            <a href="cartreview2.php">
-                <div class="cart">
-                    <div class="cart-notify"></div>
-                    <img src="images/cart.svg" alt="cart icon" />
-                </div>
-            </a>
             <img src="images/menu.svg" alt="menu icon" class="menu" />
         </div>
+
     </header>
     <?php 
              $user = new User;
@@ -187,6 +196,9 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
     <div class="flex-container">
         <ul class="dropdown-links">
+            <div class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </div>
             <li><a href="preference.php">New Land</a></li>
             <li><a href="mycustomers.php">Customers</a></li>
             <li><a href="newcustomer.php">New Customer</a></li>
@@ -196,9 +208,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
             </li>
             <li><a href="logout.php">Logout</a></li>
 
-            <div class="close">
-                <i class="ri-close-fill"></i>
-            </div>
+
         </ul>
 
         <div class="profile-container">

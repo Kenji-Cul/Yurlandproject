@@ -22,12 +22,18 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
 
     else {
     $user = new User;
+    $emailuser = $user->checkEmailAddress(check_input($email));
+    if(!empty($emailuser)){
+    $errormsg = "Email Address already exists";
+    }else{
     $checkreferral = $user->selectReferralUser($referralID);
     if(!empty($checkreferral)){
     $insertuser =
     $user->updateUserForReferral(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referralID),check_input($personalref),$checkreferral['unique_id']);
     } else {
     $errormsg = "You have not being referred";
+    }
+
     }
 
     }
