@@ -229,18 +229,14 @@ if(!isset($_SESSION['unique_id'])){
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 
     }
 
     @media only screen and (max-width: 500px) {
-        .close {
-            position: absolute;
-            top: 1em;
-            right: 1em;
-        }
+
 
         .links img {
             display: none;

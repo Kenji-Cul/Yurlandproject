@@ -82,6 +82,18 @@ if(!isset($_SESSION['unique_id'])){
 
     @media only screen and (max-width: 1300px) {
 
+        .details .pname {
+            font-size: 13px;
+        }
+
+        .transaction-details {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
+        }
+
         .user,
         #openicon {
             display: none;
@@ -96,7 +108,7 @@ if(!isset($_SESSION['unique_id'])){
         }
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -519,7 +531,7 @@ if(!isset($_SESSION['unique_id'])){
                     <img src="landimage/<?php echo $value['product_image'];?>" alt="">
                 </div>
                 <div class="details">
-                    <p><?php echo $value['product_name'];?></p>
+                    <p class="pname"><?php echo $value['product_name'];?></p>
                     <div class="inner-detail">
                         <div class="date">
                             <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
