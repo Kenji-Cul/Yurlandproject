@@ -537,9 +537,9 @@ if(!isset($_SESSION['unique_id'])){
                     $earnedprice = $percent / 100 * $value['product_price'];
                     $unitprice = $earnedprice;
             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                              echo number_format($unitprice);
+                              echo number_format(round($unitprice));
                             } else {
-                                echo $unitprice;
+                                echo round($unitprice);
                             } }else {
                                 echo "0";
                             }
@@ -595,7 +595,7 @@ if(!isset($_SESSION['unique_id'])){
 
             // Copy the text inside the text field
             let referralLink =
-                `http://localhost/Yurland/customerreferral.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
+                `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
             navigator.clipboard.writeText(referralLink);
         }
 

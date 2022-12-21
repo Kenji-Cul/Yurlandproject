@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniquesubadmin_id'])){
-    header("Location:index.php");
+    header("Location:portallogin.php");
 }
 
 ?>
@@ -32,8 +32,62 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
     @media only screen and (min-width: 1300px) {
 
-        .dropdown-links li a {
-            color: #ff6600;
+        .signup .nav {
+            position: absolute;
+            right: 40px;
+            top: 30px;
+        }
+
+        .profile-image2 {
+            display: none !important;
+        }
+
+        .user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
+
+        .user p {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+        }
+
+        .user .profile-image {
+            width: 45px;
+            height: 45px;
+        }
+
+
+
+
+        .details {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6em;
+        }
+
+        .details p {
+            color: #808080;
+        }
+
+        .details p,
+        .details h3 {
+            font-size: 22px;
+        }
+
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .menu {
+            display: none;
         }
 
         .land-estate {
@@ -52,28 +106,68 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         }
 
         .dropdown-links {
-            width: 10%;
+            width: 6%;
             height: 90vh;
-            border-radius: 0 8px 8px 0;
-            padding: 1em;
+            border-radius: 0px !important;
+            padding: 1em 0;
             display: flex;
             flex-direction: column;
             justify-content: top;
             align-items: top;
-            gap: 3em;
-            background: rgba(255, 255, 255, 0.9);
-            filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
+            gap: 1.3em;
+            background: #7e252b;
+            filter: none;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 9999999 !important;
+            transition: all 0.7s;
         }
 
         .dropdown-links li {
-            height: 0.2em;
+            height: 1em;
             width: 95%;
             text-transform: capitalize;
-            font-size: 17px;
+            font-size: 14px;
+        }
+
+        .dropdown-links .select-link {
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links {
+            width: 100%;
+        }
+
+        .dropdown-links .links img {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .dropdown-links .links {
+            width: 100%;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 1em 0;
+            transition: 1s;
+        }
+
+        .dropdown-links .links:hover {
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links .link {
+            visibility: hidden;
+            display: none;
+        }
+
+
+        .dropdown-links li a {
+            color: #fff;
+
         }
 
         .transaction-details {
@@ -86,21 +180,25 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             flex-direction: row;
             position: relative;
             padding-top: 2em;
-            height: 90vh;
+            height: 70vh;
         }
 
         .estates {
             padding-top: 6em;
             position: absolute;
-            right: 0;
-
+            left: 3em;
+            padding: 0;
+            width: 93%;
+            transition: all 0.5s;
+            margin-top: 6em;
         }
 
         .profile-container {
             position: absolute;
-            left: 10em;
+            left: 5em;
             padding: 0;
-            width: 88%;
+            width: 93%;
+            transition: all 0.5s;
         }
 
         .close {
@@ -111,7 +209,68 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
     }
 
+    @media only screen and (max-width: 1300px) {
 
+
+        .user,
+        #openicon {
+            display: none;
+        }
+
+        .links img {
+            display: none;
+        }
+
+
+
+        .land_estate_container {
+            display: flex;
+            flex-direction: row;
+            gap: 1em;
+        }
+
+
+        .profile-div-container {
+            margin: auto;
+            width: 100%;
+        }
+
+
+
+        .dropdown-links {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 2em;
+            background: #7e252b;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
+
+        .land-estate {
+            width: 290px;
+        }
+
+
+
+        .close {
+            position: absolute;
+            top: 1em;
+            right: 1em;
+        }
+
+    }
 
 
 
@@ -121,20 +280,26 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         }
 
         .dropdown-links {
-            margin-top: 5em !important;
             height: 90vh;
             display: flex;
             flex-direction: column;
+            align-items: left;
+            justify-content: center;
             gap: 2em;
+            background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
-            width: 200px;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
         }
 
         .dropdown-links li {
             height: 1em;
             grid-gap: 0;
         }
+
     }
     </style>
 </head>
@@ -143,14 +308,41 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
         </div>
 
+        <?php 
+             $user = new User;
+             $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+            ?>
+
         <div class="nav">
-            <div class="menu">
-                <img src="images/menu.svg" alt="menu icon" />
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
+            <div class="user">
+                <p><?php if(isset($newuser['subadmin_name'])){  ?>
+                    <span><?php echo $newuser['subadmin_name']; ?></span>&nbsp;
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['subadmin_image'])){?>
+                    <a href="subadmininfo.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['subadmin_image'])){?>
+                    <a href="subadmininfo.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
             </div>
         </div>
+
     </header>
     <?php 
              $user = new User;
@@ -163,16 +355,41 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <div class="flex-container">
 
         <ul class="dropdown-links">
-            <li><a href="preference.php">New Land</a></li>
-            <li><a href="allcustomers.php">All Customers</a></li>
-            <li><a href="createagent.php">Create Agent</a></li>
-            <li><a href="subadmininfo.php">Profile</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
 
-            <div class="close">
-                <i class="ri-close-fill"></i>
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
             </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="subadmin.php"><img src="images/home3.svg" /></a>
+                <a href="subadmin.php" class="link">Home</a>
+            </li>
+            <li class="links">
+                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allcustomers.php" class="link">All Customers</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="subadmininfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
+            </li>
         </ul>
+
 
         <div class="profile-container">
             <div class="profile-info">
@@ -184,7 +401,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     </h3>
                 </div>
 
-                <div class="profile-image">
+                <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['subadmin_image'])){?>
                     <img src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" />
                     <?php }?>
@@ -195,7 +412,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     <?php }?>
                 </div>
             </div>
-           
+
 
             <div class="profile-div-container">
                 <div class="profile-div">
@@ -285,38 +502,36 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="swiper estates swiper-counter">
-        <p class="available">Available Estates</p>
-        <div class="land_estate_container swiper-wrapper">
-            <?php 
+
+            <div class="swiper estates swiper-counter">
+                <p class="available">Available Estates</p>
+                <div class="land_estate_container swiper-wrapper">
+                    <?php 
              $land = new User;
              $landview = $land->selectLandPrime();
              if(!empty($landview)){
                 foreach($landview as $key => $value){
             ?>
-            <div class="land-estate swiper-slide">
-                <div class="land-image">
-                    <a
-                        href="estateinfo2.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
-                        <img src="landimage/<?php if(isset($value['product_image'])){
+                    <div class="land-estate swiper-slide">
+                        <div class="land-image">
+
+                            <img src="landimage/<?php if(isset($value['product_image'])){
                             echo $value['product_image'];
                         }?>" alt="estate image" />
-                    </a>
-                </div>
-                <div class="land-details">
-                    <div class="land-name">
-                        <p><?php echo $value['product_name'];?></p>
-                    </div>
-                    <div class="land-location">
-                        <p><?php echo $value['product_location'];?></p>
-                    </div>
-                </div>
-            </div>
 
-            <?php   }
+                        </div>
+                        <div class="land-details">
+                            <div class="land-name">
+                                <p><?php echo $value['product_name'];?></p>
+                            </div>
+                            <div class="land-location">
+                                <p><?php echo $value['product_location'];?></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php   }
              } ?>
 
 
@@ -324,8 +539,10 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
 
 
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
         </div>
-        <div class="swiper-pagination"></div>
     </div>
 
 
@@ -352,11 +569,64 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             },
         },
     });
+    if (window.innerWidth > 1200) {
+        let dropdownnav = document.querySelector(".dropdown-links");
+        let open = document.querySelector('#openicon');
+        let closeicon = document.querySelector('#closeicon');
+        open.onclick = () => {
+            dropdownnav.style = `
+        width: 14%;
+        `;
+            open.style.display = "none";
+            closeicon.style.display = "block";
+            document.querySelector(".profile-container").style = `
+         padding-left: 7em;
+        `;
+            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+
+            let allLink = document.querySelectorAll(".dropdown-links .links");
+            allLink.forEach((element) => {
+                element.style = `
+        gap: 10px;
+        `;
+
+            });
+            allLinks.forEach((element) => {
+                element.style = `
+         visibility: visible;
+         display: block;
+        `;
+            });
+        }
+
+        closeicon.onclick = () => {
+            dropdownnav.style = `
+        width: 6%;
+        `;
+            open.style.display = "block";
+            closeicon.style.display = "none";
+            document.querySelector(".profile-container").style = `
+         padding-left: 1em;
+        `;
+
+            let allLink = document.querySelectorAll(".dropdown-links .links");
+            allLink.forEach((element) => {
+                element.style = `
+        justify-content: center
+        `;
+            });
+
+            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            allLinks.forEach((element) => {
+                element.style = `
+         visibility: hidden;
+         display:none;
+        `;
+            });
+        }
+    }
     if (window.innerWidth < 1300) {
         let dropdownnav = document.querySelector(".dropdown-links");
-        // dropdownnav.style.display = "none";
-
-
         let menu = document.querySelector(".menu");
         menu.onclick = () => {
             dropdownnav.style = `

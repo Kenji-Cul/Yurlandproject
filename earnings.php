@@ -126,9 +126,9 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     $earnedprice = $percent / 100 * $value['product_price'];
                     $unitprice = $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                      echo number_format(floor($unitprice));
+                                      echo number_format(round($unitprice));
                                     } else {
-                                        echo $unitprice;
+                                        echo round($unitprice);
                                     }
                     ?>
                     </span>

@@ -21,11 +21,25 @@ header("Location:index.php");
     <style>
     body {
         position: relative;
-        height: 180vh;
         background-image: none;
+        height: 150vh;
     }
 
-   
+
+
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 40%;
+    }
+
+    .modalcon {
+        z-index: 2000000;
+    }
+
+
 
     header {
         background: #fee1e3;
@@ -33,15 +47,11 @@ header("Location:index.php");
 
     .footerdiv {
         position: absolute;
-        bottom: 0;
+        bottom: 0 !important;
         width: 100%;
     }
 
     @media only screen (max-width: 800px) {
-        body {
-            height: 260vh !important;
-            background-image: none;
-        }
 
         .footerdiv {
             display: none;
@@ -57,10 +67,7 @@ header("Location:index.php");
     }
 
     @media only screen (max-width: 500px) {
-        body {
-            height: 260vh !important;
-            background-image: none;
-        }
+
 
         .footerdiv {
             display: none;
@@ -94,10 +101,11 @@ header("Location:index.php");
         height: 30em;
     }
 
+
+
     @media only screen and (min-width: 1300px) {
-        .successmodal{
-        width:  110%;
-    }
+
+
         .center {
             display: flex;
             align-items: center;
@@ -285,6 +293,9 @@ header("Location:index.php");
 
 
     @media only screen and (max-width: 1300px) {
+        body {
+            height: 160vh;
+        }
 
         .user,
         #openicon {
@@ -319,7 +330,7 @@ header("Location:index.php");
     </style>
 </head>
 
-<body>
+<body class="body">
     <!-- Header -->
     <header class="signup">
         <div class="logo">
@@ -442,28 +453,28 @@ header("Location:index.php");
             </div>
 
             <div class="select-container input-div">
-            <div class="select-box">
-                <div class="options-container">
-                    <div class="option">
-                        <input type="radio" class="radio" id="male" name="gender" value="Male" />
-                        <label for="male">Male</label>
-                    </div>
+                <div class="select-box">
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" class="radio" id="male" name="gender" value="Male" />
+                            <label for="male">Male</label>
+                        </div>
 
-                    <div class="option">
-                        <input type="radio" class="radio" id="female" name="gender" value="Female" />
-                        <label for="female">Female</label>
+                        <div class="option">
+                            <input type="radio" class="radio" id="female" name="gender" value="Female" />
+                            <label for="female">Female</label>
+                        </div>
                     </div>
+                    <div class="selected">Select Gender</div>
                 </div>
-                <div class="selected">Select Gender</div>
-            </div>
 
-            <div class="valuediv" style="display: none;"></div>
+                <div class="valuediv" style="display: none;"></div>
 
                 <div class="input-div name">
                     <label for="date">Date Of Birth</label>
-                    <input type="date" id="date" style="font-size: 18px; cursor: pointer;"  name="date" value="<?php if(isset($newuser['dateofbirth'])){
+                    <input type="date" id="date" style="font-size: 18px; cursor: pointer;" name="date" value="<?php if(isset($newuser['dateofbirth'])){
                     echo $newuser['dateofbirth'];
-                }?>"/>
+                }?>" />
                 </div>
 
             </div>
@@ -496,20 +507,27 @@ header("Location:index.php");
             </div>
         </form>
 
-        <div class="successmodal">
-          <div class="modalcon">
-          <div class="modaldiv">
-            <div>
-            <img src="images/asset_success.svg" alt="" />
-            <p>Details!</p>
-          <p>Updated Successfully</p>
-          <a href="profiledetails.php"><button class="landing_page_button2">Back to Dashboard</button></a
-         >
+    </section>
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>Details!</p>
+                    <p>Updated Successfully</p>
+                    <a href="profiledetails.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+                </div>
             </div>
-          </div>
         </div>
     </div>
-    </section>
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
 
 
@@ -599,6 +617,13 @@ header("Location:index.php");
     const error = document.querySelector(".error");
     uploadbtn.addEventListener("click", () => {
         uploaddiv.style.display = "block";
+        if (window.innerWidth < 1300) {
+            document.querySelector('.body').style.height = "210vh";
+        }
+        if (window.innerWidth > 1300) {
+            document.querySelector('.body').style.height = "200vh";
+        }
+
     });
 
     form.onsubmit = (e) => {
@@ -706,8 +731,8 @@ header("Location:index.php");
                     if (data === "success") {
                         //console.log("uploaded");
                         submitbtn.onclick = () => {
-                             document.querySelector('.successmodal').style.visibility = "visible";
-                             document.querySelector('.modalcon').classList.add('animation');
+                            document.querySelector('.successmodal').style.display = "flex";
+                            document.querySelector('.modalcon').classList.add('animation');
                         };
                     } else {
                         error.textContent = data;

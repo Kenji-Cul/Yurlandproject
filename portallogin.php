@@ -18,6 +18,12 @@
         justify-content: space-between;
     }
 
+    .footerdiv {
+        margin-top: 9em;
+    }
+
+
+
     section .error {
         width: 60%;
     }
@@ -43,7 +49,7 @@
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
     </header>
 
@@ -54,7 +60,7 @@
 
     <section class="login-form-container">
         <form action="" class="login-form" id="login-form">
-        <div class="select-box">
+            <div class="select-box">
                 <div class="options-container">
                     <div class="option">
                         <input type="radio" class="radio" id="agent" name="userdata" value="agent" />
@@ -84,35 +90,47 @@
                 <i class="ri-eye-off-line"></i>
             </div>
 
-            <p class="error">Please input all fields</p>
-            <div class="value" style="visibility: hidden"></div>
+
             <button class="btn" type="submit">Login</button>
+            <p class="error">Please input all fields</p>
+            <div class="value" style="display: none;"></div>
             <div style="display: none">
                 <img src="images/loading.svg" alt="" class="loading-img" />
             </div>
         </form>
     </section>
 
-  
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px;">
+            <a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i class="ri-instagram-line"></a></i><a
+                href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i
+                    class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
+
+
     <script src="js/main.js"></script>
     <script>
-        var passwordInput = document.querySelector("#password");
-        var toggleBtn = document.querySelector(".password i");
-        toggleBtn.onclick = () => {
-  if (passwordInput.type == "password") {
-    passwordInput.type = "text";
-    toggleBtn.classList = "ri-eye-line";
-  } else {
-    passwordInput.type = "password";
-    toggleBtn.classList = "ri-eye-off-line";
-  }
-};
+    var passwordInput = document.querySelector("#password");
+    var toggleBtn = document.querySelector(".password i");
+    toggleBtn.onclick = () => {
+        if (passwordInput.type == "password") {
+            passwordInput.type = "text";
+            toggleBtn.classList = "ri-eye-line";
+        } else {
+            passwordInput.type = "password";
+            toggleBtn.classList = "ri-eye-off-line";
+        }
+    };
     let portalform = document.querySelector('.login-form');
     let portalbtn = document.querySelector('.login-form .btn');
     let valuediv = document.querySelector('.value');
     let error = document.querySelector(".error");
     portalform.onsubmit = (e) => {
-     e.preventDefault();
+        e.preventDefault();
     }
 
     let userdata = document.getElementsByName("userdata");
@@ -122,7 +140,7 @@
         };
     });
 
-    function portalLogin(){
+    function portalLogin() {
         let xhr = new XMLHttpRequest();
         xhr.open("POST", `inserters/checkportal.php?userdata=${valuediv.innerHTML}`);
         xhr.onload = () => {
@@ -130,13 +148,12 @@
                 if (xhr.status === 200) {
                     let data = xhr.response;
                     if (data === "agentsuccess") {
-                         location.href = "agentprofile.php";
-                    } else if(data === "subadminsuccess"){
+                        location.href = "agentprofile.php";
+                    } else if (data === "subadminsuccess") {
                         location.href = "subadmin.php";
-                    } else if(data === "superadminsuccess"){
+                    } else if (data === "superadminsuccess") {
                         location.href = "superadmin.php";
-                    }
-                    else {
+                    } else {
                         error.textContent = data;
                         error.style.visibility = "visible";
                         //uploaddiv.style.display = "none";

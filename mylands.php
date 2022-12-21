@@ -708,7 +708,7 @@ if(!isset($_SESSION['unique_id'])){
                         </div>
                         <?php if($value['payment_method'] == "Subscription"){?>
                         <div class="cartbutton">&#8358;<?php 
-                    $unitprice = $value['product_price'];
+                    $unitprice = $value['sub_price'];
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
@@ -861,13 +861,13 @@ if(!isset($_SESSION['unique_id'])){
                         <div class="detail-five">
                             <?php if($value['payment_method'] == "Subscription"){?>
                             <div class="cartbutton">&#8358;<?php 
-             $unitprice = $value['product_price'];
+             $unitprice = $value['sub_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
                                  echo $unitprice;
                              }
-             ?> &nbsp;<span>daily</span></div>
+             ?> &nbsp;<span><?php echo $value['sub_period']?></span></div>
 
                             <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
@@ -968,7 +968,7 @@ if(!isset($_SESSION['unique_id'])){
                             <p><span>Start
                                     Date:</span>&nbsp;<span><?php echo $value['payment_day'];?></span>-<span><?php echo $value['payment_month'];?></span>-<span><?php echo $value['payment_year'];?></span>
                             </p>
-                            <?php if($value['payment_method'] == "Subscription" || $value['payment_status'] == "Payed"){  ?>
+                            <?php if($value['payment_method'] == "NewPayment" || $value['payment_status'] == "Payed"){  ?>
                             <p><span>Expected End
                                     Date:</span>&nbsp;<span><?php echo $value['sub_period'];?></span></p>
                             <?php }?>
@@ -976,8 +976,8 @@ if(!isset($_SESSION['unique_id'])){
                             <p><span>Chosen Plan:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
                         echo $value['product_plan'];         
                     ?></span></p>
-                    <?php }?>
-                     <p><span>Unit:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
+                            <?php }?>
+                            <p><span>Unit:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
                         echo $value['product_unit'];         
                     ?></span></p>
                         </div>

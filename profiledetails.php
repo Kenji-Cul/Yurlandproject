@@ -488,28 +488,28 @@ if(!isset($_SESSION['unique_id'])){
                $thirduser = $user->selectReferralAgent($newuser['referral_id']);
             
             ?>
-            <?php if(isset($seconduser['first_name'])){?>
-            <a href="referraldetails.php?ref=<?php if(isset($seconduser['unique_id'])){
+                    <?php if(isset($seconduser['first_name'])){?>
+                    <a href="referraldetails.php?ref=<?php if(isset($seconduser['unique_id'])){
                 echo $seconduser['unique_id'];
             }?>">
-          
-                    <span>Referral:</span>&nbsp;<span><?php if(isset($seconduser['first_name'])){
+
+                        <span>Referral:</span>&nbsp;<span><?php if(isset($seconduser['first_name'])){
              echo $seconduser['first_name'];
             }?></span>&nbsp;<span><?php if(isset($seconduser['last_name'])){
                 echo $seconduser['last_name'];
             }?></span>
-                    
-            </a>
-            <?php }?>
-            <?php if(isset($thirduser['agent_name'])){?>
-            <a href="agentdetails.php?ref=<?php if(isset($thirduser['uniqueagent_id'])){
+
+                    </a>
+                    <?php }?>
+                    <?php if(isset($thirduser['agent_name'])){?>
+                    <a href="agentdetails.php?ref=<?php if(isset($thirduser['uniqueagent_id'])){
                 echo $thirduser['uniqueagent_id'];
             }?>">
-                    <span>Referral:</span>&nbsp;<span><?php if(isset($thirduser['agent_name'])){
+                        <span>Referral:</span>&nbsp;<span><?php if(isset($thirduser['agent_name'])){
              echo $thirduser['agent_name'];
             }?></span>
-            </a>
-            <?php }?>
+                    </a>
+                    <?php }?>
                 </p>
                 <?php } else { ?>
                 <p class="referral colored-div">
@@ -576,7 +576,7 @@ if(!isset($_SESSION['unique_id'])){
                 <a href="insertdocument.php">
                     <div class="account-detail2">
                         <div>
-            <?php if(empty($newuser['driver_license']) || empty($newuser['passport']) || empty($newuser['nin'])){
+                            <?php if(empty($newuser['driver_license']) || empty($newuser['passport']) || empty($newuser['nin'])){
     ?>
                             <p>Unverified</p>
                             <?php } else {?>
@@ -632,7 +632,7 @@ if(!isset($_SESSION['unique_id'])){
 
         // Copy the text inside the text field
         let referralLink =
-            `http://localhost/Yurland/customerreferral.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
+            `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
         navigator.clipboard.writeText(referralLink);
         if (navigator.clipboard.writeText(referralLink)) {
             setTimeout(() => {

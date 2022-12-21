@@ -477,14 +477,14 @@ if(!isset($_SESSION['unique_id'])){
                     </a>
                     <div class="payment">Payment Receipt</div>
                     <a href="allocation.php">
-                    <div class="allocation">Allocation letter</div>
+                        <div class="allocation">Allocation letter</div>
                     </a>
                 </div>
             </div>
 
             <?php 
              $land = new User;
-             $landview = $land->selectPayment($_SESSION['unique_id']);
+             $landview = $land->selectCurrentPayHistory($_SESSION['unique_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     

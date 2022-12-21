@@ -109,6 +109,7 @@ if(isset($_POST["submit"])){
     $paymentmethod = "NewPayment";
    
    
+   
 
 
     //Initiate Paystack
@@ -772,7 +773,7 @@ if(isset($_POST["submit"])){
             <?php   } else {?>
             <?php if($_GET['data'] == "onemonth"){?>
             <div class="input-div">
-                <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php 
+                <label for="day" style="width: 20em; padding-bottom: 3em;">Daily Amount: &#8358;<?php 
                 $dailycost = $_GET['tot'] / $value['onemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
@@ -780,6 +781,15 @@ if(isset($_POST["submit"])){
                     echo round($dailycost);
                 }
                 ?></label>
+                <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?> style="display: none;">
+                <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
+                $dailycost = $_GET['tot'] / $value['onemonth_period'];
+                if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
+                echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
+                }
+                ?></span></label>
                 <input type="number" id="dayno" name="dayno" value="<?php echo $value['onemonth_period'];?>"
                     style="display: none;" />
             </div>
@@ -789,7 +799,7 @@ if(isset($_POST["submit"])){
             <?php if($_GET['data'] == "threemonths"){?>
             <div class="input-div">
                 <div class="input-div">
-                    <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php 
+                    <label for="day" style="width: 20em; padding-bottom: 3em;">Daily Amount: &#8358;<?php 
                 $dailycost = $_GET['tot'] / $value['threemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
@@ -797,6 +807,15 @@ if(isset($_POST["submit"])){
                     echo round($dailycost);
                 }
                 ?></label>
+                    <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?> style="display: none;">
+                    <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
+                $dailycost = $_GET['tot'] / $value['threemonth_period'];
+                if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
+                echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
+                }
+                ?></span></label>
                     <input type="number" id="dayno" name="dayno" value="<?php echo $value['threemonth_period'];?>"
                         style="display: none;" />
                 </div>
@@ -805,7 +824,7 @@ if(isset($_POST["submit"])){
                 <?php if($_GET['data'] == "sixmonths"){?>
                 <div class="input-div">
                     <div class="input-div">
-                        <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php
+                        <label for="day" style="width: 20em; padding-bottom: 3em;">Daily Amount: &#8358;<?php
                 $dailycost = $_GET['tot'] / $value['sixmonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
@@ -813,6 +832,15 @@ if(isset($_POST["submit"])){
                     echo round($dailycost);
                 }
                 ?></label>
+                        <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?> style="display: none;">
+                        <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
+                $dailycost = $_GET['tot'] / $value['sixmonth_period'];
+                if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
+                echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
+                }
+                ?></span></label>
                         <input type="number" id="dayno" name="dayno" value="<?php echo $value['sixmonth_period'];?>"
                             style="display: none;" />
                     </div>
@@ -821,7 +849,7 @@ if(isset($_POST["submit"])){
                     <?php if($_GET['data'] == "twelvemonths"){?>
                     <div class="input-div">
                         <div class="input-div">
-                            <label for="day" style="width: 20em; padding-bottom: 3em;">Amount Due Today: &#8358;<?php 
+                            <label for="day" style="width: 20em; padding-bottom: 3em;">Daily Amount: &#8358;<?php 
                 $dailycost = $_GET['tot'] / $value['twelvemonth_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
@@ -829,6 +857,15 @@ if(isset($_POST["submit"])){
                     echo round($dailycost);
                 }
                 ?></label>
+                            <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?> style="display: none;">
+                            <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
+                $dailycost = $_GET['tot'] / $value['twelvemonth_period'];
+                if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
+                echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
+                }
+                ?></span></label>
                             <input type="number" id="dayno" name="dayno"
                                 value="<?php echo $value['twelvemonth_period'];?>" style="display: none;" />
                         </div>
@@ -837,7 +874,7 @@ if(isset($_POST["submit"])){
                         <?php if($_GET['data'] == "eighteenmonths"){?>
                         <div class="input-div">
                             <div class="input-div" style="width: 20em; padding-bottom: 3em;">
-                                <label for="day">Amount Due Today: &#8358;<?php
+                                <label for="day">Daily Amount: &#8358;<?php
                 $dailycost = $_GET['tot'] / $value['eighteen_period'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
@@ -845,6 +882,16 @@ if(isset($_POST["submit"])){
                     echo round($dailycost);
                 } 
                 ?></label>
+                                <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?>
+                                    style="display: none;">
+                                <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
+                $dailycost = $_GET['tot'] / $value['eighteen_period'];
+                if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
+                echo number_format(round($dailycost));
+                } else {
+                    echo round($dailycost);
+                }
+                ?></span></label>
                                 <input type="number" id="dayno" name="dayno"
                                     value="<?php echo $value['eighteen_period'];?>" style="display: none;" />
                             </div>
@@ -881,6 +928,23 @@ if(isset($_POST["submit"])){
 
     <script src="js/main.js"></script>
     <script>
+    <?php if(!isset($_GET['remprice'])){  ?>
+    let inputprice = document.querySelector('#period');
+    let dailyprice = document.querySelector('#dailyprice');
+
+    inputprice.oninput = () => {
+        if (inputprice.value != "") {
+            document.querySelector('#totalprice').innerHTML = new Intl.NumberFormat().format(parseInt(inputprice
+                .value) * Math.round(dailyprice.value));
+        } else {
+            document.querySelector('#totalprice').innerHTML = new Intl.NumberFormat().format(Math.round(dailyprice
+                .value));
+        }
+
+    }
+
+    <?php }?>
+
     setInterval(() => {
         let xls = new XMLHttpRequest();
         xls.open("GET", "getcart.php", true);

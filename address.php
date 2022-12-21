@@ -21,7 +21,7 @@ if(!isset($_SESSION['unique_id'])){
     <style>
     body {
         position: relative;
-        height: 100vh;
+        height: 120vh;
         background-image: none;
     }
 
@@ -240,9 +240,7 @@ if(!isset($_SESSION['unique_id'])){
             height: 50em;
         }
 
-        .footerdiv {
-            display: none;
-        }
+
 
         .close {
             display: none;
@@ -422,30 +420,31 @@ if(!isset($_SESSION['unique_id'])){
                 </form>
             </section>
 
-            <div class="successmodal">
-          <div class="modalcon">
-          <div class="modaldiv">
-            <div>
-            <img src="images/asset_success.svg" alt="" />
-            <p>Address Details!</p>
-        <p>Updated Successfully</p>
-          <a href="profiledetails.php"><button class="landing_page_button2">Back to Dashboard</button></a
-         >
-            </div>
-          </div>
-        </div>
-            </div>
-
-            <footer class="footerdiv">
-                <p>YurLAND &#169; 2022 | All Right Reserved</p>
-                <p>A product of Ilu-oba International Limited and Arklips Limited</p>
-                <p>Connect with us Facebook, Twitter, Instagram</p>
-                <p style="font-size: 30px">
-                    <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
-                </p>
-            </footer>
         </div>
     </div>
+
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>Address Details!</p>
+                    <p>Updated Successfully</p>
+                    <a href="profiledetails.php"><button class="landing_page_button2">Back to
+                            Dashboard</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
     <script src="js/cart.js"></script>
     <script>
@@ -538,8 +537,11 @@ if(!isset($_SESSION['unique_id'])){
                 data: $("#address-form input"),
                 success: function(response) {
                     if (response === "success") {
-                        document.querySelector('.successmodal').style.visibility = "visible";
+
+                        document.querySelector('.successmodal').style.display =
+                            "flex";
                         document.querySelector('.modalcon').classList.add('animation');
+                        $(".btn").html("Save Changes");
                     } else {
                         $("section .error").html(response);
                         $("section .error").css({

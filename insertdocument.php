@@ -21,8 +21,16 @@ if(!isset($_SESSION['unique_id'])){
     <style>
     body {
         position: relative;
-        height: 140vh;
+        height: 150vh;
         background-image: none;
+    }
+
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 40%;
     }
 
     header {
@@ -222,9 +230,7 @@ if(!isset($_SESSION['unique_id'])){
             height: 50em;
         }
 
-        .footerdiv {
-            display: none;
-        }
+
 
         .close {
             display: none;
@@ -274,7 +280,7 @@ if(!isset($_SESSION['unique_id'])){
     </style>
 </head>
 
-<body>
+<body class="body">
     <!-- Header -->
     <header class="signup">
         <div class="logo">
@@ -446,31 +452,33 @@ if(!isset($_SESSION['unique_id'])){
                 </form>
             </section>
 
-            <div class="successmodal">
-          <div class="modalcon">
-          <div class="modaldiv">
-            <div>
-            <img src="images/asset_success.svg" alt="" />
-            <p>Documents!</p>
-        <p>Updated Successfully</p>
-          <a href="profiledetails.php"><button class="landing_page_button2">Back to Dashboard</button></a
-         >
-            </div>
-          </div>
-        </div>
 
-            
-
-            <footer class="footerdiv">
-                <p>YurLAND &#169; 2022 | All Right Reserved</p>
-                <p>A product of Ilu-oba International Limited and Arklips Limited</p>
-                <p>Connect with us Facebook, Twitter, Instagram</p>
-                <p style="font-size: 30px">
-                    <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
-                </p>
-            </footer>
         </div>
     </div>
+
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>Documents!</p>
+                    <p>Updated Successfully</p>
+                    <a href="profiledetails.php"><button class="landing_page_button2">Back to
+                            Dashboard</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px">
+            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
     <script src="js/main.js"></script>
     <script src="js/cart.js"></script>
@@ -561,6 +569,12 @@ if(!isset($_SESSION['unique_id'])){
     const error = document.querySelector(".error");
     uploadbtn.addEventListener("click", () => {
         uploaddiv.style.display = "block";
+        if (window.innerWidth < 1300) {
+            document.querySelector('.body').style.height = "190vh";
+        }
+        if (window.innerWidth > 1300) {
+            document.querySelector('.body').style.height = "190vh";
+        }
     });
 
     let valuecon = document.getElementById('docsinput')
@@ -669,7 +683,7 @@ if(!isset($_SESSION['unique_id'])){
                     if (data === "success") {
                         //console.log("uploaded");
                         submitbtn.onclick = () => {
-                            document.querySelector('.successmodal').style.visibility = "visible";
+                            document.querySelector('.successmodal').style.display = "flex";
                             document.querySelector('.modalcon').classList.add('animation');
                         };
                     } else {

@@ -32,7 +32,7 @@ if(!isset($_GET['unique'])){
         height: 20em;
     }
 
-    
+
     .subscribed-lands {
         display: flex;
         flex-direction: row;
@@ -90,7 +90,7 @@ if(!isset($_GET['unique'])){
         min-height: 30em;
     }
 
-   
+
     .no-lands p {
         font-style: normal;
         font-weight: 600;
@@ -98,7 +98,7 @@ if(!isset($_GET['unique'])){
         color: #1a0709;
     }
 
-   
+
 
     .subscribed-land {
         height: 26em;
@@ -321,8 +321,8 @@ if(!isset($_GET['unique'])){
         }
     }
 
-    @media only screen and (max-width: 1300px){
-        
+    @media only screen and (max-width: 1300px) {
+
         .updated-land {
             height: 620px !important;
 
@@ -347,19 +347,19 @@ if(!isset($_GET['unique'])){
 
     @media only screen and (max-width: 500px) {
 
-.detail-btn p {
-    font-size: 9px;
-    text-transform: capitalize;
-}
+        .detail-btn p {
+            font-size: 9px;
+            text-transform: capitalize;
+        }
 
-.updated-land {
-    width: 80%;
-}
+        .updated-land {
+            width: 80%;
+        }
 
-.updated-img {
-    width: 100%;
-}
-}
+        .updated-img {
+            width: 100%;
+        }
+    }
     </style>
 </head>
 
@@ -427,7 +427,7 @@ if(!isset($_GET['unique'])){
     </div>
     <div class="subscribed-lands">
 
-    <?php 
+        <?php 
               $land = new User;
              $landview = $land->selectPayment($_GET['unique']);
              if(!empty($landview)){
@@ -436,18 +436,18 @@ if(!isset($_GET['unique'])){
                    
              ?>
 
-                <?php if($value['payment_status'] == "Deleted"){?>
-                    <div class="deleted-div">
-                <?php 
+        <?php if($value['payment_status'] == "Deleted"){?>
+        <div class="deleted-div">
+            <?php 
             $name = $value['product_id'].$value['payment_id'];
             if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
             ?>
-                <form action="" class="deletep-form" method="POST">
-                    <input class="price" type="submit" value="Delete Product" name="deletep<?php echo $name?>"
-                        style="background-color: #7e252b; color: #fff;" />
+            <form action="" class="deletep-form" method="POST">
+                <input class="price" type="submit" value="Delete Product" name="deletep<?php echo $name?>"
+                    style="background-color: #7e252b; color: #fff;" />
 
-                </form>
-                <?php 
+            </form>
+            <?php 
             
                 
                 if(isset($_POST["deletep".$name])){
@@ -458,17 +458,17 @@ if(!isset($_GET['unique'])){
                 
             }
             ?>
-                <?php }?>
-                <?php 
+            <?php }?>
+            <?php 
             $name = $value['product_id'].$value['payment_id'];
             if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
             ?>
-                <form action="" class="restore-form" method="POST">
-                    <input class="price" type="submit" value="Restore" name="restore<?php echo $name?>"
-                        style="background-color: #7e252b; color: #fff;" />
+            <form action="" class="restore-form" method="POST">
+                <input class="price" type="submit" value="Restore" name="restore<?php echo $name?>"
+                    style="background-color: #7e252b; color: #fff;" />
 
-                </form>
-                <?php 
+            </form>
+            <?php 
             
                 
                 if(isset($_POST["restore".$name])){
@@ -479,48 +479,48 @@ if(!isset($_GET['unique'])){
                 
             }
             ?>
-                <?php }?>
-                <div class="price">Deleted</div>
+            <?php }?>
+            <div class="price">Deleted</div>
+        </div>
+
+
+        <div class="updated-land" style="display:none;">
+
+            <div class="updated-img">
+                <img src="landimage/<?php echo $value['product_image'];?>" alt="estate image" />
+                <div class="ellipse">
+                    <i class="ri-heart-fill"></i>
+                </div>
             </div>
-           
-
-                <div class="updated-land" style="display:none;">
-
-                    <div class="updated-img">
-                        <img src="landimage/<?php echo $value['product_image'];?>" alt="estate image" />
-                        <div class="ellipse">
-                            <i class="ri-heart-fill"></i>
+            <div class="updated-details">
+                <div class="detail-one">
+                    <div class="unit-detail">
+                        <div class="detail-btn">
+                            <p>Limited Units Available</p>
+                        </div>
+                        <div class="detail-btn" style="background: #9B51E0;">
+                            <p>Half plot per Unit</p>
                         </div>
                     </div>
-                    <div class="updated-details">
-                        <div class="detail-one">
-                            <div class="unit-detail">
-                                <div class="detail-btn">
-                                    <p>Limited Units Available</p>
-                                </div>
-                                <div class="detail-btn" style="background: #9B51E0;">
-                                    <p>Half plot per Unit</p>
-                                </div>
-                            </div>
+                </div>
+                <div class="detail-two">
+                    <div class="unit-detail2">
+                        <div class="detail-name">
+                            <p><?php echo $value['product_name'];?></p>
                         </div>
-                        <div class="detail-two">
-                            <div class="unit-detail2">
-                                <div class="detail-name">
-                                    <p><?php echo $value['product_name'];?></p>
-                                </div>
-                                <div class="detail-location">
-                                    <p style="color: #808080;"><?php echo $value['product_location'];?></p>
-                                    <p><a
-                                            href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
-                                            here to view</a></p>
-                                </div>
-                            </div>
+                        <div class="detail-location">
+                            <p style="color: #808080;"><?php echo $value['product_location'];?></p>
+                            <p><a
+                                    href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
+                                    here to view</a></p>
                         </div>
-                        <div class="detail-four">
+                    </div>
+                </div>
+                <div class="detail-four">
 
-                        </div>
-                        <?php if($value['payment_method'] == "Subscription"){?>
-                        <div class="cartbutton">&#8358;<?php 
+                </div>
+                <?php if($value['payment_method'] == "Subscription"){?>
+                <div class="cartbutton">&#8358;<?php 
                     $unitprice = $value['product_price'];
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
@@ -529,8 +529,8 @@ if(!isset($_GET['unique'])){
                              }
                       ?> &nbsp;<span>daily</span></div>
 
-                        <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
-                        <div class="cartbutton">&#8358;<?php 
+                <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
+                <div class="cartbutton">&#8358;<?php 
                    $unitprice = $value['sub_payment'];
                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
@@ -539,64 +539,64 @@ if(!isset($_GET['unique'])){
                              }
                     ?> &nbsp;<span>daily</span></div>
 
-                        <?php    }
+                <?php    }
                   else {?>
-                        <div class="cartbutton"><?php 
+                <div class="cartbutton"><?php 
                   if($value['balance'] != "0" && $value['payment_method'] == "NewPayment"){ ?>
-                            <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&unique=<?php echo $_GET['unique'];?>&remprice=<?php echo $value['balance'];?>"
-                                style="color: #7e252b;">Pay Up</a>
-                            <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
-                            <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
-                            <form id="priceform">
-                                <input type="hidden" value="<?php 
+                    <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&unique=<?php echo $_GET['unique'];?>&remprice=<?php echo $value['balance'];?>"
+                        style="color: #7e252b;">Pay Up</a>
+                    <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
+                    <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
+                    <form id="priceform">
+                        <input type="hidden" value="<?php 
                         $increase = 2 / 100 * $value['sub_payment'];
                         $priceincrement = $increase + $value['sub_payment'];
                         echo $priceincrement;
                         ?>" id="increase" name="increase">
-                                <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
-                                <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
-                            </form>
-                            <script>
-                            let dateInput = document.querySelector('#date');
-                            let checkBal = document.querySelector('#check');
-                            var countDownDate = new Date(dateInput.value).getTime();
-                            var now = new Date().getTime();
-                            var timeleft = countDownDate - now;
+                        <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
+                        <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
+                    </form>
+                    <script>
+                    let dateInput = document.querySelector('#date');
+                    let checkBal = document.querySelector('#check');
+                    var countDownDate = new Date(dateInput.value).getTime();
+                    var now = new Date().getTime();
+                    var timeleft = countDownDate - now;
 
-                            var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-                            //console.log(timeleft);
-                            if (timeleft < 0 && checkBal.value != 0) {
-                                let priceform = document.querySelector('#priceform');
+                    var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                    //console.log(timeleft);
+                    if (timeleft < 0 && checkBal.value != 0) {
+                        let priceform = document.querySelector('#priceform');
 
 
-                                function increasePrice() {
-                                    let xhr = new XMLHttpRequest(); //creating XML Object
-                                    xhr.open("POST", "increase.php", true);
-                                    xhr.onload = () => {
-                                        if (xhr.readyState === XMLHttpRequest.DONE) {
-                                            if (xhr.status === 200) {
-                                                let data = xhr.response;
-                                                console.log(data);
-                                            }
-                                        }
+                        function increasePrice() {
+                            let xhr = new XMLHttpRequest(); //creating XML Object
+                            xhr.open("POST", "increase.php", true);
+                            xhr.onload = () => {
+                                if (xhr.readyState === XMLHttpRequest.DONE) {
+                                    if (xhr.status === 200) {
+                                        let data = xhr.response;
+                                        console.log(data);
                                     }
-                                    // we have to send the information through ajax to php
-                                    let formData = new FormData(priceform); //creating new formData Object
-
-                                    xhr.send(formData);
                                 }
-                                // 2592000
-
-                                setInterval(() => {
-                                    increasePrice();
-                                }, 2592000000);
                             }
-                            </script>
-                            <?php    } else {
+                            // we have to send the information through ajax to php
+                            let formData = new FormData(priceform); //creating new formData Object
+
+                            xhr.send(formData);
+                        }
+                        // 2592000
+
+                        setInterval(() => {
+                            increasePrice();
+                        }, 2592000000);
+                    }
+                    </script>
+                    <?php    } else {
              ?>
 
 
-                            &#8358;<?php 
+                    &#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
@@ -604,16 +604,16 @@ if(!isset($_GET['unique'])){
                                  echo $unitprice;
                              }
                             }?> &nbsp;
-                        </div>
-                        <?php }?>
+                </div>
+                <?php }?>
 
-                    </div>
-                    <div class="subscribed-details"
-                        style="flex-direction: column; align-items: center; justify-content: center; gap: 1em;">
-                        <div class="balance" style="display: flex;
+            </div>
+            <div class="subscribed-details"
+                style="flex-direction: column; align-items: center; justify-content: center; gap: 1em;">
+                <div class="balance" style="display: flex;
                 align-items: center; justify-content center; gap: 3em; text-align: center; width: 100%; ">
-                            <p class="amountpaid"><span>Amount
-                                    Paid:</span>&nbsp;&#8358;<span><?php 
+                    <p class="amountpaid"><span>Amount
+                            Paid:</span>&nbsp;&#8358;<span><?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
@@ -621,7 +621,7 @@ if(!isset($_GET['unique'])){
                                  echo $unitprice;
                              }
              ?></span></p>
-                            <p class="balance"><span>Balance:</span>&nbsp;&#8358;<span><?php 
+                    <p class="balance"><span>Balance:</span>&nbsp;&#8358;<span><?php 
                         $unprice = $value['balance'];
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
                                           echo number_format($unprice);
@@ -630,146 +630,146 @@ if(!isset($_GET['unique'])){
                                         }
                                        
                     ?></span></p>
-                        </div>
-                        <div class="balance" style="display: flex;
+                </div>
+                <div class="balance" style="display: flex;
                 align-items: center; justify-content center; gap: 3em; text-align: center; width: 100%;">
-                            <p class="amountpaid"><span>Start
-                                    Date:</span>&nbsp;<span><?php echo $value['payment_day'];?></span>-<span><?php echo $value['payment_month'];?></span>-<span><?php echo $value['payment_year'];?></span>
-                            </p>
-                            <?php if($value['payment_method'] == "Subscription" || $value['payment_status'] == "Payed"){  ?>
-                            <p class="balance"><span>Expected End
-                                    Date:</span>&nbsp;<span><?php echo $value['sub_period'];?></span></p>
-                            <?php }?>
+                    <p class="amountpaid"><span>Start
+                            Date:</span>&nbsp;<span><?php echo $value['payment_day'];?></span>-<span><?php echo $value['payment_month'];?></span>-<span><?php echo $value['payment_year'];?></span>
+                    </p>
+                    <?php if($value['payment_method'] == "Subscription" || $value['payment_status'] == "Payed"){  ?>
+                    <p class="balance"><span>Expected End
+                            Date:</span>&nbsp;<span><?php echo $value['sub_period'];?></span></p>
+                    <?php }?>
+                </div>
+            </div>
+        </div>
+        <?php } else {?>
+
+        <div class="updated-land">
+
+            <div class="updated-img" style="height: 241px;">
+                <img src="landimage/<?php echo $value['product_image'];?>" alt="estate image" />
+            </div>
+            <div class="updated-details">
+                <div class="detail-one">
+                    <div class="unit-detail">
+                        <div class="detail-btn">
+                            <p>Limited Units Available</p>
+                        </div>
+                        <div class="detail-btn" style="background: #9B51E0;">
+                            <p>Half plot per Unit</p>
                         </div>
                     </div>
                 </div>
-                <?php } else {?>
-
-                <div class="updated-land">
-
-                    <div class="updated-img" style="height: 241px;">
-                        <img src="landimage/<?php echo $value['product_image'];?>" alt="estate image" />
+                <div class="detail-two">
+                    <div class="unit-detail2">
+                        <div class="detail-name">
+                            <p><?php echo $value['product_name'];?></p>
+                        </div>
+                        <div class="detail-location">
+                            <p style="color: #808080;"><?php echo $value['product_location'];?></p>
+                        </div>
                     </div>
-                    <div class="updated-details">
-                        <div class="detail-one">
-                            <div class="unit-detail">
-                                <div class="detail-btn">
-                                    <p>Limited Units Available</p>
-                                </div>
-                                <div class="detail-btn" style="background: #9B51E0;">
-                                    <p>Half plot per Unit</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="detail-two">
-                            <div class="unit-detail2">
-                                <div class="detail-name">
-                                    <p><?php echo $value['product_name'];?></p>
-                                </div>
-                                <div class="detail-location">
-                                    <p style="color: #808080;"><?php echo $value['product_location'];?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="detail-five">
-                            <?php if($value['payment_method'] == "Subscription"){?>
-                            <div class="cartbutton">&#8358;<?php 
-             $unitprice = $value['product_price'];
+                </div>
+                <div class="detail-five">
+                    <?php if($value['payment_method'] == "Subscription"){?>
+                    <div class="cartbutton">&#8358;<?php 
+             $unitprice = $value['sub_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
                                  echo $unitprice;
                              }
-             ?> &nbsp;<span>daily</span></div>
+             ?> &nbsp;<span><?php echo $value['sub_period'];?></span></div>
 
-                            <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
-                            <div class="cartbutton" style="font-size: 12px;"><?php 
+                    <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
+                    <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
              ?> &nbsp;</div>
 
-                            <?php    }
+                    <?php    }
                 else {?>
-                            <div class="cartbutton" style="font-size: 12px;"><?php 
+                    <div class="cartbutton" style="font-size: 12px;"><?php 
              if($value['balance'] != "0" && $value['payment_method'] == "NewPayment"){ ?>
-                                <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&unique=<?php echo $_GET['unique'];?>&remprice=<?php echo $value['balance'];?>"
-                                    style="color: #7e252b;">Pay Up</a>
-                                <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
-                                <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
-                                <form id="priceform">
-                                    <input type="hidden" value="<?php 
+                        <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&unique=<?php echo $_GET['unique'];?>&remprice=<?php echo $value['balance'];?>"
+                            style="color: #7e252b;">Pay Up</a>
+                        <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
+                        <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
+                        <form id="priceform">
+                            <input type="hidden" value="<?php 
                         $increase = 2 / 100 * $value['sub_payment'];
                         $priceincrement = $increase + $value['sub_payment'];
                         echo $priceincrement;
                         ?>" id="increase" name="increase">
-                                    <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
-                                    <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
-                                </form>
-                                <script>
-                                let dateInput<?php echo $value['product_id'];?> = document.querySelector('#date');
-                                let checkBal<?php echo $value['product_id'];?> = document.querySelector('#check');
-                                var countDownDate<?php echo $value['product_id'];?> = new Date(
-                                    dateInput<?php echo $value['product_id'];?>.value).getTime();
-                                var now<?php echo $value['product_id'];?> = new Date().getTime();
-                                var timeleft<?php echo $value['product_id'];?> =
-                                    countDownDate<?php echo $value['product_id'];?> -
-                                    now<?php echo $value['product_id'];?>;
+                            <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
+                            <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
+                        </form>
+                        <script>
+                        let dateInput<?php echo $value['product_id'];?> = document.querySelector('#date');
+                        let checkBal<?php echo $value['product_id'];?> = document.querySelector('#check');
+                        var countDownDate<?php echo $value['product_id'];?> = new Date(
+                            dateInput<?php echo $value['product_id'];?>.value).getTime();
+                        var now<?php echo $value['product_id'];?> = new Date().getTime();
+                        var timeleft<?php echo $value['product_id'];?> =
+                            countDownDate<?php echo $value['product_id'];?> -
+                            now<?php echo $value['product_id'];?>;
 
-                                var days<?php echo $value['product_id'];?> = Math.floor(
-                                    timeleft<?php echo $value['product_id'];?> /
-                                    (1000 * 60 * 60 * 24));
-                                //console.log(timeleft);
-                                if (timeleft<?php echo $value['product_id'];?> < 0 &&
-                                    checkBal<?php echo $value['product_id'];?>
-                                    .value != 0) {
-                                    let priceform = document.querySelector('#priceform');
+                        var days<?php echo $value['product_id'];?> = Math.floor(
+                            timeleft<?php echo $value['product_id'];?> /
+                            (1000 * 60 * 60 * 24));
+                        //console.log(timeleft);
+                        if (timeleft<?php echo $value['product_id'];?> < 0 &&
+                            checkBal<?php echo $value['product_id'];?>
+                            .value != 0) {
+                            let priceform = document.querySelector('#priceform');
 
 
-                                    function increasePrice<?php echo $value['product_id'];?>() {
-                                        let xhr = new XMLHttpRequest(); //creating XML Object
-                                        xhr.open("POST", "increase.php", true);
-                                        xhr.onload = () => {
-                                            if (xhr.readyState === XMLHttpRequest.DONE) {
-                                                if (xhr.status === 200) {
-                                                    let data = xhr.response;
-                                                    console.log(data);
-                                                }
-                                            }
+                            function increasePrice<?php echo $value['product_id'];?>() {
+                                let xhr = new XMLHttpRequest(); //creating XML Object
+                                xhr.open("POST", "increase.php", true);
+                                xhr.onload = () => {
+                                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                                        if (xhr.status === 200) {
+                                            let data = xhr.response;
+                                            console.log(data);
                                         }
-                                        // we have to send the information through ajax to php
-                                        let formData = new FormData(priceform); //creating new formData Object
-
-                                        xhr.send(formData);
                                     }
-                                    // 2592000
-
-                                    setInterval(() => {
-                                        increasePrice<?php echo $value['product_id'];?>();
-                                    }, 2592000000);
                                 }
-                                </script>
-                                <?php    } else {
+                                // we have to send the information through ajax to php
+                                let formData = new FormData(priceform); //creating new formData Object
+
+                                xhr.send(formData);
+                            }
+                            // 2592000
+
+                            setInterval(() => {
+                                increasePrice<?php echo $value['product_id'];?>();
+                            }, 2592000000);
+                        }
+                        </script>
+                        <?php    } else {
              ?>
 
 
-                                <?php 
+                        <?php 
                echo "Payment Completed";
                             }?> &nbsp;
-                            </div>
-                            <?php }?>
-                        </div>
                     </div>
-                    <div class="updated-details">
-                    <div class="detail-four">
+                    <?php }?>
+                </div>
+            </div>
+            <div class="updated-details">
+                <div class="detail-four">
                     <?php 
             $name = $value['product_id'].$value['payment_id'];
             if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
             ?>
-            <form action="" class="delete-form" method="POST">
-                <input class="price" type="submit" value="Delete" name="delete<?php echo $name?>"
-                    style="background-color: #7e252b; color: #fff;" />
+                    <form action="" class="delete-form" method="POST">
+                        <input class="price" type="submit" value="Delete" name="delete<?php echo $name?>"
+                            style="background-color: #7e252b; color: #fff;" />
 
-            </form>
-            <?php 
+                    </form>
+                    <?php 
              
                 
                 if(isset($_POST["delete".$name])){
@@ -780,11 +780,11 @@ if(!isset($_GET['unique'])){
                 }
             
             ?>
-            <?php }?>
-                    </div>
-                        <div class="detail-four">
-                            <p><span>Amount
-                                    Paid:</span>&nbsp;&#8358;<span><?php 
+                    <?php }?>
+                </div>
+                <div class="detail-four">
+                    <p><span>Amount
+                            Paid:</span>&nbsp;&#8358;<span><?php 
                   $unitprice = $value['product_price'];
                   if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
@@ -792,7 +792,7 @@ if(!isset($_GET['unique'])){
                                  echo $unitprice;
                              }
                   ?></span></p>
-                            <p><span>Balance:</span>&nbsp;&#8358;<span><?php 
+                    <p><span>Balance:</span>&nbsp;&#8358;<span><?php 
                         $unprice = $value['balance'];
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
                                           echo number_format($unprice);
@@ -801,39 +801,39 @@ if(!isset($_GET['unique'])){
                                         }
                                         
                     ?></span></p>
-                            <p><span>Start
-                                    Date:</span>&nbsp;<span><?php echo $value['payment_day'];?></span>-<span><?php echo $value['payment_month'];?></span>-<span><?php echo $value['payment_year'];?></span>
-                            </p>
-                            <?php if($value['payment_method'] == "Subscription" || $value['payment_status'] == "Payed"){  ?>
-                            <p><span>Expected End
-                                    Date:</span>&nbsp;<span><?php echo $value['sub_period'];?></span></p>
-                            <?php }?>
-                            <?php if($value['payment_method'] == "Subscription" || $value['payment_method'] == "NewPayment"){  ?>
-                            <p><span>Chosen Plan:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
+                    <p><span>Start
+                            Date:</span>&nbsp;<span><?php echo $value['payment_day'];?></span>-<span><?php echo $value['payment_month'];?></span>-<span><?php echo $value['payment_year'];?></span>
+                    </p>
+                    <?php if($value['payment_method'] == "NewPayment" || $value['payment_status'] == "Payed"){  ?>
+                    <p><span>Expected End
+                            Date:</span>&nbsp;<span><?php echo $value['sub_period'];?></span></p>
+                    <?php }?>
+                    <?php if($value['payment_method'] == "Subscription" || $value['payment_method'] == "NewPayment"){  ?>
+                    <p><span>Chosen Plan:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
                         echo $value['product_plan'];         
                     ?></span></p>
                     <?php }?>
-                     <p><span>Unit:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
+                    <p><span>Unit:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
                         echo $value['product_unit'];         
                     ?></span></p>
-                        </div>
-                    </div>
-                    
                 </div>
-                <?php }?>
-                <?php  } ?>
-                <?php }?>
-
-
-
             </div>
 
-            <?php if(empty($landview)){?>
-            <div class="success">
-                <img src="images/asset_success.svg" alt="" />
-                <p>This user does not have any land yet!</p>
-            </div>
-            <?php }?>
+        </div>
+        <?php }?>
+        <?php  } ?>
+        <?php }?>
+
+
+
+    </div>
+
+    <?php if(empty($landview)){?>
+    <div class="success">
+        <img src="images/asset_success.svg" alt="" />
+        <p>This user does not have any land yet!</p>
+    </div>
+    <?php }?>
 
 
 

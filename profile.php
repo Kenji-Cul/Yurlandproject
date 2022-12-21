@@ -149,6 +149,17 @@ if(!isset($_SESSION['unique_id'])){
 
     @media only screen and (max-width: 1300px) {
 
+        .details .pname {
+            font-size: 13px;
+        }
+
+        .land-estate .land-image {
+            height: 300px !important;
+        }
+
+        .land-image img {
+            height: 300px !important;
+        }
 
         .user,
         #openicon {
@@ -779,7 +790,7 @@ if(!isset($_SESSION['unique_id'])){
 
             <?php 
              $land = new User;
-             $landview = $land->selectCurrentPayment($_SESSION['unique_id']);
+             $landview = $land->selectCurrentPayHistory($_SESSION['unique_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
@@ -790,7 +801,7 @@ if(!isset($_SESSION['unique_id'])){
                     <img src="landimage/<?php echo $value['product_image'];?>" alt="">
                 </div>
                 <div class="details">
-                    <p><?php echo $value['product_name'];?></p>
+                    <p class="pname"><?php echo $value['product_name'];?></p>
                     <div class="inner-detail">
                         <div class="date">
                             <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
@@ -851,7 +862,7 @@ if(!isset($_SESSION['unique_id'])){
                     </div>
                 </div>
                 <?php } else {?>
-                <div class="land-estate swiper-slide" style="height: 480px;">
+                <div class="land-estate swiper-slide">
                     <div class="land-image">
 
                         <img src="landimage/<?php if(isset($value['product_image'])){
@@ -866,48 +877,7 @@ if(!isset($_SESSION['unique_id'])){
                             <p><?php echo $value['product_location'];?></p>
                         </div>
                     </div>
-                    <div class="subscribed-details" style="flex-direction: column;  gap: 1em; margin-top: 60px;">
-                        <div class="price"> <a
-                                href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej"
-                                style="color: #7e252b;">View Details </a>
-                        </div>
-                        <div class="sub-detail">
-                            <?php if($value['product_unit'] != 0){?>
-                            <?php if($value['outright_price'] != 0){
-                      $outprice = $value['outright_price'];
-                      $onemonthprice = $value['onemonth_price'];
-                        ?>
-                            <div class="price-flex">
-                                <p class="land-name">Outright Price:</p>
-                                <p class="land-location">&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999){
-                          echo number_format($outprice);
-                        }?></p>
-                            </div>
-                            <?php } else {?>
-                            <p class="land-name">Subscription Only</p>
-                            <?php }?>
 
-
-                            <?php if($value['onemonth_price'] != 0){
-                        $onemonthprice = $value['onemonth_price'];
-                        ?>
-                            <div>
-                                <p class="land-name">Daily Price:</p>
-                                <p class="land-location">&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
-                          echo number_format($onemonthprice);
-                        }?></p>
-                            </div>
-                            <?php } else {?>
-                            <div>
-                                <p class="land-name">No Daily Price</p>
-                            </div>
-                            <?php } } else {?>
-                            <p class="land-name">Sold Out</p>
-                            <?php }?>
-
-
-                        </div>
-                    </div>
                 </div>
                 <?php }?>
 
@@ -988,12 +958,22 @@ if(!isset($_SESSION['unique_id'])){
 
 
                             <?php if($value['onemonth_price'] != 0){
-                        $onemonthprice = $value['onemonth_price'];
+                        $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
+                        $totalprice = $overallprice + $value['onemonth_price'];
+                        $onemonthprice = $totalprice / 540;
+          
                         ?>
                             <div>
+                                <p class="land-name" style="font-size: 13px;">Subscription Price(18 Months):</p>
+                                <p class="land-location">&#8358;<?php if($totalprice > 999 || $totalprice > 9999 || $totalprice > 99999 || $totalprice > 999999){
+                          echo number_format($totalprice);
+                        }?></p>
+
                                 <p class="land-name">Daily Price:</p>
                                 <p class="land-location">&#8358;<?php if($onemonthprice > 999 || $onemonthprice > 9999 || $onemonthprice > 99999 || $onemonthprice > 999999){
                           echo number_format($onemonthprice);
+                        } else {
+                            echo round($onemonthprice);
                         }?></p>
                             </div>
                             <?php } else {?>

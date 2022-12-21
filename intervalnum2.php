@@ -54,7 +54,18 @@ if(isset($_POST['submit'])){
     $paymentdate = date("M-d-Y");
     $uniquesub = rand();
     $paymentmethod = "Subscription";
+    $intervalinput = $_POST['intervalinput'];
     
+
+    
+    if($_POST['intervalinput'] == 'daily'){
+        $limitperiod = $limit;
+     } else if ($_POST['intervalinput'] == 'weekly'){
+        $limitperiod =  $limit * 7;
+     } else if($_POST['intervalinput'] == 'monthly'){
+         $limitperiod = $limit * 30;
+     }
+ 
 
    
 $curl = curl_init();
@@ -71,7 +82,7 @@ CURLOPT_POSTFIELDS => [
 "name" => "Subscription".$uniquesub,
 "interval" => "daily",
 "amount" => $price * 100,
-"invoice_limit" => $limit
+"invoice_limit" => $limitperiod
 
 ],
 CURLOPT_HTTPHEADER => array(
@@ -134,29 +145,29 @@ include_once "initialize2.php";
         height: 120vh !important;
     }
 
-    
-.select-box {
-border: 1px solid #808080;
-border-radius: 8px;
-width: 60%;
-margin-bottom: 1em;
-}
 
-@media only screen and (max-width: 1000px) {
-.select-box {
-    border: 1px solid #808080;
-    border-radius: 8px;
-    width: 90%;
-    margin-bottom: 1em;
-}
-}
+    .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
+        width: 60%;
+        margin-bottom: 1em;
+    }
 
-.land-location p {
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-color: var(--inactive-grey);
-}
+    @media only screen and (max-width: 1000px) {
+        .select-box {
+            border: 1px solid #808080;
+            border-radius: 8px;
+            width: 90%;
+            margin-bottom: 1em;
+        }
+    }
+
+    .land-location p {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--inactive-grey);
+    }
     </style>
 </head>
 
@@ -185,7 +196,7 @@ color: var(--inactive-grey);
 
     <div class="price-desc">
         <div>
-        <div class="land-name">
+            <div class="land-name">
                 <p><span>Estate Name:&nbsp;</span><?php echo $value['product_name'];?></p>
             </div>
             <div class="land-location">
@@ -313,7 +324,7 @@ color: var(--inactive-grey);
                             </div>
         </form>
         <?php }}?>
-        </div>
+    </div>
     </div>
 
     <footer class="footerdiv">
@@ -325,16 +336,16 @@ color: var(--inactive-grey);
         </p>
     </footer>
 
-        <script src="js/main.js"></script>
-        <script>
-            let purpose = document.getElementsByName("interval");
+    <script src="js/main.js"></script>
+    <script>
+    let purpose = document.getElementsByName("interval");
     purpose.forEach((element) => {
         element.onclick = () => {
             document.querySelector('#input').value = element.value;
             console.log(document.querySelector('#input').value)
         };
     });
-        </script>
+    </script>
 
 </body>
 

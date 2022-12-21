@@ -15,6 +15,15 @@
         width: 60%;
     }
 
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 40%;
+    }
+
+
     body {
         position: relative;
         height: 180vh;
@@ -66,7 +75,10 @@
 
             <div class="input-div name">
                 <label for="inforeferral">Referral - Optional</label>
-                <input type="text" id="inforeferral" placeholder="Input referral code" name="inforeferral" />
+                <input type="text" id="inforeferral" placeholder="Input referral code" name="inforeferral" value="<?php if(isset($_GET['ref'])){
+                    echo $_GET['ref'];
+                }
+                ?>" />
             </div>
 
             <div class="input-div email">
@@ -99,15 +111,14 @@
 
     <div class="successmodal">
         <div class="modalcon">
-          <div class="modaldiv">
-            <div>
-            <img src="images/asset_success.svg" alt="" />
-            <p>Success!</p>
-           <p>You're all set!</p>
-       <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a
-      >
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>Success!</p>
+                    <p>You're all set!</p>
+                    <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+                </div>
             </div>
-          </div>
         </div>
     </div>
 
@@ -122,7 +133,6 @@
 
     <script src="js/login.js"></script>
     <script>
-    
     $(document).ready(function() {
         $("#signup-form").submit(function(e) {
             e.preventDefault();
@@ -141,8 +151,8 @@
             $("#referral").val(random_string);
         }
 
-      
-        
+
+
 
         $("#signup-form .btn").click(function() {
             createRandomString(8);
@@ -156,8 +166,9 @@
                         location.href =
                             `preference.php?cost=<?php echo $_GET['cost'];?>&loc=<?php echo $_GET['loc'];?>&pose=<?php echo $_GET['pose'];?>&hver=0838784920182800201oajfnfkfakjaifihfaiyeyywwmcmhshsj&name=0202002028484`;
                         <?php }else {?>
-                            document.querySelector('.successmodal').style.visibility = "visible";
-                            $(".btn").html("Sign Up");
+                        document.querySelector('.successmodal').style.display =
+                            "flex";
+                        $(".btn").html("Sign Up");
                         <?php }?>
                     } else {
                         $("section .error").html(response);

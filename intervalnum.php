@@ -56,10 +56,17 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
     $paymentdate = date("M-d-Y");
     $uniquesub = rand();
     $paymentmethod = "Subscription";
+    $intervalinput = $_POST['intervalinput'];
     
     
 
-   
+    if($_POST['intervalinput'] == 'daily'){
+       $limitperiod = $limit;
+    } else if ($_POST['intervalinput'] == 'weekly'){
+       $limitperiod =  $limit * 7;
+    } else if($_POST['intervalinput'] == 'monthly'){
+        $limitperiod = $limit * 30;
+    }
 
 $curl = curl_init();
 
@@ -75,7 +82,7 @@ CURLOPT_POSTFIELDS => [
 "name" => "Subscription".$uniqueproduct,
 "interval" => $_POST['intervalinput'],
 "amount" => round($price * 100),
-"invoice_limit" => $limit
+"invoice_limit" => $limitperiod,
 ],
 CURLOPT_HTTPHEADER => array(
 "Authorization: Bearer sk_test_f573634d7c3451fe37a335d9bc66bf969cdbe1e4",
@@ -131,45 +138,45 @@ include_once "initialize.php";
 
     @media only screen and (max-width: 1300px) {
 
-.user,
-#openicon {
-    display: none;
-}
+        .user,
+        #openicon {
+            display: none;
+        }
 
-.menu{
-    display: none;
-}
+        .menu {
+            display: none;
+        }
 
-.links img {
-    display: none;
-}
+        .links img {
+            display: none;
+        }
 
-.detail3 {
-    display: none;
-}
+        .detail3 {
+            display: none;
+        }
 
-.dropdown-links {
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: center;
-    gap: 2em;
-    transform: translateX(100%);
-    transition: all 1s;
-    width: 40%;
-    position: fixed;
-    bottom: 0;
-    border-radius: 8px 0px 0px 8px;
-}
+        .dropdown-links {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 2em;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
+        }
 
-.dropdown-links li {
-    height: 1em;
-    grid-gap: 0;
-}
-}
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
+    }
 
-@media only screen and (min-width: 1300px) {
+    @media only screen and (min-width: 1300px) {
         .page-title2 a {
             display: none;
         }

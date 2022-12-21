@@ -20,13 +20,23 @@ include "projectlog.php";
     <style>
     body {
         min-height: 100vh;
+        position: relative;
     }
+
 
     header {
         background: #fee1e3;
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .success p {
+            font-size: 15px;
+        }
+
+        .success .estate_page_button {
+            width: 200px;
+        }
 
         .user,
         #openicon {
@@ -261,7 +271,6 @@ include "projectlog.php";
 
 
 
-
     .detail-four {
         display: flex;
         flex-direction: column;
@@ -312,9 +321,15 @@ include "projectlog.php";
     }
 
     .success {
-        height: 18em;
+        height: 4em;
         width: 70%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
     }
+
+
 
 
     .second-section {
@@ -510,6 +525,7 @@ include "projectlog.php";
     </header>
 
 
+
     <?php 
     $land = new User;
     $landview = $land->selectLandImage($_GET['id']);
@@ -554,7 +570,7 @@ include "projectlog.php";
             </span><span>
                 Subscription:&nbsp;&nbsp;&#8358;<?php
        $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
-       $unitprice = $overallprice + $value['onemonth_price'];
+            $unitprice = $overallprice + $value['onemonth_price'];
         if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                           echo number_format($unitprice);
                         }?> per unit for 18 months
@@ -568,9 +584,8 @@ include "projectlog.php";
             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                 echo number_format($unitprice)." per unit for 18 months";
               }
-            
         } else {
-        $unitprice = $value['outright_price'];
+       $unitprice = $value['outright_price'];
         if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
             echo number_format($unitprice)." per unit";
           }
@@ -752,6 +767,7 @@ include "projectlog.php";
             }?>" id="tot">
             <?php if(isset($_GET['remprice'])){?>
             <p>Remaining Price:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
+
             <?php }else {?>
 
             <p>Total Cost:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
@@ -778,8 +794,10 @@ include "projectlog.php";
                     <input type="hidden" name="" id="realperiod" value=<?php echo $value['period_num'];?>>
                     <input type="hidden" name="" id="realbalance" value=<?php echo $value['balance'];?>>
                     <input type="hidden" name="" id="realdate" value=<?php echo $value['sub_period'];?>>
-                    <p style="color: #808080; font-weight: bold;">End Date:&nbsp;&nbsp;&nbsp;<span
-                            id="subformat"><?php echo $value['sub_period'];?></span></p>
+                    <p style="color: #808080; font-weight: bold; width: 20em;">End
+                        Date:&nbsp;&nbsp;&nbsp;<span id="subformat"><?php echo $value['sub_period'];?></span></p>
+                    <p style="color: #808080; font-weight: bold; width: 20em;">Remaining Days:&nbsp;&nbsp;&nbsp;<span
+                            id="subformat"><?php echo $value['period_num'];?></span></p>
                     <?php }}?>
 
                     <input type="number" style="margin-top: 2em;" placeholder="Input number of days" id="period"
@@ -803,9 +821,9 @@ include "projectlog.php";
 
 
     <div class="success" style="display:none; padding-left: 4em;">
-        <p>We are sorry this land</p>
-        <p>is not up to that unit!</p>
-        <a href="cartreview.php"><button class="estate_page_button" type="submit">Go Back</button></a>
+        <p>Available Units Exceeded</p>
+        <p>Try a lower amount!</p>
+        <button class="estate_page_button" type="submit" id="goback">Go Back</button>
     </div>
 
 
@@ -1239,6 +1257,7 @@ include "projectlog.php";
     let unitNum = document.querySelector("#unitnum")
     let Successdiv = document.querySelector(".success")
     let formatnum = document.querySelector('#numformat')
+    let goback = document.querySelector('#goback');
 
 
 
@@ -1252,7 +1271,6 @@ include "projectlog.php";
                     let data = xhr.response;
                     let string = "success";
                     let realprice = data.replace('success', '')
-
                     if (data.includes(string)) {
                         let price = unitInput.value * realprice;
                         if (params.get('payment')) {
@@ -1265,15 +1283,18 @@ include "projectlog.php";
                         let first = parseInt(unitInput.value);
                         let second = parseInt(unitNum.value);
                         if (first > second) {
-                            Successdiv.style.display = "block";
-                            form2.innerHTML = Successdiv;
+                            Successdiv.style.display = "flex";
+                            form2.innerHTML = "";
                             if (params.get('payment')) {
                                 form3.innerHTML = Successdiv;
                             }
+
+                            goback.onclick = () => {
+                                location.reload();
+                            }
+
                         }
-
                         totalInput.value = price;
-
                         if (params.get('payment')) {
                             let formatnum = document.querySelector('.thirdsection #numformat')
                             formatnum.innerHTML = new Intl.NumberFormat().format(price);
@@ -1532,6 +1553,7 @@ include "projectlog.php";
                                     document.querySelector('#pricetot').innerHTML = totalprice;
                                     let formatnum = document.querySelector('.second-section #numformat')
                                     formatnum.innerHTML = totalprice;
+
                                 }
 
                                 if (element.value == "threemonths") {
@@ -1553,8 +1575,10 @@ include "projectlog.php";
                                         "visibility: visible;";
                                     document.querySelector('#pricedaily').innerHTML = realprice;
                                     document.querySelector('#pricetot').innerHTML = totalprice;
+                                    formatnum.innerHTML = totalprice;
                                     let formatnum = document.querySelector('.second-section #numformat')
                                     formatnum.innerHTML = totalprice;
+
                                 }
 
                                 if (element.value == "sixmonths") {
@@ -1576,8 +1600,10 @@ include "projectlog.php";
                                         "visibility: visible;";
                                     document.querySelector('#pricedaily').innerHTML = realprice;
                                     document.querySelector('#pricetot').innerHTML = totalprice;
+                                    formatnum.innerHTML = totalprice;
                                     let formatnum = document.querySelector('.second-section #numformat')
                                     formatnum.innerHTML = totalprice;
+
                                 }
 
                                 if (element.value == "twelvemonths") {
@@ -1599,8 +1625,10 @@ include "projectlog.php";
                                         "visibility: visible;";
                                     document.querySelector('#pricedaily').innerHTML = realprice;
                                     document.querySelector('#pricetot').innerHTML = totalprice;
+                                    formatnum.innerHTML = totalprice;
                                     let formatnum = document.querySelector('.second-section #numformat')
                                     formatnum.innerHTML = totalprice;
+
                                 }
 
                                 if (element.value == "eighteenmonths") {
@@ -1622,8 +1650,10 @@ include "projectlog.php";
                                         "visibility: visible;";
                                     document.querySelector('#pricedaily').innerHTML = realprice;
                                     document.querySelector('#pricetot').innerHTML = totalprice;
+                                    formatnum.innerHTML = totalprice;
                                     let formatnum = document.querySelector('.second-section #numformat')
                                     formatnum.innerHTML = totalprice;
+
                                 }
 
 
@@ -1817,7 +1847,6 @@ include "projectlog.php";
                     let data = xhr.response;
                     let string = "success";
                     let realprice = data.replace('success', '')
-
                     if (data.includes(string)) {
                         let price = unitInput.value * realprice;
                         if (params.get('payment')) {
@@ -1828,7 +1857,6 @@ include "projectlog.php";
                             document.querySelector('.fifthsection .payment-mode').style.display = "block";
                             form5.style.display = "block";
                             let purpose = document.getElementsByName("mode");
-
                             <?php 
                                         if(!empty($landview)){
                                             foreach($landview as $key => $value){  ?>
@@ -1861,6 +1889,7 @@ include "projectlog.php";
                                         let formatnum = document.querySelector(
                                             '.second-section #numformat')
                                         formatnum.innerHTML = totalprice;
+
                                     }
 
                                     if (element.value == "threemonths") {
@@ -1987,11 +2016,16 @@ include "projectlog.php";
                         let first = parseInt(unitInput.value);
                         let second = parseInt(unitNum.value);
                         if (first > second) {
-                            Successdiv.style.display = "block";
+                            Successdiv.style.display = "flex";
                             form2.innerHTML = Successdiv;
                             if (params.get('payment')) {
                                 form3.innerHTML = Successdiv;
                             }
+
+                            goback.onclick = () => {
+                                location.reload();
+                            }
+                            form5.style.display = "none";
                         }
                         totalInput.value = price;
                         if (params.get('payment')) {
