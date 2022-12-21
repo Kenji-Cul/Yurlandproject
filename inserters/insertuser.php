@@ -33,6 +33,7 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     }else{
     $insertuser =
     $user->createUser(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral));
+
     }
 
     }

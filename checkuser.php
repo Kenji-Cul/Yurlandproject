@@ -16,6 +16,7 @@ if(empty($email) || empty($password)){
             session_start();
             session_unset();
             $_SESSION['unique_id'] = $insertuser['unique_id'];
+            ini_set('session.gc_maxlifetime', 3*60*60*24);
         if(!empty($remember)){
             setcookie("user_login",$email,time() + (10 * 365 * 24 * 60 * 60));
             setcookie("user_password",$password,time() + (10 * 365 * 24 * 60 * 60));

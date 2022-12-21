@@ -928,7 +928,7 @@ if(!isset($_SESSION['unique_id'])){
                     </div>
                     <div class="land-details">
                         <div class="land-name">
-                            <p><?php echo $value['product_name'];?></p>
+                            <p style="font-size: 17px;"><?php echo $value['product_name'];?></p>
                         </div>
                         <div class="land-location">
                             <p><?php echo $value['product_location'];?></p>
