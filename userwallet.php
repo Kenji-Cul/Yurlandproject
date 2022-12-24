@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location:index.php");
+    header("Location: login.php");
 }
 
 ?>
@@ -83,248 +83,248 @@ if(!isset($_SESSION['unique_id'])){
 
     @media only screen and (max-width: 1300px) {
 
-.user,
-#openicon {
-    display: none;
-}
+        .user,
+        #openicon {
+            display: none;
+        }
 
-.links img {
-    display: none;
-}
+        .links img {
+            display: none;
+        }
 
-.detail3 {
-    display: none;
-}
+        .detail3 {
+            display: none;
+        }
 
-.dropdown-links {
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: center;
-    gap: 2em;
-    transform: translateX(100%);
-    transition: all 1s;
-    width: 40%;
-    position: fixed;
-    bottom: 0;
-    border-radius: 8px 0px 0px 8px;
-}
+        .dropdown-links {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 2em;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
+        }
 
-.dropdown-links li {
-    height: 1em;
-    grid-gap: 0;
-}
-
-
-}
-
-@media only screen and (min-width: 1300px) {
-.account-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding-left: 2em;
-    gap: 0.5em;
-}
-
-.account-detail .account-img {
-    width: 90px;
-    height: 90px;
-}
-
-.page-title2 a {
-    display: none;
-}
-
-.page-title2 {
-    justify-content: left;
-}
-
-.page-title2 p {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 40px;
-    color: #1A0709;
-}
-
-.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.menu {
-    display: none;
-}
-
-.profile-image2 {
-    display: none !important;
-}
-
-.user {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-}
-
-.user p {
-    font-weight: 600;
-    font-size: 20px;
-    color: #1A0709;
-}
-
-.user .profile-image {
-    width: 45px;
-    height: 45px;
-}
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
 
 
+    }
 
-.signup .nav {
-    position: absolute;
-    right: 40px;
-    top: 30px;
-}
+    @media only screen and (min-width: 1300px) {
+        .account-detail {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: 2em;
+            gap: 0.5em;
+        }
 
-.details2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6em;
-}
+        .account-detail .account-img {
+            width: 90px;
+            height: 90px;
+        }
 
-.details2 p {
-    color: #808080;
-}
+        .page-title2 a {
+            display: none;
+        }
 
-.details2 p,
-.details2 h3 {
-    font-size: 22px;
-}
+        .page-title2 {
+            justify-content: left;
+        }
 
-.land-btn-container {
-    padding-left: 1em;
-}
+        .page-title2 p {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 40px;
+            color: #1A0709;
+        }
 
-.land-btn-container .btn {
-    width: 500px;
-}
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
-.menu {
-    display: none;
-}
+        .menu {
+            display: none;
+        }
 
-.estate2 {
-    display: block !important;
-}
+        .profile-image2 {
+            display: none !important;
+        }
 
-.land-estate {
-    background: #FFFFFF;
-    border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    width: 290px;
-    height: 270px;
-    padding-top: 0;
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: top;
-    align-items: center;
-    gap: 1em;
-    flex-direction: column;
-    border-radius: 8px;
-    margin-bottom: 1.6em;
-}
+        .user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
 
-.dropdown-links {
-    width: 6%;
-    height: 90vh;
-    border-radius: 0px !important;
-    padding: 1em 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: top;
-    align-items: top;
-    gap: 1.3em;
-    background: #7e252b;
-    filter: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999999 !important;
-    transition: all 0.7s;
-}
+        .user p {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+        }
 
-.dropdown-links li {
-    height: 1em;
-    width: 95%;
-    text-transform: capitalize;
-    font-size: 14px;
-}
-
-.dropdown-links .select-link {
-    background-color: #1a0709;
-}
-
-.dropdown-links .links {
-    width: 100%;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    padding: 1em 0;
-    transition: 1s;
-}
-
-.dropdown-links .links:hover {
-    background-color: #1a0709;
-}
-
-.dropdown-links .links img {
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
-    cursor: pointer;
-}
-
-.dropdown-links .links .link {
-    visibility: hidden;
-    display: none;
-}
+        .user .profile-image {
+            width: 45px;
+            height: 45px;
+        }
 
 
-.dropdown-links li a {
-    color: #fff;
 
-}
+        .signup .nav {
+            position: absolute;
+            right: 40px;
+            top: 30px;
+        }
 
-.transaction-details {
-    width: 80%;
-    transition: all 1.5s;
-}
+        .details2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6em;
+        }
+
+        .details2 p {
+            color: #808080;
+        }
+
+        .details2 p,
+        .details2 h3 {
+            font-size: 22px;
+        }
+
+        .land-btn-container {
+            padding-left: 1em;
+        }
+
+        .land-btn-container .btn {
+            width: 500px;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .estate2 {
+            display: block !important;
+        }
+
+        .land-estate {
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            width: 290px;
+            height: 270px;
+            padding-top: 0;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: top;
+            align-items: center;
+            gap: 1em;
+            flex-direction: column;
+            border-radius: 8px;
+            margin-bottom: 1.6em;
+        }
+
+        .dropdown-links {
+            width: 6%;
+            height: 90vh;
+            border-radius: 0px !important;
+            padding: 1em 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: top;
+            align-items: top;
+            gap: 1.3em;
+            background: #7e252b;
+            filter: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999999 !important;
+            transition: all 0.7s;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            width: 95%;
+            text-transform: capitalize;
+            font-size: 14px;
+        }
+
+        .dropdown-links .select-link {
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links {
+            width: 100%;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 1em 0;
+            transition: 1s;
+        }
+
+        .dropdown-links .links:hover {
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links img {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .dropdown-links .links .link {
+            visibility: hidden;
+            display: none;
+        }
 
 
-.flex-container {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    padding-top: 2em;
-}
+        .dropdown-links li a {
+            color: #fff;
 
-.prof-container {
-    width: 90%;
-    padding-left: 5em;
-}
+        }
+
+        .transaction-details {
+            width: 80%;
+            transition: all 1.5s;
+        }
 
 
-.close {
-    display: none;
-}
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            padding-top: 2em;
+        }
+
+        .prof-container {
+            width: 90%;
+            padding-left: 5em;
+        }
 
 
-}
+        .close {
+            display: none;
+        }
+
+
+    }
     </style>
 </head>
 
@@ -374,8 +374,8 @@ if(!isset($_SESSION['unique_id'])){
 
     <div class="flex-container">
 
-    
-    <ul class="dropdown-links">
+
+        <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
                     <img src="images/home.svg" style="width: 20px; height: 20px;" />
@@ -432,30 +432,30 @@ if(!isset($_SESSION['unique_id'])){
 
 
         <div class="prof-container">
-    <div class="page-title2">
-        <a href="profile.php">
-            <img src="images/arrowleft.svg" alt="" />
-        </a>
-        <p>My Wallet</p>
-    </div>
+            <div class="page-title2">
+                <a href="profile.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <p>My Wallet</p>
+            </div>
 
 
-    <div class="details-container">
+            <div class="details-container">
 
 
-       
 
-        <div class="account-detail3">
-            <a href="logout.php">
-                <p>Sign Out</p>
-            </a>
+
+                <div class="account-detail3">
+                    <a href="logout.php">
+                        <p>Sign Out</p>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
     </div>
 
     <script src="js/cart.js"></script>
-   <script>
+    <script>
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');
@@ -529,7 +529,7 @@ if(!isset($_SESSION['unique_id'])){
             `;
         };
     }
-   </script>
+    </script>
 </body>
 
 </html>
