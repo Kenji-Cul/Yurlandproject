@@ -3,7 +3,7 @@ ob_start();
 session_start();
 include "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location: index.php");
+    header("Location: login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -401,6 +401,17 @@ if(!isset($_SESSION['unique_id'])){
 
 
     @media only screen and (max-width: 1300px) {
+        .profile-body {
+            height: 40vh;
+        }
+
+        .success {
+            position: absolute;
+            left: 50%;
+            top: 20em;
+            transform: translate(-50%, -50%);
+            height: 10em;
+        }
 
         .user,
         #openicon {
@@ -436,15 +447,22 @@ if(!isset($_SESSION['unique_id'])){
 
 
     @media only screen and (max-width: 800px) {
-
-
-        .success {
-            position: absolute;
-            left: 50%;
-            top: 60%;
-            transform: translate(-50%, -50%);
-            height: 10em;
+        .updated-img {
+            height: 200px;
         }
+
+        .detail-four p {
+            font-size: 10px;
+        }
+
+
+
+        .updated-img img {
+            width: 100%;
+            height: 200px;
+        }
+
+
 
         .success p {
             text-align: center;

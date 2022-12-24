@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniqueagent_id'])){
-    header("Location:index.php");
+    header("Location: portallogin.php");
 }
 
 ?>
@@ -24,6 +24,26 @@ if(!isset($_SESSION['uniqueagent_id'])){
         position: relative;
         overflow-x: hidden;
     }
+
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 30%;
+    }
+
+    .successmodal div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .modalcon {
+        z-index: 2000000;
+    }
+
 
     .footerdiv {
         position: absolute;
@@ -343,6 +363,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
             <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+            <li class="links">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>
                 <a href="mycustomers.php" class="link">Customers</a>
             </li>
@@ -356,12 +380,17 @@ if(!isset($_SESSION['uniqueagent_id'])){
             </li>
 
             <li class="links">
+                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
+                <a href="alltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
                 <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
                 <a href="agentprofileinfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
+                <a href="agentlogout.php" class="link">Logout</a>
             </li>
         </ul>
 
@@ -424,11 +453,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <div class="successmodal">
         <div class="modalcon">
             <div class="modaldiv">
-
-                <img src="images/asset_success.svg" alt="" />
-                <p>Customer Creation Successful!</p>
-                <a href="agentprofile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
-
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>Customer Creation Successful!</p>
+                    <a href="mycustomers.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+                </div>
             </div>
         </div>
     </div>
@@ -535,14 +564,16 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 data: $("#signup-form input"),
                 success: function(response) {
                     if (response === "success") {
-                        document.querySelector('.successmodal').style.visibility =
-                            "visible";
+                        document.querySelector('.successmodal').style.display =
+                            "flex";
+                        document.querySelector('.modalcon').classList.add('animation');
+                        $(".btn").html("Create Customer");
                     } else {
                         $("section .error").html(response);
                         $("section .error").css({
                             visibility: "visible",
                         });
-                        $(".btn").html("Sign Up");
+                        $(".btn").html("Create Customer");
                         // console.log(response);
                     }
                 },

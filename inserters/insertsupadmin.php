@@ -16,10 +16,14 @@ else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 else {
      $supadmin = new User;
-     $checksupadmin = $supadmin->checkSuperadminEmailAddress($email);
-     if(!empty($checksupadmin)){
-        $errormsg = "Email Address already exists";
-        }else{
+     $checkagent = $supadmin->checkEmailAddress(check_input($email));
+     $checkagent2 = $supadmin->checkAgentEmailAddress(check_input($email));
+     $checkagent3 = $supadmin->checkExecutiveEmailAddress(check_input($email));
+     $checkagent4 = $supadmin->checkSubadminEmailAddress(check_input($email));
+     $checkagent5 = $supadmin->checkSuperadminEmailAddress(check_input($email));
+     if(!empty( $checkagent) || !empty( $checkagent2) || !empty( $checkagent3) || !empty( $checkagent4) || !empty( $checkagent5)){
+     $errormsg = "Email Address already exists";
+     }else{
      $insertsupadmin = $supadmin->createSuperAdmin(check_input($name),check_input($password), check_input($email));
         }
 

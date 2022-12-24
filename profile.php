@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location:index.php");
+    header("Location: login.php");
 }
 
 ?>
@@ -26,11 +26,6 @@ if(!isset($_SESSION['unique_id'])){
     body {
         overflow-x: hidden;
     }
-
-
-
-
-
 
 
 
@@ -148,6 +143,20 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+        .payee {
+            width: 100px;
+
+        }
+
+        .payee .payee-name {
+            text-overflow: ellipsis;
+        }
+
+
+
+        .payee .payee-name {
+            text-overflow: ellipsis;
+        }
 
         .details .pname {
             font-size: 13px;
@@ -817,7 +826,21 @@ if(!isset($_SESSION['unique_id'])){
                              } else {
                                 echo $unitprice;
                              }
-            ?></div>
+            ?>
+                    <p class="payee" style="font-size: 12px; color: #808080;">
+                        <span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;">
+                            <span class="payee-name">
+                                <?php 
+                            if($value['payee'] == $newuser['first_name']." ".$newuser['last_name']){
+                                echo "You";
+                            } else {
+                                echo $value['payee'];   
+                            }
+                             
+                    ?>
+                            </span></span>
+                    </p>
+                </div>
             </div>
             <?php }} else {?>
             <div class="transaction-details" style="display: flex; align-items: center; justify-content: center;">

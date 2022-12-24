@@ -1,8 +1,10 @@
 <?php 
 session_start();
 include "projectlog.php";
-if(!isset($_SESSION['unique_id'])){
-    header("Location: login.php");
+
+
+if(!isset($_GET['unique'])){
+    header("Location: portallogin.php");
 }
 ?>
 <!DOCTYPE html>
@@ -20,23 +22,12 @@ if(!isset($_SESSION['unique_id'])){
     <style>
     body {
         min-height: 100vh;
+        position: relative;
     }
 
     header {
         background: #fee1e3;
     }
-
-    .success {
-        position: absolute;
-        top: 20em;
-        width: 90%;
-    }
-
-    .success img {
-        width: 25em;
-        height: 25em;
-    }
-
 
     .no-lands {
         width: 100%;
@@ -45,21 +36,6 @@ if(!isset($_SESSION['unique_id'])){
         align-items: center;
         justify-content: top;
         flex-direction: column;
-    }
-
-    .navigation-div .offer {
-        background: #ffffff;
-        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
-        border-radius: 8px;
-        text-align: center;
-        color: var(--secondary-color);
-        width: 150px;
-        padding: 0.3em 0.3em;
-    }
-
-    a {
-        text-decoration: none;
-        color: #1a0709;
     }
 
     .no-lands p {
@@ -75,21 +51,71 @@ if(!isset($_SESSION['unique_id'])){
         height: 30em;
     }
 
+    .success {
+        position: absolute;
+        left: 50%;
+        top: 26em;
+        transform: translate(-50%, -50%);
+        height: 10em;
+        width: 90%;
+    }
+
+    .success img {
+        width: 36em;
+        height: 36em;
+    }
+
+    .radius {
+        position: relative;
+    }
+
+    .radius img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .transaction-details {
+        border-radius: 8px;
+        /* border: 2px solid black; */
+        padding: 1em 2em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 90%;
+    }
+
     @media only screen and (max-width: 1300px) {
-        .success {
-            position: absolute;
-            top: 40%;
-            height: 10em;
-            width: 100%;
+
+        .payee {
+            width: 100px;
+
         }
 
-        .success img {
-            width: 20em;
-            height: 20em;
+        .payee .payee-name {
+            text-overflow: ellipsis;
         }
 
-        .success p {
-            text-align: center;
+        .profile-body {
+            height: 40vh;
+        }
+
+        .transaction-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        .details .pname {
+            font-size: 13px;
+        }
+
+        .transaction-details {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
         }
 
         .user,
@@ -106,7 +132,7 @@ if(!isset($_SESSION['unique_id'])){
         }
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -306,7 +332,7 @@ if(!isset($_SESSION['unique_id'])){
             padding-top: 2em;
         }
 
-        .doc-container {
+        .trans-container {
             width: 90%;
             padding-left: 5em;
         }
@@ -318,55 +344,75 @@ if(!isset($_SESSION['unique_id'])){
 
 
     }
+
+
+
+    @media only screen and (max-width: 700px) {
+        .transaction-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        .success {
+            position: absolute;
+            left: 50%;
+            top: 30%;
+            transform: translate(-50%, -50%);
+            height: 10em;
+        }
+
+        .success p {
+            text-align: center;
+        }
+
+
+        .success img {
+            width: 15em;
+            height: 15em;
+        }
+
+        .detail3 {
+            display: none;
+        }
+    }
     </style>
 </head>
 
 <body class="profile-body">
     <!-- Header -->
     <header class="signup">
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
         <div class="logo">
-            <?php if(isset($_SESSION['unique_id'])){?>
-            <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
-        <?php 
-             $user = new User;
-             $newuser = $user->selectUser($_SESSION['unique_id']);
-            ?>
-        <div class="nav">
-            <a href="cartreview.php">
-                <div class="cart">
-                    <div class="cart-notify"></div>
-                    <img src="images/cart.svg" alt="cart icon" />
-                </div>
-            </a>
-            <img src="images/menu.svg" alt="menu icon" class="menu" />
-            <div class="user">
-                <p><?php if(isset($newuser['first_name'])){  ?>
-                    <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
-                    <?php }?>
-                </p>
-                <div class="profile-image">
-                    <?php if(!empty($newuser['photo'])){?>
-                    <a href="updatedetails.php" style="color: #808080;"><img
-                            src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
-                    <?php }?>
-                    <?php if(empty($newuser['photo'])){?>
-                    <a href="updatedetails.php" style="color: #808080;">
-                        <div class="empty-img">
-                            <i class="ri-user-fill"></i>
-                        </div>
-                    </a>
-                    <?php }?>
-                </div>
-            </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
         </div>
+        <?php }?>
+
+        <div class="nav">
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
+        </div>
+
     </header>
 
+    </header>
 
     <div class="flex-container">
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
@@ -380,95 +426,188 @@ if(!isset($_SESSION['unique_id'])){
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links">
-                <a href="profile.php"><img src="images/home3.svg" /></a>
-                <a href="profile.php" class="link">Home</a>
-            </li>
-            <li class="links">
-                <a href="allestates.php"><img src="images/land2.svg" /></a>
-                <a href="allestates.php" class="link">New Land</a>
-            </li>
-            <li class="links">
-                <a href="transactions.php"><img src="images/updown.svg" /> </a>
-                <a href="transactions.php" class="link">Transaction History</a>
-            </li>
-            <li class="links">
-                <a href="mylands.php"><img src="images/land2.svg" /></a>
-                <a href="mylands.php" class="link">My Land</a>
-            </li>
-            <li class="links">
-                <a href="mylands.php"><img src="images/chart2.svg" /> </a>
-                <a href="mylands.php" class="link">New Payment</a>
-            </li>
-            <li class="links">
-                <a href="userreferral.php"><img src="images/referral.svg" /></a>
-                <a href="userreferral.php" class="link">Referral</a>
-            </li>
             <li class="links select-link">
-                <a href="documents.php"><img src="images/folder.svg" /></a>
-                <a href="documents.php" class="link">Documentation</a>
+                <a href="subadmin.php"><img src="images/home3.svg" /></a>
+                <a href="subadmin.php" class="link">Home</a>
             </li>
             <li class="links">
-                <a href="settings.php"><img src="images/settings.svg" /></a>
-                <div>
-                    <a href="profiledetails.php" class="link">Profile&nbsp;<span style="color: #808080;">and</span></a>
-                    <a href="settings.php" class="link">Settings</a>
-                </div>
+                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allcustomers.php" class="link">All Customers</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
                 <a href="logout.php"><img src="images/exit.svg" /></a>
                 <a href="logout.php" class="link">Logout</a>
             </li>
         </ul>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
+
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="agentprofile.php"><img src="images/home3.svg" /></a>
+                <a href="agentprofile.php" class="link">Home</a>
+            </li>
+
+            <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+            <li class="links">
+                <a href="mycustomers.php"><img src="images/referral.svg" /></a>
+                <a href="mycustomers.php" class="link">Customers</a>
+            </li>
+            <li class="links">
+                <a href="newcustomer.php"><img src="images/referral.svg" /> </a>
+                <a href="newcustomer.php" class="link">New Customer</a>
+            </li>
+            <li class="links">
+                <a href="referral.php"><img src="images/chart2.svg" /></a>
+                <a href="referral.php" class="link">Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
+                <a href="alltransactions.php" class="link">View Transactions</a>
+            </li>
 
 
-        <div class="doc-container">
+            <li class="links">
+                <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
+                <a href="agentprofileinfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
+                <a href="agentlogout.php" class="link">Logout</a>
+            </li>
+        </ul>
+
+        <?php }?>
+
+
+
+
+
+
+        <div class="trans-container">
             <div class="page-title2">
-                <a href="profile.php">
+                <a href="agentprofile.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
-                <p>Documents</p>
+                <p>Transactions</p>
             </div>
 
             <!-- <div class="no-lands">
         <img src="images/asset_success.svg" alt="success image" />
-        <p>You have not uploaded any document yet!!</p>
-    </div> -->
-
-            <div class="navigation-div">
-                <div class="navig">
-                    <div class="offer">Offer letter</div>
-                    <a href="paymentreceipt.php">
-                        <div class="payment">Payment Receipt</div>
-                    </a>
-                    <a href="allocation.php">
-                        <div class="allocation">Allocation letter</div>
-                    </a>
-                </div>
-            </div>
+        <p>You have not done any transaction yet!!</p>
+      </div> -->
 
             <?php 
-             $land = new User;
-             $landview = $land->selectPayment($_SESSION['unique_id']);
+           
+            $user = new User;
+             $landview = $user->selectPayHistory($_GET['unique']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
+              
             ?>
+            <div class="transaction-details">
+                <div class="radius">
+                    <img src="landimage/<?php echo $value['product_image'];?>" alt="">
+                </div>
+                <div class="details">
+                    <p class="pname"><?php echo $value['product_name'];?></p>
+                    <div class="inner-detail">
+                        <div class="date">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        </div>
+                    </div>
+                </div>
+                <div class="price-detail detail3"><?php 
+            echo $value['product_unit'];
+            ?>&nbsp;<span>Units</span></div>
+                <div class="price-detail detail3"><?php 
+            echo $value['payment_method'];
+            ?></div>
+                <div class="price-detail">&#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } else {
+                                echo round($unitprice);
+                             }
+            ?>
+                    <p class="payee" style="font-size: 12px; color: #808080;">
+                        <span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;">
+                            <span class="payee-name">
+                                <?php
+                                if(isset($_SESSION['uniqueagent_id'])){
+                                $newagent = $user->selectAgent($_SESSION['uniqueagent_id']);
+                                if($value['payee'] == $newagent['agent_name']){
+                                echo "You";
+                                } else {
+                                echo $value['payee'];
+                                }
+                                }
+
+                                if(isset($_SESSION['uniquesubadmin_id'])){
+                                $subadmin = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+                                if($value['payee'] == $subadmin['subadmin_name']){
+                                echo "You";
+                                } else {
+                                echo $value['payee'];
+                                }
+                                } ?>
+                            </span></span>
+                    </p>
+                </div>
+            </div>
+
+
 
 
             <?php }}?>
 
-            <?php if(empty($landview['offer_letter'])){?>
+            <?php if(empty($landview)){?>
             <div class="success">
                 <img src="images/whoops.svg" alt="" />
-                <p>Whoops You don't have offer letters yet</p>
+                <p>Whoops, This user has no payment records</p>
             </div>
-            <?php }?>
-
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <?php }?>
+
+
+
+    <!-- <div class="directions">
+        <img src="images/leftpage.svg" alt="" />
+        <p>Page 1 of 4</p>
+        <img src="images/rightPage.svg" alt="" />
+    </div> -->
+
     <script src="js/cart.js"></script>
     <script>
     if (window.innerWidth > 1200) {
@@ -481,7 +620,7 @@ if(!isset($_SESSION['unique_id'])){
         `;
             open.style.display = "none";
             closeicon.style.display = "block";
-            document.querySelector(".doc-container").style = `
+            document.querySelector(".trans-container").style = `
          padding-left: 13em;
         `;
             let allLinks = document.querySelectorAll(".dropdown-links .links .link");
@@ -507,7 +646,7 @@ if(!isset($_SESSION['unique_id'])){
         `;
             open.style.display = "block";
             closeicon.style.display = "none";
-            document.querySelector(".doc-container").style = `
+            document.querySelector(".trans-container").style = `
          padding-left: 5em;
         `;
 
@@ -544,6 +683,26 @@ if(!isset($_SESSION['unique_id'])){
             `;
         };
     }
+
+    setInterval(() => {
+        let xls = new XMLHttpRequest();
+        xls.open("GET", "getcart.php", true);
+        xls.onload = () => {
+            if (xls.readyState === XMLHttpRequest.DONE) {
+                if (xls.status === 200) {
+                    let data = xls.response;
+                    let notify = document.querySelector('.cart-notify');
+                    if (data == 0) {
+                        notify.style.display = "none";
+                    }
+
+                    notify.innerHTML = data;
+                    //console.log(data);
+                }
+            }
+        }
+        xls.send();
+    }, 100);
     </script>
 </body>
 

@@ -1,8 +1,8 @@
-<?php
+<?php 
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniqueagent_id'])){
-header("Location: portallogin.php");
+    header("Location: portallogin.php");
 }
 
 ?>
@@ -15,76 +15,92 @@ header("Location: portallogin.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
-    <script src="bootstrap/js/jquery.min.js"></script>
+
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
     <style>
     body {
-        height: 120vh;
-        background-image: none;
+        min-height: 100vh;
+        position: relative;
         overflow-x: hidden;
     }
 
-    .successmodal {
-        /* display: flex; */
-        align-items: center;
-        justify-content: center;
+    .footerdiv {
         position: absolute;
-        top: 50%;
+        bottom: 0;
     }
 
-    .successmodal div {
+    .flex-success {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1em;
+    }
+
+    .flex-success a {
+        color: #fff;
+    }
+
+    .radius {
+        position: relative;
+    }
+
+    .radius img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .empty-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+    }
+
+
+    .success {
+        position: absolute;
+        left: 50%;
+        top: 20em;
+        transform: translate(-50%, -50%);
+        height: 100%;
+
+    }
+
+    .success img {
+        width: 15em;
+        height: 15em;
+    }
+
+
+    .account-detail2 {
+        position: relative;
+    }
+
+    .account-detail2 .flex {
+        position: absolute;
+        left: 90px;
+    }
+
+    .account-detail3 {
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: column;
+        padding-top: 3em;
+        position: absolute;
+        top: 30em;
     }
 
-    @media only screen (max-width: 800px) {
-        body {
-            height: 260vh !important;
-            background-image: none;
-        }
-    }
-
-    @media only screen (max-width: 500px) {
-        body {
-            height: 260vh !important;
-            background-image: none;
-        }
-    }
-
-    section .error {
-        width: 60%;
-    }
-
-    .btn {
-        background-color: #808080;
-    }
-
-    .select-box {
-        border: 1px solid #808080;
-        border-radius: 8px;
-        width: 80%;
-    }
-
-    .label {
+    .account-detail3 p {
         font-style: normal;
         font-weight: 600;
-        font-size: 17px;
-        line-height: 18px;
-        padding-bottom: 10px;
-        padding-left: 10px;
-    }
-
-    .select-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        align-items: center;
-        justify-content: center;
-        flex-direction: row;
-        width: 100% !important;
-        gap: 4em;
+        font-size: 20px;
+        line-height: 22px;
+        text-align: center;
+        color: #eb5757;
     }
 
     @media only screen and (min-width: 1300px) {
@@ -263,14 +279,13 @@ header("Location: portallogin.php");
     }
 
     @media only screen and (max-width: 1300px) {
-        .code-container .flex0 {
-            flex-direction: column;
+        body {
+            height: 90vh;
         }
 
-        .price-button {
-            width: 200px;
-            font-size: 12px;
-        }
+
+
+
 
         .user,
         #openicon {
@@ -339,7 +354,7 @@ header("Location: portallogin.php");
     </style>
 </head>
 
-<body class="body">
+<body class="profile-body">
     <!-- Header -->
     <header class="signup">
         <div class="logo">
@@ -369,7 +384,7 @@ header("Location: portallogin.php");
                     <?php }?>
                     <?php if(empty($newuser['agent_img'])){?>
                     <a href="agentprofileinfo.php" style="color: #808080;">
-                        <div class="empty-img">
+                        <div class="empty-img" style="border-radius: 50%;">
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
@@ -395,10 +410,12 @@ header("Location: portallogin.php");
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links">
+            <li class="links select-link">
                 <a href="agentprofile.php"><img src="images/home3.svg" /></a>
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
+
+
             <li class="links">
                 <a href="usertype.php"><img src="images/land2.svg" /></a>
                 <a href="usertype.php" class="link">New Land</a>
@@ -421,7 +438,7 @@ header("Location: portallogin.php");
                 <a href="alltransactions.php" class="link">View Transactions</a>
             </li>
 
-            <li class="links select-link">
+            <li class="links">
                 <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
                 <a href="agentprofileinfo.php" class="link">Profile</a>
             </li>
@@ -433,222 +450,58 @@ header("Location: portallogin.php");
 
 
         <div class="profile-container">
-            <!-- Landing Page Text -->
-            <div class="page-title2">
-                <a href="agentprofileinfo.php">
-                    <img src="images/arrowleft.svg" alt="" />
-                </a>
-                <p>Upload Details</p>
-            </div>
-
-
-            <?php 
-             $user = new User;
-             $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
-            ?>
-            <section class="login-form-container">
-                <form action="" class="login-form" id="upload-form">
-                    <div class="input-div name">
-                        <label for="num">Phone Number</label>
-                        <input type="number" id="num" placeholder="Fill in phone number" name="num" value="<?php if(isset($newuser['agent_num'])){
-                    echo $newuser['agent_num'];
-                }?>" />
-                    </div>
-
-                    <div class="input-div name">
-                        <label for="address">Home Address</label>
-                        <input type="text" id="address" placeholder="Fill in your home address" name="address" value="<?php if(isset($newuser['home_address'])){
-                    echo $newuser['home_address'];
-                }?>" />
-                    </div>
 
 
 
 
 
-                    <div class="input-div email">
-                        <label>Profile Image</label>
-                        <input type="text" name="text" placeholder="Upload your profile Image" disabled />
-                        <input type="file" id="passport" placeholder="Upload your profile image" name="image"
-                            hidden="hidden" accept="image/*" />
-                        <div id="createid">Upload</div>
-                    </div>
 
-                    <div class="file-container">
-                        <div class="browse-filediv">
-                            <div class="centrediv">
-                                <p>Drop files here to upload</p>
-                                <label>Browse files</label>
+            <div class="success">
+
+                <div class="flex-success">
+                    <p>Customer Type</p>
+                    <p>
+                        <a href="mycustomers.php">
+                            <div class="estate_page_button" style="width: 200px; height: 30px;">Existing
+                                User
                             </div>
-                            <div class="uploading-div"></div>
-                            <div class="uploading-div2"></div>
-                        </div>
-                    </div>
+                        </a>
+                    </p>
 
-                    <p class="error">Please input all fields</p>
-                    <button class="btn" type="submit">Save Changes</button>
-
-                    <div style="display: none">
-                        <img src="images/loading.svg" alt="" class="loading-img" />
-                    </div>
-                </form>
-            </section>
-        </div>
-    </div>
-
-
-    <div class="successmodal">
-        <div class="modalcon">
-            <div class="modaldiv">
-                <div>
-                    <img src="images/asset_success.svg" alt="" />
-                    <p>Details Updated!</p>
-                    <a href="agentprofileinfo.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+                    <p>
+                        <a href="newcustomer.php">
+                            <div class="estate_page_button" style="width: 200px; height: 30px;">New
+                                User
+                            </div>
+                        </a>
+                    </p>
                 </div>
             </div>
+            <div class="account-detail3">
+                <a href="agentlogout.php">
+                    <p>Sign Out</p>
+                </a>
+            </div>
+
+
+
         </div>
     </div>
+    </div>
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px;">
+            <a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i class="ri-instagram-line"></a></i><a
+                href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i
+                    class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
 
     <script src="js/main.js"></script>
     <script>
-    const form = document.querySelector("#upload-form"),
-        fileInput = form.querySelector("#passport"),
-        progressArea = document.querySelector(".uploading-div"),
-        uploadArea = document.querySelector(".uploading-div2"),
-        startbtn = document.querySelector(".centrediv label");
-    let uploadbtn = document.querySelector("#createid");
-    let uploaddiv = document.querySelector(".file-container");
-    let submitbtn = document.querySelector("#upload-form .btn");
-    const error = document.querySelector(".error");
-    uploadbtn.addEventListener("click", () => {
-        uploaddiv.style.display = "block";
-        if (window.innerWidth < 1300) {
-            document.querySelector('.body').style.height = "170vh";
-        }
-        if (window.innerWidth > 1300) {
-            document.querySelector('.body').style.height = "170vh";
-        }
-    });
-
-    form.onsubmit = (e) => {
-        e.preventDefault();
-    };
-
-    startbtn.addEventListener("click", () => {
-        fileInput.click();
-    });
-
-    fileInput.onchange = ({
-        target
-    }) => {
-        let file = target.files[0];
-        if (file) {
-            let fileName = file.name;
-            if (fileName.length >= 12) {
-                let splitName = fileName.split(".");
-                fileName = splitName[0].substring(0, 12) + "..." + splitName[1];
-            }
-            uploadFile(fileName);
-        }
-    };
-
-    function uploadFile(name) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "inserters/insertagentimg.php", true);
-        xhr.upload.addEventListener("progress", ({
-            loaded,
-            total
-        }) => {
-            let fileLoaded = Math.floor((loaded / total) * 100);
-            let fileTotal = Math.floor(total / 1000);
-            let fileSize;
-            fileTotal < 1024 ?
-                (fileSize = fileTotal + " KB") :
-                (fileSize = (loaded / (1024 * 1024)).toFixed(2) + " MB");
-            let progressHTML = `
-                <div class="progress-bar">
-                            <div class="progress-element" style="width: ${fileLoaded}%"></div>
-                        </div>
-                        <p class="percent"><span class="percent">${fileLoaded}</span>% Complete</p>
-                        <div class="upload-state">
-                            <p class="file-name">${name}</p>
-                        </div>
-                `;
-
-            uploadArea.innerHTML = "";
-            progressArea.innerHTML = progressHTML;
-
-            if (loaded == total) {
-                progressArea.innerHTML = "";
-                let uploadedHTML = `
-                    <div class="progress-bar">
-                            <div class="progress-element" style="width: ${fileLoaded}%"></div>
-                        </div>
-                        <p class="percent"><span class="percent">Uploaded</p>
-                        <div class="upload-state">
-                            <p class="file-name">${name}</p>
-                            <p class="file-size">${fileSize}</p>
-                        </div>
-                `;
-                uploadArea.innerHTML = uploadedHTML;
-                error.style.visibility = "hidden";
-            }
-
-            if (total > 2097152) {
-                progressArea.innerHTML = "";
-                let uploadedHTML = `
-                    <div class="progress-bar">
-                            <div class="progress-element" style="width: 50%!important; background: #808080!important;"></div>
-                        </div>
-                        <p class="percent"><span class="percent">Upload Failed</p>
-                `;
-                uploadArea.innerHTML = uploadedHTML;
-                error.textContent = "File Should be 2mb or less";
-                error.style.visibility = "visible";
-                setTimeout(() => {
-                    error.style.visibility = "hidden";
-                }, 20000);
-                loaded = 0;
-            }
-        });
-
-        let formData = new FormData(form);
-        xhr.send(formData);
-    }
-
-    function insertDetails() {
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "inserters/insertagentimg.php", true);
-        xhr.onload = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    let data = xhr.response;
-                    if (data === "success") {
-                        //console.log("uploaded");
-                        submitbtn.onclick = () => {
-                            document.querySelector('.successmodal').style.display =
-                                "flex";
-                            document.querySelector('.modalcon').classList.add('animation');
-                        };
-                    } else {
-                        error.textContent = data;
-                        error.style.visibility = "visible";
-                        //uploaddiv.style.display = "none";
-                        setTimeout(() => {
-                            error.style.visibility = "hidden";
-                        }, 20000);
-                    }
-                }
-            }
-        };
-        let formData = new FormData(form)
-        xhr.send(formData);
-    }
-
-    submitbtn.onclick = () => {
-        insertDetails();
-    };
-
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

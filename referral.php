@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniqueagent_id'])){
-    header("Location:index.php");
+    header("Location: portallogin.php");
 }
 
 ?>
@@ -20,9 +20,30 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <title>Yurland</title>
     <style>
     body {
-        min-height: 100vh;
-
+        min-height: 200vh;
+        position: relative;
         overflow-x: hidden;
+    }
+
+    section {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    section .error {
+        color: #ff6600;
+        border: 1px solid #ff6600;
+        height: 1em;
+        border-radius: 8px;
+        margin-bottom: 1.5em;
+        width: 80px;
+    }
+
+    .footerdiv {
+        position: absolute;
+        bottom: 0;
     }
 
 
@@ -30,6 +51,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
     .success img {
         width: 15em;
         height: 15em;
+    }
+
+    .price-button {
+        width: 300px;
+        font-size: 15px;
     }
 
     @media only screen and (min-width: 1300px) {
@@ -208,11 +234,14 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+        .code-container .flex0 {
+            flex-direction: column;
+        }
 
-
-
-
-
+        .price-button {
+            width: 200px;
+            font-size: 12px;
+        }
 
         .user,
         #openicon {
@@ -362,6 +391,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
             <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+            <li class="links">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>
                 <a href="mycustomers.php" class="link">Customers</a>
             </li>
@@ -375,12 +408,17 @@ if(!isset($_SESSION['uniqueagent_id'])){
             </li>
 
             <li class="links">
+                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
+                <a href="alltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
                 <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
                 <a href="agentprofileinfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
+                <a href="agentlogout.php" class="link">Logout</a>
             </li>
         </ul>
 
@@ -418,14 +456,40 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     <img src="images/image2.svg" alt="payment image" />
                     <div class="payment-desc">
                         <p>Paid Referral</p>
-                        <div class="payment-count">15</div>
+                        <div class="payment-count"> <span class="landusercount"></span><?php 
+                         $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
+                         $customer = $user ->selectAgentCustomer($agent['referral_id']);
+                        if(!empty($customer)){
+                            $customers = [];
+                           foreach($customer as $key => $value){
+               array_push($customers,$value['unique_id']);
+                           }}
+
+                           //var_dump($customers);
+
+                        
+
+                           for ($i = 0; $i <= count($customers) - 1; $i++) {
+                            $total = $user->selectTotalCustomers($customers[$i]);
+                            
+                           if(!empty($total)){
+                            $landusers = [];
+                            foreach($total as $key => $value){
+                                array_push($landusers,$value); 
+                                 ?>
+                            <span name="landuser" style="display: none;"><?php echo $value?></span>
+                            <?php          }
+                        }
+                           } ?>
+
+                        </div>
                     </div>
                 </div>
                 <?php 
-    $user = new User;
-    $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
-    $customer = $user ->selectAgentCustomer($agent['referral_id']);
-    if(!empty($customer)){
+     $user = new User;
+     $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
+     $customer = $user ->selectAgentCustomer($agent['referral_id']);
+     if(!empty($customer)){
        
        
          $percent = $agent['earning_percentage'] / 100;
@@ -471,6 +535,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 </div>
             </div>
 
+            <section>
+                <p class="error">Copied</p>
+            </section>
+
             <div class="code-container">
                 <span>Referral code</span>
                 <div class="flex0">
@@ -483,7 +551,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
              }?>" style="display: none;">
                         <img src="images/copy.svg" alt="" />
                     </div>
-                    <div class="price-button copy-div">Share</div>
+                    <div class="price-button copy-div">Share For New Customer</div>
                 </div>
             </div>
 
@@ -491,19 +559,22 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
                 <?php 
-    $user = new User;
-    $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
-    $customer = $user ->selectAgentCustomer($agent['referral_id']);
-    if(!empty($customer)){
+     $user = new User;
+     $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
+      $customer = $user ->selectAgentCustomer($agent['referral_id']);
+     if(!empty($customer)){
         foreach($customer as $key => $value){
-            $earning = $user->selectPayment($value['unique_id']);
+            $earning = $user->selectPayHistory($value['unique_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
-    ?>
+     ?>
+                <?php if($agent['agent_date'] <= $value['payment_date']){
+                if($agent['earning_percentage'] != ""){  ?>
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
-                        <p style="text-transform: capitalize;"><span>Hello <?php echo $agent['agent_name'];?></span></p>
+                        <p style="text-transform: capitalize;"><span>Hello <?php echo $agent['agent_name'];?></span>
+                        </p>
                         <p style="text-transform: uppercase;">
                             <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $agent['earning_percentage'];
                     $earnedprice = $percent / 100 * $value['product_price'];
@@ -518,6 +589,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                         </p>
                     </div>
                 </div>
+                <?php }}?>
 
                 <?php }} }}?>
 
@@ -529,122 +601,145 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <?php }?>
             </div>
         </div>
+    </div>
 
 
-        <script>
-        let total = document.getElementsByName("price");
-        let values = [];
-        total.forEach(element => {
 
-            values.push(parseInt(element.value));
-        });
+    <script>
+    let total = document.getElementsByName("price");
+    let values = [];
+    total.forEach(element => {
 
-        let sum = 0;
+        values.push(parseInt(element.value));
+    });
 
-        for (let i = 0; i < values.length; i++) {
-            sum += values[i];
+    let sum = 0;
+
+    for (let i = 0; i < values.length; i++) {
+        sum += values[i];
+    }
+    document.querySelector('.total').innerHTML = new Intl.NumberFormat().format(sum);
+    let landuser = document.getElementsByName("landuser");
+
+    let landvalues = [];
+    landuser.forEach(element => {
+
+        landvalues.push(parseInt(element.innerHTML));
+    });
+    document.querySelector('.landusercount').innerHTML = landvalues.length;
+
+
+
+
+
+
+    let copybtn = document.querySelector('.copy-div');
+
+
+    copybtn.onclick = () => {
+        copyFunction();
+    }
+
+
+
+    function copyFunction() {
+        // Get the text field
+        var copyText = document.querySelector('.copy-text');
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        let referralLink =
+            `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
+        navigator.clipboard.writeText(referralLink);
+
+        if (navigator.clipboard.writeText(referralLink)) {
+            setTimeout(() => {
+                document.querySelector("section .error").style.visibility = "visible";
+            }, 400);
+            setTimeout(() => {
+                document.querySelector("section .error").style.visibility = "hidden";
+            }, 4000);
+
+
         }
-        document.querySelector('.total').innerHTML = new Intl.NumberFormat().format(sum);
+    }
 
-
-
-
-        let copybtn = document.querySelector('.copy-div');
-
-
-        copybtn.onclick = () => {
-            copyFunction();
-        }
-
-
-
-        function copyFunction() {
-            // Get the text field
-            var copyText = document.querySelector('.copy-text');
-
-            // Select the text field
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
-
-            // Copy the text inside the text field
-            let referralLink =
-                `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
-            navigator.clipboard.writeText(referralLink);
-        }
-
-        if (window.innerWidth > 1200) {
-            let dropdownnav = document.querySelector(".dropdown-links");
-            let open = document.querySelector('#openicon');
-            let closeicon = document.querySelector('#closeicon');
-            open.onclick = () => {
-                dropdownnav.style = `
+    if (window.innerWidth > 1200) {
+        let dropdownnav = document.querySelector(".dropdown-links");
+        let open = document.querySelector('#openicon');
+        let closeicon = document.querySelector('#closeicon');
+        open.onclick = () => {
+            dropdownnav.style = `
         width: 14%;
         `;
-                open.style.display = "none";
-                closeicon.style.display = "block";
-                document.querySelector(".profile-container").style = `
+            open.style.display = "none";
+            closeicon.style.display = "block";
+            document.querySelector(".profile-container").style = `
          padding-left: 7em;
         `;
-                let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
 
-                let allLink = document.querySelectorAll(".dropdown-links .links");
-                allLink.forEach((element) => {
-                    element.style = `
+            let allLink = document.querySelectorAll(".dropdown-links .links");
+            allLink.forEach((element) => {
+                element.style = `
         gap: 10px;
         `;
 
-                });
-                allLinks.forEach((element) => {
-                    element.style = `
+            });
+            allLinks.forEach((element) => {
+                element.style = `
          visibility: visible;
          display: block;
         `;
-                });
-            }
+            });
+        }
 
-            closeicon.onclick = () => {
-                dropdownnav.style = `
+        closeicon.onclick = () => {
+            dropdownnav.style = `
         width: 6%;
         `;
-                open.style.display = "block";
-                closeicon.style.display = "none";
-                document.querySelector(".profile-container").style = `
+            open.style.display = "block";
+            closeicon.style.display = "none";
+            document.querySelector(".profile-container").style = `
          padding-left: 1em;
         `;
 
-                let allLink = document.querySelectorAll(".dropdown-links .links");
-                allLink.forEach((element) => {
-                    element.style = `
+            let allLink = document.querySelectorAll(".dropdown-links .links");
+            allLink.forEach((element) => {
+                element.style = `
         justify-content: center
         `;
-                });
+            });
 
-                let allLinks = document.querySelectorAll(".dropdown-links .links .link");
-                allLinks.forEach((element) => {
-                    element.style = `
+            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            allLinks.forEach((element) => {
+                element.style = `
          visibility: hidden;
          display:none;
         `;
-                });
-            }
+            });
         }
-        if (window.innerWidth < 1300) {
-            let dropdownnav = document.querySelector(".dropdown-links");
-            let menu = document.querySelector(".menu");
-            menu.onclick = () => {
-                dropdownnav.style = `
+    }
+    if (window.innerWidth < 1300) {
+        let dropdownnav = document.querySelector(".dropdown-links");
+        let menu = document.querySelector(".menu");
+        menu.onclick = () => {
+            dropdownnav.style = `
             transform: translateX(0);
             `;
-            };
+        };
 
-            let close = document.querySelector(".close");
-            close.onclick = () => {
-                dropdownnav.style = `
+        let close = document.querySelector(".close");
+        close.onclick = () => {
+            dropdownnav.style = `
             transform: translateX(100%);
             `;
-            };
-        }
-        </script>
+        };
+    }
+    </script>
 </body>
 
 </html>

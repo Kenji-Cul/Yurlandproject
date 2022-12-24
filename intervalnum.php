@@ -59,6 +59,7 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
     $intervalinput = $_POST['intervalinput'];
     
     
+    
 
     if($_POST['intervalinput'] == 'daily'){
        $limitperiod = $limit;
@@ -113,6 +114,9 @@ if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct)
 include_once "initialize.php";
 }
 
+} else {
+    $error = "Please choose your payment interval";
+    header("Location: verify3.php?error=".$error."");
 }
 ?>
 <!DOCTYPE html>

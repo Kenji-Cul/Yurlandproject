@@ -25,7 +25,8 @@ include "signconstant.php";
      function createAgent($agentname,$agent_password,$referralid,$earningpercent, $email){
         $uniqueid = rand();
         $pwd = password_hash($agent_password,PASSWORD_DEFAULT);
-          $sql = "INSERT INTO agent_table(uniqueagent_id,agent_name, agent_email,agent_password,referral_id,earning_percentage) VALUES('{$uniqueid}','{$agentname}','{$email}','{$pwd}','{$referralid}','{$earningpercent}')";
+        $agentdate = date("M-d-Y");
+          $sql = "INSERT INTO agent_table(uniqueagent_id,agent_name, agent_email,agent_password,referral_id,earning_percentage,agent_date) VALUES('{$uniqueid}','{$agentname}','{$email}','{$pwd}','{$referralid}','{$earningpercent}','{$agentdate}')";
           $result = $this->dbcon->query($sql);
           if($this->dbcon->affected_rows == 1){
             session_start();
@@ -311,7 +312,7 @@ include "signconstant.php";
     }
 
     function selectAgentCustomer($uniqueid){
-        $sql = "SELECT * FROM user WHERE referral_id = '{$uniqueid}'";
+        $sql = "SELECT * FROM user WHERE referral_id = '{$uniqueid}' ORDER BY user_id DESC";
         $result = $this->dbcon->query($sql);
         $rows = array();
             if($this->dbcon->affected_rows > 0){
@@ -323,6 +324,9 @@ include "signconstant.php";
                 return $rows;
             }
     }
+    
+
+    
 
 
     function selectSubadmin($uniqueid){
@@ -1239,8 +1243,8 @@ include "signconstant.php";
         }
     }
 
-    function insertPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice){
-        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}')";
+    function insertPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice,$payee){
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price,payee) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}','{$payee}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1249,19 +1253,8 @@ include "signconstant.php";
         }
     }
 
-    function insertPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}')";
-        $result = $this->dbcon->query($sql);
-        if($this->dbcon->affected_rows == 1){
-           //echo "success";
-        } else {
-           echo $this->dbcon->error;
-        }
-
-    }
-
-    function insertOutPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate){
-        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}')";
+    function insertPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice,$payee){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price,payee) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}','{$payee}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1271,8 +1264,8 @@ include "signconstant.php";
 
     }
 
-    function insertOutPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}')";
+    function insertOutPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee){
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1282,8 +1275,8 @@ include "signconstant.php";
 
     }
 
-    function insertNewPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice){
-        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}')";
+    function insertOutPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1293,8 +1286,8 @@ include "signconstant.php";
 
     }
 
-    function insertNewPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}')";
+    function insertNewPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee){
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1304,8 +1297,8 @@ include "signconstant.php";
 
     }
 
-    function updateNewPayment($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod){
-        $sql = "UPDATE payment SET payment_month='{$paymentmonth}',payment_day='{$paymentday}',payment_year='{$paymentyear}',payment_time='{$paymenttime}',product_location='{$productlocation}',product_price='{$price}',product_image='{$image}',product_unit='{$addedunit}',payment_method='{$method}',balance='{$balance}',sub_period='{$period}',period_num='{$subperiod}' WHERE product_id='{$productid}' AND payment_status='Payed' AND customer_id='{$customerid}'";
+    function insertNewPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1315,8 +1308,19 @@ include "signconstant.php";
 
     }
 
-    function insertUpdateHistory($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$productname){
-        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}')";
+    function updateNewPayment($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$payee){
+        $sql = "UPDATE payment SET payment_month='{$paymentmonth}',payment_day='{$paymentday}',payment_year='{$paymentyear}',payment_time='{$paymenttime}',product_location='{$productlocation}',product_price='{$price}',product_image='{$image}',product_unit='{$addedunit}',payment_method='{$method}',balance='{$balance}',sub_period='{$period}',period_num='{$subperiod}' WHERE product_id='{$productid}' AND payment_status='Payed' AND customer_id='{$customerid}' AND payee = '{$payee}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
+    function insertUpdateHistory($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$productname,$payee){
+        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -1544,6 +1548,20 @@ include "signconstant.php";
 		}
     }
 
+    function selectPayHistory($id){
+        $sql = "SELECT * FROM land_history WHERE customer_id='{$id}' ORDER BY payment_id DESC";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
     function selectSubPayment($id){
         $sql = "SELECT * FROM payment WHERE customer_id='{$id}' AND payment_method='Subscription'";
         $result = $this->dbcon->query($sql);
@@ -1569,6 +1587,10 @@ include "signconstant.php";
         }
     }
 
+    
+
+
+
     function selectTotalPayment($id){
         $sql = "SELECT SUM(product_price) FROM payment WHERE product_id='{$id}'";
         $result = $this->dbcon->query($sql);
@@ -1590,6 +1612,19 @@ include "signconstant.php";
             return $row;
         }
     }
+
+    function selectTotalCustomers($id){
+        $sql = "SELECT customer_id FROM land_history WHERE customer_id='{$id}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+   
 
     function selectBuyers(){
         $sql = "SELECT COUNT(product_id) FROM payment";
@@ -1950,7 +1985,7 @@ include "signconstant.php";
                
     }
 
-    function searchProduct($name){
+    function searchProduct($name,$uniquestaff){
         $sql = "SELECT * FROM land_product WHERE product_name = '{$name}'";
         $result = $this->dbcon->query($sql);
         $output = "";
@@ -2026,16 +2061,16 @@ $output .= '<div class="updated-land">
 
 
         if($data['product_unit'] != 0){
-        if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
-            $uniquep = $_GET['unique'];
+        if($uniquestaff != ""){
+          
         $output1 ='<a
-            href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej&unique='.$uniquep.'">
+            href="estateinfo.php?id='.$data['unique_id'].'&key=9298783&unique='.$uniquestaff.'&REF=019299383&keyref=091234549">
 <img src="landimage/'.$data['product_image']
                     .'" alt="estate image" />
 </a>';
 } else {
 $output1 ='<a
-    href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
+    href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623&REF=0192993838383&keyref=09123454954848kdksuuejwej">
     <img src="landimage/'.$data['product_image']
                     .'" alt="estate image" />
 </a>';
@@ -2043,7 +2078,35 @@ $output1 ='<a
 
 $output3 ='</div>';
 
-$output4 ='<div class="updated-details">
+if($uniquestaff != ""){
+    $output4 ='<div class="updated-details">
+    <div class="detail-one">
+        <div class="unit-detail">
+            <div class="detail-btn">
+                <p>Limited Units Available</p>
+            </div>
+            <div class="detail-btn" style="background: #9B51E0;">
+                <p>Half plot per Unit</p>
+            </div>
+        </div>
+    </div>
+    <div class="detail-two">
+        <div class="unit-detail2">
+            <div class="detail-name">
+                <p>'.$data['product_name'].'</p>
+            </div>
+            <div class="detail-location">
+                <p style="color: #808080;">'.$data['product_location'].'</p>
+                <p><a
+                        href="estateinfo.php?id='.$data['unique_id'].'&key=9298783623k&unique='.$uniquestaff.'&REF=019299383838383&keyref=09123454954848kdksuuejwej">click
+                        here to view</a></p>
+            </div>
+        </div>
+    </div>
+    ';
+
+}  else {
+    $output4 ='<div class="updated-details">
     <div class="detail-one">
         <div class="unit-detail">
             <div class="detail-btn">
@@ -2068,6 +2131,7 @@ $output4 ='<div class="updated-details">
         </div>
     </div>
     ';
+}
 
 
 
@@ -2141,7 +2205,7 @@ $output .= '<div class="updated-land">
 
         }
         }else{
-        $output .= " <div class='success'>
+        $output .= "<div class='success'>
             <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
             <p>We are sorry but this land</p>
             <p>is unavailable at the moment!</p>
@@ -2156,8 +2220,51 @@ $output .= '<div class="updated-land">
         }
 
 
+function searchForCustomer($name,$ref){
+    $sql = "SELECT * FROM user WHERE email = '{$name}'  AND referral_id = '{$ref}'";
+    $result = $this->dbcon->query($sql);
+    $output = "";
+    
+    if($result->num_rows > 0){
+      while($data = $result->fetch_assoc()){
+        $output1 = '<div class="account-detail2">
+                    <div class="radius"> ';
+                         if(!empty($data['photo'])){
+$output2 = '<img src="profileimage/'.$data['photo'].'" alt="profile image" /></div>';
+ }
+if(empty($data['photo'])){
+ $output2 = '<div class="empty-img">
+    <i class="ri-user-fill"></i>
+</div> 
+</div> ';
+}
+$output3 ='
+        <div class="flex">
+    <p style="text-transform: capitalize;">
+        <span>'.$data['first_name'].'</span>&nbsp;<span>'.$data['last_name'].'</span>
+</p>
+<span>'.$data['email'].'</span>
+</div>
+<a href="customerinfo.php?unique='.$data['unique_id'].'&real=91838JDFOJOEI939" style="color: #808080;"><i
+        class="ri-arrow-right-s-line"></i></a>
+</div> ';
+$output .= ''.$output1.''.$output2.''.$output3.'';
+}
+} else {
+$output .= "
+  <div class='success'>
+   <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+  <p>This customer does not exist </p>
+  </div>
+";
+}
+
+echo $output;
+}
 
 
-        }
 
-        ?>
+
+}
+
+?>

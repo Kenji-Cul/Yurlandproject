@@ -429,13 +429,36 @@ include "projectlog.php";
 <body class="profile-body">
     <!-- Header -->
     <header class="signup">
+        <?php if(isset($_SESSION['unique_id'])){?>
         <div class="logo">
             <?php if(isset($_SESSION['unique_id'])){?>
             <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
         <?php 
              $user = new User;
              if(isset($_SESSION['unique_id'])){

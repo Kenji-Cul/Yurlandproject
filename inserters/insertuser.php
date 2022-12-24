@@ -28,7 +28,11 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     else {
     $user = new User;
     $emailuser = $user->checkEmailAddress(check_input($email));
-    if(!empty($emailuser)){
+    $emailuser2 = $user->checkAgentEmailAddress(check_input($email));
+    $emailuser3 = $user->checkExecutiveEmailAddress(check_input($email));
+    $emailuser4 = $user->checkSubadminEmailAddress(check_input($email));
+    $emailuser5 = $user->checkSuperadminEmailAddress(check_input($email));
+    if(!empty($emailuser) || !empty($emailuser2) || !empty($emailuser3) || !empty($emailuser4) || !empty($emailuser5)){
     $errormsg = "Email Address already exists";
     }else{
     $insertuser =

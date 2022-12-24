@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniqueagent_id'])){
-    header("Location:index.php");
+    header("Location: portallogin.php");
 }
 
 ?>
@@ -23,6 +23,67 @@ if(!isset($_SESSION['uniqueagent_id'])){
         min-height: 100vh;
         position: relative;
     }
+
+    section {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    section .error {
+        color: #ff6600;
+        border: 1px solid #ff6600;
+        height: 1em;
+        border-radius: 8px;
+        margin-bottom: 1.5em;
+        width: 80px;
+    }
+
+
+    .search-icon {
+        position: absolute;
+        right: 4em;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-input {
+        display: none;
+    }
+
+
+
+
+
+    .search-icon img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .search-icon input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+    }
+
+    .search-icon input:focus {
+        border: none;
+    }
+
+
+
+
+    .price-button {
+        width: 300px;
+        font-size: 15px;
+    }
+
 
     .footerdiv {
         position: absolute;
@@ -99,6 +160,8 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     @media only screen and (min-width: 1300px) {
+
+
         .signup .nav {
             position: absolute;
             right: 40px;
@@ -274,9 +337,20 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
-        body {
-            height: 90vh;
+        .profile-body {
+            height: 40vh;
         }
+
+        .code-container .flex0 {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-button {
+            width: 200px;
+            font-size: 12px;
+        }
+
 
 
 
@@ -379,7 +453,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     <?php }?>
                     <?php if(empty($newuser['agent_img'])){?>
                     <a href="agentprofileinfo.php" style="color: #808080;">
-                        <div class="empty-img">
+                        <div class="empty-img" style="border-radius: 50%;">
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
@@ -407,6 +481,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentprofile.php"><img src="images/home3.svg" /></a>
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
+
+            <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
             <li class="links select-link">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>
                 <a href="mycustomers.php" class="link">Customers</a>
@@ -421,12 +500,17 @@ if(!isset($_SESSION['uniqueagent_id'])){
             </li>
 
             <li class="links">
+                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
+                <a href="alltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
                 <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
                 <a href="agentprofileinfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
+                <a href="agentlogout.php" class="link">Logout</a>
             </li>
         </ul>
 
@@ -437,11 +521,24 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <p>My Customers</p>
+
+                <div class="search-icon">
+                    <img src="images/search.svg" alt="search image" id="searchimg">
+
+                    <div class="search-input">
+                        <form action="" class="search-form">
+                            <input type="text" class="search" type="search" name="searchproduct"
+                                placeholder="Search For Customer">
+                        </form>
+                    </div>
+                </div>
+
+
+
             </div>
 
 
             <div class="details-container">
-
 
                 <?php 
     $user = new User;
@@ -473,6 +570,25 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
                 <?php }}?>
 
+                <section>
+                    <p class="error">Copied</p>
+                </section>
+                <div class="code-container">
+                    <span>Referral code</span>
+                    <div class="flex0">
+                        <div class="colored-div">
+                            <p><?php if(isset($newuser['referral_id'])){
+                echo $newuser['referral_id'];
+            }?> </p>
+                            <input type="text" name="" class="copy-text" value="<?php if(isset($newuser['referral_id'])){
+                echo $newuser['referral_id'];
+             }?>" style="display: none;">
+                            <img src="images/copy.svg" alt="" />
+                        </div>
+                        <div class="price-button copy-div">Share For Created Customer</div>
+                    </div>
+                </div>
+
                 <?php if(empty($customer)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
@@ -481,7 +597,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <?php }?>
 
                 <div class="account-detail3">
-                    <a href="logout.php">
+                    <a href="agentlogout.php">
                         <p>Sign Out</p>
                     </a>
                 </div>
@@ -490,21 +606,100 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
     </div>
-    <footer class="footerdiv">
-        <p>YurLAND &#169; 2022 | All Right Reserved</p>
-        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
-        <p>Connect with us Facebook, Twitter, Instagram</p>
-        <p style="font-size: 30px;">
-            <a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i class="ri-instagram-line"></a></i><a
-                href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i
-                    class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
-        </p>
-    </footer>
+
 
 
 
     <script src="js/main.js"></script>
     <script>
+    let searchIcon = document.querySelector('.search-icon');
+    searchIcon.onclick = () => {
+        let searchinput = document.querySelector('.search-input');
+        let searchinput2 = document.querySelector('.search');
+        searchinput.style.display = "flex";
+        document.querySelector('#searchimg').style.display = "none";
+
+        let searchform = document.querySelector('.search-form');
+        searchform.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+        searchinput2.onkeyup = () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchforcustomer.php?ref=<?php echo $agent['referral_id'];?>`);
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+                    }
+                }
+            };
+            let formData = new FormData(searchform);
+            xhr.send(formData);
+        }
+
+        // $(document).ready(function() {
+        //     $(".search-form").submit(function(e) {
+        //         e.preventDefault();
+        //     })
+
+
+        //     $(".search-form input").keyup(function() {
+        //         // console.log(("#searchform input").val())
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "searchforcustomer.php?ref=<?php echo $agent['referral_id'];?>",
+        //             data: $(".search-form input"),
+        //             success: function(response) {
+        //                 console.log(response);
+        //                 //$(".details-container").html(response);
+        //                 console.log(response);
+        //             }
+        //         });
+        //     })
+
+        // });
+
+    }
+
+
+    let copybtn = document.querySelector('.copy-div');
+
+
+    copybtn.onclick = () => {
+        copyFunction();
+    }
+
+
+
+    function copyFunction() {
+        // Get the text field
+        var copyText = document.querySelector('.copy-text');
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        let referralLink =
+            `http://localhost/Yurland/referralsignup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
+        navigator.clipboard.writeText(referralLink);
+        if (navigator.clipboard.writeText(referralLink)) {
+            setTimeout(() => {
+                document.querySelector("section .error").style.visibility = "visible";
+            }, 400);
+            setTimeout(() => {
+                document.querySelector("section .error").style.visibility = "hidden";
+            }, 4000);
+
+
+        }
+
+    }
+
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

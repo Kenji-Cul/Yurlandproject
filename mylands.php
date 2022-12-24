@@ -2,7 +2,7 @@
 session_start();
 include "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location: index.php");
+    header("Location: login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -131,7 +131,7 @@ if(!isset($_SESSION['unique_id'])){
     .updated-land {
         position: relative;
         width: 350px;
-        min-height: 620px !important;
+        min-height: 700px !important;
         background: #FFFFFF;
         border-radius: 8px;
         filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
@@ -716,7 +716,7 @@ if(!isset($_SESSION['unique_id'])){
                              }
                       ?> &nbsp;<span>daily</span></div>
 
-                        <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
+                        <?php } else if($value['balance'] < "1" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
                         <div class="cartbutton">&#8358;<?php 
                    $unitprice = $value['sub_payment'];
                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
@@ -869,7 +869,7 @@ if(!isset($_SESSION['unique_id'])){
                              }
              ?> &nbsp;<span><?php echo $value['sub_period']?></span></div>
 
-                            <?php } else if($value['balance'] == "0" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
+                            <?php } else if($value['balance'] < "1" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
              ?> &nbsp;</div>
@@ -979,6 +979,14 @@ if(!isset($_SESSION['unique_id'])){
                             <?php }?>
                             <p><span>Unit:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
                         echo $value['product_unit'];         
+                    ?></span></p>
+                            <p><span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
+                            if($value['payee'] == $newuser['first_name']." ".$newuser['last_name']){
+                                echo "You";
+                            } else {
+                                echo $value['payee'];   
+                            }
+                             
                     ?></span></p>
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniqueagent_id'])){
-    header("Location:index.php");
+    header("Location: portallogin.php");
 }
 
 ?>
@@ -34,6 +34,29 @@ if(!isset($_SESSION['uniqueagent_id'])){
         height: 20em;
     }
 
+    .details .pname {
+        font-size: 18px;
+    }
+
+
+    .radius {
+        position: relative;
+    }
+
+    .radius img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .transaction-details {
+        border-radius: 8px;
+        /* border: 2px solid black; */
+        padding: 1em 2em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 90%;
+    }
 
 
     /* .land_estate_container {
@@ -43,6 +66,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
     @media only screen and (min-width: 1300px) {
+
+        .land-btn-container .btn {
+            width: 500px;
+        }
 
         .signup .nav {
             position: absolute;
@@ -223,6 +250,55 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
     @media only screen and (max-width: 1300px) {
 
+        .payee {
+            width: 100px;
+
+        }
+
+        .payee .payee-name {
+            text-overflow: ellipsis;
+        }
+
+        .land-image {
+            height: 200px;
+        }
+
+        .land-image img {
+            height: 200px;
+        }
+
+        .transaction-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+        .details .pname {
+            font-size: 13px;
+        }
+
+        .transaction-details {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
+        }
+
+        .detail3 {
+            display: none;
+        }
+
+        .land-btn-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
 
         .user,
         #openicon {
@@ -241,11 +317,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
             gap: 1em;
         }
 
-
+        /* 
         .profile-div-container {
             margin: auto;
             width: 100%;
-        }
+        } */
 
 
 
@@ -289,6 +365,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
     @media only screen and (max-width: 800px) {
+
         body {
             height: 90vh;
         }
@@ -370,9 +447,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <?php if(empty($newuser['home_address'])){
     ?>
     <div class="update-data">
-        <div class="notice-div">
-            <p>Please Update Your Data For Verification</p>
-        </div>
+        <a href="agentimg.php" style="width: 100%; display: flex; align-items:center; justify-content:center;">
+            <div class="notice-div">
+                <p>Please Update Your Data For Verification</p>
+            </div>
+        </a>
     </div>
 
     <?php }?>
@@ -398,6 +477,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentprofile.php"><img src="images/home3.svg" /></a>
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
+
+            <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
             <li class="links">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>
                 <a href="mycustomers.php" class="link">Customers</a>
@@ -412,12 +497,17 @@ if(!isset($_SESSION['uniqueagent_id'])){
             </li>
 
             <li class="links">
+                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
+                <a href="alltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
                 <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
                 <a href="agentprofileinfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
+                <a href="agentlogout.php" class="link">Logout</a>
             </li>
         </ul>
 
@@ -436,14 +526,25 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
                 <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['agent_img'])){?>
-                    <img src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" />
+                    <a href="agentimg.php" style="color: #808080;">
+                        <img src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" />
+                    </a>
                     <?php }?>
                     <?php if(empty($newuser['agent_img'])){?>
-                    <div class="empty-img">
-                        <i class="ri-user-fill"></i>
-                    </div>
+                    <a href="agentimg.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
                     <?php }?>
                 </div>
+
+            </div>
+            <div class="land-btn-container">
+                <a href="usertype.php">
+                    <button class="btn land-btn">Buy a new land</button>
+                </a>
+
             </div>
 
 
@@ -500,6 +601,78 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
             </div>
+
+            <div class="transactions">
+                <p>Current Transactions</p>
+                <a href="alltransactions.php">
+                    <p class="more">See more</p>
+                </a>
+            </div>
+
+            <?php 
+             $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
+             $customer = $user ->selectAgentCustomer($agent['referral_id']);
+            if(!empty($customer)){
+               foreach($customer as $key => $value){
+                $first = $value['first_name'];
+                $last = $value['last_name'];
+             $landview = $user->selectCurrentPayHistory($value['unique_id']);
+             if(!empty($landview)){
+                foreach($landview as $key => $value){
+                    
+              
+            ?>
+            <div class="transaction-details">
+                <div class="radius">
+                    <img src="landimage/<?php echo $value['product_image'];?>" alt="">
+                </div>
+                <div class="details">
+                    <p class="pname"><?php echo $value['product_name'];?></p>
+                    <div class="inner-detail">
+                        <div class="date">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        </div>
+                    </div>
+                </div>
+                <div class="price-detail detail3"><?php 
+            echo $value['product_unit'];
+            ?>&nbsp;<span>Units</span></div>
+                <div class="price-detail detail3"><?php 
+            echo $value['payment_method'];
+            ?></div>
+                <div class="price-detail">&#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } else {
+                                echo round($unitprice);
+                             }
+            ?>
+                    <p class="payee" style="font-size: 12px; color: #808080;">
+                        <span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;">
+                            <span class="payee-name">
+                                <?php 
+                            if($value['payee'] == $newuser['agent_name']){
+                                echo "You";
+                            } else {
+                                echo $value['payee'];   
+                            }
+                             
+                    ?>
+                            </span></span>
+                    </p>
+                </div>
+            </div>
+
+            <?php }}}}?>
+
+            <?php if(empty($landview)){?>
+            <div class="transaction-details" style="display: flex; align-items: center; justify-content: center;">
+                <p>You have not done any transactions yet</p>
+            </div>
+            <?php }?>
+
+
 
 
             <div class="swiper estates swiper-counter">

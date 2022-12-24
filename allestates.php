@@ -1,6 +1,9 @@
 <?php 
 session_start();
 include "projectlog.php";
+if(!isset($_SESSION['unique_id'])){
+    header("Location: login.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -468,14 +471,15 @@ include "projectlog.php";
 
 
     @media only screen and (max-width: 800px) {
-        .updated-img{
+        .updated-img {
             height: 200px;
         }
 
-        .updated-img img{
+        .updated-img img {
             width: 100%;
             height: 200px;
         }
+
         .success img {
             width: 20em;
             height: 20em;
@@ -848,8 +852,11 @@ include "projectlog.php";
                 <p>YurLAND &#169; 2022 | All Right Reserved</p>
                 <p>A product of Ilu-oba International Limited and Arklips Limited</p>
                 <p>Connect with us Facebook, Twitter, Instagram</p>
-                <p style="font-size: 30px">
-                    <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
+                <p style="font-size: 30px;">
+                    <a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i
+                            class="ri-instagram-line"></a></i><a
+                        href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i
+                            class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
                 </p>
             </footer>
             <?php }?>

@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniqueagent_id'])){
-    header("Location:index.php");
+    header("Location: portallogin.php");
 }
 
 ?>
@@ -20,8 +20,14 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <title>Yurland</title>
     <style>
     body {
-        height: 70vh !important;
+        min-height: 70vh !important;
         overflow-x: hidden;
+        position: relative;
+    }
+
+    .footerdiv {
+        position: absolute;
+        bottom: 0;
     }
 
     section {
@@ -368,6 +374,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentprofile.php"><img src="images/home3.svg" /></a>
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
+
+            <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
             <li class="links">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>
                 <a href="mycustomers.php" class="link">Customers</a>
@@ -381,13 +392,18 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="referral.php" class="link">Referrals</a>
             </li>
 
+            <li class="links">
+                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
+                <a href="alltransactions.php" class="link">View Transactions</a>
+            </li>
+
             <li class="links select-link">
                 <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
                 <a href="agentprofileinfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
+                <a href="agentlogout.php" class="link">Logout</a>
             </li>
         </ul>
 
@@ -450,9 +466,54 @@ if(!isset($_SESSION['uniqueagent_id'])){
                                 <?php }?>
                             </span>
                         </div>
-                        <i class="ri-arrow-right-s-line"></i>
+                        <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
                     </div>
                 </a>
+
+                <div class="account-detail2">
+                    <div>
+                        <p style="text-transform: capitalize;">
+                            Phone Number
+                        </p>
+                        <span><?php if(isset($newuser['agent_num'])){  ?>
+                            <?php echo $newuser['agent_num']; ?><span>&nbsp;
+                                <?php }?></span>
+                    </div>
+                </div>
+
+                <div class="account-detail2">
+                    <div>
+                        <p style="text-transform: capitalize;">
+                            Email
+                        </p>
+                        <span><?php if(isset($newuser['agent_email'])){  ?>
+                            <?php echo $newuser['agent_email']; ?><span>&nbsp;
+                                <?php }?></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="account-detail2">
+                    <div style="display: flex; flex-direction: column; gap: 0.4em;">
+                        <p style="text-transform: capitalize;">
+                            Percentage Commission
+                        </p>
+                        <span><?php if(isset($newuser['earning_percentage'])){ ?>
+                            <?php echo $newuser['earning_percentage']; ?><span>%
+                                <?php }?></span>
+                            </p>
+                        </span>
+                        <p>
+                            <a href="https://chat.whatsapp.com/KC9NaLdq9otGNcD7zkjeIL" style="color: #fff;">
+                                <div class="estate_page_button"
+                                    style="width: 120px; height: 10px; font-size: 14px; background-color: green;">
+                                    Join
+                                    Info Room
+                                </div>
+                            </a>
+                        </p>
+                    </div>
+                </div>
 
 
 
@@ -461,6 +522,17 @@ if(!isset($_SESSION['uniqueagent_id'])){
             </div>
         </div>
     </div>
+
+    <footer class="footerdiv">
+        <p>YurLAND &#169; 2022 | All Right Reserved</p>
+        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>Connect with us Facebook, Twitter, Instagram</p>
+        <p style="font-size: 30px;">
+            <a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i class="ri-instagram-line"></a></i><a
+                href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i
+                    class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
+        </p>
+    </footer>
     <script>
     let copybtn = document.querySelector('.copy-div');
 
@@ -478,7 +550,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         // Copy the text inside the text field
         let referralLink =
-            `http://localhost/Yurland/referralsignup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
+            `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
         navigator.clipboard.writeText(referralLink);
         if (navigator.clipboard.writeText(referralLink)) {
             setTimeout(() => {

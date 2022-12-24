@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
-    header("Location:index.php");
+    header("Location: login.php");
 }
 
 ?>

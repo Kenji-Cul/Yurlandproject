@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location:index.php");
+    header("Location: login.php");
 }
 
 ?>
@@ -21,6 +21,22 @@ if(!isset($_SESSION['unique_id'])){
     <style>
     body {
         min-height: 100vh;
+    }
+
+    section {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    section .error {
+        color: #ff6600;
+        border: 1px solid #ff6600;
+        height: 1em;
+        border-radius: 8px;
+        margin-bottom: 1.5em;
+        width: 80px;
     }
 
     header {
@@ -493,6 +509,10 @@ if(!isset($_SESSION['unique_id'])){
                 </div>
             </div>
 
+            <section>
+                <p class="error">Copied</p>
+            </section>
+
             <div class="code-container">
                 <span>Referral code</span>
                 <div class="flex0">
@@ -524,7 +544,7 @@ if(!isset($_SESSION['unique_id'])){
                     
     ?>
                 <?php 
-                 if($users['user_date'] >= $value['payment_date']){
+                 if($users['user_date'] <= $value['payment_date']){
                 if($users['earning_percentage'] != ""){?>
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
@@ -597,6 +617,17 @@ if(!isset($_SESSION['unique_id'])){
             let referralLink =
                 `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
             navigator.clipboard.writeText(referralLink);
+
+            if (navigator.clipboard.writeText(referralLink)) {
+                setTimeout(() => {
+                    document.querySelector("section .error").style.visibility = "visible";
+                }, 400);
+                setTimeout(() => {
+                    document.querySelector("section .error").style.visibility = "hidden";
+                }, 4000);
+
+
+            }
         }
 
         if (window.innerWidth > 1200) {

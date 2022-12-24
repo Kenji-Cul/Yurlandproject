@@ -92,8 +92,8 @@ if(!isset($_GET['rand'])){
     }
 
     input {
-            margin-left: 1rem;
-        }
+        margin-left: 1rem;
+    }
 
     @media only screen and (max-width: 600px) {
         form {
@@ -138,7 +138,7 @@ if(!isset($_GET['rand'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
 
         <!-- <div class="nav">

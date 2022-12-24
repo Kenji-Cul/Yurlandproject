@@ -19,7 +19,7 @@ if(!empty($landview)){
 
        
 
-if(isset($_POST['submit'])){
+if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
 
     if($_GET['data'] == "onemonth"){
         $price = $_GET['tot'] / $value['onemonth_period'];
@@ -57,6 +57,7 @@ if(isset($_POST['submit'])){
     $intervalinput = $_POST['intervalinput'];
     
 
+   
     
     if($_POST['intervalinput'] == 'daily'){
         $limitperiod = $limit;
@@ -126,7 +127,9 @@ if(isset($_SESSION['unique_id'])){
 include_once "initialize2.php";
 }
 
-}
+} 
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,13 +177,27 @@ include_once "initialize2.php";
 <body class="profile-body">
     <!-- Header -->
     <header class="signup">
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
         </div>
+        <?php }?>
 
-        <div class="nav">
-            <img src="images/menu.svg" alt="menu icon" />
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
         </div>
+        <?php }?>
+
+
     </header>
 
     <div class="page-title4">

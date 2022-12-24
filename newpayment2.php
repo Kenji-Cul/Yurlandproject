@@ -12,7 +12,12 @@ if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
 
 $user = new User;
 $selectuser = $user->selectUser($_GET['user']);
-
+if(isset($_SESSION['uniqueagent_id'])){
+$selectagent = $user->selectAgent($_SESSION['uniqueagent_id']);
+}
+if(isset($_SESSION['uniquesubadmin_id'])){
+$subadmin = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+}
    
     $landview = $user->selectLandImage($_GET['uniqueid']);
    
@@ -105,6 +110,14 @@ if(isset($_POST["submit"])){
     $paymenttime = date("h:i a");
     $paymentdate = date("M-d-Y");
     $paymentmethod = "NewPayment";
+    if(isset($_SESSION['uniqueagent_id'])){
+        $payee = $selectagent['agent_name'];
+    } 
+
+    if(isset($_SESSION['uniquesubadmin_id'])){
+        $payee = $subadmin['subadmin_name'];
+    }
+ 
    
 
 
@@ -238,6 +251,13 @@ if(isset($_POST["submit"])){
                 "value" => $paymentdate
             ],
 
+            
+            [
+                "display_name" => "Payee",
+                "variable_name" => "payee",
+                "value" => $payee
+            ],
+
             [
                 "display_name" => "Chosen Plan",
                 "variable_name" => "chosenplan",
@@ -337,6 +357,10 @@ if(isset($_POST["submit"])){
     }
 
     @media only screen and (max-width: 1000px) {
+        .btn-container .estate_page_button {
+            width: 300px;
+        }
+
         .select-box {
             border: 1px solid #808080;
             border-radius: 8px;
@@ -361,14 +385,27 @@ if(isset($_POST["submit"])){
 <body class="profile-body">
     <!-- Header -->
     <header class="signup">
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
         </div>
+        <?php }?>
 
-        <div class="nav">
-            <img src="images/cart.svg" alt="cart icon" />
-            <img src="images/menu.svg" alt="menu icon" />
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
         </div>
+        <?php }?>
+
+
     </header>
 
     <div class="page-title4">

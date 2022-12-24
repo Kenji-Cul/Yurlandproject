@@ -2,7 +2,7 @@
 session_start();
 include "projectlog.php";
 if(!isset($_SESSION['unique_id'])){
-    header("Location: index.php");
+    header("Location: login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -83,11 +83,32 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .payee {
+            width: 100px;
+
+        }
+
+        .payee .payee-name {
+            text-overflow: ellipsis;
+        }
+
+        .profile-body {
+            height: 40vh;
+        }
+
+        .transaction-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
         .details .pname {
             font-size: 13px;
         }
 
-        .transaction-details2 {
+        .transaction-details {
             border-radius: 8px;
             /* border: 2px solid black; */
             padding: 1em 2em;
@@ -473,7 +494,7 @@ if(!isset($_SESSION['unique_id'])){
 
             <?php 
              $land = new User;
-             $landview = $land->selectCurrentPayHistory($_SESSION['unique_id']);
+             $landview = $land->selectPayHistory($_SESSION['unique_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
@@ -504,7 +525,21 @@ if(!isset($_SESSION['unique_id'])){
                              } else {
                                 echo round($unitprice);
                              }
-            ?></div>
+            ?>
+                    <p class="payee" style="font-size: 12px; color: #808080;">
+                        <span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;">
+                            <span class="payee-name">
+                                <?php 
+                            if($value['payee'] == $newuser['first_name']." ".$newuser['last_name']){
+                                echo "You";
+                            } else {
+                                echo $value['payee'];   
+                            }
+                             
+                    ?>
+                            </span></span>
+                    </p>
+                </div>
             </div>
 
 

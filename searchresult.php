@@ -469,6 +469,7 @@ include "projectlog.php";
 <body class="profile-body">
     <!-- Header -->
     <header class="signup">
+        <?php if(isset($_SESSION['unique_id'])){?>
         <div class="logo">
             <?php if(isset($_SESSION['unique_id'])){?>
             <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
@@ -476,7 +477,31 @@ include "projectlog.php";
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
+
         <?php 
+            if(isset($_SESSION['unique_id'])){
              $user = new User;
              $newuser = $user->selectUser($_SESSION['unique_id']);
             ?>
@@ -506,11 +531,44 @@ include "projectlog.php";
                     </a>
                     <?php }?>
                 </div>
+
             </div>
         </div>
+        <?php }?>
+
+        <?php 
+            if(isset($_SESSION['uniqueagent_id'])){
+             $user = new User;
+             $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
+            ?>
+        <div class="nav">
+
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
+            <div class="user">
+                <p><?php if(isset($newuser['agent_name'])){  ?>
+                    <span><?php echo $newuser['agent_name']; ?></span>
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['agent_img'])){?>
+                    <img src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" />
+                    <?php }?>
+                    <?php if(empty($newuser['agent_img'])){?>
+                    <a href="updatedetails.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+
+            </div>
+        </div>
+        <?php }?>
     </header>
 
     <div class="flex-container">
+        <?php if(isset($_SESSION['unique_id'])){?>
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
@@ -564,6 +622,101 @@ include "projectlog.php";
                 <a href="logout.php" class="link">Logout</a>
             </li>
         </ul>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
+
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="agentprofile.php"><img src="images/home3.svg" /></a>
+                <a href="agentprofile.php" class="link">Home</a>
+            </li>
+
+            <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+            <li class="links">
+                <a href="mycustomers.php"><img src="images/referral.svg" /></a>
+                <a href="mycustomers.php" class="link">Customers</a>
+            </li>
+            <li class="links">
+                <a href="newcustomer.php"><img src="images/referral.svg" /> </a>
+                <a href="newcustomer.php" class="link">New Customer</a>
+            </li>
+            <li class="links">
+                <a href="referral.php"><img src="images/chart2.svg" /></a>
+                <a href="referral.php" class="link">Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
+                <a href="alltransactions.php" class="link">View Transactions</a>
+            </li>
+
+
+            <li class="links">
+                <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
+                <a href="agentprofileinfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
+                <a href="agentlogout.php" class="link">Logout</a>
+            </li>
+        </ul>
+
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="subadmin.php"><img src="images/home3.svg" /></a>
+                <a href="subadmin.php" class="link">Home</a>
+            </li>
+            <li class="links">
+                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allcustomers.php" class="link">All Customers</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="subadmininfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
+            </li>
+        </ul>
+        <?php }?>
 
         <div class="profile-container">
             <div class="page-title2">
@@ -686,19 +839,20 @@ include "projectlog.php";
             type: "POST",
             <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
             url: "searching.php?unique=<?php echo $_GET['unique'];?>",
-            <?php }else {?>
-            url: "searching.php",
+            <?php }?>
+            <?php if(isset($_SESSION['unique_id'])){?>
+            url: "searching.php?unique=''",
             <?php }?>
             data: $(".search-form input"),
             success: function(response) {
                 console.log(response);
                 $(".subscribed-lands").html(response);
-                //    console.log(response);
+                //console.log(response);
             }
-
         });
     })
 
+    <?php if(isset($_SESSION['unique_id'])){?>
     setInterval(() => {
         let xls = new XMLHttpRequest();
         xls.open("GET", "getcart.php", true);
@@ -718,6 +872,7 @@ include "projectlog.php";
         }
         xls.send();
     }, 100);
+    <?php }?>
     </script>
 </body>
 

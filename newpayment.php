@@ -107,6 +107,7 @@ if(isset($_POST["submit"])){
     $paymenttime = date("h:i a");
     $paymentdate = date("M-d-Y");
     $paymentmethod = "NewPayment";
+    $payee = $selectuser['first_name']." ".$selectuser['last_name'];
    
    
    
@@ -243,6 +244,12 @@ if(isset($_POST["submit"])){
             ],
 
             [
+                "display_name" => "Payee",
+                "variable_name" => "payee",
+                "value" => $payee
+            ],
+
+            [
                 "display_name" => "Chosen Plan",
                 "variable_name" => "chosenplan",
                 "value" => $chosenplan
@@ -254,6 +261,7 @@ if(isset($_POST["submit"])){
                 "value" => $subprice
             ],
 
+         
            
 
           ]
@@ -336,6 +344,10 @@ if(isset($_POST["submit"])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .btn-container .estate_page_button {
+            width: 300px;
+        }
 
         .user,
         #openicon {

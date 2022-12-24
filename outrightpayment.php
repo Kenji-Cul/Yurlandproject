@@ -39,6 +39,7 @@ if(isset($_POST["submit"])){
     $paymenttime = date("h:i a");
     $paymentdate = date("M-d-Y");
     $paymentmethod = "Outright";
+    $payee = $selectuser['first_name']." ".$selectuser['last_name'];
    
 
 
@@ -150,6 +151,12 @@ if(isset($_POST["submit"])){
                 "value" => $paymentdate
             ],
 
+            [
+                "display_name" => "Payee",
+                "variable_name" => "payee",
+                "value" => $payee
+            ],
+
           ]
        ]
     ];
@@ -226,45 +233,45 @@ header("Location: ".$transaction->data->authorization_url);
 
     @media only screen and (max-width: 1300px) {
 
-.user,
-#openicon {
-    display: none;
-}
+        .user,
+        #openicon {
+            display: none;
+        }
 
-.menu{
-    display: none;
-}
+        .menu {
+            display: none;
+        }
 
-.links img {
-    display: none;
-}
+        .links img {
+            display: none;
+        }
 
-.detail3 {
-    display: none;
-}
+        .detail3 {
+            display: none;
+        }
 
-.dropdown-links {
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: center;
-    gap: 2em;
-    transform: translateX(100%);
-    transition: all 1s;
-    width: 40%;
-    position: fixed;
-    bottom: 0;
-    border-radius: 8px 0px 0px 8px;
-}
+        .dropdown-links {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 2em;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 40%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
+        }
 
-.dropdown-links li {
-    height: 1em;
-    grid-gap: 0;
-}
-}
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
+    }
 
-@media only screen and (min-width: 1300px) {
+    @media only screen and (min-width: 1300px) {
         .page-title2 a {
             display: none;
         }
@@ -586,7 +593,7 @@ header("Location: ".$transaction->data->authorization_url);
 
     <div class="price-desc">
         <div>
-        <div class="land-name">
+            <div class="land-name">
                 <p><span>Estate Name:&nbsp;</span><?php echo $value['product_name'];?></p>
             </div>
             <div class="land-location">
@@ -620,7 +627,7 @@ header("Location: ".$transaction->data->authorization_url);
         </form>
 
         <?php }}?>
-                            </div>
+    </div>
     </div>
 
     <footer class="footerdiv">
@@ -633,7 +640,7 @@ header("Location: ".$transaction->data->authorization_url);
     </footer>
     <script src="js/main.js"></script>
     <script>
-        setInterval(() => {
+    setInterval(() => {
         let xls = new XMLHttpRequest();
         xls.open("GET", "getcart.php", true);
         xls.onload = () => {
