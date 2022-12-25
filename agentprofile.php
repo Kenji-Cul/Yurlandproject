@@ -25,6 +25,38 @@ if(!isset($_SESSION['uniqueagent_id'])){
         overflow-x: hidden;
     }
 
+    .details {
+        display: flex;
+        flex-direction: column;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center;
+    }
+
+
+    .payee {
+        width: 130px;
+        display: flex;
+        flex-direction: row;
+        gap: 0 !important;
+        position: relative;
+        height: 20px;
+    }
+
+    .payee .payee-name {
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 13px;
+        color: #808080;
+        width: 59%;
+    }
+
+    .payee .payee-tag {
+        width: 41%;
+        font-size: 13px;
+    }
+
     .update-data {
         position: fixed;
         top: -2em;
@@ -66,6 +98,22 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
     @media only screen and (min-width: 1300px) {
+        .details2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6em;
+            flex-direction: row;
+        }
+
+        .details2 p {
+            color: #808080;
+        }
+
+        .details2 p,
+        .details2 h3 {
+            font-size: 22px;
+        }
 
         .land-btn-container .btn {
             width: 500px;
@@ -249,15 +297,34 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
-
         .payee {
             width: 100px;
+            display: flex;
+            flex-direction: row;
+            gap: 0 !important;
+            position: relative;
+            height: 20px;
+        }
 
+        .radius {
+            width: 50px !important;
         }
 
         .payee .payee-name {
-            text-overflow: ellipsis;
+            text-overflow: ellipsis !important;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 12px;
+            color: #808080;
+            width: 50%;
         }
+
+        .payee .payee-tag {
+            width: 50%;
+            font-size: 12px;
+        }
+
+
 
         .land-image {
             height: 200px;
@@ -516,7 +583,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         <div class="profile-container">
             <div class="profile-info">
-                <div class="details">
+                <div class="details2">
                     <p>Welcome Back!</p>
                     <h3><?php if(isset($newuser['agent_name'])){  ?>
                         <span><?php echo $newuser['agent_name']; ?></span>&nbsp;
@@ -635,8 +702,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     </div>
                 </div>
                 <div class="price-detail detail3"><?php 
-            echo $value['product_unit'];
-            ?>&nbsp;<span>Units</span></div>
+            if($value['product_unit'] == "1"){
+                echo $value['product_unit']." Unit";
+            } else {
+                echo $value['product_unit']." Units";
+            }
+            ?></div>
                 <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
@@ -648,10 +719,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
                                 echo round($unitprice);
                              }
             ?>
-                    <p class="payee" style="font-size: 12px; color: #808080;">
-                        <span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;">
-                            <span class="payee-name">
-                                <?php 
+                    <div class="payee">
+                        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+                        <p class="payee-name"
+                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+
+                            <?php 
                             if($value['payee'] == $newuser['agent_name']){
                                 echo "You";
                             } else {
@@ -659,8 +732,8 @@ if(!isset($_SESSION['uniqueagent_id'])){
                             }
                              
                     ?>
-                            </span></span>
-                    </p>
+                        </p>
+                    </div>
                 </div>
             </div>
 

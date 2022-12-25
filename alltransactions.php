@@ -27,6 +27,29 @@ if(!isset($_SESSION['uniqueagent_id'])){
         background: #fee1e3;
     }
 
+    .payee {
+        width: 130px;
+        display: flex;
+        flex-direction: row;
+        gap: 0 !important;
+        position: relative;
+        height: 20px;
+    }
+
+    .payee .payee-name {
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 13px;
+        color: #808080;
+        width: 59%;
+    }
+
+    .payee .payee-tag {
+        width: 41%;
+        font-size: 13px;
+    }
+
     .no-lands {
         width: 100%;
         height: 100%;
@@ -86,11 +109,25 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         .payee {
             width: 100px;
-
+            display: flex;
+            flex-direction: row;
+            gap: 0 !important;
+            position: relative;
+            height: 20px;
         }
 
         .payee .payee-name {
-            text-overflow: ellipsis;
+            text-overflow: ellipsis !important;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 12px;
+            color: #808080;
+            width: 50%;
+        }
+
+        .payee .payee-tag {
+            width: 50%;
+            font-size: 12px;
         }
 
         .profile-body {
@@ -512,8 +549,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     </div>
                 </div>
                 <div class="price-detail detail3"><?php 
-            echo $value['product_unit'];
-            ?>&nbsp;<span>Units</span></div>
+            if($value['product_unit'] == "1"){
+                echo $value['product_unit']." Unit";
+            } else {
+                echo $value['product_unit']." Units";
+            }
+            ?></div>
                 <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
@@ -526,10 +567,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
                              }
             ?>
 
-                    <p class="payee" style="font-size: 12px; color: #808080;">
-                        <span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;">
-                            <span class="payee-name">
-                                <?php 
+                    <div class="payee">
+                        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+                        <p class="payee-name"
+                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+
+                            <?php 
                             if($value['payee'] == $newuser['agent_name']){
                                 echo "You";
                             } else {
@@ -537,8 +580,8 @@ if(!isset($_SESSION['uniqueagent_id'])){
                             }
                              
                     ?>
-                            </span></span>
-                    </p>
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -565,7 +608,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
         <img src="images/rightPage.svg" alt="" />
     </div> -->
 
-    <script src="js/cart.js"></script>
+
     <script>
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
@@ -640,26 +683,6 @@ if(!isset($_SESSION['uniqueagent_id'])){
             `;
         };
     }
-
-    setInterval(() => {
-        let xls = new XMLHttpRequest();
-        xls.open("GET", "getcart.php", true);
-        xls.onload = () => {
-            if (xls.readyState === XMLHttpRequest.DONE) {
-                if (xls.status === 200) {
-                    let data = xls.response;
-                    let notify = document.querySelector('.cart-notify');
-                    if (data == 0) {
-                        notify.style.display = "none";
-                    }
-
-                    notify.innerHTML = data;
-                    //console.log(data);
-                }
-            }
-        }
-        xls.send();
-    }, 100);
     </script>
 </body>
 

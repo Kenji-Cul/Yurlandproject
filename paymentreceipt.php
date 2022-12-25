@@ -26,6 +26,29 @@ if(!isset($_SESSION['unique_id'])){
         background: #fee1e3;
     }
 
+    .payee {
+        width: 130px;
+        display: flex;
+        flex-direction: row;
+        gap: 0 !important;
+        position: relative;
+        height: 20px;
+    }
+
+    .payee .payee-name {
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 13px;
+        color: #808080;
+        width: 59%;
+    }
+
+    .payee .payee-tag {
+        width: 41%;
+        font-size: 13px;
+    }
+
     .success {
         position: absolute;
         top: 20em;
@@ -98,11 +121,25 @@ if(!isset($_SESSION['unique_id'])){
 
         .payee {
             width: 100px;
-
+            display: flex;
+            flex-direction: row;
+            gap: 0 !important;
+            position: relative;
+            height: 20px;
         }
 
         .payee .payee-name {
-            text-overflow: ellipsis;
+            text-overflow: ellipsis !important;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 12px;
+            color: #808080;
+            width: 50%;
+        }
+
+        .payee .payee-tag {
+            width: 50%;
+            font-size: 12px;
         }
 
         .details .pname {
@@ -532,8 +569,13 @@ if(!isset($_SESSION['unique_id'])){
                     </div>
                 </div>
                 <div class="price-detail detail3"><?php 
-            echo $value['product_unit'];
-            ?>&nbsp;<span>Units</span></div>
+            if($value['product_unit'] == "1"){
+                echo $value['product_unit']." Unit";
+            } else {
+                echo $value['product_unit']." Units";
+            }
+        ?>
+                </div>
                 <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
@@ -545,10 +587,12 @@ if(!isset($_SESSION['unique_id'])){
                                 echo round($unitprice);
                              }
             ?>
-                    <p class="payee" style="font-size: 12px; color: #808080;">
-                        <span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;">
-                            <span class="payee-name">
-                                <?php 
+                    <div class="payee">
+                        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+                        <p class="payee-name"
+                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+
+                            <?php 
                             if($value['payee'] == $newuser['first_name']." ".$newuser['last_name']){
                                 echo "You";
                             } else {
@@ -556,8 +600,8 @@ if(!isset($_SESSION['unique_id'])){
                             }
                              
                     ?>
-                            </span></span>
-                    </p>
+                        </p>
+                    </div>
                 </div>
             </div>
 

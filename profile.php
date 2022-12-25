@@ -29,6 +29,46 @@ if(!isset($_SESSION['unique_id'])){
 
 
 
+
+    .payee {
+        width: 130px;
+        display: flex;
+        flex-direction: row;
+        gap: 0 !important;
+        position: relative;
+        height: 20px;
+    }
+
+
+    .details {
+        width: 140px !important;
+        position: relative;
+    }
+
+    .details .pname {
+        width: 100px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .payee .payee-name {
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 13px;
+        color: #808080;
+        width: 59%;
+    }
+
+    .payee .payee-tag {
+        width: 41%;
+        font-size: 13px;
+    }
+
+
+
+
     ::-webkit-scrollbar {
         width: 0.7rem;
         background-color: #8d8989;
@@ -135,6 +175,7 @@ if(!isset($_SESSION['unique_id'])){
         /* border: 2px solid black; */
         padding: 1em 2em;
         box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 90%;
     }
 
     .land_estate_container {
@@ -143,20 +184,34 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .radius {
+            width: 120px !important;
+        }
+
         .payee {
             width: 100px;
-
+            display: flex;
+            flex-direction: row;
+            gap: 0 !important;
+            position: relative;
+            height: 20px;
         }
 
         .payee .payee-name {
-            text-overflow: ellipsis;
+            text-overflow: ellipsis !important;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 12px;
+            color: #808080;
+            width: 50%;
         }
 
-
-
-        .payee .payee-name {
-            text-overflow: ellipsis;
+        .payee .payee-tag {
+            width: 50%;
+            font-size: 12px;
         }
+
 
         .details .pname {
             font-size: 13px;
@@ -184,6 +239,14 @@ if(!isset($_SESSION['unique_id'])){
             align-items: center;
             justify-content: space-between;
             flex-direction: row;
+        }
+
+        .transaction-details {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
         }
 
         .detail3 {
@@ -814,8 +877,12 @@ if(!isset($_SESSION['unique_id'])){
                     </div>
                 </div>
                 <div class="price-detail detail3"><?php 
-            echo $value['product_unit'];
-            ?>&nbsp;<span>Units</span></div>
+                if($value['product_unit'] == "1"){
+                    echo $value['product_unit']." Unit";
+                } else {
+                    echo $value['product_unit']." Units";
+                }
+            ?></div>
                 <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
@@ -827,10 +894,12 @@ if(!isset($_SESSION['unique_id'])){
                                 echo $unitprice;
                              }
             ?>
-                    <p class="payee" style="font-size: 12px; color: #808080;">
-                        <span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;">
-                            <span class="payee-name">
-                                <?php 
+                    <div class="payee">
+                        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+                        <p class="payee-name"
+                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+
+                            <?php 
                             if($value['payee'] == $newuser['first_name']." ".$newuser['last_name']){
                                 echo "You";
                             } else {
@@ -838,8 +907,8 @@ if(!isset($_SESSION['unique_id'])){
                             }
                              
                     ?>
-                            </span></span>
-                    </p>
+                        </p>
+                    </div>
                 </div>
             </div>
             <?php }} else {?>
