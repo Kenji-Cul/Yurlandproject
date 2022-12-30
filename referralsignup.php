@@ -12,7 +12,7 @@ if(!isset($ref)){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -24,6 +24,14 @@ if(!isset($ref)){
     section .error {
         width: 60%;
     }
+
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 20%;
+    }
     </style>
 </head>
 
@@ -31,7 +39,7 @@ if(!isset($ref)){
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
     </header>
 
@@ -55,10 +63,7 @@ if(!isset($ref)){
                 <input type="email" id="email" name="useremail" placeholder="Input your email" />
             </div>
 
-            <div class="input-div email">
-                <!-- <label for="referralcustomer">Referral</label> -->
-                <input type="hidden" id="referralcustomer" placeholder="Input referral id" val="" name="referral" />
-            </div>
+
 
             <div class="input-div password">
                 <label for="referral">Referral ID</label>
@@ -76,6 +81,19 @@ if(!isset($ref)){
         </form>
     </section>
 
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>Success!</p>
+                    <p>You're all set!</p>
+                    <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/login.js"></script>
     <script>
     $(document).ready(function() {
@@ -85,26 +103,22 @@ if(!isset($ref)){
             $(".btn").html(loadingImg);
         });
 
-        function createRandomString(string_length) {
-            var random_string = "";
-            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678910";
-            for (var i, i = 0; i < string_length; i++) {
-                random_string += characters.charAt(
-                    Math.floor(Math.random() * characters.length)
-                );
-            }
-            $("#referralcustomer").val(random_string);
-        }
+
 
         $("#signup-form .btn").click(function() {
-            createRandomString(8);
+
             $.ajax({
                 type: "POST",
-                url: "inserters/insertreferraluser.php",
+                url: `inserters/insertreferraluser.php?refuser=<?php if(isset($_GET['ref'])){
+                    echo $_GET['ref'];
+                }?>`,
                 data: $("#signup-form input"),
                 success: function(response) {
                     if (response === "success") {
-                        location.href = "successpage/usersuccess.html";
+                        document.querySelector('.successmodal').style.display =
+                            "flex";
+                        document.querySelector('.modalcon').classList.add('animation');
+                        $(".btn").html("Sign Up");
                     } else {
                         $("section .error").html(response);
                         $("section .error").css({

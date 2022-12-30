@@ -14,7 +14,7 @@ if(!isset($_SESSION['unique_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <!-- ========= SWIPER CSS ======== -->
     <link rel="stylesheet" href="css/swiper-bundle.min.css">
@@ -95,9 +95,7 @@ if(!isset($_SESSION['unique_id'])){
         border-radius: 8px 8px 0px 0px !important;
     }
 
-    .land-estate {
-        min-height: 480px !important;
-    }
+
 
     .land-estate {
         padding-top: 0;
@@ -178,16 +176,60 @@ if(!isset($_SESSION['unique_id'])){
         width: 90%;
     }
 
+    .unverified {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5px;
+        padding: 1px 6px;
+        border-radius: 15px;
+        background-color: #808080;
+        color: #fff;
+    }
+
+    .unverified .unspan {
+        font-size: 14px;
+    }
+
     .land_estate_container {
         display: flex;
         gap: 2em;
     }
 
     @media only screen and (max-width: 1300px) {
-
-        .radius {
-            width: 120px !important;
+        .land-estate .land-details {
+            display: none;
         }
+
+        .unverified {
+            width: 100px;
+            position: absolute;
+            right: 20px;
+            margin-top: 0.4em;
+        }
+
+        .profile-image {
+            position: relative;
+        }
+
+        #check {
+            position: absolute;
+            bottom: -7px;
+            right: -5px;
+        }
+
+
+
+
+
+
+
+
+
+        .transaction-details .radius img {
+            width: 50px !important;
+        }
+
 
         .payee {
             width: 100px;
@@ -217,12 +259,23 @@ if(!isset($_SESSION['unique_id'])){
             font-size: 13px;
         }
 
+        .land_estate_container .land-estate {
+            filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.90));
+            min-height: 250px !important;
+            gap: 0;
+            border-radius: 8px;
+        }
+
+
+
         .land-estate .land-image {
-            height: 300px !important;
+            border-radius: 8px !important;
+            height: 250px !important;
         }
 
         .land-image img {
-            height: 300px !important;
+            border-radius: 8px !important;
+            height: 250px !important;
         }
 
         .user,
@@ -327,13 +380,9 @@ if(!isset($_SESSION['unique_id'])){
 
         .land-estate {
             width: 290px;
-            height: 18em;
             position: relative;
         }
 
-        .land-estate img {
-            height: 13em;
-        }
 
         .land-details {
             position: absolute;
@@ -348,6 +397,18 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (min-width: 1300px) {
+        .land-estate {
+            height: 500px !important;
+        }
+
+        .land-estate .land-image {
+            height: 230px !important;
+        }
+
+        .land-image img {
+            height: 230px !important;
+        }
+
         .estates {
             overflow-y: auto;
             direction: rtl;
@@ -387,11 +448,19 @@ if(!isset($_SESSION['unique_id'])){
             gap: 1em;
         }
 
-        .user p {
+        .user .profile-name {
             font-weight: 600;
             font-size: 20px;
             color: #1A0709;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5px;
         }
+
+
+
+
 
         .user .profile-image {
             width: 45px;
@@ -655,10 +724,32 @@ if(!isset($_SESSION['unique_id'])){
             </a>
             <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
-                <p><?php if(isset($newuser['first_name'])){  ?>
+
+                <div class="profile-name">
+                    <?php if(empty($newuser['photo'])){
+    ?>
+                    <div class="unverified">
+                        <span style="text-transform: capitalize;" class="unspan">unverified</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z"
+                                fill="rgba(249,19,19,1)" />
+                        </svg>
+                    </div>
+                    <?php } else {?>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"
+                            fill="rgba(50,179,40,1)" />
+                    </svg>
+                    <?php }?>
+                    <?php if(isset($newuser['first_name'])){  ?>
                     <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
                     <?php }?>
-                </p>
+                </div>
                 <div class="profile-image">
                     <?php if(!empty($newuser['photo'])){?>
                     <a href="updatedetails.php" style="color: #808080;"><img
@@ -677,19 +768,7 @@ if(!isset($_SESSION['unique_id'])){
     </header>
 
 
-    <?php if(empty($newuser['photo'])){
-    ?>
 
-    <div class="update-data">
-        <a href="updatedetails.php" style="width: 100%; display: flex; align-items:center; justify-content:center;">
-            <div class="notice-div">
-                <p>Please Update Your Data For Verification</p>
-            </div>
-        </a>
-    </div>
-
-
-    <?php }?>
 
 
     <div class="flex-container">
@@ -760,6 +839,7 @@ if(!isset($_SESSION['unique_id'])){
                         <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
                         <?php }?>
                     </h3>
+
                 </div>
 
                 <div class="profile-image profile-image2">
@@ -773,6 +853,26 @@ if(!isset($_SESSION['unique_id'])){
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
+                    <?php }?>
+                    <?php if(empty($newuser['photo'])){
+    ?>
+                    <div class="unverified">
+                        <span style="text-transform: capitalize;" class="unspan">unverified</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z"
+                                fill="rgba(249,19,19,1)" />
+                        </svg>
+                    </div>
+                    <?php } else {?>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" id="check">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"
+                            fill="rgba(50,179,40,1)" />
+                    </svg>
                     <?php }?>
                 </div>
             </div>
@@ -889,9 +989,9 @@ if(!isset($_SESSION['unique_id'])){
                 <div class="price-detail">&#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                               echo number_format($unitprice);
+                               echo number_format(round($unitprice));
                              } else {
-                                echo $unitprice;
+                                echo round($unitprice);
                              }
             ?>
                     <div class="payee">
@@ -1007,7 +1107,7 @@ if(!isset($_SESSION['unique_id'])){
                     </div>
                 </div>
                 <?php } else {?>
-                <div class="land-estate" style="height: 420px;">
+                <div class="land-estate">
                     <div class="land-image">
 
                         <img src="landimage/<?php if(isset($value['product_image'])){

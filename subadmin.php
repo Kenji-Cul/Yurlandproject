@@ -14,7 +14,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <!-- ========= SWIPER CSS ======== -->
     <link rel="stylesheet" href="css/swiper-bundle.min.css" />
@@ -25,12 +25,36 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         overflow-x: hidden;
     }
 
+    .amountdiv {
+        width: 150px;
+        font-size: 18px;
+        font-weight: 500;
+        color: #ff6600 !important;
+    }
+
     .dropdown-links {
         height: 18em;
     }
 
 
     @media only screen and (min-width: 1300px) {
+
+        .details2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6em;
+            flex-direction: row;
+        }
+
+        .details2 p {
+            color: #808080;
+        }
+
+        .details2 p,
+        .details2 h3 {
+            font-size: 22px;
+        }
 
         .signup .nav {
             position: absolute;
@@ -210,7 +234,9 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
-
+        .amountdiv {
+            font-size: 14px;
+        }
 
         .user,
         #openicon {
@@ -376,8 +402,17 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="allcustomers.php" class="link">All Customers</a>
             </li>
             <li class="links">
+                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                <a href="newuser.php" class="link">New Customer</a>
+            </li>
+            <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
                 <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
             </li>
 
             <li class="links">
@@ -393,7 +428,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
         <div class="profile-container">
             <div class="profile-info">
-                <div class="details">
+                <div class="details2">
                     <p>Welcome Back!</p>
                     <h3><?php if(isset($newuser['subadmin_name'])){  ?>
                         <span><?php echo $newuser['subadmin_name']; ?></span>&nbsp;
@@ -418,7 +453,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/land.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="customercount.php">
                         <div class="navigate">
                             <p>Total Customer Count</p>
                             <img src="images/right_arrow.svg" alt="" />
@@ -429,32 +464,155 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/Wallet.svg" alt="land-icon-image" />
 
-                    <div class="navigate">
-                        <p>Land</p>
-                        <img src="images/right_arrow.svg" alt="" />
-                    </div>
+                    <a href="allestates3.php">
+                        <div class="navigate">
+                            <p>Land</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
                 </div>
 
                 <a href="#">
                     <div class="profile-div">
-                        <img class="profile-icon" src="images/Chart.svg" alt="land-icon-image" />
 
-                        <div class="navigate">
+                        <div class="navigate"
+                            style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
                             <p>Total Payment</p>
-                            <img src="images/right_arrow.svg" alt="" />
+                            <p class="amountdiv">
+                                &#8358;
+                                <?php 
+                               
+                                $totalpayment = $user->selectTotalUsersPayment();
+             if($totalpayment > 999 || $totalpayment > 9999 || $totalpayment > 99999 || $totalpayment > 999999){
+                               echo number_format($totalpayment);
+                               
+                             } else {
+                                echo round($totalpayment);
+                             }
+                               
+                                ?></p>
                         </div>
                     </div>
                 </a>
 
                 <div class="profile-div">
-                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p>Total Earnings</p>
+                        <p class="amountdiv">&#8358;
+                            <span class="totalearn"></span>
+                            <?php 
+                               
+                                $allusers = $user->selectAllUsers();
+                                foreach ($allusers as $key => $value3) {
+                                    $agentpercent = $value3['earning_percentage'];
+                                 
+                             $datearray = [];
+                                $userhistory = $user->selectAgentHistory($value3['unique_id']);
+                                foreach ($userhistory as $key => $value) {
+                                    if(empty($value3['earning_percentage'])){
+                                       $earnedprice = 0;
+                                    } else {
+                                        $earnedprice = $value3['earning_percentage'] / 100 * $value['product_price'];
+                                    }
+                                   
+                        
+                                     ?>
+                            <span name="userdate" style="display:none;"><?php echo $earnedprice;?></span>
+                            <?php    }
+                                }
+                               
+                                ?>
+                            <?php 
+                               
+                                $allagents = $user->selectAllAgents();
+                                foreach ($allagents as $key => $value2) {
+                                    $agentdate = $value2['agent_date'];
+                                    $agentpercent = $value2['earning_percentage'];
+                                 
+                             $datearray = [];
+                                $agenthistory = $user->selectAgentHistory($value2['uniqueagent_id']);
+                                foreach ($agenthistory as $key => $value) {
+                                    $earnedprice = $value2['earning_percentage'] / 100 * $value['product_price'];
+                        
+                                     ?>
+                            <span name="paydate" style="display:none;"><?php echo $earnedprice;?></span>
+                            <?php    }
+                                }
+                               
+                                ?>
+                        </p>
+                    </div>
+                </div>
 
-                    <a href="#">
-                        <div class="navigate">
-                            <p>Total Earnings</p>
-                            <img src="images/right_arrow.svg" alt="" />
-                        </div>
-                    </a>
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Total Users Referred</p>
+                        <p class="amountdiv">
+
+                            <?php 
+                               
+                                $allrefusers = $user->selectAllRefUsers();
+                                foreach ($allrefusers as $key => $value) {
+                                   echo $value;
+                                }
+                                
+                                ?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Yurland Referrals</p>
+                        <p class="amountdiv">
+
+                            <?php 
+                               
+                                $allrefusers = $user->selectAllYurlandUsers();
+                                foreach ($allrefusers as $key => $value) {
+                                   echo $value;
+                                }
+                                
+                                ?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Total Paid Referral</p>
+                        <p class="amountdiv">
+                            <span class="landusercount"></span><?php 
+                         $customer = $user ->selectAllRefs();
+                        if(!empty($customer)){
+                            $customers = [];
+                           foreach($customer as $key => $value){
+               array_push($customers,$value['unique_id']);
+                           }
+
+                           //var_dump($customers);
+
+                        
+
+                           for ($i = 0; $i <= count($customers) - 1; $i++) {
+                            $total = $user->selectTotalCustomers($customers[$i]);
+                            
+                           if(!empty($total)){
+                            $landusers = [];
+                            foreach($total as $key => $value){
+                                array_push($landusers,$value); 
+                                 ?>
+                            <span name="landuser" style="display: none;"><?php echo $value?></span>
+                            <?php          }
+                        }
+                           } }?>
+                        </p>
+                    </div>
                 </div>
 
                 <div class="profile-div">
@@ -482,7 +640,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="totaltransactions.php">
                         <div class="navigate">
                             <p>Transactions</p>
                             <img src="images/right_arrow.svg" alt="" />
@@ -491,15 +649,17 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 </div>
 
                 <div class="profile-div">
-                    <img class="profile-icon" src="images/paypal.svg" alt="land-icon-image" />
+                    <img class="profile-icon" src="images/paystack.svg" alt="land-icon-image" />
 
-                    <div class="navigate">
-                        <div>
-                            <p>Make new</p>
-                            <p>Payment</p>
+                    <a href="allcustomers.php">
+                        <div class="navigate">
+                            <div>
+                                <p>Make new</p>
+                                <p>Payment</p>
+                            </div>
+                            <img src="images/right_arrow.svg" alt="" />
                         </div>
-                        <img src="images/right_arrow.svg" alt="" />
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -641,6 +801,52 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             `;
         };
     }
+
+    let userdate = document.getElementsByName("userdate");
+
+    let userdates = [];
+    userdate.forEach(element => {
+        userdates.push(parseInt(element.innerHTML));
+    });
+
+    //console.log(paydates);
+
+    let sum2 = 0;
+
+    for (let i = 0; i < userdates.length; i++) {
+        sum2 += userdates[i];
+    }
+    //console.log(sum);
+
+
+
+    let paydate = document.getElementsByName("paydate");
+
+    let paydates = [];
+    paydate.forEach(element => {
+        paydates.push(parseInt(element.innerHTML));
+    });
+
+    //console.log(paydates);
+
+    let sum = 0;
+
+    for (let i = 0; i < paydates.length; i++) {
+        sum += paydates[i];
+    }
+    //console.log(sum);
+    document.querySelector('.totalearn').innerHTML = new Intl.NumberFormat().format(sum + sum2);
+
+
+    let landuser = document.getElementsByName("landuser");
+
+    let landvalues = [];
+    landuser.forEach(element => {
+
+        landvalues.push(parseInt(element.innerHTML));
+    });
+    document.querySelector('.landusercount').innerHTML = landvalues.length;
+    //document.querySelector('.totalearn').innerHTML = paydates.length;
     </script>
 </body>
 

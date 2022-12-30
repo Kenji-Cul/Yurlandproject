@@ -3,7 +3,8 @@ include_once "../projectlog.php";
 session_start();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $referral= $_POST['referral'];
+    $referral= $_GET['refagent'];
+    $personalref = $_POST['referral'];
     $email = $_POST['email'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -26,7 +27,7 @@ else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     if(!empty($emailuser) || !empty($emailuser2) || !empty($emailuser3) || !empty($emailuser4) || !empty($emailuser5)){
     $errormsg = "Email Address already exists";
     }else{
-    $insertuser = $user->createReferralUser(check_input($referral), check_input($email),check_input($firstname), check_input($lastname),check_input($phone_num));
+    $insertuser = $user->createReferralUser(check_input($referral), check_input($email),check_input($firstname), check_input($lastname),check_input($phone_num),check_input($personalref));
     }
 
 }

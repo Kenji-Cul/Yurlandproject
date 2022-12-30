@@ -10,10 +10,12 @@ $subadmin = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
 }
 if(isset($_SESSION['uniqueagent_id'])){
   $payee = $selectagent['agent_name'];
+  $agentid = $selectagent['uniqueagent_id'];
 } 
 
 if(isset($_SESSION['uniquesubadmin_id'])){
   $payee = $subadmin['subadmin_name'];
+  $agentid = $suabadmin['unique_id'];
 }
 $email = $selectuser['email'];
 $realprice = round($price * 100);
@@ -62,16 +64,16 @@ if($message == "Plan created"){
       $unit_added = $_GET['unit'] / 4;
       $added_unit = $_GET['unit'] + $unit_added;
  
- $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee);
+ $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid);
 
- $inserthistory = $land->insertPayHistory($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee);
+ $inserthistory = $land->insertPayHistory($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid);
 
  
  $update = $land->updateUnit($deducted_unit,$uniqueproduct);
  } else {
-     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee);
+     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid);
 
-     $inserthistory = $land->insertPayHistory($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee);
+     $inserthistory = $land->insertPayHistory($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid);
      $update = $land->updateUnit($deducted_unit,$uniqueproduct);
  }
 

@@ -358,7 +358,6 @@ section .error {
 .company {
     margin-top: 2em;
     position: absolute;
-    bottom: -9em;
     width: 420px;
     height: 40px;
     background: rgba(174, 172, 172, 0.7);
@@ -1976,9 +1975,6 @@ section .error {
 /* Update Details Page Styling */
 
 @media only screen and (min-width: 800px) {
-    .landing_form {
-        width: 50%;
-    }
     .login-link {
         font-size: 20px;
         color: #2f3640;
@@ -2156,10 +2152,6 @@ section .error {
     .transaction-details2 {
         flex-direction: column;
     }
-    .company {
-        position: absolute;
-        bottom: -12em;
-    }
 }
 
 @media only screen and (max-width: 800px) {
@@ -2190,19 +2182,6 @@ section .error {
         background-size: 120% !important;
         overflow-x: hidden;
         height: 100vh;
-    }
-    .company {
-        margin-top: 2em;
-        position: absolute;
-        bottom: -4em;
-        width: 360px;
-        height: 40px;
-        background: rgba(174, 172, 172, 0.7);
-        backdrop-filter: blur(2px);
-        border-radius: 8px;
-        padding: 10px;
-        text-align: center;
-        vertical-align: middle;
     }
     /* .page-title2 {
         padding-right: 30%;
@@ -2244,9 +2223,6 @@ section .error {
     .btn-license {
         width: 340px;
     }
-    .landing_form {
-        height: 30em;
-    }
 }
 
 @media only screen and (max-width: 300px) {
@@ -2265,12 +2241,6 @@ section .error {
         align-items: center;
         justify-content: center;
         padding-top: 7em;
-    }
-    .landing_form_container {
-        width: 120%;
-    }
-    .landing_form {
-        width: 92%;
     }
     .landing_page_button {
         width: 220px;

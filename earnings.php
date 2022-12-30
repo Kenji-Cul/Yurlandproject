@@ -14,7 +14,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -23,6 +23,26 @@ if(!isset($_SESSION['uniqueagent_id'])){
         min-height: 100vh;
         position: relative;
         overflow-x: hidden;
+    }
+
+    .account-detail2 {
+        padding-bottom: 1em;
+        padding-top: 1em;
+    }
+
+    .payee {
+        width: 350px;
+    }
+
+    .payee {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .payee-tag {
+        text-transform: capitalize !important;
     }
 
     .footerdiv {
@@ -265,6 +285,31 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .success {
+            position: absolute;
+            top: 20em;
+        }
+
+        .payee {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0 !important;
+            width: 280px;
+            position: relative;
+        }
+
+        .payee .payee-tag {
+            width: 35%;
+            font-size: 11px;
+        }
+
+        .payee .payee-name {
+            width: 65%;
+            font-size: 11px;
+        }
+
         body {
             height: 90vh;
         }
@@ -452,23 +497,20 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
                 <?php 
-    $user = new User;
-    $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
-    $customer = $user ->selectAgentCustomer($agent['referral_id']);
-    if(!empty($customer)){
-        foreach($customer as $key => $value){
-            $earning = $user->selectPayHistory($value['unique_id']);
+  
+            $earning = $user->selectAgentHistory($newuser['uniqueagent_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
     ?>
-                <?php if($agent['agent_date'] <= $value['payment_date']){
-                if($agent['earning_percentage'] != ""){  ?>
+                <?php if($newuser['agent_date'] <= $value['payment_date']){
+                if($newuser['earning_percentage'] != ""){  ?>
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
-                        <p style="text-transform: capitalize;"><span>Hello <?php echo $agent['agent_name'];?></span></p>
+                        <p style="text-transform: capitalize;"><span>Hello <?php echo $newuser['agent_name'];?></span>
+                        </p>
                         <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $agent['earning_percentage'];
+                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $newuser['earning_percentage'];
                     $earnedprice = $percent / 100 * $value['product_price'];
                     $unitprice = $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
@@ -479,13 +521,31 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     ?>
                             </span>
                         </p>
+                        <div class="payee">
+                            <p class="payee-tag" style="color: #808080;">
+                                <?php if($value['payee'] == $newuser['agent_name']){ 
+                                echo "You Paid:"; 
+                            } else {
+                                    echo "Customer Paid:"; }
+                                 ?></p>&nbsp;
+                            <p class="payee-name"
+                                style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                &#8358;<?php $unitprice = $value['product_price']; 
+                                  if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                    echo number_format(round($unitprice));
+                                  } else {
+                                      echo round($unitprice);
+                                  }
+                                ?> for <?php echo $value['product_name'];?>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <?php } }?>
 
-                <?php }} }}?>
+                <?php }} ?>
 
-                <?php if(empty($customer)){?>
+                <?php if(empty($earning)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
                     <p>You have no earnings yet!</p>

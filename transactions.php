@@ -13,7 +13,7 @@ if(!isset($_SESSION['unique_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -44,6 +44,18 @@ if(!isset($_SESSION['unique_id'])){
     .payee .payee-tag {
         width: 41%;
         font-size: 13px;
+    }
+
+    .details {
+        width: 140px !important;
+        position: relative;
+    }
+
+    .details .pname {
+        width: 100px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     header {
@@ -106,6 +118,12 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+
+        .success {
+            position: absolute;
+            top: 20em;
+        }
 
         .payee {
             width: 100px;
@@ -390,13 +408,6 @@ if(!isset($_SESSION['unique_id'])){
             flex-direction: row;
         }
 
-        .success {
-            position: absolute;
-            left: 50%;
-            top: 30%;
-            transform: translate(-50%, -50%);
-            height: 10em;
-        }
 
         .success p {
             text-align: center;

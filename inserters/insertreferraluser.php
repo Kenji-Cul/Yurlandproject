@@ -4,8 +4,8 @@ include_once "../projectlog.php";
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $email = $_POST['useremail'];
     $password = $_POST['password'];
-    $referralID = $_POST['referralID'];
-    $personalref = $_POST['referral'];
+    $referralID = $_GET['refuser'];
+    
 
 if(empty($email) || empty($password) || empty($referralID)){
     $errormsg = "Please input all fields";
@@ -25,7 +25,7 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     $errormsg = "You have not being Referred";
     }else{
     $insertuser =
-    $user->updateUser(check_input($email),check_input($password),check_input($referralID),check_input($personalref),$emailuser['unique_id']);
+    $user->updateUser(check_input($email),check_input($password),check_input($referralID),$emailuser['unique_id']);
     }
 
     }

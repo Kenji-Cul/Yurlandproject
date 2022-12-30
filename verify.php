@@ -63,6 +63,8 @@ if('success' == $trans->data->status){
     $paymenttype = $trans->data->metadata->custom_fields[14]->value;
     $paymentdate = $trans->data->metadata->custom_fields[15]->value;
     $payee = $trans->data->metadata->custom_fields[16]->value;
+    $agentid = $trans->data->metadata->custom_fields[17]->value;
+
    
    $user = new User;
    if($paymenttype == "outrightpayment"){
@@ -70,13 +72,13 @@ if('success' == $trans->data->status){
     $unit_added = $unit / 4;
     $added_unit = $unit + $unit_added;
 
-$insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$payee);
+$insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$payee,$agentid);
 
-$inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$payee);
+$inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$payee,$agentid);
 } else {
-   $insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate,$payee);
+   $insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate,$payee,$agentid);
 
-   $inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate,$payee);
+   $inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate,$payee,$agentid);
 }
    }
 
@@ -87,6 +89,7 @@ $inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,
     $subperiod = $trans->data->metadata->custom_fields[18]->value;
     $paymentdate = $trans->data->metadata->custom_fields[19]->value;
     $payee = $trans->data->metadata->custom_fields[20]->value;
+    $agentid = $trans->data->metadata->custom_fields[21]->value;
     
    
     
@@ -97,18 +100,18 @@ if($unit % 4 == 0){
 
 $checklastpayment = $user->selectLastPay($uniqueperson,$unique);
 if(empty($checklastpayment)){
-    $chosenplan = $trans->data->metadata->custom_fields[21]->value;
-    $subprice = $trans->data->metadata->custom_fields[22]->value;
+    $chosenplan = $trans->data->metadata->custom_fields[22]->value;
+    $subprice = $trans->data->metadata->custom_fields[23]->value;
     
-    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee);
+    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid);
 
-    $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee);
+    $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid);
 
 } else {
     $addedprice = $checklastpayment['product_price'] + $newpay;
-$updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$added_unit,$payment_method,$newprice,$period,$subperiod,$payee);
+$updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$added_unit,$payment_method,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid);
 
-$inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$payment_method,$newprice,$period,$subperiod,$product_name,$payee);
+$inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$payment_method,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid);
 
       
 }
@@ -117,17 +120,18 @@ $updatenewpayment = $user->updatePayment($unique,$uniqueperson);
 } else {
     $checklastpayment = $user->selectLastPay($uniqueperson,$unique);
     if(empty($checklastpayment)){
-        $chosenplan = $trans->data->metadata->custom_fields[21]->value;
-        $subprice = $trans->data->metadata->custom_fields[22]->value;
-   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee);
+        $chosenplan = $trans->data->metadata->custom_fields[22]->value;
+        $subprice = $trans->data->metadata->custom_fields[23]->value;
+   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid);
 
-   $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee);
+
+   $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid);
     } else {
         $addedprice = $checklastpayment['product_price'] + $newpay;
-    $updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$payee);
+    $updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid);
 
-    $inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$product_name,$payee);
-          
+    $inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid);
+    
     }
     
    $updatenewpayment = $user->updatePayment($unique,$uniqueperson);
@@ -173,7 +177,7 @@ if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -225,7 +229,7 @@ if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -240,7 +244,7 @@ if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
 
         <div class="nav">

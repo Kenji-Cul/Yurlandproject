@@ -14,7 +14,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <!-- ========= SWIPER CSS ======== -->
     <link rel="stylesheet" href="css/swiper-bundle.min.css" />
@@ -25,12 +25,39 @@ if(!isset($_SESSION['uniqueagent_id'])){
         overflow-x: hidden;
     }
 
+    .unverified {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5px;
+        padding: 1px 6px;
+        border-radius: 15px;
+        background-color: #808080;
+        color: #fff;
+    }
+
+    .unverified .unspan {
+        font-size: 14px;
+    }
+
     .details {
         display: flex;
         flex-direction: column;
         align-items: center !important;
         justify-content: center !important;
         text-align: center;
+    }
+
+    .details {
+        width: 140px !important;
+        position: relative;
+    }
+
+    .details .pname {
+        width: 100px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
 
@@ -288,6 +315,34 @@ if(!isset($_SESSION['uniqueagent_id'])){
             transition: all 0.5s;
         }
 
+        .user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
+
+        .user .profile-name {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5px;
+        }
+
+
+
+
+
+        .user .profile-image {
+            width: 45px;
+            height: 45px;
+        }
+
+
+
         .close {
             display: none;
         }
@@ -304,6 +359,24 @@ if(!isset($_SESSION['uniqueagent_id'])){
             gap: 0 !important;
             position: relative;
             height: 20px;
+        }
+
+        .profile-image {
+            position: relative;
+        }
+
+        #check {
+            position: absolute;
+            bottom: -7px;
+            right: -5px;
+        }
+
+
+        .unverified {
+            width: 100px;
+            position: absolute;
+            right: 20px;
+            margin-top: 0.4em;
         }
 
         .radius {
@@ -485,10 +558,34 @@ if(!isset($_SESSION['uniqueagent_id'])){
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
-                <p><?php if(isset($newuser['agent_name'])){  ?>
-                    <span><?php echo $newuser['agent_name']; ?></span>&nbsp;
+                <div class="profile-name">
+                    <?php if(empty($newuser['agent_img'])){
+    ?>
+                    <div class="unverified">
+                        <span style="text-transform: capitalize;" class="unspan">unverified</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z"
+                                fill="rgba(249,19,19,1)" />
+                        </svg>
+                    </div>
+                    <?php } else {?>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"
+                            fill="rgba(50,179,40,1)" />
+                    </svg>
                     <?php }?>
-                </p>
+                    <p><?php if(isset($newuser['agent_name'])){  ?>
+                        <span><?php echo $newuser['agent_name']; ?></span>&nbsp;
+                        <?php }?>
+                    </p>
+                </div>
+
+
                 <div class="profile-image">
                     <?php if(!empty($newuser['agent_img'])){?>
                     <a href="agentprofileinfo.php" style="color: #808080;"><img
@@ -506,23 +603,6 @@ if(!isset($_SESSION['uniqueagent_id'])){
         </div>
 
     </header>
-    <?php 
-             $user = new User;
-             $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
-            ?>
-
-    <?php if(empty($newuser['home_address'])){
-    ?>
-    <div class="update-data">
-        <a href="agentimg.php" style="width: 100%; display: flex; align-items:center; justify-content:center;">
-            <div class="notice-div">
-                <p>Please Update Your Data For Verification</p>
-            </div>
-        </a>
-    </div>
-
-    <?php }?>
-
 
 
     <div class="flex-container">
@@ -548,6 +628,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
             <li class="links">
                 <a href="usertype.php"><img src="images/land2.svg" /></a>
                 <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+            <li class="links">
+                <a href="allestates3.php"><img src="images/land2.svg" /></a>
+                <a href="allestates3.php" class="link">All Estates</a>
             </li>
 
             <li class="links">
@@ -603,6 +688,26 @@ if(!isset($_SESSION['uniqueagent_id'])){
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
+                    <?php }?>
+                    <?php if(empty($newuser['agent_img'])){
+    ?>
+                    <div class="unverified">
+                        <span style="text-transform: capitalize;" class="unspan">unverified</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z"
+                                fill="rgba(249,19,19,1)" />
+                        </svg>
+                    </div>
+                    <?php } else {?>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" id="check">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"
+                            fill="rgba(50,179,40,1)" />
+                    </svg>
                     <?php }?>
                 </div>
 
@@ -677,13 +782,8 @@ if(!isset($_SESSION['uniqueagent_id'])){
             </div>
 
             <?php 
-             $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
-             $customer = $user ->selectAgentCustomer($agent['referral_id']);
-            if(!empty($customer)){
-               foreach($customer as $key => $value){
-                $first = $value['first_name'];
-                $last = $value['last_name'];
-             $landview = $user->selectCurrentPayHistory($value['unique_id']);
+            
+             $landview = $user->selectAgentCurrentHistory($newuser['uniqueagent_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
@@ -737,7 +837,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 </div>
             </div>
 
-            <?php }}}}?>
+            <?php }}?>
 
             <?php if(empty($landview)){?>
             <div class="transaction-details" style="display: flex; align-items: center; justify-content: center;">

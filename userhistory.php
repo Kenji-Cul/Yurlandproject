@@ -15,7 +15,7 @@ if(!isset($_GET['unique'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -24,6 +24,18 @@ if(!isset($_GET['unique'])){
         min-height: 100vh;
         position: relative;
         background-image: none;
+    }
+
+    .details {
+        width: 140px !important;
+        position: relative;
+    }
+
+    .details .pname {
+        width: 100px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     .payee {
@@ -513,6 +525,13 @@ if(!isset($_GET['unique'])){
             <li class="links">
                 <a href="usertype.php"><img src="images/land2.svg" /></a>
                 <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+
+
+            <li class="links">
+                <a href="allestates3.php"><img src="images/land2.svg" /></a>
+                <a href="allestates3.php" class="link">All Estates</a>
             </li>
 
             <li class="links">

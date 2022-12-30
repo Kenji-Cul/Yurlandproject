@@ -14,7 +14,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <!-- ========= SWIPER CSS ======== -->
     <link rel="stylesheet" href="css/swiper-bundle.min.css" />

@@ -40,6 +40,19 @@ if(isset($_POST["submit"])){
     $paymentdate = date("M-d-Y");
     $paymentmethod = "Outright";
     $payee = $selectuser['first_name']." ".$selectuser['last_name'];
+    if($selectuser['referral_id'] != ""){
+        $agent = $user->selectAgentRef($selectuser['referral_id']);
+        $userperson = $user->selectUserRef($selectuser['referral_id']);
+        if(!empty($agent)){
+            $agentid= $agent['uniqueagent_id'];
+        } else {
+            $agentid = $userperson['unique_id'];
+        }
+       
+    } else {
+        $agentid = "noagent";
+    }
+   
    
 
 
@@ -157,6 +170,12 @@ if(isset($_POST["submit"])){
                 "value" => $payee
             ],
 
+            [
+                "display_name" => "Agentid",
+                "variable_name" => "Agentid",
+                "value" => $agentid
+            ],
+
           ]
        ]
     ];
@@ -218,7 +237,7 @@ header("Location: ".$transaction->data->authorization_url);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -475,6 +494,12 @@ header("Location: ".$transaction->data->authorization_url);
 
     .footerdiv {
         width: 100%;
+    }
+
+    @media only screen and (max-width: 1300px) {
+        .footerdiv {
+            display: none;
+        }
     }
     </style>
 </head>

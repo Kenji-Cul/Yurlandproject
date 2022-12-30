@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
     <style>
-        body {
-            height: 160vh;
-        }
-        
-        section .error {
-            width: 60%;
-        }
+    body {
+        height: 160vh;
+    }
+
+    section .error {
+        width: 60%;
+    }
     </style>
 </head>
 
@@ -30,11 +30,11 @@
     </header>
 
     <div class="page-title2">
-       
+
         <a href="superadmin.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
-    
+
     </div>
 
     <!-- Landing Page Text -->
@@ -76,33 +76,33 @@
 
     <script src="js/login.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#subadmin-form").submit(function(e) {
-                e.preventDefault();
-                var loadingImg = $(".loading-img");
-                $(".btn").html(loadingImg);
-            });
+    $(document).ready(function() {
+        $("#subadmin-form").submit(function(e) {
+            e.preventDefault();
+            var loadingImg = $(".loading-img");
+            $(".btn").html(loadingImg);
+        });
 
-            $("#subadmin-form .btn").click(function() {
-                $.ajax({
-                    type: "POST",
-                    url: "inserters/insertsubadmin.php",
-                    data: $("#subadmin-form input"),
-                    success: function(response) {
-                        if (response === "success") {
-                            location.href = "successpage/subadminsuccess.html";
-                        } else {
-                            $("section .error").html(response);
-                            $("section .error").css({
-                                visibility: "visible",
-                            });
-                            $(".btn").html("Create SuperAdmin");
-                            // console.log(response);
-                        }
-                    },
-                });
+        $("#subadmin-form .btn").click(function() {
+            $.ajax({
+                type: "POST",
+                url: "inserters/insertsubadmin.php",
+                data: $("#subadmin-form input"),
+                success: function(response) {
+                    if (response === "success") {
+                        location.href = "successpage/subadminsuccess.html";
+                    } else {
+                        $("section .error").html(response);
+                        $("section .error").css({
+                            visibility: "visible",
+                        });
+                        $(".btn").html("Create SuperAdmin");
+                        // console.log(response);
+                    }
+                },
             });
         });
+    });
     </script>
 </body>
 

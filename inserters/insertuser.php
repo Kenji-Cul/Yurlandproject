@@ -6,13 +6,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
     $referral = $_POST['referral'];
-    $inforeferral = $_POST['inforeferral'];
+    $inforeferral = $_GET['refuser'];
     $phone_num = $_POST['number'];
     $password = $_POST['password'];
 
 if(empty($firstname) || empty($lastname) || empty($email) || empty($phone_num) || empty($password)){
     $errormsg = "Please input all fields";
 }  
+
+
 
 
 
@@ -35,8 +37,14 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     if(!empty($emailuser) || !empty($emailuser2) || !empty($emailuser3) || !empty($emailuser4) || !empty($emailuser5)){
     $errormsg = "Email Address already exists";
     }else{
+    if(isset($_GET['creator'])){
+    $insertuser =
+    $user->createUser2(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral));
+    } else {
     $insertuser =
     $user->createUser(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral));
+    }
+
 
     }
 

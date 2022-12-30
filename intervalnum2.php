@@ -14,13 +14,38 @@ if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
 
 $land = new User;
 $landview = $land->selectLandImage($_GET['uniqueid']);
+$checklastsub= $land->selectLastSub($_GET['user'],$_GET['uniqueid']);
+$checklastpaid = $land->selectSubPay($_GET['user']);
 if(!empty($landview)){
     foreach($landview as $key => $value){ 
 
        
 
 if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
-
+    if(empty($checklastsub)){
+        $landsub = $land->selectSubProduct($checklastpaid['product_id']);
+   
+        if($checklastpaid['product_plan'] == "onemonth"){
+            $totalsubprice = $landsub['onemonth_percent'] / 100 * $landsub['onemonth_price'];
+          } else if($checklastpaid['product_plan'] == "threemonths"){
+            $totalsubprice = $landsub['threemonth_percent'] / 100 * $landsub['onemonth_price'];
+          }  else if($checklastpaid['product_plan'] == "sixmonths"){
+            $totalsubprice = $landsub['sixmonth_percent'] / 100 * $landsub['onemonth_price'];
+          } else if($checklastpaid['product_plan'] == "twelvemonths"){
+            $totalsubprice = $landsub['twelvemonth_percent'] / 100 * $landsub['onemonth_price'];
+          } 
+    
+          else if($checklastpaid['product_plan'] == "eighteenmonths"){
+            $totalsubprice = $landsub['eighteen_percent'] / 100 * $landsub['onemonth_price'];
+          }
+    
+          $totprice = $checklastpaid['product_unit'] * $landsub['onemonth_price'];
+            $price = $totprice + $totalsubprice;
+            $pricepercent = 70 / 100 * $price;
+            if($checklastpaid['product_price'] < $pricepercent){ 
+                $error = "Current plan is below 70% payment,please payup to qualify for another location on Subscription";
+                header("Location: verify3.php?error=".$error."");
+            } else {
     if($_GET['data'] == "onemonth"){
         $price = $_GET['tot'] / $value['onemonth_period'];
         $limit = $value['onemonth_period'];
@@ -125,7 +150,12 @@ if(isset($_SESSION['unique_id'])){
         }
 
 include_once "initialize2.php";
-}
+} 
+            }
+    } else {
+        $error = "This customer has an ongoing subscription on this estate, please complete payment";
+        header("Location: verify3.php?error=".$error."");
+    }
 
 } 
     
@@ -139,7 +169,7 @@ include_once "initialize2.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -170,6 +200,12 @@ include_once "initialize2.php";
         font-weight: 500;
         font-size: 16px;
         color: var(--inactive-grey);
+    }
+
+    @media only screen and (max-width: 1300px) {
+        .footerdiv {
+            display: none;
+        }
     }
     </style>
 </head>

@@ -46,10 +46,12 @@ if(isset($_POST["submit"])){
     $paymentmethod = "Outright";
     if(isset($_SESSION['uniqueagent_id'])){
         $payee = $selectagent['agent_name'];
+        $agentid = $selectagent['uniqueagent_id'];
     } 
 
     if(isset($_SESSION['uniquesubadmin_id'])){
         $payee = $subadmin['subadmin_name'];
+        $agentid = $subadmin['unique_id'];
     }
    
 
@@ -167,6 +169,13 @@ if(isset($_POST["submit"])){
                 "value" => $payee
             ],
 
+            [
+                "display_name" => "Agentid",
+                "variable_name" => "Agentid",
+                "value" => $agentid
+            ],
+
+
           ]
        ]
     ];
@@ -226,7 +235,7 @@ if(isset($_POST["submit"])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -240,6 +249,12 @@ if(isset($_POST["submit"])){
         font-weight: 500;
         font-size: 16px;
         color: var(--inactive-grey);
+    }
+
+    @media only screen and (max-width: 1300px) {
+        .footerdiv {
+            display: none;
+        }
     }
     </style>
 </head>

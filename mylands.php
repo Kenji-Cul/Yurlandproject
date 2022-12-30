@@ -13,7 +13,7 @@ if(!isset($_SESSION['unique_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -865,7 +865,7 @@ if(!isset($_SESSION['unique_id'])){
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
-                                 echo $unitprice;
+                                 echo round($unitprice);
                              }
              ?> &nbsp;<span><?php echo $value['sub_period']?></span></div>
 
@@ -980,7 +980,7 @@ if(!isset($_SESSION['unique_id'])){
                             <p><span>Unit:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
                         echo $value['product_unit'];         
                     ?></span></p>
-                            <p><span>Paid By:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
+                            <p><span>Bought By:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
                             if($value['payee'] == $newuser['first_name']." ".$newuser['last_name']){
                                 echo "You";
                             } else {

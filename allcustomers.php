@@ -12,7 +12,7 @@ include_once "projectlog.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -20,6 +20,37 @@ include_once "projectlog.php";
     body {
         min-height: 100vh;
         overflow-x: hidden;
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 4em;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-input {
+        display: none;
+    }
+
+    .search-icon img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .search-icon input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+    }
+
+    .search-icon input:focus {
+        border: none;
     }
 
     .radius {
@@ -421,6 +452,17 @@ include_once "projectlog.php";
                 </a>
                 <?php }?>
                 <p>All Customers</p>
+
+                <div class="search-icon">
+                    <img src="images/search.svg" alt="search image" id="searchimg">
+
+                    <div class="search-input">
+                        <form action="" class="search-form">
+                            <input type="text" class="search" type="search" name="searchproduct"
+                                placeholder="Search For Customer">
+                        </form>
+                    </div>
+                </div>
             </div>
 
 
@@ -468,6 +510,35 @@ include_once "projectlog.php";
 
     <script src="js/main.js"></script>
     <script>
+    let searchIcon = document.querySelector('.search-icon');
+    searchIcon.onclick = () => {
+        let searchinput = document.querySelector('.search-input');
+        let searchinput2 = document.querySelector('.search');
+        searchinput.style.display = "flex";
+        document.querySelector('#searchimg').style.display = "none";
+
+        let searchform = document.querySelector('.search-form');
+        searchform.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+        searchinput2.onkeyup = () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchcustomer.php`);
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+                    }
+                }
+            };
+            let formData = new FormData(searchform);
+            xhr.send(formData);
+        }
+    }
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

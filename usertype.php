@@ -14,7 +14,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -410,15 +410,20 @@ if(!isset($_SESSION['uniqueagent_id'])){
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links select-link">
+            <li class="links">
                 <a href="agentprofile.php"><img src="images/home3.svg" /></a>
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
 
 
-            <li class="links">
+            <li class="links select-link">
                 <a href="usertype.php"><img src="images/land2.svg" /></a>
                 <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+            <li class="links">
+                <a href="allestates3.php"><img src="images/land2.svg" /></a>
+                <a href="allestates3.php" class="link">All Estates</a>
             </li>
             <li class="links">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>

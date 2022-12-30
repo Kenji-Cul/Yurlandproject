@@ -13,7 +13,7 @@ include "projectlog.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -423,6 +423,12 @@ include "projectlog.php";
         }
 
     }
+
+    @media only screen and (max-width: 1300px) {
+        .footerdiv {
+            display: none;
+        }
+    }
     </style>
 </head>
 
@@ -526,7 +532,7 @@ include "projectlog.php";
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <div class="user">
                 <p><?php if(isset($newuser['subadmin_name'])){  ?>
-                    <span><?php echo $newuser['subdamin_name']; ?></span>
+                    <span><?php echo $newuser['subadmin_name']; ?></span>
                     <?php }?>
                 </p>
                 <div class="profile-image">

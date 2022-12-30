@@ -2,7 +2,7 @@
 if (window.innerWidth < 800) {
   let swiperVerse = new Swiper(".swiper-counter", {
     loop: true,
-    spaceBetween: 24,
+    spaceBetween: 10,
     slidesPerView: "auto",
     grabCursor: true,
     autoplay: true,
@@ -16,7 +16,7 @@ if (window.innerWidth < 800) {
         slidesPerView: 3,
       },
       1024: {
-        spaceBetween: 48,
+        spaceBetween: 10,
       },
     },
   });

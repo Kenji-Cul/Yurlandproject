@@ -8,13 +8,128 @@ include "projectlog.php";
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="yurLAND,land estate website">
+    <meta name="description" content="yurLAND - Own ready to build lands in Nigeria, with as little as 650 naira only.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
 
     <style>
     .body {
+        height: 120vh;
+    }
+
+    .landing_form_container {
+        height: 85vh;
+        flex-direction: column;
+        gap: 4em;
+        position: relative;
+    }
+
+    .landing_form .landing_page_button {
+        position: unset;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 16px;
+        width: 281px;
+        height: 44px;
+        background: var(--primary-main);
+        border-radius: 45px;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+    .landing_form {
+        width: 50%;
+        height: 24em;
+        margin-top: 2em;
+        border-radius: 8px;
+        background: linear-gradient(139.44deg, #fee1e3 -18.53%, rgba(254, 225, 227, 0) 99.11%);
+        backdrop-filter: blur(37px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        gap: 0;
+    }
+
+    .landing_form .select-container {
+        height: 60%;
+    }
+
+    .landing_form .form-flex {
+        position: absolute;
+        bottom: 1.5em;
+    }
+
+    @media only screen and (max-width: 300px) {
+        .landing_form_container {
+            width: 120%;
+        }
+    }
+
+
+    @media only screen and (max-width: 1000px) {
+        body {
+            height: 200vh;
+        }
+
+        .landing_form {
+            margin-top: 6em;
+            height: 450px;
+            width: 90%;
+        }
+
+        .landing_form_container {
+            gap: 0;
+        }
+
+        .landing_form .form-flex {
+            position: absolute;
+            bottom: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .company {
+            width: 80% !important;
+        }
+
+        .company-flex {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+    }
+
+
+    .company {
+        width: 420px;
+        height: 40px;
+        background: rgba(174, 172, 172, 0.7);
+        backdrop-filter: blur(2px);
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+        position: unset;
+    }
+
+    .company span {
+        color: var(--secondary-color);
+    }
+
+    body {
         background-image: url(images/landing_image.jpg);
         background-repeat: no-repeat;
         background-size: 100%;
@@ -37,15 +152,6 @@ include "projectlog.php";
 
     .price a {
         color: #fff;
-    }
-
-
-
-
-    @media only screen and (max-width: 800px) {
-        .company {
-            margin-top: 100px !important;
-        }
     }
     </style>
 </head>
@@ -141,6 +247,9 @@ include "projectlog.php";
                     <div class="selected">Purpose</div>
                 </div>
 
+            </div>
+
+            <div class="form-flex">
                 <button class="landing_page_button" type="submit">
                     Continue
                 </button>
@@ -150,14 +259,16 @@ include "projectlog.php";
                 <?php }?>
             </div>
 
-            <div class="company">
-                A Product of <span>Ilu-Oba Int.Ltd</span> in partnership with <span>Arklips</span>
-            </div>
+
 
         </form>
 
 
-
+        <div class="company-flex">
+            <div class="company">
+                A Product of <span>Ilu-Oba Int.Ltd</span> in partnership with <span>Arklips</span>
+            </div>
+        </div>
     </section>
 
 

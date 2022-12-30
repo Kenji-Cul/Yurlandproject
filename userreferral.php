@@ -14,13 +14,33 @@ if(!isset($_SESSION['unique_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
     <style>
     body {
         min-height: 100vh;
+    }
+
+    .account-detail2 {
+        padding-bottom: 1em;
+        padding-top: 1em;
+    }
+
+    .payee {
+        width: 350px;
+    }
+
+    .payee {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .payee-tag {
+        text-transform: capitalize !important;
     }
 
     section {
@@ -49,6 +69,25 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .payee {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0 !important;
+            width: 280px;
+            position: relative;
+        }
+
+        .payee .payee-tag {
+            width: 35%;
+            font-size: 11px;
+        }
+
+        .payee .payee-name {
+            width: 65%;
+            font-size: 11px;
+        }
 
         .user,
         #openicon {
@@ -451,7 +490,32 @@ if(!isset($_SESSION['unique_id'])){
                     <img src="images/image2.svg" alt="payment image" />
                     <div class="payment-desc">
                         <p>Paid Referral</p>
-                        <div class="payment-count">15</div>
+                        <div class="payment-count"><span class="landusercount"></span><?php 
+                         $customer = $user ->selectAgentCustomer($newuser['personal_ref']);
+                        if(!empty($customer)){
+                            $customers = [];
+                           foreach($customer as $key => $value){
+               array_push($customers,$value['unique_id']);
+                           }
+
+                           //var_dump($customers);
+
+                        
+
+                           for ($i = 0; $i <= count($customers) - 1; $i++) {
+                            $total = $user->selectTotalCustomers($customers[$i]);
+                            
+                           if(!empty($total)){
+                            $landusers = [];
+                            foreach($total as $key => $value){
+                                array_push($landusers,$value); 
+                                 ?>
+                            <span name="landuser" style="display: none;"><?php echo $value?></span>
+                            <?php          }
+                        }
+                           } }?>
+
+                        </div>
                     </div>
                 </div>
                 <?php 
@@ -533,25 +597,22 @@ if(!isset($_SESSION['unique_id'])){
 
 
                 <?php 
-    $user = new User;
-    $users = $user->selectUser($_SESSION['unique_id']);
-    $customer = $user ->selectAgentCustomer($users['personal_ref']);
-    if(!empty($customer)){
-        foreach($customer as $key => $value){
-            $earning = $user->selectPayment($value['unique_id']);
+   
+            $earning = $user->selectAgentHistory($newuser['unique_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
                     
     ?>
                 <?php 
-                 if($users['user_date'] <= $value['payment_date']){
-                if($users['earning_percentage'] != ""){?>
+                 if($newuser['user_date'] <= $value['payment_date']){
+                if($newuser['earning_percentage'] != ""){?>
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
-                        <p style="text-transform: capitalize;"><span>Hello <?php echo $users['first_name'];?></span></p>
+                        <p style="text-transform: capitalize;"><span>Hello <?php echo $newuser['first_name'];?></span>
+                        </p>
                         <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $users['earning_percentage'];
+                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $newuser['earning_percentage'];
                            
                     if($percent != ""){
                     $earnedprice = $percent / 100 * $value['product_price'];
@@ -567,12 +628,25 @@ if(!isset($_SESSION['unique_id'])){
                     ?>
                             </span>
                         </p>
+                        <div class="payee">
+                            <p class="payee-tag" style="color: #808080;">Customer Paid:</p>&nbsp;
+                            <p class="payee-name"
+                                style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                &#8358;<?php $unitprice = $value['product_price']; 
+                                  if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                    echo number_format(round($unitprice));
+                                  } else {
+                                      echo round($unitprice);
+                                  }
+                                ?> for <?php echo $value['product_name'];?>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <?php }}} }}}?>
+                <?php }}} }?>
 
-                <?php if(empty($customer) || $users['earning_percentage'] == ""){?>
+                <?php if(empty($earning)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
                     <p>You have no earnings yet!</p>
@@ -597,6 +671,15 @@ if(!isset($_SESSION['unique_id'])){
             sum += values[i];
         }
         document.querySelector('.total').innerHTML = new Intl.NumberFormat().format(sum);
+        let landuser = document.getElementsByName("landuser");
+
+        let landvalues = [];
+        landuser.forEach(element => {
+
+            landvalues.push(parseInt(element.innerHTML));
+        });
+        document.querySelector('.landusercount').innerHTML = landvalues.length;
+
         let copybtn = document.querySelector('.copy-div');
 
         copybtn.onclick = () => {

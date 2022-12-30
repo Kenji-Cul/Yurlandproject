@@ -13,7 +13,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -25,6 +25,18 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
     header {
         background: #fee1e3;
+    }
+
+    .details {
+        width: 140px !important;
+        position: relative;
+    }
+
+    .details .pname {
+        width: 100px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     .payee {
@@ -106,6 +118,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .success {
+            position: absolute;
+            top: 35em;
+        }
 
         .payee {
             width: 100px;
@@ -479,6 +496,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="usertype.php"><img src="images/land2.svg" /></a>
                 <a href="usertype.php" class="link">New Land</a>
             </li>
+
+            <li class="links">
+                <a href="allestates3.php"><img src="images/land2.svg" /></a>
+                <a href="allestates3.php" class="link">All Estates</a>
+            </li>
             <li class="links">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>
                 <a href="mycustomers.php" class="link">Customers</a>
@@ -492,12 +514,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="referral.php" class="link">Referrals</a>
             </li>
 
-            <li class="links">
+            <li class="links select-link">
                 <a href="alltransactions.php"><img src="images/updown.svg" /></a>
                 <a href="alltransactions.php" class="link">View Transactions</a>
             </li>
 
-            <li class="links select-link">
+            <li class="links">
                 <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
                 <a href="agentprofileinfo.php" class="link">Profile</a>
             </li>
@@ -526,11 +548,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
             <?php 
            
-             $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
-             $customer = $user ->selectAgentCustomer($agent['referral_id']);
-            if(!empty($customer)){
-               foreach($customer as $key => $value){
-             $landview = $user->selectPayHistory($value['unique_id']);
+             $landview = $user->selectAgentHistory($newuser['uniqueagent_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
@@ -588,7 +606,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
 
-            <?php }}}}?>
+            <?php }}?>
 
             <?php if(empty($landview)){?>
             <div class="success">

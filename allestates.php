@@ -13,7 +13,7 @@ if(!isset($_SESSION['unique_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css" />
@@ -522,6 +522,7 @@ if(!isset($_SESSION['unique_id'])){
             </a>
             <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
+
                 <p><?php if(isset($newuser['first_name'])){  ?>
                     <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
                     <?php }?>

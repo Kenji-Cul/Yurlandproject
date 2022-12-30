@@ -12,11 +12,17 @@ if(isset($_SESSION['unique_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
     <style>
+    .login-body {
+        display: grid;
+        grid-template-rows: repeat(4, 1fr);
+        height: 116vh;
+    }
+
     .remember-div {
         display: flex !important;
         flex-direction: row;
@@ -33,10 +39,16 @@ if(isset($_SESSION['unique_id'])){
         font-size: 17px;
         font-weight: 400;
     }
+
+    @media only screen and (max-width: 1300px) {
+        .footerdiv {
+            display: none;
+        }
+    }
     </style>
 </head>
 
-<body>
+<body class="login-body">
     <!-- Header -->
     <header>
         <div class="logo">
@@ -44,64 +56,66 @@ if(isset($_SESSION['unique_id'])){
         </div>
     </header>
 
-    <!-- Landing Page Text -->
-    <section class="landing_text_container">
-        <p class="landing_text">Welcome Back!</p>
-        <p class="landing_text">Login to your account</p>
-        <p class="error">Please input all fields</p>
-    </section>
+    <div>
+        <!-- Landing Page Text -->
+        <section class="landing_text_container">
+            <p class="landing_text">Welcome Back!</p>
+            <p class="landing_text">Login to your account</p>
+            <p class="error">Please input all fields</p>
+        </section>
 
-    <section class="login-form-container">
-        <form action="" class="login-form" id="login-form">
-            <div class="input-div email">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Input your email address" name="email" value="<?php 
+        <section class="login-form-container">
+            <form action="" class="login-form" id="login-form">
+                <div class="input-div email">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Input your email address" name="email" value="<?php 
                  if(isset($_COOKIE['user_login'])){
                     echo $_COOKIE['user_login'];
                  }
                 ?>" />
-            </div>
+                </div>
 
-            <div class="input-div password">
-                <label for="password">Password</label>
-                <input type="password" placeholder="Input your password" id="password" name="password" value="<?php 
+                <div class="input-div password">
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Input your password" id="password" name="password" value="<?php 
                  if(isset($_COOKIE['user_password'])){
                     echo $_COOKIE['user_password'];
                  }
                 ?>" />
-                <i class="ri-eye-off-line"></i>
-            </div>
-
-            <div class="input-div remember-div">
-                <label class="radio" for="check">
-                    <input type="checkbox" id="check" name="remember" <?php if(isset($_COOKIE['user_login'])){?> checked
-                        <?php }?> />
-                    <span class="check"></span>
-                    <p>Remember me</p>
-                </label>
-                <div class="remember">
-                    <a href="forgotpassword.php">Forgot Password?</a>
+                    <i class="ri-eye-off-line"></i>
                 </div>
-            </div>
 
-            <button class="btn" type="submit">Login</button>
-            <div style="display: none">
-                <img src="images/loading.svg" alt="" class="loading-img" />
-            </div>
-            <div class="login-link">
-                Don't have an account? <a href="signup.php">Sign&nbsp;up</a>
-            </div>
-        </form>
+                <div class="input-div remember-div">
+                    <label class="radio" for="check">
+                        <input type="checkbox" id="check" name="remember" <?php if(isset($_COOKIE['user_login'])){?>
+                            checked <?php }?> />
+                        <span class="check"></span>
+                        <p>Remember me</p>
+                    </label>
+                    <div class="remember">
+                        <a href="forgotpassword.php">Forgot Password?</a>
+                    </div>
+                </div>
 
-
-    </section>
+                <button class="btn" type="submit">Login</button>
+                <div style="display: none">
+                    <img src="images/loading.svg" alt="" class="loading-img" />
+                </div>
+                <div class="login-link">
+                    Don't have an account? <a href="signup.php">Sign&nbsp;up</a>
+                </div>
+            </form>
+        </section>
+    </div>
 
     <footer class="footerdiv">
         <p>YurLAND &#169; 2022 | All Right Reserved</p>
         <p>A product of Ilu-oba International Limited and Arklips Limited</p>
         <p>Connect with us Facebook, Twitter, Instagram</p>
         <p style="font-size: 30px;">
-<a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i class="ri-instagram-line"></a></i><a href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
+            <a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i class="ri-instagram-line"></a></i><a
+                href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i
+                    class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
         </p>
     </footer>
 

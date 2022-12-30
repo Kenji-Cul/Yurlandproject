@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
-    header("Location:index.php");
+    header("Location:login.php");
 }
 
 ?>
@@ -14,7 +14,7 @@ if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -415,7 +415,7 @@ if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
                     </div>
                 </div>
 
-               
+
                 <div class="account-detail2">
                     <div class="radius"></div>
                     <div class="flex">
@@ -431,7 +431,7 @@ if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
                     </div>
                 </div>
 
-                
+
                 <div class="account-detail2">
                     <div class="radius"></div>
                     <div class="flex">
@@ -447,7 +447,7 @@ if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
                     </div>
                 </div>
 
-                
+
                 <div class="account-detail2">
                     <div class="radius"></div>
                     <div class="flex">
@@ -466,7 +466,7 @@ if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
 
 
 
-               
+
 
                 <div class="account-detail3">
                     <a href="logout.php">

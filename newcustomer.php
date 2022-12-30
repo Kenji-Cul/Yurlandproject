@@ -14,7 +14,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="images/yurland_logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title>Yurland</title>
@@ -367,6 +367,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="usertype.php" class="link">New Land</a>
             </li>
             <li class="links">
+                <a href="allestates3.php"><img src="images/land2.svg" /></a>
+                <a href="allestates3.php" class="link">All Estates</a>
+            </li>
+            <li class="links">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>
                 <a href="mycustomers.php" class="link">Customers</a>
             </li>
@@ -425,6 +429,13 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     <div class="input-div name">
                         <label for="lastname">Last Name</label>
                         <input type="text" id="lastname" placeholder="Input your last name" name="lastname" />
+                    </div>
+
+
+                    <div class="input-div email">
+                        <!-- <label for="referral">Referral</label> -->
+                        <input type="hidden" id="personalreferral" placeholder="Input referral id" val=""
+                            name="referral" />
                     </div>
 
                     <div class="input-div number">
@@ -557,10 +568,22 @@ if(!isset($_SESSION['uniqueagent_id'])){
         });
 
 
+        function createRandomString(string_length) {
+            var random_string = "";
+            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678910";
+            for (var i, i = 0; i < string_length; i++) {
+                random_string += characters.charAt(
+                    Math.floor(Math.random() * characters.length)
+                );
+            }
+            $("#personalreferral").val(random_string);
+        }
+
         $("#signup-form .btn").click(function() {
+            createRandomString(8);
             $.ajax({
                 type: "POST",
-                url: "inserters/insertreferral.php",
+                url: `inserters/insertreferral.php?refagent=<?php echo $newuser['referral_id'];?>`,
                 data: $("#signup-form input"),
                 success: function(response) {
                     if (response === "success") {
