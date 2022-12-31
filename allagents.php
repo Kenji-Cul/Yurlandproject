@@ -349,7 +349,7 @@ include_once "projectlog.php";
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 
@@ -437,11 +437,11 @@ include_once "projectlog.php";
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -451,9 +451,13 @@ include_once "projectlog.php";
                 <a href="subadmin.php"><img src="images/home3.svg" /></a>
                 <a href="subadmin.php" class="link">Home</a>
             </li>
-            <li class="links select-link">
+            <li class="links">
                 <a href="allcustomers.php"><img src="images/referral.svg" /></a>
                 <a href="allcustomers.php" class="link">All Customers</a>
+            </li>
+            <li class="links">
+                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                <a href="newuser.php" class="link">New Customer</a>
             </li>
             <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
@@ -461,12 +465,27 @@ include_once "projectlog.php";
             </li>
 
             <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links select-link">
+                <a href="allgroups.php"><img src="images/referral.svg" /> </a>
+                <a href="allgroups.php" class="link">All Groups</a>
+            </li>
+
+            <li class="links">
                 <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.phpuser=subadmin" class="link">Logout</a>
             </li>
         </ul>
 
@@ -475,6 +494,11 @@ include_once "projectlog.php";
             <div class="page-title2">
                 <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
                 <a href="superadmin.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <?php }?>
+                <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+                <a href="subadmin.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <?php }?>

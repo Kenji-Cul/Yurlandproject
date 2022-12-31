@@ -18,6 +18,15 @@
         justify-content: space-between;
     }
 
+
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 2em;
+    }
+
     .remember a {
         color: #ff6600;
         text-decoration: underline;
@@ -84,6 +93,18 @@
         </form>
     </section>
 
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>This Account</p>
+                    <p>Has Been Disabled</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/login.js"></script>
     <script>
     $(document).ready(function() {
@@ -101,6 +122,9 @@
                 success: function(response) {
                     if (response === "success") {
                         location.href = "agentprofile.php";
+                    } else if (response === "disabled") {
+                        document.querySelector('.successmodal').style.display = "flex";
+                        document.querySelector('.modalcon').classList.add('animation');
                     } else {
                         $("section .error").html(response);
                         $("section .error").css({

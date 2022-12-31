@@ -627,9 +627,15 @@ if(!isset($_GET['unique'])){
         <div class="profile-container">
             <div class="page-title2">
                 <?php if(isset($_GET['unique'])){?>
+                <?php if(isset($_SESSION['uniqueagent_id'])){?>
                 <a href="agentprofile.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
+                <?php } else if(isset($_SESSION['uniquesubadmin_id'])){?>
+                <a href="subadmin.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <?php }?>
                 <div style="display: flex !important; flex-direction: column !important" class="estatetext">
                     <p>All Estates</p>
                 </div>

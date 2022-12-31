@@ -47,7 +47,7 @@ if(empty($firstname) || empty($lastname) || empty($email) || empty($number)  || 
     }else if($emailuser6['email'] != $email && !empty($emailuser)){
       $errormsg = "Email Address already exists";
     } else {
-     $insertuser = $user->updateUserInfo(check_input($firstname),check_input($lastname),check_input($email),check_input($unique),check_input($number),check_input($nin),check_input($dob),check_input($nfirstname),check_input($nlastname),check_input($nemail),check_input($naddress),check_input($nphone),check_input($nrelation),check_input($earning),$address);
+     $insertuser = $user->updateUserInfo(check_input($firstname),check_input($lastname),check_input($email),check_input($unique),check_input($number),check_input($nin),check_input($dob),check_input($nfirstname),check_input($nlastname),check_input($nemail),check_input($naddress),check_input($nphone),check_input($nrelation),check_input($earning),check_input($address));
     }
     }
 

@@ -46,6 +46,22 @@ if(!isset($_SESSION['uniqueagent_id'])){
         width: 80px;
     }
 
+    .colored-div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 30%;
+        border-radius: 8px;
+        gap: 0;
+        height: 50px;
+        background-color: #fee1e3;
+    }
+
+    .colored-div span {
+        font-size: 16px;
+        text-transform: capitalize;
+    }
+
     @media only screen and (min-width: 1300px) {
         .account-detail {
             display: flex;
@@ -238,7 +254,14 @@ if(!isset($_SESSION['uniqueagent_id'])){
     @media only screen and (max-width: 1300px) {
 
 
+        .colored-div {
+            min-width: 80%;
+        }
 
+        .colored-div span {
+            font-size: 14px;
+            text-transform: capitalize;
+        }
 
 
 
@@ -296,7 +319,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 
@@ -444,6 +467,13 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     <span><?php echo $newuser['agent_name']; ?></span>&nbsp;
                     <?php }?>
                 </p>
+                <?php if($newuser['group_id'] != ""){
+                    $group = $user->selectGroup($newuser['group_id']);
+                    ?>
+                <p class="referral colored-div">
+                    <span>Group Attached:</span>&nbsp;<span><?php echo $group['group_name'];?></span>
+                </p>
+                <?php }?>
                 <div class="referral">
                     <div class="copy-div"><span>copy</span><img src="images/copy.svg" alt="" /></div>
                     <div class="referral_code"><?php if(isset($newuser['referral_id'])){

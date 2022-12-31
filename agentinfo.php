@@ -24,6 +24,24 @@ if(!isset($_GET['unique'])){
         overflow-x: hidden;
     }
 
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 2em;
+    }
+
+    .successmodal .closemodal {
+        width: 30px;
+        height: 30px;
+    }
+
+
+    .flexdiv-1 {
+        width: 100%;
+    }
+
     .payee {
         width: 350px;
     }
@@ -364,7 +382,7 @@ if(!isset($_GET['unique'])){
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 
@@ -457,23 +475,27 @@ if(!isset($_GET['unique'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links">
+            <li class="links select-link">
                 <a href="subadmin.php"><img src="images/home3.svg" /></a>
                 <a href="subadmin.php" class="link">Home</a>
             </li>
-            <li class="links select-link">
+            <li class="links">
                 <a href="allcustomers.php"><img src="images/referral.svg" /></a>
                 <a href="allcustomers.php" class="link">All Customers</a>
+            </li>
+            <li class="links">
+                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                <a href="newuser.php" class="link">New Customer</a>
             </li>
             <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
@@ -481,16 +503,32 @@ if(!isset($_GET['unique'])){
             </li>
 
             <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
                 <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.phpuser=subadmin" class="link">Logout</a>
             </li>
         </ul>
 
         <div class="profile-container">
+
             <div class="page-title2">
                 <a href="allagents.php">
                     <img src="images/arrowleft.svg" alt="" />
@@ -501,82 +539,151 @@ if(!isset($_GET['unique'])){
     
    
     ?>
-                <p><?php echo $agent['agent_name'];?> Earnings</p>
+                <p>Agent Profile</p>
             </div>
-
+            <div class="profile-image" style="margin-left: 3em;">
+                <?php if(!empty($agent['agent_img'])){?>
+                <img src="profileimage/<?php echo $agent['agent_img'];?>" alt="profile image" />
+                <?php }?>
+                <?php if(empty($agent['agent_img'])){?>
+                <div class="empty-img" style="border-radius: 50%;">
+                    <i class="ri-user-fill"></i>
+                </div>
+                <?php }?>
+            </div>
             <div class="land-btn-container" style="display: flex; gap: 2em;">
                 <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
-                <a href="editagent.php?unique=<?php echo $newuser['unique_id'];?>">
+                <a href="editagent.php?unique=<?php echo $agent['uniqueagent_id'];?>">
                     <button class="btn land-btn">Edit Agent</button>
                 </a>
                 <?php }?>
             </div>
-
+            <div class="land-btn-container" style="display: flex; gap: 2em;">
+                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
+                <?php if($agent['agent_status'] == "Disabled"){?>
+                <form id="agentform2">
+                    <input type="hidden" name="agentid2" id="agentid2" value="<?php echo $agent['uniqueagent_id'];?>">
+                    <button class="btn land-btn">Enable Agent</button>
+                </form>
+                <?php } else {  ?>
+                <form id="agentform">
+                    <input type="hidden" name="agentid" id="agentid" value="<?php echo $agent['uniqueagent_id'];?>">
+                    <button class="btn land-btn">Disable Agent</button>
+                </form>
+                <?php }}?>
+            </div>
+            <div class="land-btn-container">
+                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
+                <a href="agenthistory.php?unique=<?php echo $agent['uniqueagent_id'];?>">
+                    <button class="btn land-btn">Agent Earning History</button>
+                </a>
+                <?php }?>
+            </div>
 
             <div class="details-container">
 
 
-
-
-                <?php   $earning = $user->selectAgentHistory($_GET['unique']);
-            if(!empty($earning)){
-                foreach($earning as $key => $value){
-    ?>
-                <?php if($agent['agent_date'] <= $value['payment_date']){
-                if($agent['earning_percentage'] != ""){  ?>
-                <div class="account-detail2"
-                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                    <div class="flex">
-                        <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;"><?php echo $agent['agent_name'];?>
-                                has
-                                earned &#8358;<?php $percent = $agent['earning_percentage'];
-                    $earnedprice = $percent / 100 * $value['product_price'];
-                    $unitprice = $earnedprice;
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                      echo number_format(round($unitprice));
-                                    } else {
-                                        echo round($unitprice);
-                                    }
-                    ?>
-                            </span>
+                <div class="account-detail2">
+                    <div>
+                        <p><?php if(isset($agent['agent_name'])){  ?>
+                            <?php echo $agent['agent_name']; ?><span>&nbsp;
+                                <?php }?>
                         </p>
-                        <div class="payee">
-                            <p class="payee-tag" style="color: #808080;">
-                                <?php if($value['payee'] == $agent['agent_name']){ 
-                                echo "".$agent['agent_name']." Paid:"; 
-                            } else {
-                                    echo "Customer Paid:"; }
-                                 ?></p>&nbsp;
-                            <p class="payee-name"
-                                style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                &#8358;<?php $unitprice = $value['product_price']; 
-                                  if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                    echo number_format(round($unitprice));
-                                  } else {
-                                      echo round($unitprice);
-                                  }
-                                ?> for <?php echo $value['product_name'];?>
-                            </p>
-                        </div>
+
+                        <span> <?php if(empty($agent['home_address']) || empty($agent['agent_img']) || empty($agent['agent_num'])){
+?>
+                            <span>Update Details Needed</span>
+                            <?php } else {?>
+                            <span>Verified</span>
+                            <?php }?>
+                        </span>
                     </div>
                 </div>
-                <?php } }?>
-
-                <?php }} ?>
 
 
-                <?php if(empty($earning)){?>
-                <div class="success">
-                    <img src="images/asset_success.svg" alt="" />
-                    <p><?php echo $agent['agent_name'];?> has no earnings yet!</p>
+                <div class="account-detail2">
+                    <div>
+                        <p style="text-transform: capitalize;">
+                            Phone Number
+                        </p>
+                        <span><?php if(isset($agent['agent_num'])){  ?>
+                            <?php echo $agent['agent_num']; ?><span>&nbsp;
+                                <?php }?></span>
+                    </div>
                 </div>
-                <?php }?>
 
-                <div class="account-detail3">
-                    <a href="logout.php">
-                        <p>Sign Out</p>
-                    </a>
+                <div class="account-detail2">
+                    <div>
+                        <p style="text-transform: capitalize;">
+                            Group Name
+                        </p>
+                        <span><?php 
+                        if($agent['group_id'] != ""){
+                            $group = $user->selectGroup($agent['group_id']);
+                            echo $group['group_name'];
+                        } else {
+                            echo "No Group Attached";
+                        }
+                        ?></span>
+                    </div>
+                </div>
+
+                <div class="account-detail2">
+                    <div>
+                        <p style="text-transform: capitalize;">
+                            Email
+                        </p>
+                        <span><?php if(isset($agent['agent_email'])){  ?>
+                            <?php echo $agent['agent_email']; ?><span>&nbsp;
+                                <?php }?></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="account-detail2">
+                    <div style="display: flex; flex-direction: column; gap: 0.4em;">
+                        <p style="text-transform: capitalize;">
+                            Percentage Commission
+                        </p>
+                        <span><?php if(isset($agent['earning_percentage'])){ ?>
+                            <?php echo $agent['earning_percentage']; ?><span>%
+                                <?php }?></span>
+                            </p>
+                        </span>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+            <div class="account-detail3">
+                <a href="logout.php">
+                    <p>Sign Out</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <img src="images/close2.svg" alt="" class="closemodal">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <?php if($agent['agent_status'] == "Disabled"){?>
+                    <p>Agent Enabled</p>
+                    <p>Successfully</p>
+                    <?php } else {?>
+                    <p>Agent Disabled</p>
+                    <p>Successfully</p>
+
+                    <?php }?>
                 </div>
             </div>
         </div>
@@ -655,6 +762,87 @@ if(!isset($_GET['unique'])){
             `;
         };
     }
+
+    <?php if($agent['agent_status'] == "Disabled"){?>
+    let agentform2 = document.querySelector('#agentform2');
+    let uniqueid2 = agentform2.querySelector('#agentid2');
+    let enablebtn = agentform2.querySelector('.btn');
+
+
+    agentform2.onsubmit = (e) => {
+        e.preventDefault();
+    };
+
+    function enable() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", `enableagent.php`, true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    if (data == "success") {
+                        //console.log("uploaded");
+                        document.querySelector('.successmodal').style.display = "flex";
+                        document.querySelector('.modalcon').classList.add('animation');
+
+                        let closemodal = document.querySelector('.successmodal .closemodal');
+                        closemodal.onclick = () => {
+                            document.querySelector('.successmodal').style.display = "none";
+                            location.reload();
+                        }
+                    }
+                }
+            }
+        };
+        let formData = new FormData(agentform2)
+        xhr.send(formData);
+    }
+
+    enablebtn.onclick = () => {
+        enable();
+    }
+
+    <?php } else {?>
+
+    let agentform = document.querySelector('#agentform');
+    let uniqueid = agentform.querySelector('#agentid');
+    let disablebtn = agentform.querySelector('.btn');
+
+
+    agentform.onsubmit = (e) => {
+        e.preventDefault();
+    };
+
+    function disable() {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", `disableagent.php`, true);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    if (data == "success") {
+                        //console.log("uploaded");
+                        document.querySelector('.successmodal').style.display = "flex";
+                        document.querySelector('.modalcon').classList.add('animation');
+
+                        let closemodal = document.querySelector('.successmodal .closemodal');
+                        closemodal.onclick = () => {
+                            document.querySelector('.successmodal').style.display = "none";
+                            location.reload();
+                        }
+                    }
+                }
+            }
+        };
+        let formData = new FormData(agentform)
+        xhr.send(formData);
+    }
+
+    disablebtn.onclick = () => {
+        disable();
+    }
+
+    <?php }?>
     </script>
 </body>
 

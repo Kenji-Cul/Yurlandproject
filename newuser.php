@@ -245,12 +245,12 @@ include "projectlog.php";
 
     @media only screen and (max-width: 1300px) {
 
-        .login-form-container {
+        /* .login-form-container {
             position: absolute;
-            top: 2%;
+            top: 20%;
             height: 100%;
 
-        }
+        } */
 
         .page-title2 a {
             z-index: 200000;
@@ -316,7 +316,7 @@ include "projectlog.php";
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 
@@ -376,11 +376,11 @@ include "projectlog.php";
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -395,8 +395,27 @@ include "projectlog.php";
                 <a href="allcustomers.php" class="link">All Customers</a>
             </li>
             <li class="links select-link">
+                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                <a href="newuser.php" class="link">New Customer</a>
+            </li>
+            <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
                 <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
             </li>
 
             <li class="links">
@@ -404,10 +423,12 @@ include "projectlog.php";
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.phpuser=subadmin" class="link">Logout</a>
             </li>
         </ul>
+
+
 
 
         <div class="profile-container">
@@ -477,7 +498,7 @@ include "projectlog.php";
                     <img src="images/asset_success.svg" alt="" />
                     <p>User Creation!</p>
                     <p>Successful</p>
-                    <a href="subadmin.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+                    <a href="allcustomers.php"><button class="landing_page_button2">Back to Dashboard</button></a>
                 </div>
             </div>
         </div>

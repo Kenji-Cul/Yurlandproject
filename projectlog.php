@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Author : Teibo Gideon
+ * Author : Teibo Gideon Tamaraduobra
  * Program : Yurland Website
  * Date : Nov 5,2022
  */
@@ -22,16 +22,13 @@ include "signconstant.php";
         }
      }
 
-     function createAgent($agentname,$agent_password,$referralid,$earningpercent, $email){
+     function createAgent($agentname,$agent_password,$referralid,$earningpercent,$email,$groupid){
         $uniqueid = rand();
         $pwd = password_hash($agent_password,PASSWORD_DEFAULT);
         $agentdate = date("M-d-Y");
-          $sql = "INSERT INTO agent_table(uniqueagent_id,agent_name, agent_email,agent_password,referral_id,earning_percentage,agent_date) VALUES('{$uniqueid}','{$agentname}','{$email}','{$pwd}','{$referralid}','{$earningpercent}','{$agentdate}')";
+          $sql = "INSERT INTO agent_table(uniqueagent_id,agent_name, agent_email,agent_password,referral_id,earning_percentage,agent_date,group_id) VALUES('{$uniqueid}','{$agentname}','{$email}','{$pwd}','{$referralid}','{$earningpercent}','{$agentdate}','{$groupid}')";
           $result = $this->dbcon->query($sql);
           if($this->dbcon->affected_rows == 1){
-            session_start();
-            session_unset();
-            $_SESSION['uniqueagent_id'] = $uniqueid;
              echo "success";
           } else {
              echo $this->dbcon->error;
@@ -176,6 +173,132 @@ include "signconstant.php";
 }
      }
 
+
+
+     function createGroup($groupname,$grouphead,$grouplocation){
+    if(isset($_FILES['image'])){
+        $filename = $_FILES['image']['name'];
+        $filesize = $_FILES['image']['size'];
+        $filetype = $_FILES['image']['type'];
+        $file_error = $_FILES['image']['error'];
+        $filetmp = $_FILES['image']['tmp_name'];
+      // validate image
+        if($file_error > 0){
+            $error = "You have not selected a file";
+            return $error;
+        }
+    
+        if($filesize > 2097152){
+            $error = "Your file should be less than 2mb";
+            return $error;
+        }
+    
+        $extensions = array("gif", "png", "jpeg", "svg", "jpg");
+        $file_ext = explode(".",$filename);
+        $file_ext = end($file_ext);
+    
+        if(!in_array(strtolower($file_ext), $extensions)){
+            $error = $file_ext."File format not supported";
+            return $error;
+        }
+    
+        //upload document
+        //$folder = "userdocuments/";
+        $newfilename = time().rand().".".$file_ext;
+        $destination_path = getcwd().DIRECTORY_SEPARATOR;
+        $target_path = $destination_path . '../profileimage/'. basename($newfilename);
+        //$destination = $folder.$newfilename;
+        if(move_uploaded_file($filetmp, $target_path)){
+            $uniqueid = rand();
+    $sql = "INSERT INTO group_table(uniquegroup_id,group_name,group_head,group_location,group_img) VALUES('{$uniqueid}','{$groupname}','{$grouphead}','{$grouplocation}','{$newfilename}')";
+    $result = $this->dbcon->query($sql);
+    if($this->dbcon->affected_rows == 1){
+       echo "success";
+    } else {
+       echo $this->dbcon->error;
+    }
+}
+    }
+}
+
+function checkGroupName($name){
+    $sql = "SELECT * FROM group_table WHERE group_name = '{$name}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+}
+
+     function disableAgent($agentid){
+        $sql = "UPDATE agent_table SET agent_status = 'Disabled' WHERE uniqueagent_id='{$agentid}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+     }
+
+     function enableAgent($agentid){
+        $sql = "UPDATE agent_table SET agent_status = 'Enabled' WHERE uniqueagent_id='{$agentid}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+     }
+
+
+     function updateAgentInfo($agentname,$agentnum,$email,$unique,$address,$earning,$groupid){
+        if(isset($_FILES['image'])){
+            $filename = $_FILES['image']['name'];
+            $filesize = $_FILES['image']['size'];
+            $filetype = $_FILES['image']['type'];
+            $file_error = $_FILES['image']['error'];
+            $filetmp = $_FILES['image']['tmp_name'];
+          // validate image
+            if($file_error > 0){
+                $error = "You have not selected a file";
+                return $error;
+            }
+        
+            if($filesize > 2097152){
+                $error = "Your file should be less than 2mb";
+                return $error;
+            }
+        
+            $extensions = array("gif", "png", "jpeg", "svg", "jpg");
+            $file_ext = explode(".",$filename);
+            $file_ext = end($file_ext);
+        
+            if(!in_array(strtolower($file_ext), $extensions)){
+                $error = $file_ext."File format not supported";
+                return $error;
+            }
+        
+            //upload document
+            //$folder = "userdocuments/";
+            $newfilename = time().rand().".".$file_ext;
+            $destination_path = getcwd().DIRECTORY_SEPARATOR;
+            $target_path = $destination_path . '../profileimage/'. basename($newfilename);
+            //$destination = $folder.$newfilename;
+            if(move_uploaded_file($filetmp, $target_path)){
+        
+    $sql = "UPDATE agent_table SET agent_img='{$newfilename}',agent_name='{$agentname}', agent_num='{$agentnum}', agent_email='{$email}', home_address='{$address}',earning_percentage='{$earning}', group_id='{$groupid}' WHERE uniqueagent_id='{$unique}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+    }
+}
+     }
+
      function updateLandInfo($productname,$purpose,$location,$unit,$unitprice,$unique){
         $sql = "UPDATE land_product SET product_name='{$productname}', purpose='{$purpose}', product_location='{$location}',product_unit='{$unit}', unit_price='{$unitprice}' WHERE unique_id='{$unique}'";
         $result = $this->dbcon->query($sql);
@@ -302,6 +425,42 @@ include "signconstant.php";
         }
     }
 
+    function selectPurchasedLands(){
+        $sql = "SELECT COUNT(unique_id) FROM land_product WHERE product_unit= 0";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectGroup($uniqueid){
+        $sql = "SELECT * FROM group_table WHERE uniquegroup_id = '{$uniqueid}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectAgentGroup($uniqueid){
+        $sql = "SELECT * FROM agent_table WHERE group_id = '{$uniqueid}'";
+        $result = $this->dbcon->query($sql);
+        $rows = array();
+            if($this->dbcon->affected_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    $rows[] = $row;
+                }
+                return $rows;
+            }else{
+                return $rows;
+            }
+    }
+
 
     function selectEmail($uniqueid){
         $sql = "SELECT * FROM user WHERE email = '{$uniqueid}'";
@@ -316,6 +475,17 @@ include "signconstant.php";
 
     function selectUserEmail($uniqueid){
         $sql = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            return $row;
+        }else{
+            return $row;
+        }
+    }
+
+    function selectAgentEmail($uniqueid){
+        $sql = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$uniqueid}'";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -1127,6 +1297,20 @@ include "signconstant.php";
 
     function selectAllUsers(){
         $sql = "SELECT * FROM user ORDER BY user_id DESC";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
+    function selectAllGroups(){
+        $sql = "SELECT * FROM group_table ORDER BY group_id DESC";
         $result = $this->dbcon->query($sql);
 	$rows = array();
 		if($this->dbcon->affected_rows > 0){
@@ -2831,6 +3015,8 @@ $output .= "
 
 echo $output;
 }
+
+
 
 
 

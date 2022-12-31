@@ -482,7 +482,7 @@ if(!isset($_SESSION['unique_id'])){
                     <?php }?>
                 </p>
                 <?php 
-        if($newuser['referral_id'] !== ""){ ?>
+        if($newuser['referral_id'] !== "Yurland"){ ?>
                 <p class="referral colored-div">
                     <?php   $seconduser = $user->selectReferralUser($newuser['referral_id']);
                $thirduser = $user->selectReferralAgent($newuser['referral_id']);

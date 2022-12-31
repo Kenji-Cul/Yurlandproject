@@ -2,7 +2,7 @@
 session_start();
 include_once "projectlog.php";
 if(!isset($_SESSION['uniquesubadmin_id'])){
-    header("Location:portallogin.php");
+    header("Location: teamspace.php");
 }
 
 ?>
@@ -25,6 +25,21 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         overflow-x: hidden;
     }
 
+    .unverified {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5px;
+        padding: 1px 6px;
+        border-radius: 15px;
+        background-color: #808080;
+        color: #fff;
+    }
+
+    .unverified .unspan {
+        font-size: 14px;
+    }
+
     .amountdiv {
         width: 150px;
         font-size: 18px;
@@ -34,6 +49,32 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
     .dropdown-links {
         height: 18em;
+    }
+
+    .land-estate .land-details {
+        display: none;
+    }
+
+    .land_estate_container .land-estate {
+        filter: drop-shadow(0px 4px 8px rgba(128, 128, 128, 0.90));
+        min-height: 0px !important;
+        padding-top: 0;
+        gap: 0;
+        border-radius: 8px;
+        position: relative;
+    }
+
+
+
+    .land-estate .land-image {
+        border-radius: 8px !important;
+        height: 250px !important;
+        width: 100%;
+    }
+
+    .land-image img {
+        border-radius: 8px !important;
+        height: 250px !important;
     }
 
 
@@ -71,6 +112,16 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             justify-content: center;
             align-items: center;
             gap: 1em;
+        }
+
+        .user .profile-name {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5px;
         }
 
         .user p {
@@ -117,7 +168,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         .land-estate {
             border: 1px solid #d4d1d1;
             width: 320px;
-            height: 290px;
+            /* height: 290px; */
             padding-top: 8px;
             padding-bottom: 10px;
             display: flex;
@@ -247,6 +298,24 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             display: none;
         }
 
+        .profile-image {
+            position: relative;
+        }
+
+        #check {
+            position: absolute;
+            bottom: -7px;
+            right: -5px;
+        }
+
+
+        .unverified {
+            width: 100px;
+            position: absolute;
+            right: 20px;
+            margin-top: 0.4em;
+        }
+
 
 
         .land_estate_container {
@@ -292,7 +361,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 
@@ -349,10 +418,33 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
-                <p><?php if(isset($newuser['subadmin_name'])){  ?>
-                    <span><?php echo $newuser['subadmin_name']; ?></span>&nbsp;
+                <div class="profile-name">
+                    <?php if(empty($newuser['subadmin_image'])){
+    ?>
+                    <div class="unverified">
+                        <span style="text-transform: capitalize;" class="unspan">unverified</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z"
+                                fill="rgba(249,19,19,1)" />
+                        </svg>
+                    </div>
+                    <?php } else {?>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"
+                            fill="rgba(50,179,40,1)" />
+                    </svg>
                     <?php }?>
-                </p>
+                    <p><?php if(isset($newuser['subadmin_name'])){  ?>
+                        <span><?php echo $newuser['subadmin_name']; ?></span>&nbsp;
+                        <?php }?>
+                    </p>
+                </div>
+
                 <div class="profile-image">
                     <?php if(!empty($newuser['subadmin_image'])){?>
                     <a href="subadmininfo.php" style="color: #808080;"><img
@@ -383,11 +475,11 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -411,6 +503,16 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             </li>
 
             <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
                 <a href="allagents.php"><img src="images/referral.svg" /> </a>
                 <a href="allagents.php" class="link">All Agents</a>
             </li>
@@ -420,8 +522,8 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
 
@@ -444,6 +546,26 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     <div class="empty-img">
                         <i class="ri-user-fill"></i>
                     </div>
+                    <?php }?>
+                    <?php if(empty($newuser['subadmin_image'])){
+    ?>
+                    <div class="unverified">
+                        <span style="text-transform: capitalize;" class="unspan">unverified</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z"
+                                fill="rgba(249,19,19,1)" />
+                        </svg>
+                    </div>
+                    <?php } else {?>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" id="check">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"
+                            fill="rgba(50,179,40,1)" />
+                    </svg>
                     <?php }?>
                 </div>
             </div>
@@ -546,23 +668,6 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 </div>
 
 
-                <div class="profile-div">
-                    <div class="navigate"
-                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
-                        <p style="font-size: 14px;">Total Users Referred</p>
-                        <p class="amountdiv">
-
-                            <?php 
-                               
-                                $allrefusers = $user->selectAllRefUsers();
-                                foreach ($allrefusers as $key => $value) {
-                                   echo $value;
-                                }
-                                
-                                ?>
-                        </p>
-                    </div>
-                </div>
 
                 <div class="profile-div">
                     <div class="navigate"
@@ -585,35 +690,19 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <div class="profile-div">
                     <div class="navigate"
                         style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
-                        <p style="font-size: 14px;">Total Paid Referral</p>
+                        <p style="font-size: 14px;">Sold Out Lands</p>
                         <p class="amountdiv">
-                            <span class="landusercount"></span><?php 
-                         $customer = $user ->selectAllRefs();
-                        if(!empty($customer)){
-                            $customers = [];
-                           foreach($customer as $key => $value){
-               array_push($customers,$value['unique_id']);
-                           }
-
-                           //var_dump($customers);
-
-                        
-
-                           for ($i = 0; $i <= count($customers) - 1; $i++) {
-                            $total = $user->selectTotalCustomers($customers[$i]);
-                            
-                           if(!empty($total)){
-                            $landusers = [];
-                            foreach($total as $key => $value){
-                                array_push($landusers,$value); 
-                                 ?>
-                            <span name="landuser" style="display: none;"><?php echo $value?></span>
-                            <?php          }
-                        }
-                           } }?>
+                            <?php 
+                                $alllands = $user->selectPurchasedLands();
+                                foreach ($alllands as $key => $value) {
+                                   echo $value;
+                                }
+                                
+                                ?>
                         </p>
                     </div>
                 </div>
+
 
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
@@ -649,6 +738,17 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 </div>
 
                 <div class="profile-div">
+                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+                    <a href="totalearnings.php">
+                        <div class="navigate">
+                            <p>Earnings</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
+                </div>
+
+                <div class="profile-div">
                     <img class="profile-icon" src="images/paystack.svg" alt="land-icon-image" />
 
                     <a href="allcustomers.php">
@@ -673,7 +773,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
              if(!empty($landview)){
                 foreach($landview as $key => $value){
             ?>
-                    <div class="land-estate swiper-slide">
+                    <div class="land-estate swiper-slide" style="height: 250px;">
                         <div class="land-image">
 
                             <img src="landimage/<?php if(isset($value['product_image'])){
@@ -711,7 +811,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <script>
     let swiperVerse = new Swiper(".swiper-counter", {
         loop: true,
-        spaceBetween: 24,
+        spaceBetween: 20,
         slidesPerView: "auto",
         grabCursor: true,
         autoplay: true,
@@ -725,7 +825,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 slidesPerView: 3,
             },
             1024: {
-                spaceBetween: 48,
+                spaceBetween: 20,
             },
         },
     });
@@ -838,14 +938,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     document.querySelector('.totalearn').innerHTML = new Intl.NumberFormat().format(sum + sum2);
 
 
-    let landuser = document.getElementsByName("landuser");
 
-    let landvalues = [];
-    landuser.forEach(element => {
-
-        landvalues.push(parseInt(element.innerHTML));
-    });
-    document.querySelector('.landusercount').innerHTML = landvalues.length;
     //document.querySelector('.totalearn').innerHTML = paydates.length;
     </script>
 </body>

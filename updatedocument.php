@@ -319,11 +319,11 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -338,8 +338,27 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="allcustomers.php" class="link">All Customers</a>
             </li>
             <li class="links">
+                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                <a href="newuser.php" class="link">New Customer</a>
+            </li>
+            <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
                 <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
             </li>
 
             <li class="links">
@@ -347,8 +366,8 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
 
@@ -361,7 +380,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 </a>
                 <?php }?>
                 <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
-                <a href="customerinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939">
+                <a href="customerprofileinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <?php }?>
@@ -449,7 +468,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     <img src="images/asset_success.svg" alt="" />
                     <p>Documents!</p>
                     <p>Updated Successfully</p>
-                    <a href="customerinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939"><button
+                    <a href="customerprofileinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939"><button
                             class="landing_page_button2">Back to
                             Dashboard</button></a>
                 </div>

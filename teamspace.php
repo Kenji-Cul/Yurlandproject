@@ -22,6 +22,11 @@
         margin-top: 9em;
     }
 
+    @media only screen and (max-width: 1300px) {
+        .footerdiv {
+            display: none;
+        }
+    }
 
 
     section .error {

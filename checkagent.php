@@ -12,26 +12,34 @@ if(empty($email) || empty($password)){
      $user = new User;
      $insertuser = $user->agentLogin($email);
      if(isset($insertuser['agent_password'])){
-        if(password_verify($password,$insertuser['agent_password'])){
-            session_start();
-            session_unset();
-            $_SESSION['uniqueagent_id'] = $insertuser['uniqueagent_id'];
-            if(!empty($remember)){
-                setcookie("agent_login",$email,time() + (10 * 365 * 24 * 60 * 60));
-                setcookie("agent_password",$password,time() + (10 * 365 * 24 * 60 * 60));
-            } else {
-                if(!isset($_COOKIE['agent_login'])){
-                    setcookie('agent_login',"");
+        if($insertuser['agent_status'] == "Disabled"){
+            echo "disabled";
+        } 
+
+     else {
+            if(password_verify($password,$insertuser['agent_password'])){
+                session_start();
+                session_unset();
+                $_SESSION['uniqueagent_id'] = $insertuser['uniqueagent_id'];
+                if(!empty($remember)){
+                    setcookie("agent_login",$email,time() + (10 * 365 * 24 * 60 * 60));
+                    setcookie("agent_password",$password,time() + (10 * 365 * 24 * 60 * 60));
+                } else {
+                    if(!isset($_COOKIE['agent_login'])){
+                        setcookie('agent_login',"");
+                    }
+        
+                    if(!isset($_COOKIE['agent_password'])){
+                        setcookie('agent_password',"");
+                    }
                 }
-    
-                if(!isset($_COOKIE['agent_password'])){
-                    setcookie('agent_password',"");
-                }
+                echo "success";
+            } 
+            else {
+                $errormsg = "Invalid Details Try Again";
             }
-            echo "success";
-        } else {
-            $errormsg = "Invalid Details Try Again";
         }
+        
      } else {
         $errormsg = "User Not Found";
      }

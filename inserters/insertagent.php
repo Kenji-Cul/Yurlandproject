@@ -7,6 +7,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $agent_password = $_POST['password'];
 $referralid = $_POST['refid'];
 $earningpercent = $_POST['percent'];
+$groupid = $_GET['groupid'];
 
 if(empty($name) || empty($referralid) || empty($earningpercent) || empty($agent_password) || empty($agentemail)){
     $errormsg = "Please input all fields";
@@ -26,7 +27,7 @@ else {
      if(!empty( $checkagent) || !empty( $checkagent2) || !empty( $checkagent3) || !empty( $checkagent4) || !empty( $checkagent5)){
      $errormsg = "Email Address already exists";
      }else{
-     $insertagent = $agent->createAgent(check_input($name),check_input($agent_password),check_input($referralid),check_input($earningpercent), check_input($agentemail));
+     $insertagent = $agent->createAgent(check_input($name),check_input($agent_password),check_input($referralid),check_input($earningpercent), check_input($agentemail),$groupid);
         }
 
 }

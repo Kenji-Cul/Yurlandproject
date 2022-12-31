@@ -115,12 +115,14 @@ if(isset($_POST["submit"])){
     $paymentdate = date("M-d-Y");
     $paymentmethod = "NewPayment";
     $payee = $selectuser['first_name']." ".$selectuser['last_name'];
-    if($selectuser['referral_id'] != ""){
+    if($selectuser['referral_id'] != "Yurland"){
         $agent = $user->selectAgentRef($selectuser['referral_id']);
         $userperson = $user->selectUserRef($selectuser['referral_id']);
         if(!empty($agent)){
             $agentid= $agent['uniqueagent_id'];
-        } else {
+        } 
+        
+        if(!empty($userperson)){
             $agentid = $userperson['unique_id'];
         }
        
@@ -464,7 +466,7 @@ if(empty($checklastpayment)){
     $paymentdate = date("M-d-Y");
     $paymentmethod = "NewPayment";
     $payee = $selectuser['first_name']." ".$selectuser['last_name'];
-    if($selectuser['referral_id'] != ""){
+    if($selectuser['referral_id'] != "Yurland"){
         $agent = $user->selectAgentRef($selectuser['referral_id']);
         $userperson = $user->selectUserRef($selectuser['referral_id']);
         if(!empty($agent)){

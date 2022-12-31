@@ -2,7 +2,7 @@
 session_start();
 include "projectlog.php";
 if(!isset($_GET['unique'])){
-  header("Location: agentprofile.php");
+  header("Location: subadmin.php");
 }
 ?>
 <!DOCTYPE html>
@@ -248,7 +248,7 @@ if(!isset($_GET['unique'])){
     <header class="signup">
         <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
         <div class="logo">
-            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
             <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
@@ -281,11 +281,11 @@ if(!isset($_GET['unique'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -300,8 +300,27 @@ if(!isset($_GET['unique'])){
                 <a href="allcustomers.php" class="link">All Customers</a>
             </li>
             <li class="links">
+                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                <a href="newuser.php" class="link">New Customer</a>
+            </li>
+            <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
                 <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
             </li>
 
             <li class="links">
@@ -309,8 +328,8 @@ if(!isset($_GET['unique'])){
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
 
@@ -323,7 +342,7 @@ if(!isset($_GET['unique'])){
                 </a>
                 <?php }?>
                 <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
-                <a href="customerinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939">
+                <a href="customerprofileinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <?php }?>
@@ -527,7 +546,7 @@ if(!isset($_GET['unique'])){
                     <img src="images/asset_success.svg" alt="" />
                     <p>Customer Details!</p>
                     <p>Updated Successfully</p>
-                    <a href="customerinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939"><button
+                    <a href="customerprofileinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939"><button
                             class="landing_page_button2">Back to Dashboard</button></a>
                     <a href="updatedocument.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939"><button
                             class="landing_page_button2">Update User Document</button></a>

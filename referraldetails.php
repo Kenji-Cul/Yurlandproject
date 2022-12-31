@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
+if(!isset($_GET['ref'])){
     header("Location: login.php");
 }
 
@@ -295,8 +295,10 @@ if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
         <div class="logo">
             <?php if(isset($_SESSION['unique_id'])){?>
             <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
-            <?php } else {?>
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
         <?php 
@@ -335,6 +337,7 @@ if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
 
 
     <div class="flex-container">
+        <?php if(isset($_SESSION['unique_id'])){?>
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
@@ -388,6 +391,64 @@ if(!isset($_SESSION['unique_id']) || !isset($_GET['ref'])){
                 <a href="logout.php" class="link">Logout</a>
             </li>
         </ul>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="subadmin.php"><img src="images/home3.svg" /></a>
+                <a href="subadmin.php" class="link">Home</a>
+            </li>
+            <li class="links">
+                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allcustomers.php" class="link">All Customers</a>
+            </li>
+            <li class="links">
+                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                <a href="newuser.php" class="link">New Customer</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
+                <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="subadmininfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
+            </li>
+        </ul>
+        <?php }?>
 
 
         <div class="prof-container">
