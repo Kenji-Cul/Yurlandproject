@@ -8,12 +8,13 @@ include "projectlog.php";
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="keywords" content="yurLAND,land estate website">
+    <meta name="keywords"
+        content="yurLAND,land estate website, Land in Nigeria,Land in Lagos,Nigerian Real estate,Own Your Land,Land,Real estate in Lagos, Buy land,Buy a land,Land for sale,own a land,Flexible payment land,Easy to own land,yurLAND,Real Estate,Proptech,Realtech,Properties in Alimosho,Real Estate in Alimosho,flexible land,Realtech in Lagos,Land in Alimosho">
     <meta name="description" content="yurLAND - Own ready to build lands in Nigeria, with as little as 650 naira only.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
 
     <style>
     .body {
@@ -171,7 +172,7 @@ include "projectlog.php";
     <section class="landing_text_container">
         <p class="landing_text">
             Welcome, let's help you</p>
-        <p class="landing_text">find yur<span style="text-transform: uppercase;">land</span></p>
+        <p class="landing_text">find <?php echo MY_APP_NAME;?></p>
     </section>
 
     <!-- Landing Form Container -->

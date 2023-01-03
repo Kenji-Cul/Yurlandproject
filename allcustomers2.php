@@ -15,11 +15,19 @@ include_once "projectlog.php";
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         min-height: 100vh;
         overflow-x: hidden;
+    }
+
+    .email-span {
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        width: 170px;
     }
 
     ::-webkit-scrollbar {
@@ -494,7 +502,7 @@ include_once "projectlog.php";
                         <p style="text-transform: capitalize;">
                             <span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
                         </p>
-                        <span><?php echo $value['email'];?></span>
+                        <span class="email-span"><?php echo $value['email'];?></span>
                     </div>
                     <a href="customerinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939"
                         style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>

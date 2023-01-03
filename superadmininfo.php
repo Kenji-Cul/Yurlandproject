@@ -15,7 +15,7 @@ include "projectlog.php";
     <script src="bootstrap/js/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     .page-title3 {
         flex-direction: column;

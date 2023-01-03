@@ -17,24 +17,34 @@ header("Location: teamspace.php");
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
-        height: 200vh;
         background-image: none;
         overflow-x: hidden;
     }
 
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+    }
+
+    .body {
+        height: 130vh;
+    }
+
     @media only screen (max-width: 800px) {
         body {
-            height: 260vh !important;
+
             background-image: none;
         }
     }
 
     @media only screen (max-width: 500px) {
         body {
-            height: 260vh !important;
             background-image: none;
         }
     }
@@ -346,7 +356,7 @@ header("Location: teamspace.php");
     </style>
 </head>
 
-<body>
+<body class="body">
     <!-- Header -->
     <header class="signup">
         <div class="logo">
@@ -500,6 +510,19 @@ header("Location: teamspace.php");
         </div>
     </div>
 
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>Details!</p>
+                    <p>Updated Successfully</p>
+                    <a href="subadmininfo.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/main.js"></script>
     <script>
     const form = document.querySelector("#upload-form"),
@@ -513,6 +536,12 @@ header("Location: teamspace.php");
     const error = document.querySelector(".error");
     uploadbtn.addEventListener("click", () => {
         uploaddiv.style.display = "block";
+        if (window.innerWidth < 1300) {
+            document.querySelector('.body').style.height = "170vh";
+        }
+        if (window.innerWidth > 1300) {
+            document.querySelector('.body').style.height = "160vh";
+        }
     });
 
     form.onsubmit = (e) => {
@@ -611,7 +640,9 @@ header("Location: teamspace.php");
                     if (data === "success") {
                         //console.log("uploaded");
                         submitbtn.onclick = () => {
-                            location.href = "successpage/subadminsucceed.html";
+                            document.querySelector('.successmodal').style.display =
+                                "flex";
+                            document.querySelector('.modalcon').classList.add('animation');
                         };
                     } else {
                         error.textContent = data;

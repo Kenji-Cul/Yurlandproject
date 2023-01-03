@@ -19,7 +19,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <!-- ========= SWIPER CSS ======== -->
     <link rel="stylesheet" href="css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         overflow-x: hidden;
@@ -39,6 +39,34 @@ if(!isset($_SESSION['uniqueagent_id'])){
     .unverified .unspan {
         font-size: 14px;
     }
+
+    .land-estate .land-details {
+        display: none;
+    }
+
+    .land_estate_container .land-estate {
+        filter: drop-shadow(0px 4px 8px rgba(128, 128, 128, 0.90));
+        min-height: 0px !important;
+        padding-top: 0;
+        gap: 0;
+        border-radius: 8px;
+        position: relative;
+    }
+
+
+
+    .land-estate .land-image {
+        border-radius: 8px !important;
+        height: 250px !important;
+        width: 100%;
+    }
+
+    .land-image img {
+        border-radius: 8px !important;
+        height: 250px !important;
+    }
+
+
 
     .details {
         display: flex;
@@ -610,11 +638,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -857,7 +885,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
              if(!empty($landview)){
                 foreach($landview as $key => $value){
             ?>
-                    <div class="land-estate swiper-slide">
+                    <div class="land-estate swiper-slide" style="height: 250px;">
                         <div class="land-image">
 
                             <img src="landimage/<?php if(isset($value['product_image'])){
@@ -897,7 +925,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <script>
     let swiperVerse = new Swiper(".swiper-counter", {
         loop: true,
-        spaceBetween: 24,
+        spaceBetween: 20,
         slidesPerView: "auto",
         grabCursor: true,
         autoplay: true,
@@ -911,7 +939,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 slidesPerView: 3,
             },
             1024: {
-                spaceBetween: 48,
+                spaceBetween: 20,
             },
         },
     });

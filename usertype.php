@@ -1,9 +1,7 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['uniqueagent_id'])){
-    header("Location: portallogin.php");
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -17,12 +15,31 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         min-height: 100vh;
         position: relative;
         overflow-x: hidden;
+    }
+
+    .dropdown-links {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
     }
 
     .footerdiv {
@@ -176,7 +193,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         .dropdown-links {
             width: 6%;
-            height: 90vh;
+            height: 84vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -313,7 +330,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -322,7 +339,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
             background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
-            width: 40%;
+            width: 50%;
             position: fixed;
             bottom: 0;
             border-radius: 8px 0px 0px 8px;
@@ -337,13 +354,16 @@ if(!isset($_SESSION['uniqueagent_id'])){
             width: 290px;
         }
 
-
-
         .close {
+            padding-top: 12em;
+        }
+
+
+        /* .close {
             position: absolute;
             top: 1em;
             right: 1em;
-        }
+        } */
 
 
         .update-data {
@@ -360,16 +380,26 @@ if(!isset($_SESSION['uniqueagent_id'])){
         <div class="logo">
             <?php if(isset($_SESSION['uniqueagent_id'])){?>
             <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
-            <?php } else {?>
+            <?php } else if(isset($_SESSION['uniquesubadmin_id'])){ ?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
 
         <?php 
              $user = new User;
-             $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
+             if(isset($_SESSION['uniqueagent_id'])){
+                $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
+             }  
+
+             if(isset($_SESSION['uniquesubadmin_id'])){
+                $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+             }
+            
             ?>
 
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
@@ -392,19 +422,46 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 </div>
             </div>
         </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <div class="nav">
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
+            <div class="user">
+                <p><?php if(isset($newuser['subadmin_name'])){  ?>
+                    <span><?php echo $newuser['subadmin_name']; ?></span>&nbsp;
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['subadmin_image'])){?>
+                    <a href="agentprofileinfo.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['subadmin_image'])){?>
+                    <a href="agentprofileinfo.php" style="color: #808080;">
+                        <div class="empty-img" style="border-radius: 50%;">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
+        </div>
+        <?php }?>
 
     </header>
 
 
     <div class="flex-container">
+        <?php if(isset($_SESSION['uniqueagent_id'])){?>
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -452,6 +509,84 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentlogout.php" class="link">Logout</a>
             </li>
         </ul>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/openmenu.svg" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/openmenu.svg" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links">
+                <a href="subadmin.php"><img src="images/home3.svg" /></a>
+                <a href="subadmin.php" class="link">Home</a>
+            </li>
+            <li class="links">
+                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allcustomers.php" class="link">All Customers</a>
+            </li>
+            <li class="links">
+                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                <a href="newuser.php" class="link">New Customer</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links select-link">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
+                <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="subadmininfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
+            </li>
+        </ul>
+        <?php }?>
+
 
 
         <div class="profile-container">
@@ -465,6 +600,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
                 <div class="flex-success">
                     <p>Customer Type</p>
+                    <?php if(isset($_SESSION['uniqueagent_id'])){?>
                     <p>
                         <a href="mycustomers.php">
                             <div class="estate_page_button" style="width: 200px; height: 30px;">Existing
@@ -472,7 +608,18 @@ if(!isset($_SESSION['uniqueagent_id'])){
                             </div>
                         </a>
                     </p>
+                    <?php } else {?>
+                    <p>
+                        <a href="allcustomers.php">
+                            <div class="estate_page_button" style="width: 200px; height: 30px;">Existing
+                                User
+                            </div>
+                        </a>
+                    </p>
+                    <?php }?>
 
+
+                    <?php if(isset($_SESSION['uniqueagent_id'])){?>
                     <p>
                         <a href="newcustomer.php">
                             <div class="estate_page_button" style="width: 200px; height: 30px;">New
@@ -480,12 +627,28 @@ if(!isset($_SESSION['uniqueagent_id'])){
                             </div>
                         </a>
                     </p>
+                    <?php } else {?>
+                    <p>
+                        <a href="newuser.php">
+                            <div class="estate_page_button" style="width: 200px; height: 30px;">New
+                                User
+                            </div>
+                        </a>
+                    </p>
+                    <?php }?>
                 </div>
             </div>
             <div class="account-detail3">
+                <?php if(isset($_SESSION['uniqueagent_id'])){?>
                 <a href="agentlogout.php">
                     <p>Sign Out</p>
                 </a>
+                <?php }?>
+                <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+                <a href="logout.php?user=subadmin">
+                    <p>Sign Out</p>
+                </a>
+                <?php }?>
             </div>
 
 

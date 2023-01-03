@@ -16,7 +16,7 @@ if(!isset($_GET['unique'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     .body {
         height: 320vh;
@@ -177,6 +177,12 @@ if(!isset($_GET['unique'])){
     @media only screen and (max-width: 1300px) {
         .details .pname {
             font-size: 13px;
+        }
+
+        .page-title2 {
+            display: flex;
+            gap: 2em;
+            width: 80%;
         }
 
 

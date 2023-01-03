@@ -17,7 +17,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         min-height: 200vh;
@@ -26,8 +26,8 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     .account-detail2 {
-        padding-bottom: 1em;
-        padding-top: 1em;
+        padding-bottom: 2em;
+        padding-top: 2em;
     }
 
     .payee {
@@ -417,11 +417,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -606,7 +606,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
                 <?php 
      
-            $earning = $user->selectAgentHistory($newuser['uniqueagent_id']);
+            $earning = $user->selectAgentHistory2($newuser['uniqueagent_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
      ?>
@@ -646,6 +646,13 @@ if(!isset($_SESSION['uniqueagent_id'])){
                                   }
                                 ?> for <?php echo $value['product_name'];?>
                             </p>
+                        </div>
+                        <div class="inner-detail">
+                            <div class="date">
+                                <span style="font-size: 13px;"><?php echo $value['payment_month'];?></span>&nbsp;<span
+                                    style="font-size: 13px;"><?php echo $value['payment_day'];?></span>&nbsp;<span
+                                    style="font-size: 13px;"><?php echo $value['payment_year'];?>
+                            </div>
                         </div>
                     </div>
                 </div>

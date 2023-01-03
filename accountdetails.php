@@ -17,10 +17,10 @@ if(!isset($_SESSION['unique_id'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
-    body {
-        min-height: 100vh;
+    .profile-body {
+        height: 100vh;
     }
 
     header {
@@ -54,6 +54,14 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .account-detail2 .flex p {
+            text-overflow: ellipsis !important;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 12px;
+            width: 150px;
+        }
 
         .user,
         #openicon {
@@ -338,11 +346,11 @@ if(!isset($_SESSION['unique_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">

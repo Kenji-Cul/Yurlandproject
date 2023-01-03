@@ -16,10 +16,11 @@ if(!isset($_SESSION['unique_id'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
-    body {
-        min-height: 100vh;
+    .profile-body {
+        height: 120vh;
+        overflow-x: hidden;
     }
 
     header {
@@ -76,6 +77,23 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .navigation-div .offer {
+            background: #ffffff;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--secondary-color);
+            width: 100px;
+            padding: 0.3em 0.3em;
+        }
+
+        .navig .offer,
+        .navig .payment,
+        .navig .allocation {
+            font-size: 12px;
+        }
+
         .success {
             position: absolute;
             top: 40%;
@@ -328,7 +346,7 @@ if(!isset($_SESSION['unique_id'])){
             <?php if(isset($_SESSION['unique_id'])){?>
             <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
         <?php 
@@ -370,11 +388,11 @@ if(!isset($_SESSION['unique_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">

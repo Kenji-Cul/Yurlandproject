@@ -17,11 +17,19 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
-    body {
-        min-height: 100vh;
+    .profile-body {
+        height: 100vh;
         position: relative;
+    }
+
+    .email-span {
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        width: 170px;
     }
 
     section {
@@ -110,7 +118,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     .success {
         position: absolute;
         left: 50%;
-        top: 90%;
+        top: 45em;
         transform: translate(-50%, -50%);
         height: 10em;
     }
@@ -467,11 +475,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -567,7 +575,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                         <p style="text-transform: capitalize;">
                             <span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
                         </p>
-                        <span><?php echo $value['email'];?></span>
+                        <span class="email-span"><?php echo $value['email'];?></span>
                     </div>
                     <a href="customerinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939"
                         style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>

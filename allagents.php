@@ -15,11 +15,38 @@ include_once "projectlog.php";
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
-    body {
-        min-height: 100vh;
+    .profile-body {
+        height: 100vh;
         overflow-x: hidden;
+    }
+
+    .email-span {
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        width: 170px;
+    }
+
+    .dropdown-links {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
     }
 
     .search-icon {
@@ -70,6 +97,23 @@ include_once "projectlog.php";
         border-radius: 8px;
     }
 
+    .success {
+        position: absolute;
+        left: 50%;
+        top: 20em;
+        transform: translate(-50%, -50%);
+        height: 40%;
+
+    }
+
+    .success p {
+        text-align: center;
+    }
+
+    .success img {
+        width: 15em;
+        height: 15em;
+    }
 
 
     .account-detail2 {
@@ -190,7 +234,7 @@ include_once "projectlog.php";
 
         .dropdown-links {
             width: 6%;
-            height: 90vh;
+            height: 84vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -294,6 +338,11 @@ include_once "projectlog.php";
 
     @media only screen and (max-width: 1300px) {
 
+        .success {
+            position: absolute;
+            top: 27em;
+        }
+
 
         .user,
         #openicon {
@@ -321,7 +370,7 @@ include_once "projectlog.php";
 
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -330,7 +379,7 @@ include_once "projectlog.php";
             background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
-            width: 40%;
+            width: 50%;
             position: fixed;
             bottom: 0;
             border-radius: 8px 0px 0px 8px;
@@ -345,13 +394,16 @@ include_once "projectlog.php";
             width: 290px;
         }
 
+        .close {
+            padding-top: 12em;
+        }
 
-
+        /* 
         .close {
             position: absolute;
             top: 4em;
             right: 1em;
-        }
+        } */
 
     }
     </style>
@@ -465,6 +517,25 @@ include_once "projectlog.php";
             </li>
 
             <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
+            </li>
+
+            <li class="links">
                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                 <a href="totaltransactions.php" class="link">View Transactions</a>
             </li>
@@ -475,8 +546,8 @@ include_once "projectlog.php";
             </li>
 
             <li class="links select-link">
-                <a href="allgroups.php"><img src="images/referral.svg" /> </a>
-                <a href="allgroups.php" class="link">All Groups</a>
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
             </li>
 
             <li class="links">
@@ -485,9 +556,10 @@ include_once "projectlog.php";
             </li>
             <li class="links">
                 <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
-                <a href="logout.phpuser=subadmin" class="link">Logout</a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
+
 
 
         <div class="profile-container">
@@ -541,7 +613,7 @@ include_once "projectlog.php";
                         <p style="text-transform: capitalize;">
                             <span><?php echo $value['agent_name'];?></span>
                         </p>
-                        <span><?php echo $value['agent_email'];?></span>
+                        <span class="email-span"><?php echo $value['agent_email'];?></span>
                     </div>
                     <a href="agentinfo.php?unique=<?php echo $value['uniqueagent_id'];?>&real=91838JDFOJOEI939"
                         style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>
@@ -549,8 +621,15 @@ include_once "projectlog.php";
 
                 <?php }}?>
 
+                <?php if(empty($customer)){?>
+                <div class="success">
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>There are no agents yet!</p>
+                </div>
+                <?php }?>
+
                 <div class="account-detail3">
-                    <a href="logout.php">
+                    <a href="logout.php?user=subadmin">
                         <p>Sign Out</p>
                     </a>
                 </div>

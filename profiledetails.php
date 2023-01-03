@@ -17,7 +17,7 @@ if(!isset($_SESSION['unique_id'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         min-height: 100vh;
@@ -25,6 +25,13 @@ if(!isset($_SESSION['unique_id'])){
 
     header {
         background: #fee1e3;
+    }
+
+    .account-detail2 p {
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 200px;
     }
 
     .colored-div {
@@ -57,7 +64,8 @@ if(!isset($_SESSION['unique_id'])){
     .navig {
         width: 20em;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        gap: 3em;
         padding: 0 0.8em;
     }
 
@@ -86,6 +94,15 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .colored-div {
+            min-width: 80%;
+        }
+
+        .colored-div span {
+            font-size: 14px;
+            text-transform: capitalize;
+        }
 
         .user,
         #openicon {
@@ -381,11 +398,11 @@ if(!isset($_SESSION['unique_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -543,6 +560,7 @@ if(!isset($_SESSION['unique_id'])){
                     </div>
                 </a>
 
+
                 <a href="address.php">
                     <div class="account-detail2">
                         <div>
@@ -576,7 +594,7 @@ if(!isset($_SESSION['unique_id'])){
                 <a href="insertdocument.php">
                     <div class="account-detail2">
                         <div>
-                            <?php if(empty($newuser['driver_license']) || empty($newuser['passport']) || empty($newuser['nin'])){
+                            <?php if(empty($newuser['home_address']) || empty($newuser['phone_number'])){
     ?>
                             <p>Unverified</p>
                             <?php } else {?>
@@ -603,6 +621,19 @@ if(!isset($_SESSION['unique_id'])){
                         <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
                     </div>
                 </a>
+                <?php $newuser2 = $user->selectReferredCustomer2($newuser['personal_ref']);
+        if(!empty($newuser2)){
+        ?>
+                <a href="myreferrals.php">
+                    <div class="account-detail2">
+                        <div>
+                            <p style="text-transform: capitalize;">View Referred Users
+                            </p>
+                        </div>
+                        <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
+                    </div>
+                </a>
+                <?php }?>
 
                 <div class="account-detail2 detail-3">
                     <button class="btn"><a

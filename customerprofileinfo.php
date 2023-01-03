@@ -15,11 +15,13 @@ include_once "projectlog.php";
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         min-height: 100vh;
     }
+
+
 
     header {
         background: #fee1e3;
@@ -131,10 +133,38 @@ include_once "projectlog.php";
             grid-gap: 0;
         }
 
+        .flexbtn-container .btn {
+            width: 18em;
+            font-size: 14px;
+        }
+
+        .flexbtn-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1em;
+            position: relative;
+        }
+
 
     }
 
     @media only screen and (min-width: 1300px) {
+        .flexbtn-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3em;
+
+        }
+
+        .flexbtn-container .btn {
+            width: 100%;
+        }
+
         .account-detail {
             display: flex;
             flex-direction: column;
@@ -337,6 +367,8 @@ include_once "projectlog.php";
         .close {
             display: none;
         }
+
+
 
 
     }
@@ -560,15 +592,7 @@ include_once "projectlog.php";
 
             <div class="details-container">
 
-                <a href="customerinfo.php?unique=<?php echo $newuser['unique_id'];?>">
-                    <button class="btn land-btn">Customer's Land</button>
-                </a>
 
-                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
-                <a href="editcustomer.php?unique=<?php echo $newuser['unique_id'];?>">
-                    <button class="btn land-btn">Edit Customer</button>
-                </a>
-                <?php }?>
 
 
                 <div class="account-detail2">
@@ -613,7 +637,7 @@ include_once "projectlog.php";
 
                 <div class="account-detail2">
                     <div>
-                        <?php if(empty($newuser['driver_license']) || empty($newuser['passport']) || empty($newuser['nin'])){
+                        <?php if(empty($newuser['home_address']) || empty($newuser['phone_number'])){
     ?>
                         <p>Unverified</p>
                         <?php } else {?>
@@ -634,6 +658,18 @@ include_once "projectlog.php";
                         <?php }?>
                         <span>Next of Kin</span>
                     </div>
+                </div>
+
+                <div class="flexbtn-container">
+                    <a href="customerinfo.php?unique=<?php echo $newuser['unique_id'];?>">
+                        <button class="btn land-btn">Customer's Land</button>
+                    </a>
+
+                    <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
+                    <a href="editcustomer.php?unique=<?php echo $newuser['unique_id'];?>">
+                        <button class="btn land-btn">Edit Customer</button>
+                    </a>
+                    <?php }?>
                 </div>
 
             </div>

@@ -17,11 +17,16 @@ if(!isset($_GET['unique'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         min-height: 100vh;
         overflow-x: hidden;
+    }
+
+    .account-detail2 {
+        padding-bottom: 2em;
+        padding-top: 2em;
     }
 
     .successmodal {
@@ -617,6 +622,13 @@ if(!isset($_GET['unique'])){
                                   }
                                 ?> for <?php echo $value['product_name'];?>
                             </p>
+                        </div>
+                        <div class="inner-detail">
+                            <div class="date">
+                                <span style="font-size: 13px;"><?php echo $value['payment_month'];?></span>&nbsp;<span
+                                    style="font-size: 13px;"><?php echo $value['payment_day'];?></span>&nbsp;<span
+                                    style="font-size: 13px;"><?php echo $value['payment_year'];?>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -13,12 +13,31 @@ include "projectlog.php";
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         height: 150vh;
         position: relative;
         overflow-x: hidden;
+    }
+
+    .dropdown-links {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
     }
 
     .select-box {
@@ -138,7 +157,7 @@ include "projectlog.php";
 
         .dropdown-links {
             width: 6%;
-            height: 90vh;
+            height: 84vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -285,7 +304,7 @@ include "projectlog.php";
 
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -310,12 +329,16 @@ include "projectlog.php";
         }
 
 
+        .close {
+            padding-top: 12em;
+        }
 
+        /* 
         .close {
             position: absolute;
             top: 4em;
             right: 1em;
-        }
+        } */
 
     }
 
@@ -395,8 +418,27 @@ include "projectlog.php";
                 <a href="newuser.php" class="link">New Customer</a>
             </li>
             <li class="links select-link">
-                <a href="creategroup.php"><img src="images/referral.svg" /> </a>
-                <a href="creategroup.php" class="link">Create Group</a>
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
             </li>
 
             <li class="links">
@@ -423,6 +465,8 @@ include "projectlog.php";
                 <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
+
+
 
         <div class="profile-container">
             <div class="page-title2">

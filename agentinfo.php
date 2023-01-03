@@ -17,19 +17,21 @@ if(!isset($_GET['unique'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         min-height: 100vh;
         overflow-x: hidden;
     }
 
+
+
     .successmodal {
         /* display: flex; */
         align-items: center;
         justify-content: center;
         position: absolute;
-        top: 2em;
+        top: 28em;
     }
 
     .successmodal .closemodal {
@@ -116,6 +118,18 @@ if(!isset($_GET['unique'])){
     }
 
     @media only screen and (min-width: 1300px) {
+        .flexbtn-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2em;
+        }
+
+        .flexbtn-container .btn {
+            width: 100%;
+        }
+
         .signup .nav {
             position: absolute;
             right: 40px;
@@ -291,6 +305,27 @@ if(!isset($_GET['unique'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .successmodal {
+            /* display: flex; */
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 28em;
+        }
+
+        .flexbtn-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .flexbtn-container .btn {
+            width: 100%;
+        }
 
         .success {
             position: absolute;
@@ -551,34 +586,6 @@ if(!isset($_GET['unique'])){
                 </div>
                 <?php }?>
             </div>
-            <div class="land-btn-container" style="display: flex; gap: 2em;">
-                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
-                <a href="editagent.php?unique=<?php echo $agent['uniqueagent_id'];?>">
-                    <button class="btn land-btn">Edit Agent</button>
-                </a>
-                <?php }?>
-            </div>
-            <div class="land-btn-container" style="display: flex; gap: 2em;">
-                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
-                <?php if($agent['agent_status'] == "Disabled"){?>
-                <form id="agentform2">
-                    <input type="hidden" name="agentid2" id="agentid2" value="<?php echo $agent['uniqueagent_id'];?>">
-                    <button class="btn land-btn">Enable Agent</button>
-                </form>
-                <?php } else {  ?>
-                <form id="agentform">
-                    <input type="hidden" name="agentid" id="agentid" value="<?php echo $agent['uniqueagent_id'];?>">
-                    <button class="btn land-btn">Disable Agent</button>
-                </form>
-                <?php }}?>
-            </div>
-            <div class="land-btn-container">
-                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
-                <a href="agenthistory.php?unique=<?php echo $agent['uniqueagent_id'];?>">
-                    <button class="btn land-btn">Agent Earning History</button>
-                </a>
-                <?php }?>
-            </div>
 
             <div class="details-container">
 
@@ -661,8 +668,41 @@ if(!isset($_GET['unique'])){
 
 
 
+            <div class="flexbtn-container">
+                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
+                <a href="editagent.php?unique=<?php echo $agent['uniqueagent_id'];?>">
+                    <button class="btn land-btn">Edit Agent</button>
+                </a>
+                <?php }?>
+
+
+                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
+                <?php if($agent['agent_status'] == "Disabled"){?>
+                <form id="agentform2">
+                    <input type="hidden" name="agentid2" id="agentid2" value="<?php echo $agent['uniqueagent_id'];?>">
+                    <button class="btn land-btn">Enable Agent</button>
+                </form>
+                <?php } else {  ?>
+                <form id="agentform">
+                    <input type="hidden" name="agentid" id="agentid" value="<?php echo $agent['uniqueagent_id'];?>">
+                    <button class="btn land-btn">Disable Agent</button>
+                </form>
+                <?php }}?>
+
+
+                <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
+                <a href="agenthistory.php?unique=<?php echo $agent['uniqueagent_id'];?>">
+                    <button class="btn land-btn">Agent Earning History</button>
+                </a>
+                <?php }?>
+            </div>
+
+
+
+
+
             <div class="account-detail3">
-                <a href="logout.php">
+                <a href="logout.php?user=subadmin">
                     <p>Sign Out</p>
                 </a>
             </div>

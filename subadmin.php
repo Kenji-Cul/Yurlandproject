@@ -19,10 +19,29 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <!-- ========= SWIPER CSS ======== -->
     <link rel="stylesheet" href="css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         overflow-x: hidden;
+    }
+
+    .dropdown-links {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
     }
 
     .unverified {
@@ -182,7 +201,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
         .dropdown-links {
             width: 6%;
-            height: 90vh;
+            height: 84vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -333,7 +352,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -342,7 +361,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
-            width: 40%;
+            width: 50%;
             position: fixed;
             bottom: 0;
             border-radius: 8px 0px 0px 8px;
@@ -358,12 +377,15 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         }
 
 
-
         .close {
+            padding-top: 7em;
+        }
+
+        /* .close {
             position: absolute;
             top: 4em;
             right: 1em;
-        }
+        } */
 
     }
 
@@ -503,6 +525,25 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             </li>
 
             <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
+            </li>
+
+            <li class="links">
                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                 <a href="totaltransactions.php" class="link">View Transactions</a>
             </li>
@@ -540,12 +581,16 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
                 <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['subadmin_image'])){?>
-                    <img src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" />
+                    <a href="subadminimg.php" style="color: #808080;">
+                        <img src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" />
+                    </a>
                     <?php }?>
                     <?php if(empty($newuser['subadmin_image'])){?>
-                    <div class="empty-img">
-                        <i class="ri-user-fill"></i>
-                    </div>
+                    <a href="agentimg.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
                     <?php }?>
                     <?php if(empty($newuser['subadmin_image'])){
     ?>

@@ -17,7 +17,7 @@ header("Location: login.php");
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         position: relative;
@@ -378,11 +378,11 @@ header("Location: login.php");
     <ul class="dropdown-links">
         <div class="center">
             <li id="openicon" style="cursor: pointer;">
-                <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                <img src="images/openmenu.svg" />
             </li>
 
             <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                <img src="images/openmenu.svg" />
             </li>
         </div>
         <li class="close">

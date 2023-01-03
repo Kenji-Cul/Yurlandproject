@@ -14,7 +14,7 @@ include "projectlog.php";
     <script src="bootstrap/js/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     .page-title3 {
         flex-direction: column;
@@ -436,6 +436,19 @@ include "projectlog.php";
 
     @media only screen and (max-width: 1300px) {
 
+        .detail-btn p {
+            font-size: 9px;
+            text-transform: capitalize;
+        }
+
+
+        .detail-four p {
+            color: #808080;
+            font-size: 9px;
+        }
+
+
+
         .user,
         #openicon {
             display: none;
@@ -534,11 +547,11 @@ include "projectlog.php";
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -548,6 +561,12 @@ include "projectlog.php";
                 <a href="subadmin.php"><img src="images/home3.svg" /></a>
                 <a href="subadmin.php" class="link">Home</a>
             </li>
+
+            <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
             <li class="links">
                 <a href="allcustomers.php"><img src="images/referral.svg" /></a>
                 <a href="allcustomers.php" class="link">All Customers</a>
@@ -573,11 +592,11 @@ include "projectlog.php";
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -588,10 +607,6 @@ include "projectlog.php";
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
 
-            <li class="links">
-                <a href="usertype.php"><img src="images/land2.svg" /></a>
-                <a href="usertype.php" class="link">New Land</a>
-            </li>
 
 
             <li class="links select-link">
@@ -675,7 +690,7 @@ include "projectlog.php";
                 foreach($landview as $key => $value){
                     
             ?>
-                <div class="updated-land">
+                <div class="updated-land" <?php if($value['product_unit'] == 0){?>style="order: 1;" <?php }?>>
                     <div class="updated-img">
                         <?php if($value['product_unit'] != 0){?>
 

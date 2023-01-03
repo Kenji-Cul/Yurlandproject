@@ -18,7 +18,7 @@ if(!isset($_GET['unique'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         min-height: 100vh;
@@ -572,7 +572,7 @@ if(!isset($_GET['unique'])){
 
         <div class="trans-container">
             <div class="page-title2">
-                <a href="agentprofile.php">
+                <a href="customerprofileinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <p>Transactions</p>

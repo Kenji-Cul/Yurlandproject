@@ -40,7 +40,7 @@ if(isset($_POST["submit"])){
     $paymentdate = date("M-d-Y");
     $paymentmethod = "Outright";
     $payee = $selectuser['first_name']." ".$selectuser['last_name'];
-    if($selectuser['referral_id'] != ""){
+    if($selectuser['referral_id'] != "Yurland"){
         $agent = $user->selectAgentRef($selectuser['referral_id']);
         $userperson = $user->selectUserRef($selectuser['referral_id']);
         if(!empty($agent)){
@@ -240,7 +240,7 @@ header("Location: ".$transaction->data->authorization_url);
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         height: 70vh !important;

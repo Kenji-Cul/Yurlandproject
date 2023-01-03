@@ -17,7 +17,7 @@ if(!isset($_GET['unique'])){
     <script src="bootstrap/js/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     .page-title3 {
         flex-direction: column;
@@ -435,6 +435,18 @@ if(!isset($_GET['unique'])){
 
     @media only screen and (max-width: 1300px) {
 
+        .detail-btn p {
+            font-size: 9px;
+            text-transform: capitalize;
+        }
+
+        .detail-four p {
+            color: #808080;
+            font-size: 9px;
+        }
+
+
+
         .user,
         #openicon {
             display: none;
@@ -534,11 +546,11 @@ if(!isset($_GET['unique'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -573,11 +585,11 @@ if(!isset($_GET['unique'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -659,7 +671,7 @@ if(!isset($_GET['unique'])){
                 foreach($landview as $key => $value){
                     
             ?>
-                <div class="updated-land">
+                <div class="updated-land" <?php if($value['product_unit'] == 0){?>style="order: 1;" <?php }?>>
                     <div class="updated-img">
                         <?php if($value['product_unit'] != 0){?>
                         <a

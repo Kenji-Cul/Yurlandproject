@@ -14,10 +14,14 @@ include "projectlog.php";
     <script src="bootstrap/js/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     .page-title3 {
         flex-direction: column;
+    }
+
+    body {
+        overflow-x: hidden;
     }
 
     header {
@@ -433,6 +437,11 @@ include "projectlog.php";
 
     @media only screen and (max-width: 1300px) {
 
+        .detail-four p {
+            color: #808080;
+            font-size: 9px;
+        }
+
         .user,
         #openicon {
             display: none;
@@ -845,7 +854,7 @@ include "projectlog.php";
             <?php }?>
             data: $(".search-form input"),
             success: function(response) {
-                console.log(response);
+                //console.log(response);
                 $(".subscribed-lands").html(response);
                 //console.log(response);
             }

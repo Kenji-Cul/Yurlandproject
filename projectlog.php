@@ -425,6 +425,8 @@ function checkGroupName($name){
         }
     }
 
+   
+
     function selectPurchasedLands(){
         $sql = "SELECT COUNT(unique_id) FROM land_product WHERE product_unit= 0";
         $result = $this->dbcon->query($sql);
@@ -1070,6 +1072,21 @@ function checkGroupName($name){
         }
     }
 
+    
+    function selectReferredCustomer2($referral){
+        $sql = "SELECT * FROM user WHERE referral_id='{$referral}'";
+        $result = $this->dbcon->query($sql);
+        $rows = array();
+            if($this->dbcon->affected_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    $rows[] = $row;
+                }
+                return $rows;
+            }else{
+                return $rows;
+            }
+    }
+
 
   
     function uploadProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$uniqueid,$purpose,$unitnumber,$budget){
@@ -1295,6 +1312,9 @@ function checkGroupName($name){
 		}
     }
 
+    
+   
+
     function selectAllUsers(){
         $sql = "SELECT * FROM user ORDER BY user_id DESC";
         $result = $this->dbcon->query($sql);
@@ -1417,9 +1437,7 @@ function checkGroupName($name){
 		}
     }
 
-    
    
-
     function selectSubProduct($uniqueid){
         $sql = "SELECT * FROM land_product WHERE unique_id = '{$uniqueid}'";
         $result = $this->dbcon->query($sql);
@@ -1878,6 +1896,25 @@ function checkGroupName($name){
 		}
     }
 
+    function selectAllPayment2(){
+        $sql = "SELECT * FROM payment";
+        $result = $this->dbcon->query($sql);
+	    $rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+                foreach($rows as $key => $value){
+                    return $value;
+                }
+			}
+		}else{
+			return $rows;
+		}
+    }
+
+
+   
+
     function selectCurrentPayment($id){
         $sql = "SELECT * FROM payment WHERE customer_id='{$id}' ORDER BY payment_id DESC LIMIT 5";
         $result = $this->dbcon->query($sql);
@@ -1950,6 +1987,20 @@ function checkGroupName($name){
 		}
     }
 
+    function selectAgentHistory2($id){
+        $sql = "SELECT * FROM land_history WHERE agent_id='{$id}' ORDER BY payment_id DESC LIMIT 6";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
 
     function selectAllHistory(){
         $sql = "SELECT * FROM land_history  ORDER BY payment_id DESC";
@@ -1996,7 +2047,7 @@ function checkGroupName($name){
     }
 
     function selectTotal($id){
-        $sql = "SELECT SUM(product_price) FROM payment WHERE customer_id='{$id}'";
+        $sql = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$id}'";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2152,7 +2203,7 @@ function checkGroupName($name){
 
     
     function selectTotalUsersPayment(){
-        $sql = "SELECT SUM(product_price) FROM payment";
+        $sql = "SELECT SUM(product_price) FROM land_history";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2275,6 +2326,17 @@ function checkGroupName($name){
 
     function updatePayment($userid,$user){
         $sql = "UPDATE payment SET payment_status='Payed' WHERE product_id='{$userid}' AND customer_id='{$user}' AND balance !=0";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+        //   echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+          }else{
+        //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+          }
+    }
+
+    function updateLandUnit($prodid,$soldunit,$boughtunits){
+        $sql = "UPDATE land_product SET product_unit='{$soldunit}', bought_units='{$boughtunits}' WHERE unique_id='{$prodid}'";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows==1){
         //   echo "<h3 align='center'>Photo added successfully</h3>";
@@ -2641,12 +2703,12 @@ $output6 = number_format($outprice);
 
 $output5 = '
 <div class="detail-four" style="gap: 1em;">
-    <p style="color: #808080; font-size: 13px; padding-top: 1em;"><span>Outright
+    <p style="color: #808080; padding-top: 1em;"><span>Outright
             Price:&nbsp;&nbsp;</span>&#8358;'.$output6.'</p>';
 
 
     } else {
-    $output5 = '<p style="color: #ff6600; font-size: 13px; padding-top: 1em;">Subscription Only</p>';
+    $output5 = '<p style="color: #ff6600;  padding-top: 1em;">Subscription Only</p>';
     }
 
 
@@ -2661,18 +2723,18 @@ $output5 = '
     } else {
         $outinprice = round($onemonthprice);
     }
-    $output7 = '<p style="color: #808080; font-size: 13px;"><span>Daily Price:&nbsp;&nbsp;</span>&#8358;'.$outinprice.'
+    $output7 = '<p style="color: #808080;"><span>Daily Price:&nbsp;&nbsp;</span>&#8358;'.$outinprice.'
     </p>
 </div>';
 
-$output8 = '<p style="color: #808080; font-size: 13px;"><span>Subscription Price(18 Months):&nbsp;&nbsp;</span>&#8358;'.$totalprice.'</p>';
+$output8 = '<p style="color: #808080;"><span>Subscription Price(18 Months):&nbsp;&nbsp;</span>&#8358;'.$totalprice.'</p>';
 
 $output .= '<div class="updated-land">
     <div class="updated-img">'.$output1.''.$output3.''.$output4.''.$output5.''.$output8.''.$output7.''.$output11.'';
 
 } else {
 $output7 = '
-<p style="color: #ff6600; font-size: 13px;">Outright Only</p>
+<p style="color: #ff6600;">Outright Only</p>
 </div>';
 
 $output .= '<div class="updated-land">
@@ -2827,12 +2889,12 @@ $output .= '<div class="updated-land">
     
     $output5 = '
     <div class="detail-four" style="gap: 1em;">
-        <p style="color: #808080; font-size: 13px; padding-top: 1em;"><span>Outright
+        <p style="color: #808080;  padding-top: 1em;"><span>Outright
                 Price:&nbsp;&nbsp;</span>&#8358;'.$output6.'</p>';
     
     
         } else {
-        $output5 = '<p style="color: #ff6600; font-size: 13px; padding-top: 1em;">Subscription Only</p>';
+        $output5 = '<p style="color: #ff6600;  padding-top: 1em;">Subscription Only</p>';
         }
     
     
@@ -2847,18 +2909,19 @@ $output .= '<div class="updated-land">
         } else {
             $outinprice = round($onemonthprice);
         }
-        $output7 = '<p style="color: #808080; font-size: 13px;"><span>Daily Price:&nbsp;&nbsp;</span>&#8358;'.$outinprice.'
+        $output7 = '<p style="color: #808080;"><span>Daily Price:&nbsp;&nbsp;</span>&#8358;'.$outinprice.'
         </p>
     </div>';
     
-    $output8 = '<p style="color: #808080; font-size: 13px;"><span>Subscription Price(18 Months):&nbsp;&nbsp;</span>&#8358;'.$totalprice.'</p>';
+    $output8 = '<p style="color: #808080;
+    "><span>Subscription Price(18 Months):&nbsp;&nbsp;</span>&#8358;'.$totalprice.'</p>';
     
     $output .= '<div class="updated-land">
         <div class="updated-img">'.$output1.''.$output3.''.$output4.''.$output5.''.$output8.''.$output7.''.$output11.'';
     
     } else {
     $output7 = '
-    <p style="color: #ff6600; font-size: 13px;">Outright Only</p>
+    <p style="color: #ff6600;">Outright Only</p>
     </div>';
     
     $output .= '<div class="updated-land">
@@ -3016,6 +3079,55 @@ $output .= "
 echo $output;
 }
 
+
+function searchGroup($name){
+    $sql = "SELECT * FROM group_table WHERE group_name = '{$name}'";
+    $result = $this->dbcon->query($sql);
+    $output = "";
+    
+    if($result->num_rows > 0){
+      while($data = $result->fetch_assoc()){
+$output1 = '
+<a href="groupmembers.php?unique='.$data['uniquegroup_id'].'">
+    <div class="account-detail2">
+        <div class="radius"> ';
+            if(!empty($data['group_img'])){
+            $output2 = '<img src="profileimage/'.$data['group_img'].'" alt="profile image" /></div>';
+        }
+        if(empty($data['group_img'])){
+        $output2 = '<div class="empty-img">
+            <i class="ri-user-fill"></i>
+        </div>
+    </div> ';
+    }
+    $output3 ='
+    <div class="flex">
+        <p style="text-transform: capitalize;">
+            <span>Group Head:&nbsp;&nbsp;&nbsp;'.$data['group_head'].'</span>
+        </p>
+        <p style="text-transform: capitalize;">
+            <span>Group Name:&nbsp;&nbsp;&nbsp;'.$data['group_name'].'</span>
+        </p>
+        <p style="text-transform: capitalize;">
+            <span>Group Location:&nbsp;&nbsp;&nbsp;'.$data['group_location'].'</span>
+        </p>
+
+    </div>
+    </div>
+</a>';
+$output .= ''.$output1.''.$output2.''.$output3.'';
+}
+} else {
+$output .= "
+<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>This group does not exist </p>
+</div>
+";
+}
+
+echo $output;
+}
 
 
 

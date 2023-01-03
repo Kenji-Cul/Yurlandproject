@@ -17,10 +17,10 @@ if(!isset($_GET['ref'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
-    body {
-        min-height: 100vh;
+    .profile-body {
+        height: 100vh;
     }
 
     header {
@@ -54,6 +54,14 @@ if(!isset($_GET['ref'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .account-detail2 .flex p {
+            text-overflow: ellipsis !important;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 12px;
+            width: 150px;
+        }
 
         .user,
         #openicon {
@@ -305,34 +313,7 @@ if(!isset($_GET['ref'])){
              $user = new User;
              $newuser = $user->selectUser($_GET['ref']);
             ?>
-        <div class="nav">
-            <a href="cartreview.php">
-                <div class="cart">
-                    <div class="cart-notify"></div>
-                    <img src="images/cart.svg" alt="cart icon" />
-                </div>
-            </a>
-            <img src="images/menu.svg" alt="menu icon" class="menu" />
-            <div class="user">
-                <p><?php if(isset($newuser['first_name'])){  ?>
-                    <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
-                    <?php }?>
-                </p>
-                <div class="profile-image">
-                    <?php if(!empty($newuser['photo'])){?>
-                    <a href="updatedetails.php" style="color: #808080;"><img
-                            src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
-                    <?php }?>
-                    <?php if(empty($newuser['photo'])){?>
-                    <a href="updatedetails.php" style="color: #808080;">
-                        <div class="empty-img">
-                            <i class="ri-user-fill"></i>
-                        </div>
-                    </a>
-                    <?php }?>
-                </div>
-            </div>
-        </div>
+
     </header>
 
 
@@ -453,9 +434,21 @@ if(!isset($_GET['ref'])){
 
         <div class="prof-container">
             <div class="page-title2">
+                <?php if(isset($_SESSION['unique_id'])){?>
                 <a href="settings.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
+                <?php }?>
+                <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+                <a href="allcustomers.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <?php }?>
+                <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+                <a href="superadmin.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <?php }?>
                 <p>Referral Information</p>
             </div>
 

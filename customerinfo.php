@@ -22,7 +22,7 @@ if(!isset($_GET['unique'])){
     <!-- ========= SWIPER CSS ======== -->
     <link rel="stylesheet" href="css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
         overflow-x: hidden;
@@ -548,6 +548,10 @@ if(!isset($_GET['unique'])){
             font-size: 13px;
         }
 
+        .deleted-div {
+            width: 300px;
+        }
+
 
         .success {
             position: absolute;
@@ -774,11 +778,11 @@ if(!isset($_GET['unique'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -899,6 +903,12 @@ if(!isset($_GET['unique'])){
                 
                 if(isset($_POST["deletep".$name])){
                     $insertuser = $user->DeleteProductP($value['product_id'],$_GET['unique'],$value['payment_method'],$value['payment_id']);
+                    $checkland = $user->selectLandImage($value['product_id']);
+                    foreach ($checkland as $key => $value2) {
+                        $soldunit = $value2['product_unit'] + $value['product_unit'];
+                        $boughtunits = $value2['bought_units'] - $value['product_unit'];
+                        $updateland = $user->updateLandUnit($value['product_id'],$soldunit,$boughtunits);
+                    }
                     $deletedp = "deletedp";
                         header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
                     

@@ -1,5 +1,6 @@
 <?php 
 session_start();
+include_once "projectlog.php";
 if(isset($_SESSION['unique_id'])){
     header("Location: profile.php");
 }
@@ -15,7 +16,7 @@ if(isset($_SESSION['unique_id'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     .login-body {
         display: grid;

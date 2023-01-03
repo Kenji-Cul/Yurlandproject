@@ -17,12 +17,15 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <link rel="stylesheet" href="css/index.css" />
-    <title>Yurland</title>
+    <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
-        min-height: 200vh;
         position: relative;
         overflow-x: hidden;
+    }
+
+    .profile-body {
+        height: 100vh;
     }
 
 
@@ -296,6 +299,9 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     @media only screen and (max-width: 1300px) {
 
 
+        .page-title2 p {
+            font-size: 15px;
+        }
 
 
 
@@ -383,7 +389,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 
@@ -421,7 +427,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <header class="signup">
         <div class="logo">
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
-            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
@@ -463,11 +469,11 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -478,8 +484,16 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="subadmin.php" class="link">Home</a>
             </li>
             <li class="links">
-                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="allcustomers.php" class="link">All Customers</a>
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
             </li>
             <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
@@ -487,12 +501,27 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             </li>
 
             <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
                 <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
 
@@ -648,20 +677,25 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                         //   $time2 = date_add($date2, date_interval_create_from_date_string("30 days"));
                         //   $period = date_format($time2, "M-d-Y");
                       
-                        
+                        $default = [];
                           foreach($allpayusers as $key => $value){
+                           
                           if($value['payment_date'] == $lastsevendays){
+                            array_push($default,$value['customer_id']);
                             
+                           
                             
-                            $lastpaiduser = $user->selectUser($value['customer_id']);
-                            
-?>
-                            <span name="landuser3"
-                                style="display: none;"><?php echo $lastpaiduser['customer_id']?></span>
-                            <?php
-                          }  
-                          }
-                              ?>
+?> <?php
+}  
+}
+
+$default2 = array_unique($default);
+for ($i=0; $i < count($default2); $i++) { 
+    
+$lastpaiduser = $user->selectUser($default2[$i]);
+    ?>
+                            <span name="landuser3" style="display: none;"><?php echo $lastpaiduser['unique_id']?></span>
+                            <?php }?>
                         </div>
                     </div>
                 </div>
@@ -688,6 +722,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
         landvalues.push(parseInt(element.innerHTML));
     });
+
     document.querySelector('.landusercount').innerHTML = landvalues.length;
 
     let landuser2 = document.getElementsByName("landuser2");
@@ -697,6 +732,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
         landvalues2.push(parseInt(element.innerHTML));
     });
+
     document.querySelector('.landusercount2').innerHTML = landvalues2.length;
 
     let landuser3 = document.getElementsByName("landuser3");
