@@ -23,6 +23,25 @@ if(!isset($_GET['unique'])){
         flex-direction: column;
     }
 
+    .dropdown-links {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+    }
+
     body {
         overflow-x: hidden;
         background-image: none;
@@ -306,7 +325,7 @@ if(!isset($_GET['unique'])){
 
             .dropdown-links {
                 width: 6%;
-                height: 90vh;
+                height: 84vh;
                 border-radius: 0px !important;
                 padding: 1em 0;
                 display: flex;
@@ -534,6 +553,16 @@ if(!isset($_GET['unique'])){
         </div>
         <?php }?>
 
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
         </div>
@@ -579,6 +608,101 @@ if(!isset($_GET['unique'])){
             </li>
         </ul>
         <?php }?>
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="superadmin.php"><img src="images/home3.svg" /></a>
+                <a href="superadmin.php" class="link">Home</a>
+            </li>
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
+                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
+                <a href="createexecutive.php" class="link">Create Executive</a>
+            </li>
+
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
+                <a href="createsubadmin.php" class="link">Create Subadmin</a>
+            </li>
+
+            <li class="links">
+                <a href="productperiod.php"><img src="images/land2.svg" /></a>
+                <a href="productperiod.php" class="link">Create Plan</a>
+            </li>
+
+            <li class="links">
+                <a href="selectprice.php"><img src="images/land2.svg" /></a>
+                <a href="selectprice.php" class="link">Create Product</a>
+            </li>
+
+            <li class="links">
+                <a href="#"><img src="images/updown.svg" /></a>
+                <a href="#" class="link">Pay Earnings</a>
+            </li>
+
+            <li class="links">
+                <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="supadmininfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
+            </li>
+        </ul>
+
+        <?php }?>
+
+
 
         <?php if(isset($_SESSION['uniqueagent_id'])){?>
 
@@ -645,6 +769,10 @@ if(!isset($_GET['unique'])){
                 </a>
                 <?php } else if(isset($_SESSION['uniquesubadmin_id'])){?>
                 <a href="subadmin.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <?php } else if(isset($_SESSION['uniquesupadmin_id'])){?>
+                <a href="superadmin.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <?php }?>
@@ -717,10 +845,19 @@ if(!isset($_GET['unique'])){
                             <?php if($value['outright_price'] != 0){
                      $outprice = $value['outright_price'];
                     $onemonthprice = $value['onemonth_price'];
+                    $allocationfee = $value['allocation_fee'];
                         ?>
                             <p><span>Outright Price:&nbsp;&nbsp;</span>&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999 || $outprice > 9999999){
                           echo number_format($outprice);
                         }?></p>
+
+                            <?php if($value['outright_price'] != 0 && $value['onemonth_price'] == 0){?>
+                            <p><span>Allocation Fee:&nbsp;&nbsp;</span>&#8358;<?php if($allocationfee > 999 || $allocationfee > 9999 || $allocationfee > 99999 || $allocationfee > 999999 || $allocationfee > 9999999){
+                          echo number_format($allocationfee);
+                        } else {
+                           echo round($allocationfee);
+                        }?></p>
+                            <?php }?>
                             <?php } else {?>
                             <p style="color: #ff6600;">Subscription Only</p>
                             <?php }?>
@@ -729,6 +866,7 @@ if(!isset($_GET['unique'])){
                         $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
                         $totalprice = $overallprice + $value['onemonth_price'];
                         $onemonthprice = $totalprice / 540;
+                        $allocationfee = $value['allocation_fee'];
           
               
 
@@ -741,12 +879,33 @@ if(!isset($_GET['unique'])){
                         } else {
                             echo round($onemonthprice);
                         }?></p>
+                            <p><span>Allocation Fee:&nbsp;&nbsp;</span>&#8358;<?php if($allocationfee > 999 || $allocationfee > 9999 || $allocationfee > 99999 || $allocationfee > 999999 || $allocationfee > 9999999){
+                          echo number_format($allocationfee);
+                        } else {
+                           echo round($allocationfee);
+                        }?></p>
 
                             <?php } else {?>
                             <p style="color: #ff6600;">Outright Only</p>
                             <?php }} else {?>
                             <p>Sold Out</p>
                             <?php }?>
+                        </div>
+
+                        <div class="detail-four">
+                            <p>Features</p>
+                            <div class="detail">
+                                <img src="images/ellipse.svg" alt="">
+                                <p><?php echo $value['product_description'];?></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-four">
+                            <p>Purpose</p>
+                            <div class="detail">
+                                <img src="images/ellipse.svg" alt="">
+                                <p><?php echo $value['purpose'];?></p>
+                            </div>
                         </div>
 
                         <?php if($value['product_unit'] != 0){?>

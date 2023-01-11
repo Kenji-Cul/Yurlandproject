@@ -8,6 +8,10 @@ $selectagent = $user->selectAgent($_SESSION['uniqueagent_id']);
 if(isset($_SESSION['uniquesubadmin_id'])){
 $subadmin = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
 }
+
+if(isset($_SESSION['uniquesupadmin_id'])){
+  $subadmin = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+  }
 if(isset($_SESSION['uniqueagent_id'])){
   $payee = $selectagent['agent_name'];
   $agentid = $selectagent['uniqueagent_id'];
@@ -15,6 +19,11 @@ if(isset($_SESSION['uniqueagent_id'])){
 
 if(isset($_SESSION['uniquesubadmin_id'])){
   $payee = $subadmin['subadmin_name'];
+  $agentid = $suabadmin['unique_id'];
+}
+
+if(isset($_SESSION['uniquesupadmin_id'])){
+  $payee = $subadmin['super_adminname'];
   $agentid = $suabadmin['unique_id'];
 }
 $email = $selectuser['email'];
@@ -64,16 +73,16 @@ if($message == "Plan created"){
       $unit_added = $_GET['unit'] / 4;
       $added_unit = $_GET['unit'] + $unit_added;
  
- $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid);
+ $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid,$allocationfee,$limitperiod,$totalprice);
 
- $inserthistory = $land->insertPayHistory($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid);
+ $inserthistory = $land->insertPayHistory($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid,$allocationfee,$limitperiod);
 
  
  $update = $land->updateUnit($deducted_unit,$uniqueproduct);
  } else {
-     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid);
+     $insertpayment = $land->insertPayment($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid,$allocationfee,$limitperiod,$totalprice);
 
-     $inserthistory = $land->insertPayHistory($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid);
+     $inserthistory = $land->insertPayHistory($uniqueperson,$uniqueproduct,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$_GET['unit'],$paymentmethod,$paymentdate,$_GET['data'],$intervalinput,round($price),$payee,$agentid,$allocationfee,$limitperiod);
      $update = $land->updateUnit($deducted_unit,$uniqueproduct);
  }
 

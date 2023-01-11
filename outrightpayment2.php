@@ -18,6 +18,10 @@ if(isset($_SESSION['uniqueagent_id'])){
     $subadmin = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
     }
 
+    if(isset($_SESSION['uniquesupadmin_id'])){
+        $subadmin = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+        }
+
    
     $landview = $user->selectLandImage($_GET['uniqueid']);
     if(!empty($landview)){
@@ -34,6 +38,7 @@ if(isset($_POST["submit"])){
     $uniqueproduct = $_GET['uniqueid'];
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
+    $allocationfee = $value['allocation_fee'];
     $deducted_unit = $value['product_unit'] - $_GET['unit'];
     $boughtunit = $_GET['unit'] + $value['bought_units'];
     $productlocation = $value['product_location'];
@@ -51,6 +56,11 @@ if(isset($_POST["submit"])){
 
     if(isset($_SESSION['uniquesubadmin_id'])){
         $payee = $subadmin['subadmin_name'];
+        $agentid = $subadmin['unique_id'];
+    }
+
+    if(isset($_SESSION['uniquesupadmin_id'])){
+        $payee = $subadmin['super_adminname'];
         $agentid = $subadmin['unique_id'];
     }
    
@@ -175,6 +185,12 @@ if(isset($_POST["submit"])){
                 "value" => $agentid
             ],
 
+            [
+                "display_name" => "Allocation Fee",
+                "variable_name" => "allocation fee",
+                "value" =>  $allocationfee
+            ],
+
 
           ]
        ]
@@ -276,6 +292,16 @@ if(isset($_POST["submit"])){
         <div class="logo">
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>

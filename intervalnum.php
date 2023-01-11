@@ -49,27 +49,33 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
                 header("Location: verify3.php?error=".$error."");
             } else {
     if($_GET['data'] == "onemonth"){
+        $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['onemonth_period'];
         $limit = $value['onemonth_period'];
         } else if($_GET['data'] == "threemonths"){
+            $totalprice = $_GET['tot'];
             $price = $_GET['tot'] / $value['threemonth_period'];
         $limit = $value['threemonth_period'];
         } else if($_GET['data'] == "sixmonths"){
+            $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['sixmonth_period'];
         $limit = $value['sixmonth_period'];
         } else if($_GET['data'] == "twelvemonths"){
+            $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['twelvemonth_period'];
         $limit = $value['twelvemonth_period'];
         } else if($_GET['data'] == "eighteenmonths"){
+            $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['eighteen_period'];
         $limit = $value['eighteen_period'];
         }
 
-    
+       
     $uniqueperson = $_SESSION['unique_id'];
     $uniqueproduct = $_GET['uniqueid'];
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
+    $allocationfee = $value['allocation_fee'];
     $deducted_unit = $value['product_unit'] - $_GET['unit'];
     $boughtunit = $_GET['unit']  + $value['bought_units'];
     $productlocation = $value['product_location'];
@@ -93,6 +99,8 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
     } else if($_POST['intervalinput'] == 'monthly'){
         $limitperiod = $limit * 30;
     }
+
+   
 
 $curl = curl_init();
 

@@ -18,6 +18,10 @@ $selectagent = $user->selectAgent($_SESSION['uniqueagent_id']);
 if(isset($_SESSION['uniquesubadmin_id'])){
 $subadmin = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
 }
+
+if(isset($_SESSION['uniquesupadmin_id'])){
+    $subadmin = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+    }
    
     $landview = $user->selectLandImage($_GET['uniqueid']);
     $checklastpayment = $user->selectLastPay($_GET['user'],$_GET['uniqueid']);
@@ -89,7 +93,7 @@ if(isset($_POST["submit"])){
     
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
-   
+    $allocationfee = $value['allocation_fee'];
 
     if(isset($_GET['remunit'])){
         $deducted_unit = $value['product_unit'];
@@ -119,6 +123,11 @@ if(isset($_POST["submit"])){
 
     if(isset($_SESSION['uniquesubadmin_id'])){
         $payee = $subadmin['subadmin_name'];
+        $agentid = $subadmin['unique_id'];
+    }
+
+    if(isset($_SESSION['uniquesupadmin_id'])){
+        $payee = $subadmin['super_adminname'];
         $agentid = $subadmin['unique_id'];
     }
  
@@ -267,6 +276,13 @@ if(isset($_POST["submit"])){
                 "variable_name" => "Agentid",
                 "value" => $agentid
             ],
+
+            [
+                "display_name" => "Allocation Fee",
+                "variable_name" => "allocation fee",
+                "value" =>  $allocationfee
+            ],
+
 
             [
                 "display_name" => "Chosen Plan",
@@ -423,6 +439,7 @@ if(empty($checklastpayment)){
     
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
+    $allocationfee = $value['allocation_fee'];
    
 
     if(isset($_GET['remunit'])){
@@ -453,6 +470,11 @@ if(empty($checklastpayment)){
 
     if(isset($_SESSION['uniquesubadmin_id'])){
         $payee = $subadmin['subadmin_name'];
+        $agentid = $subadmin['unique_id'];
+    }
+
+    if(isset($_SESSION['uniquesupadmin_id'])){
+        $payee = $subadmin['super_adminname'];
         $agentid = $subadmin['unique_id'];
     }
  
@@ -601,6 +623,13 @@ if(empty($checklastpayment)){
                 "variable_name" => "Agentid",
                 "value" => $agentid
             ],
+
+            [
+                "display_name" => "Allocation Fee",
+                "variable_name" => "allocation fee",
+                "value" =>  $allocationfee
+            ],
+
 
             [
                 "display_name" => "Chosen Plan",
@@ -754,6 +783,28 @@ if(empty($checklastpayment)){
         <div class="logo">
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
+
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>

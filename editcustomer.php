@@ -481,6 +481,9 @@ if(!isset($_GET['unique'])){
                     </div>
 
 
+                    <div class="valuediv2" style="display: none;"></div>
+
+
                     <div class="input-div number">
                         <label for="earning">Earning Percentage</label>
                         <input type="number" id="earning" placeholder="Enter earning percentage" name="earning"
@@ -588,11 +591,19 @@ if(!isset($_GET['unique'])){
     };
 
     let valuediv = document.querySelector('.valuediv');
+    let valuediv2 = document.querySelector('.valuediv2');
 
     let purpose = document.getElementsByName("gender");
     purpose.forEach((element) => {
         element.onclick = () => {
             valuediv.innerHTML = element.value;
+        };
+    });
+
+    let purpose2 = document.getElementsByName("relation");
+    purpose2.forEach((element) => {
+        element.onclick = () => {
+            valuediv2.innerHTML = element.value;
         };
     });
 
@@ -680,7 +691,7 @@ if(!isset($_GET['unique'])){
 
     function insertDetails() {
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", `inserters/edituser.php?gender=${valuediv.innerHTML}`, true);
+        xhr.open("POST", `inserters/edituser.php?gender=${valuediv.innerHTML}&relation=${valuediv2.innerHTML}`, true);
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {

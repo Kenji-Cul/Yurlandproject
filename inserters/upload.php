@@ -6,16 +6,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
    $nin = $_POST['nin'];
    $filename = $_FILES['passport']['name'];
    $file_error = $_FILES['passport']['error'];
-   $deter = $_POST['docsinput'];
+   $deter = $_GET['docsinput'];
   
-if(empty($nin) || empty($filename)){
-    $errormsg = "Please input all fields";
-}  else if(strlen($nin) !== 11){
-    $errormsg = "Please input your NIN correctly";
-}  
 
-
-else {
      $user = new User;
      if($deter == "Passport"){
      $insertdocument = $user->insertDocuments($_SESSION['unique_id'],$nin);
@@ -23,7 +16,7 @@ else {
         $insertdocs = $user->insertLicense($_SESSION['unique_id']);
      }
 
-}
+
 
 if(isset($errormsg)){
     echo $errormsg;

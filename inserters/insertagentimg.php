@@ -5,16 +5,14 @@ include_once "../projectlog.php";
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $address = $_POST['address'];
     $num = $_POST['num'];
+    $bankname = $_POST['bankname'];
+    $accountnum = $_POST['accountnum'];
+    $accountname = $_POST['accountname'];
     $filename = $_FILES['image']['name'];
-    if(empty($address) || empty($num)){
-        $errormsg = "Please input all fields";
-    }
-    else if(empty($filename)){
-        $errormsg = "Please Select Your File";
-    } else {
+  
      $user = new User;
-     $insertdocument = $user->updateAgentDetails($_SESSION['uniqueagent_id'],check_input($address),check_input($num));
-    }
+     $insertdocument = $user->updateAgentDetails($_SESSION['uniqueagent_id'],check_input($address),check_input($num),check_input($bankname),check_input($accountnum),check_input($accountname));
+    
 
 }
 

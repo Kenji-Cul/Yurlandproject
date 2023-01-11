@@ -39,6 +39,37 @@ if(!isset($_SESSION['unique_id'])){
     }
 
 
+    .radius {
+        position: relative;
+    }
+
+    .radius img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .detail3 {
+        width: 140px !important;
+        position: relative;
+    }
+
+    .detail3 {
+        width: 100px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .transaction-details2 {
+        border-radius: 8px;
+        /* border: 2px solid black; */
+        padding: 1em 2em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 90%;
+    }
+
     .no-lands {
         width: 100%;
         height: 100%;
@@ -77,6 +108,22 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .transaction-details2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+
+
+        .transaction-details2 {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
+        }
 
         .navigation-div .allocation {
             background: #ffffff;
@@ -449,9 +496,9 @@ if(!isset($_SESSION['unique_id'])){
             </div>
 
             <!-- <div class="no-lands">
-        <img src="images/asset_success.svg" alt="success image" />
-        <p>You have not uploaded any document yet!!</p>
-    </div> -->
+            <img src="images/asset_success.svg" alt="success image" />
+           <p>You have not uploaded any document yet!!</p>
+              </div> -->
 
             <div class="navigation-div">
                 <div class="navig">
@@ -467,24 +514,64 @@ if(!isset($_SESSION['unique_id'])){
 
             <?php 
              $land = new User;
-             $landview = $land->selectPayment($_SESSION['unique_id']);
+             $landview = $land->selectAllocationLetter($_SESSION['unique_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
             ?>
+            <div class="transaction-details2">
+                <div class="radius">
+                    <img src="landimage/<?php echo $value['product_image'];?>" alt="">
+                </div>
+                <div class="details">
+                    <p class="pname"><?php echo $value['product_name'];?></p>
+                    <div class="inner-detail">
+                        <div class="date">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        </div>
+                    </div>
+                </div>
+                <div class="price-detail detail3"><?php 
+            if($value['product_unit'] == "1"){
+                echo $value['product_unit']." Unit";
+            } else {
+                echo $value['product_unit']." Units";
+            }
+         ?>
+                </div>
+                <div class="price-detail detail3"><?php 
+            echo $value['allocation_letter'];
+            ?></div>
+                <div class="price-detail">
+
+                    <a href="userdocuments/<?php echo $value['allocation_letter'];?>">
+                        <button class="btn land-btn" style="width: 70px; margin-top: 0;"><i class="ri-download-line"
+                                id="export"></i></button>
+                    </a>
+
+                    </p>
+                </div>
+            </div>
+
+
+
+
 
 
             <?php }}?>
 
-            <?php if(empty($landview['allocation_letter'])){?>
+            <?php if(empty($landview)){?>
             <div class="success">
                 <img src="images/whoops.svg" alt="" />
                 <p>Whoops, You don't have allocation letters yet</p>
             </div>
             <?php }?>
-
         </div>
     </div>
+
+
+
+
 
     <script src="js/main.js"></script>
     <script src="js/cart.js"></script>

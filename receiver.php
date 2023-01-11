@@ -30,7 +30,7 @@ include "projectlog.php";
         
         foreach($landuse as $key => $value){
             $balance = $value['product_price'] + $amount;
-            $sub = $user->insertPayment2($land['unique_id'],$product,$balance); 
+            $sub = $user->insertPayment2($land['unique_id'],$product,$balance,$land['allocation_fee']); 
            
             $inserthistory = $land->insertPayHistory($land['unique_id'],$value['product_id'],$value['product_name'],$paymentmonth,$paymentday,$paymentyear,$paymenttime,$value['product_location'],$value['product_price'],$value['product_image'],$value['product_unit'],$paymentmethod,$paymentdate,$value['product_plan'],$value['sub_period'],$value['product_price'],$value['payee'],$value['agent_id']);
         }

@@ -605,13 +605,9 @@ include_once "projectlog.php";
                     <a href="customerprofileinfo.php?unique=<?php echo $lastpaiduser['unique_id'];?>&real=91838JDFOJOEI939"
                         style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>
                 </div>
-                <?php } else {?>
-
-                <div class="success">
-                    <img src="images/asset_success.svg" alt="" />
-                    <p>There are no default customers yet!</p>
-                </div>
                 <?php }?>
+
+
 
                 <?php }?>
                 <?php if(empty($lastpaiduser)){?>

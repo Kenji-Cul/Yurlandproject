@@ -14,6 +14,7 @@ include_once "projectlog.php";
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
@@ -588,11 +589,58 @@ include_once "projectlog.php";
             </div>
 
 
+            <form action="" class="download-form">
+                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
+                        id="export"></i></button>
+            </form>
+
+
+            <table id="user-data" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Agent ID</th>
+                        <th>Agent Name</th>
+                        <th>Agent Number</th>
+                        <th>Agent Date</th>
+                        <th>Bank Name</th>
+                        <th>Account Number</th>
+                        <th>Reg Account Name</th>
+                        <th>Agent Email</th>
+                        <th>Earning Percentage</th>
+                        <th>Home Address</th>
+                    </tr>
+                </thead>
+                <tbody class="table-data">
+
+                    <?php 
+    $user = new User;
+   
+    $customer = $user ->selectAllAgents();
+    if(!empty($customer)){
+        foreach($customer as $key => $value){
+    ?>
+                    <tr>
+                        <td><?php echo $value['agent_id'];?></td>
+                        <td><?php echo $value['agent_name'];?></td>
+                        <td><?php echo $value['agent_num'];?></td>
+                        <td><?php echo $value['agent_date'];?></td>
+                        <td><?php echo $value['bank_name'];?></td>
+                        <td><?php echo $value['account_number'];?></td>
+                        <td><?php echo $value['reg_account_name'];?></td>
+                        <td><?php echo $value['agent_email'];?></td>
+                        <td><?php echo $value['earning_percentage'];?></td>
+                        <td><?php echo $value['home_address'];?></td>
+                    </tr>
+                    <?php }}?>
+                </tbody>
+            </table>
+
+
             <div class="details-container">
 
 
                 <?php 
-    $user = new User;
+  
    
     $customer = $user ->selectAllAgents();
     if(!empty($customer)){
@@ -654,7 +702,7 @@ include_once "projectlog.php";
         searchinput2.onkeyup = () => {
             let xhr = new XMLHttpRequest();
             xhr.open("POST",
-                `searchagent.php`);
+                `searchagent.php?user=subadmin`);
 
             xhr.onload = () => {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -668,6 +716,32 @@ include_once "projectlog.php";
             xhr.send(formData);
         }
     }
+
+    let downloadbtn = document.querySelector('.download-form .land-btn');
+    let downloadform = document.querySelector('.download-form');
+    downloadform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    function htmlTableToExcel(type) {
+        var userdata = document.getElementById('user-data');
+        var file = XLSX.utils.table_to_book(userdata, {
+            sheet: "sheet1"
+        });
+        XLSX.write(file, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        });
+
+        XLSX.writeFile(file, 'agentdata.' + type);
+    }
+
+    downloadbtn.onclick = () => {
+        htmlTableToExcel('xlsx');
+
+    }
+
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

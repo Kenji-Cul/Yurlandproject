@@ -68,6 +68,7 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
     $uniqueproduct = $_GET['uniqueid'];
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
+    $allocationfee = $value['allocation_fee'];
     $deducted_unit = $value['product_unit'] - $_GET['unit'];
     $boughtunit = $_GET['unit']  + $value['bought_units'];
     $productlocation = $value['product_location'];
@@ -141,7 +142,7 @@ if(isset($_SESSION['unique_id'])){
         unset($_SESSION['cart'][$uniqueproduct]);}
     }
   
-    if(isset($_SESSION['uniqueagent_id']) || $_SESSION['uniquesubadmin_id']){
+    if(isset($_SESSION['uniqueagent_id']) || $_SESSION['uniquesubadmin_id'] || $_SESSION['uniquesupadmin_id']){
         $delete = $land->DeleteCartId($uniqueproduct,$uniqueperson);
     
         if (isset($uniqueproduct) && is_numeric($uniqueproduct) && isset($uniqueproduct) && isset($_SESSION['cart'][$uniqueproduct])) {
@@ -227,6 +228,16 @@ include_once "initialize2.php";
         <div class="logo">
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>

@@ -1,9 +1,7 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['uniquesubadmin_id'])){
-    header("Location: teamspace.php");
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -23,6 +21,26 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         position: relative;
         overflow-x: hidden;
     }
+
+    .dropdown-links {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+    }
+
 
     .profile-body {
         height: 100vh;
@@ -166,7 +184,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
         .dropdown-links {
             width: 6%;
-            height: 90vh;
+            height: 84vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -428,18 +446,27 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         <div class="logo">
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
-            <?php } else {?>
+            <?php }  else if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }  else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
 
         <?php 
              $user = new User;
+             if(isset($_SESSION['uniquesubadmin_id'])){
              $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+             }
+
+             if(isset($_SESSION['uniquesupadmin_id'])){
+                $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+                }
             ?>
 
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <div class="user">
                 <p><?php if(isset($newuser['subadmin_name'])){  ?>
                     <span><?php echo $newuser['subadmin_name']; ?></span>&nbsp;
@@ -459,13 +486,36 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     <?php }?>
                 </div>
             </div>
+            <?php }?>
+
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <div class="user">
+                <p><?php if(isset($newuser['super_adminname'])){  ?>
+                    <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['admin_image'])){?>
+                    <a href="supadminimg.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['admin_image'])){?>
+                    <a href="supadminimg.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
+            <?php }?>
         </div>
 
     </header>
 
 
     <div class="flex-container">
-
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
@@ -524,6 +574,100 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="superadmin.php"><img src="images/home3.svg" /></a>
+                <a href="superadmin.php" class="link">Home</a>
+            </li>
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
+                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
+                <a href="createexecutive.php" class="link">Create Executive</a>
+            </li>
+
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
+                <a href="createsubadmin.php" class="link">Create Subadmin</a>
+            </li>
+
+            <li class="links">
+                <a href="productperiod.php"><img src="images/land2.svg" /></a>
+                <a href="productperiod.php" class="link">Create Plan</a>
+            </li>
+
+            <li class="links">
+                <a href="selectprice.php"><img src="images/land2.svg" /></a>
+                <a href="selectprice.php" class="link">Create Product</a>
+            </li>
+
+            <li class="links">
+                <a href="#"><img src="images/updown.svg" /></a>
+                <a href="#" class="link">Pay Earnings</a>
+            </li>
+
+            <li class="links">
+                <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="supadmininfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
+            </li>
+        </ul>
+
+        <?php }?>
 
 
 
@@ -540,7 +684,13 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
             <?php 
              $user = new User;
-             $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+             if(isset($_SESSION['uniquesubadmin_id'])){
+                $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+                }
+   
+                if(isset($_SESSION['uniquesupadmin_id'])){
+                   $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+                   }
             ?>
 
             <div class="payment-image-div2">

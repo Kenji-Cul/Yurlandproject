@@ -477,6 +477,9 @@ if(!isset($_SESSION['unique_id'])){
                         <div class="selected">Choose Below</div>
                     </div>
 
+                    <div class="valuediv" style="display: none;"></div>
+
+
                     <p class="error">Please input all fields</p>
 
                     <button class="btn" type="submit">
@@ -602,9 +605,18 @@ if(!isset($_SESSION['unique_id'])){
         btn.appendChild(loadingImg);
     };
 
+    let valuediv = document.querySelector('.valuediv');
+
+    let purpose = document.getElementsByName("relation");
+    purpose.forEach((element) => {
+        element.onclick = () => {
+            valuediv.innerHTML = element.value;
+        };
+    });
+
     function insertNextOfKin() {
         let xhr = new XMLHttpRequest(); //creating XML Object
-        xhr.open("POST", "insertnextofkin.php", true);
+        xhr.open("POST", `insertnextofkin.php?relation=${valuediv.innerHTML}`, true);
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
@@ -616,6 +628,7 @@ if(!isset($_SESSION['unique_id'])){
                     } else {
                         document.querySelector("section .error").style.visibility =
                             "visible";
+                        document.querySelector("section .error").textContent = data;
                         document.querySelector(".btn").textContent = "Save Changes";
                     }
                 }

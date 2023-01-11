@@ -730,10 +730,19 @@ include "projectlog.php";
                             <?php if($value['outright_price'] != 0){
                      $outprice = $value['outright_price'];
                     $onemonthprice = $value['onemonth_price'];
+                    $allocationfee = $value['allocation_fee'];
                         ?>
                             <p><span>Outright Price:&nbsp;&nbsp;</span>&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999 || $outprice > 9999999){
                           echo number_format($outprice);
                         }?></p>
+
+                            <?php if($value['outright_price'] != 0 && $value['onemonth_price'] == 0){?>
+                            <p><span>Allocation Fee:&nbsp;&nbsp;</span>&#8358;<?php if($allocationfee > 999 || $allocationfee > 9999 || $allocationfee > 99999 || $allocationfee > 999999 || $allocationfee > 9999999){
+                          echo number_format($allocationfee);
+                        } else {
+                           echo round($allocationfee);
+                        }?></p>
+                            <?php }?>
                             <?php } else {?>
                             <p style="color: #ff6600;">Subscription Only</p>
                             <?php }?>
@@ -742,7 +751,7 @@ include "projectlog.php";
                         $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
                         $totalprice = $overallprice + $value['onemonth_price'];
                         $onemonthprice = $totalprice / 540;
-          
+                        $allocationfee = $value['allocation_fee'];
               
 
                         ?>
@@ -753,6 +762,11 @@ include "projectlog.php";
                           echo number_format($onemonthprice);
                         } else {
                             echo round($onemonthprice);
+                        }?></p>
+                            <p><span>Allocation Fee:&nbsp;&nbsp;</span>&#8358;<?php if($allocationfee > 999 || $allocationfee > 9999 || $allocationfee > 99999 || $allocationfee > 999999 || $allocationfee > 9999999){
+                          echo number_format($allocationfee);
+                        } else {
+                           echo round($allocationfee);
                         }?></p>
 
                             <?php } else {?>
@@ -767,6 +781,14 @@ include "projectlog.php";
                             <div class="detail">
                                 <img src="images/ellipse.svg" alt="">
                                 <p><?php echo $value['product_description'];?></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-four">
+                            <p>Purpose</p>
+                            <div class="detail">
+                                <img src="images/ellipse.svg" alt="">
+                                <p><?php echo $value['purpose'];?></p>
                             </div>
                         </div>
 

@@ -173,10 +173,15 @@ if(!isset($_GET['pose'])){
             </div>
 
             <div class="input-div name">
-                <input type="hidden" id="purpose" name="purpose" placeholder="Input estate feature" value="<?php if(($_GET['pose'] === "residential") || $_GET['pose'] === "commercial"){
+                <label for="allocationfee">Allocation Fee</label>
+                <input type="number" id="allocationfee" placeholder="Input allocation fee" name="allocationfee" />
+            </div>
+
+            <div class="input-div name">
+                <input type="hidden" id="purpose" name="purpose" placeholder="Input estate feature" value="<?php if(($_GET['pose'] === "Residential") || $_GET['pose'] === "Commercial"){
                     echo $_GET['pose'];
                 } else {
-                    header("Location: selectprice.html");
+                    header("Location: selectprice.php");
                 }?>" />
             </div>
 
@@ -247,7 +252,7 @@ if(!isset($_GET['pose'])){
             valuediv2.innerHTML = element.value;
         };
     });
-    .
+
 
 
 

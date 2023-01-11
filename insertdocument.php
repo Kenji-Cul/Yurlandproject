@@ -471,14 +471,7 @@ if(!isset($_SESSION['unique_id'])){
     </div>
 
 
-    <footer class="footerdiv">
-        <p>YurLAND &#169; 2022 | All Right Reserved</p>
-        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
-        <p>Connect with us Facebook, Twitter, Instagram</p>
-        <p style="font-size: 30px">
-            <i class="ri-instagram-line"></i><i class="ri-facebook-fill"></i><i class="ri-twitter-line"></i>
-        </p>
-    </footer>
+
 
     <script src="js/main.js"></script>
     <script src="js/cart.js"></script>
@@ -675,7 +668,7 @@ if(!isset($_SESSION['unique_id'])){
 
     submitbtn.onclick = () => {
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "inserters/upload.php");
+        xhr.open("POST", `inserters/upload.php?docsinput=${valuecon.value}`);
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {

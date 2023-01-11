@@ -687,18 +687,29 @@ if(!isset($_SESSION['unique_id'])){
                             <?php if($value['outright_price'] != 0){
                      $outprice = $value['outright_price'];
                     $onemonthprice = $value['onemonth_price'];
+                    $allocationfee = $value['allocation_fee'];
                         ?>
                             <p><span>Outright Price:&nbsp;&nbsp;</span>&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999 || $outprice > 9999999){
                           echo number_format($outprice);
                         }?></p>
+
+                            <?php if($value['outright_price'] != 0 && $value['onemonth_price'] == 0){?>
+                            <p><span>Allocation Fee:&nbsp;&nbsp;</span>&#8358;<?php if($allocationfee > 999 || $allocationfee > 9999 || $allocationfee > 99999 || $allocationfee > 999999 || $allocationfee > 9999999){
+                          echo number_format($allocationfee);
+                        } else {
+                           echo round($allocationfee);
+                        }?></p>
+                            <?php }?>
                             <?php } else {?>
                             <p style="color: #ff6600;">Subscription Only</p>
                             <?php }?>
+
                             <?php if($value['onemonth_price'] != 0){
                        
                         $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
                         $totalprice = $overallprice + $value['onemonth_price'];
                         $onemonthprice = $totalprice / 540;
+                        $allocationfee = $value['allocation_fee'];
           
               
 
@@ -711,6 +722,13 @@ if(!isset($_SESSION['unique_id'])){
                         } else {
                             echo round($onemonthprice);
                         }?></p>
+                            <p><span>Allocation Fee:&nbsp;&nbsp;</span>&#8358;<?php if($allocationfee > 999 || $allocationfee > 9999 || $allocationfee > 99999 || $allocationfee > 999999 || $allocationfee > 9999999){
+                          echo number_format($allocationfee);
+                        } else {
+                           echo round($allocationfee);
+                        }?></p>
+
+
 
                             <?php } else {?>
                             <p style="color: #ff6600;">Outright Only</p>
@@ -724,6 +742,14 @@ if(!isset($_SESSION['unique_id'])){
                             <div class="detail">
                                 <img src="images/ellipse.svg" alt="">
                                 <p><?php echo $value['product_description'];?></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-four">
+                            <p>Purpose</p>
+                            <div class="detail">
+                                <img src="images/ellipse.svg" alt="">
+                                <p><?php echo $value['purpose'];?></p>
                             </div>
                         </div>
 
@@ -858,19 +884,7 @@ if(!isset($_SESSION['unique_id'])){
             </div>
             <?php }?>
 
-            <?php if(isset($_SESSION['unique_id'])){?>
-            <footer class="footerdiv">
-                <p>YurLAND &#169; 2022 | All Right Reserved</p>
-                <p>A product of Ilu-oba International Limited and Arklips Limited</p>
-                <p>Connect with us Facebook, Twitter, Instagram</p>
-                <p style="font-size: 30px;">
-                    <a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i
-                            class="ri-instagram-line"></a></i><a
-                        href="https://www.facebook.com/profile.php?id=100088254710492&mibextid=ZbWKwL"><i
-                            class="ri-facebook-fill"></i></a><i class="ri-twitter-line"></i>
-                </p>
-            </footer>
-            <?php }?>
+
         </div>
     </div>
 

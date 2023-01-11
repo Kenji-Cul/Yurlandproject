@@ -45,6 +45,53 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         text-transform: capitalize !important;
     }
 
+    .search-form,
+    .search-form2,
+    .search-form3 {
+        display: none;
+    }
+
+
+
+    .search-icon img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .search-input2 input {
+        position: unset;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-top: 2em;
+        position: unset;
+        gap: 2em;
+    }
+
+    .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
+        width: 240px;
+    }
+
+    .search-input2 input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+        border-radius: 8px;
+        border: 2px solid #ff6600;
+    }
+
+    .search-icon input:focus {
+        border: none;
+    }
+
+
     .footerdiv {
         position: absolute;
         bottom: 0;
@@ -71,9 +118,9 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     .success {
         position: absolute;
         left: 50%;
-        top: 20em;
+        top: 40em;
         transform: translate(-50%, -50%);
-        height: 100%;
+        height: 20%;
 
     }
 
@@ -291,8 +338,9 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     @media only screen and (max-width: 1300px) {
 
         .success {
+            height: 20%;
             position: absolute;
-            top: 20em;
+            top: 44em;
         }
 
         .payee {
@@ -439,11 +487,13 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
+
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
+
                 </li>
             </div>
             <li class="close">
@@ -486,8 +536,8 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
 
@@ -498,6 +548,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <p>Total Agent Earnings</p>
+
             </div>
 
             <div class="land-btn-container" style="display: flex; gap: 2em;">
@@ -509,28 +560,108 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <?php }?>
             </div>
 
+            <div class="search-container">
+                <div class="select-box">
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode1" name="searchmode" value="Name" />
+                            <label for="searchmode1">By Name</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode2" name="searchmode" value="Date" />
+                            <label for="searchmode2">By Date</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode3" name="searchmode" value="Range" />
+                            <label for="searchmode3">By Range</label>
+                        </div>
+                    </div>
+
+                    <div class="selected">Choose Search Mode</div>
+
+                </div>
+
+                <div class="search-input2">
+                    <form action="" class="search-form">
+                        <input type="text" class="search" type="search" name="searchproduct"
+                            placeholder="Search For Agent By Name">
+                    </form>
+                </div>
+
+
+                <form action="" class="search-form2">
+                    <div class="select-box">
+                        <div class="options-container">
+                            <?php 
+                         $lastsevendays = date('M-d-Y', strtotime('today - 7 days'));
+                         $today = date('M-d-Y', strtotime('today'));
+                          $dates = [];
+                         for ($i = 0; $i < 31; $i++) { 
+                              
+                       ?>
+                            <div class="option">
+                                <input type="radio" class="radio" id="date<?php echo $i;?>" name="searchproduct2"
+                                    value="<?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?>" />
+                                <label
+                                    for="date<?php echo $i;?>"><?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?></label>
+                            </div>
+                            <?php }?>
+                        </div>
+
+                        <div class="selected">Choose Date</div>
+
+                    </div>
+                    <div class="valuediv" style="display: none;"></div>
+                </form>
+
+                <form action="" class="search-form3">
+                    <div class="select-box">
+                        <div class="options-container">
+                            <?php 
+                       
+                         for ($i = 0; $i < 31; $i++) { 
+                              
+                       ?>
+                            <div class="option">
+                                <input type="radio" class="radio" id="range<?php echo $i;?>" name="searchproduct3"
+                                    value="<?php echo $i;?>" />
+                                <label for="range<?php echo $i;?>"><?php echo $i;?></label>
+                            </div>
+                            <?php }?>
+                        </div>
+
+                        <div class="selected">Choose Range</div>
+
+                    </div>
+                    <div class="valuediv2" style="display: none;"></div>
+                </form>
+
+
+            </div>
+
 
             <div class="details-container">
 
 
                 <?php 
-                 $allusers = $user->selectAllAgents();
+                 $allusers = $user->selectAllAgents2();
+                 
                  foreach ($allusers as $key => $value3) {
                      $agentpercent = $value3['earning_percentage'];
   
-            $earning = $user->selectAgentHistory($value3['uniqueagent_id']);
-            if(!empty($earning)){
-                foreach($earning as $key => $value){
+          
     ?>
-                <?php if($value3['agent_date'] <= $value['payment_date']){
+                <?php if($value3['agent_date'] <= $value3['payment_date']){
                 if($value3['earning_percentage'] != ""){  ?>
-                <div class="account-detail2"
-                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                    <div class="flex">
-                        <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;"><?php echo $value3['agent_name']?>
-                                earned &#8358;<?php $percent = $value3['earning_percentage'];
-                    $earnedprice = $percent / 100 * $value['product_price'];
+                <a href="agenthistory.php?unique=<?php echo $value3['uniqueagent_id'];?>">
+                    <div class="account-detail2"
+                        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                        <div class="flex">
+                            <p style="text-transform: uppercase;">
+                                <span
+                                    style="color: #000000!important; font-size: 16px;"><?php echo $value3['agent_name']?>
+                                    earned &#8358;<?php $percent = $value3['earning_percentage'];
+                    $earnedprice = $percent / 100 * $value3['product_price'];
                     $unitprice = $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                       echo number_format(round($unitprice));
@@ -539,15 +670,15 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                                     }
                                 
                     ?>
-                            </span>
-                        </p>
-                        <div class="payee">
-                            <p class="payee-tag" style="color: #808080;">
-                                <?php 
+                                </span>
+                            </p>
+                            <div class="payee">
+                                <p class="payee-tag" style="color: #808080;">
+                                    <?php 
                                 
                                
                                 
-                                if($value['payee'] == $value3['agent_name']){
+                                if($value3['payee'] == $value3['agent_name']){
                                     echo $value3['agent_name']." Paid:";
                                 } 
                                 
@@ -556,31 +687,33 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                                 }
 
                                  ?></p>&nbsp;
-                            <p class="payee-name"
-                                style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                &#8358;<?php $unitprice = $value['product_price']; 
+                                <p class="payee-name"
+                                    style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                    &#8358;<?php $unitprice = $value3['product_price']; 
                                   if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                     echo number_format(round($unitprice));
                                   } else {
                                       echo round($unitprice);
                                   }
-                                ?> for <?php echo $value['product_name'];?>
-                            </p>
-                        </div>
-                        <div class="inner-detail">
-                            <div class="date">
-                                <span style="font-size: 13px;"><?php echo $value['payment_month'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_day'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_year'];?>
+                                ?> for <?php echo $value3['product_name'];?>
+                                </p>
+                            </div>
+                            <div class="inner-detail">
+                                <div class="date">
+                                    <span
+                                        style="font-size: 13px;"><?php echo $value3['payment_month'];?></span>&nbsp;<span
+                                        style="font-size: 13px;"><?php echo $value3['payment_day'];?></span>&nbsp;<span
+                                        style="font-size: 13px;"><?php echo $value3['payment_year'];?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 <?php } }?>
 
-                <?php }} }?>
+                <?php }?>
 
-                <?php if(empty($earning)){?>
+                <?php if(empty($allusers)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
                     <p>There are no earnings yet!</p>
@@ -588,7 +721,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <?php }?>
 
                 <div class="account-detail3">
-                    <a href="agentlogout.php">
+                    <a href="logout.php?user=subadmin">
                         <p>Sign Out</p>
                     </a>
                 </div>
@@ -600,6 +733,119 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
     <script src="js/main.js"></script>
     <script>
+    let purpose4 = document.getElementsByName("searchmode");
+    purpose4.forEach((element) => {
+        element.onclick = () => {
+            if (element.value == "Name") {
+                document.querySelector('.search-form').style.display = "block";
+                document.querySelector('.search-form2').style.display = "none";
+                document.querySelector('.search-form3').style.display = "none";
+            }
+            if (element.value == "Date") {
+                document.querySelector('.search-form2').style.display = "block";
+                document.querySelector('.search-form3').style.display = "none";
+                document.querySelector('.search-form').style.display = "none";
+            }
+            if (element.value == "Range") {
+                document.querySelector('.search-form3').style.display = "block";
+                document.querySelector('.search-form').style.display = "none";
+                document.querySelector('.search-form2').style.display = "none";
+            }
+        }
+    });
+    //let searchIcon = document.querySelector('.search-icon');
+
+    //let searchinput = document.querySelector('.search-input2');
+    let searchinput2 = document.querySelector('.search');
+
+    //searchinput.style.display = "flex";
+    //document.querySelector('#searchimg').style.display = "none";
+
+    let searchform = document.querySelector('.search-form');
+    let searchform2 = document.querySelector('.search-form2');
+    let searchform3 = document.querySelector('.search-form3');
+    searchform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    searchform2.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    searchform3.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    searchinput2.onkeyup = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST",
+            `searchearningbyname.php?user=agent`);
+
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    document.querySelector('.details-container').innerHTML = data;
+                }
+            }
+        };
+        let formData = new FormData(searchform);
+        xhr.send(formData);
+    }
+
+    let valuediv = document.querySelector('.valuediv');
+
+    let purpose = document.getElementsByName("searchproduct2");
+    purpose.forEach((element) => {
+        element.onclick = () => {
+            valuediv.innerHTML = element.value;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchearningbydate.php?data=${valuediv.innerHTML}&user=agent`);
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+                    }
+                }
+            };
+            let formData = new FormData(searchform2);
+            xhr.send(formData);
+        }
+
+
+    });
+
+
+    let valuediv2 = document.querySelector('.valuediv2');
+
+    let purpose2 = document.getElementsByName("searchproduct3");
+    purpose2.forEach((element) => {
+        element.onclick = () => {
+            valuediv2.innerHTML = element.value;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchearningbyrange.php?data=${valuediv2.innerHTML}&user=agent`);
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+                    }
+                }
+            };
+            let formData = new FormData(searchform3);
+            xhr.send(formData);
+        }
+
+
+    });
+
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

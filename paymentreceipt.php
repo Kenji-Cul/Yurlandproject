@@ -560,9 +560,9 @@ if(!isset($_SESSION['unique_id'])){
             </div>
 
             <!-- <div class="no-lands">
-        <img src="images/asset_success.svg" alt="success image" />
-        <p>You have not uploaded any document yet!!</p>
-    </div> -->
+         <img src="images/asset_success.svg" alt="success image" />
+         <p>You have not uploaded any document yet!!</p>
+              </div> -->
 
             <div class="navigation-div">
                 <div class="navig">

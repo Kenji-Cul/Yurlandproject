@@ -499,7 +499,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                             </p>
 
                             <span> <?php if(empty($newuser['subadmin_image']) || empty($newuser['subadmin_num'])){
-    ?>
+                     ?>
                                 <span>Update Your Details</span>
                                 <?php } else {?>
                                 <span>Verified</span>

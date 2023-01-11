@@ -89,12 +89,12 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             <div class="select-box">
                 <div class="options-container">
                     <div class="option">
-                        <input type="radio" class="radio" id="residential" name="purpose" value="residential" />
+                        <input type="radio" class="radio" id="residential" name="purpose" value="Residential" />
                         <label for="residential">Residential</label>
                     </div>
 
                     <div class="option">
-                        <input type="radio" class="radio" id="commercial" name="purpose" value="commercial" />
+                        <input type="radio" class="radio" id="commercial" name="purpose" value="Commercial" />
                         <label for="commercial">Commercial</label>
                     </div>
                 </div>

@@ -14,6 +14,7 @@ include_once "projectlog.php";
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
@@ -416,20 +417,27 @@ include_once "projectlog.php";
         <div class="logo">
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
-            <?php } else {?>
+            <?php }  else if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }  else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
-
-
         </div>
 
         <?php 
              $user = new User;
+             if(isset($_SESSION['uniquesubadmin_id'])){
              $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+             }
+
+             if(isset($_SESSION['uniquesupadmin_id'])){
+                $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+                }
             ?>
 
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <div class="user">
                 <p><?php if(isset($newuser['subadmin_name'])){  ?>
                     <span><?php echo $newuser['subadmin_name']; ?></span>&nbsp;
@@ -437,24 +445,47 @@ include_once "projectlog.php";
                 </p>
                 <div class="profile-image">
                     <?php if(!empty($newuser['subadmin_image'])){?>
-                    <a href="subadmininfo.php" style="color: #808080;"><img
+                    <a href="agentprofileinfo.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['subadmin_image'])){?>
-                    <a href="subadmininfo.php" style="color: #808080;">
-                        <div class="empty-img" style="border-radius: 50%;">
+                    <a href="agentprofileinfo.php" style="color: #808080;">
+                        <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
                     <?php }?>
                 </div>
             </div>
-        </div>
+            <?php }?>
+
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <div class="user">
+                <p><?php if(isset($newuser['super_adminname'])){  ?>
+                    <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['admin_image'])){?>
+                    <a href="supadminimg.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['admin_image'])){?>
+                    <a href="supadminimg.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
+            <?php }?>
 
     </header>
 
 
     <div class="flex-container">
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
@@ -468,29 +499,10 @@ include_once "projectlog.php";
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links">
+            <li class="links select-link">
                 <a href="subadmin.php"><img src="images/home3.svg" /></a>
                 <a href="subadmin.php" class="link">Home</a>
             </li>
-            <li class="links select-link">
-                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="allcustomers.php" class="link">All Customers</a>
-            </li>
-            <li class="links">
-                <a href="newuser.php"><img src="images/referral.svg" /></a>
-                <a href="newuser.php" class="link">New Customer</a>
-            </li>
-            <li class="links">
-                <a href="createagent.php"><img src="images/referral.svg" /> </a>
-                <a href="createagent.php" class="link">Create Agent</a>
-            </li>
-
-            <li class="links">
-                <a href="usertype.php"><img src="images/land2.svg" /></a>
-                <a href="usertype.php" class="link">New Land</a>
-            </li>
-
-
             <li class="links">
                 <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
                 <a href="defaultcustomers.php" class="link">Default Customers</a>
@@ -502,6 +514,10 @@ include_once "projectlog.php";
             <li class="links">
                 <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
                 <a href="payingcustomers.php" class="link">Paying Customers</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
             </li>
 
             <li class="links">
@@ -528,6 +544,102 @@ include_once "projectlog.php";
                 <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="superadmin.php"><img src="images/home3.svg" /></a>
+                <a href="superadmin.php" class="link">Home</a>
+            </li>
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
+                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
+                <a href="createexecutive.php" class="link">Create Executive</a>
+            </li>
+
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
+                <a href="createsubadmin.php" class="link">Create Subadmin</a>
+            </li>
+
+            <li class="links">
+                <a href="productperiod.php"><img src="images/land2.svg" /></a>
+                <a href="productperiod.php" class="link">Create Plan</a>
+            </li>
+
+            <li class="links">
+                <a href="selectprice.php"><img src="images/land2.svg" /></a>
+                <a href="selectprice.php" class="link">Create Product</a>
+            </li>
+
+            <li class="links">
+                <a href="#"><img src="images/updown.svg" /></a>
+                <a href="#" class="link">Pay Earnings</a>
+            </li>
+
+            <li class="links">
+                <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="supadmininfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
+            </li>
+        </ul>
+
+        <?php }?>
+
+
 
 
 
@@ -559,12 +671,71 @@ include_once "projectlog.php";
                 </div>
             </div>
 
+            <form action="" class="download-form">
+                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
+                        id="export"></i></button>
+            </form>
 
+            <table id="user-data" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Home Address</th>
+                        <th>User Date</th>
+                        <th>NextOfKin Firstname</th>
+                        <th>NextOfKin Lastname</th>
+                        <th>NextOfKin Email</th>
+                        <th>NextOfKin Address</th>
+                        <th>NextOfKin Phone Number</th>
+                        <th>NextOfKin Relation</th>
+                        <th>NIN</th>
+                        <th>Earning Percentage</th>
+                        <th>Gender</th>
+                        <th>Occupation</th>
+                        <th>Date Of Birth</th>
+                    </tr>
+                </thead>
+                <tbody class="table-data">
+
+                    <?php 
+    $user = new User;
+   
+    $customer = $user ->selectAllUsers();
+    if(!empty($customer)){
+        foreach($customer as $key => $value){
+    ?>
+                    <tr>
+                        <td><?php echo $value['user_id'];?></td>
+                        <td><?php echo $value['first_name'];?></td>
+                        <td><?php echo $value['last_name'];?></td>
+                        <td><?php echo $value['email'];?></td>
+                        <td><?php echo $value['phone_number'];?></td>
+                        <td><?php echo $value['home_address'];?></td>
+                        <td><?php echo $value['user_date'];?></td>
+                        <td><?php echo $value['nextofkin_firstname'];?></td>
+                        <td><?php echo $value['nextofkin_lastname'];?></td>
+                        <td><?php echo $value['nextofkin_email'];?></td>
+                        <td><?php echo $value['nextofkin_address'];?></td>
+                        <td><?php echo $value['nextofkin_phone'];?></td>
+                        <td><?php echo $value['nextofkin_relation'];?></td>
+                        <td><?php echo $value['nin'];?></td>
+                        <td><?php echo $value['earning_percentage'];?></td>
+                        <td><?php echo $value['gender'];?></td>
+                        <td><?php echo $value['occupation'];?></td>
+                        <td><?php echo $value['dateofbirth'];?></td>
+                    </tr>
+                    <?php }}?>
+                </tbody>
+            </table>
             <div class="details-container">
 
 
                 <?php 
-    $user = new User;
+   
    
     $customer = $user ->selectAllUsers();
     if(!empty($customer)){
@@ -640,6 +811,32 @@ include_once "projectlog.php";
             xhr.send(formData);
         }
     }
+
+    let downloadbtn = document.querySelector('.download-form .land-btn');
+    let downloadform = document.querySelector('.download-form');
+    downloadform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    function htmlTableToExcel(type) {
+        var userdata = document.getElementById('user-data');
+        var file = XLSX.utils.table_to_book(userdata, {
+            sheet: "sheet1"
+        });
+        XLSX.write(file, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        });
+
+        XLSX.writeFile(file, 'userdata.' + type);
+    }
+
+    downloadbtn.onclick = () => {
+        htmlTableToExcel('xlsx');
+
+    }
+
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

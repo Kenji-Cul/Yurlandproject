@@ -378,7 +378,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
 
         .close {
-            padding-top: 7em;
+            padding-top: 12em;
         }
 
         /* .close {
@@ -516,12 +516,21 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="allcustomers.php" class="link">All Customers</a>
             </li>
             <li class="links">
+                <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                <a href="allagentearnings.php" class="link">View Earnings</a>
+            </li>
+            <li class="links">
                 <a href="newuser.php"><img src="images/referral.svg" /></a>
                 <a href="newuser.php" class="link">New Customer</a>
             </li>
             <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
                 <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                <a href="creategroup.php" class="link">Create Group</a>
             </li>
 
             <li class="links">
@@ -593,7 +602,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                     </a>
                     <?php }?>
                     <?php if(empty($newuser['subadmin_image'])){
-    ?>
+              ?>
                     <div class="unverified">
                         <span style="text-transform: capitalize;" class="unspan">unverified</span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -838,11 +847,6 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
                     <?php   }
              } ?>
-
-
-
-
-
 
                 </div>
                 <div class="swiper-pagination"></div>

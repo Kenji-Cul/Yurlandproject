@@ -10,10 +10,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $outrightprice = $_POST['outrightprice'];
     $desc = $_POST['productdesc'];
     $feature = $_POST['estatefeature'];
+    $allocationfee = $_POST['allocationfee'];
     $filename = $_FILES['image']['name'];
     $purpose = $_POST['purpose'];
     $unitnumber = $_POST['noofunit'];
-if(empty($landname) || ($location == "") || ($budget == "") || empty($landsize) || empty($desc) || empty($feature) || empty($outrightprice)  || empty($unitnumber)){
+if(empty($landname) || ($location == "") || ($budget == "") || empty($landsize) || empty($desc) || empty($feature) || empty($outrightprice)  || empty($unitnumber) || empty($allocationfee)){
     $errormsg = "Please input all fields";
 }  else if(empty($filename)){
     $errormsg = "Please Select Your File";
@@ -22,7 +23,7 @@ if(empty($landname) || ($location == "") || ($budget == "") || empty($landsize) 
 
 else {
      $superadmin = new User;
-        $insertland = $superadmin->uploadOutrightProduct(check_input($landname),check_input($outrightprice),check_input($desc),check_input($feature),check_input($landsize),check_input($location),$unique,$purpose,check_input($unitnumber),check_input($budget));
+        $insertland = $superadmin->uploadOutrightProduct(check_input($landname),check_input($outrightprice),check_input($desc),check_input($feature),check_input($landsize),check_input($location),$unique,$purpose,check_input($unitnumber),check_input($budget),check_input($allocationfee));
      
     
 

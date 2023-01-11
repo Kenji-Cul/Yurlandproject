@@ -602,7 +602,7 @@ include "projectlog.php";
         if(!empty($searchland)){
             foreach($searchland as $key => $value){
             ?>
-                <div class="updated-land">
+                <div class="updated-land" <?php if($value['product_unit'] == 0){?>style="order: 1;" <?php }?>>
                     <div class="updated-img">
                         <img src="landimage/<?php if(isset($value['product_image'])){
                         echo $value['product_image'];
@@ -640,18 +640,28 @@ include "projectlog.php";
                             <?php if($value['outright_price'] != 0){
                      $outprice = $value['outright_price'];
                     $onemonthprice = $value['onemonth_price'];
+                    $allocationfee = $value['allocation_fee'];
                         ?>
                             <p><span>Outright Price:&nbsp;&nbsp;</span>&#8358;<?php if($outprice > 999 || $outprice > 9999 || $outprice > 99999 || $outprice > 999999 || $outprice > 9999999){
                           echo number_format($outprice);
                         }?></p>
+                            <?php if($value['outright_price'] != 0 && $value['onemonth_price'] == 0){?>
+                            <p><span>Allocation Fee:&nbsp;&nbsp;</span>&#8358;<?php if($allocationfee > 999 || $allocationfee > 9999 || $allocationfee > 99999 || $allocationfee > 999999 || $allocationfee > 9999999){
+                          echo number_format($allocationfee);
+                        } else {
+                           echo round($allocationfee);
+                        }?></p>
+                            <?php }?>
                             <?php } else {?>
                             <p>No Outright Price</p>
                             <?php }?>
+
                             <?php if($value['onemonth_price'] != 0){
                         $onemonthprice = $value['onemonth_price'];
                         $overallprice = $value['eighteen_percent'] / 100 * $value['onemonth_price'];
                         $totalprice = $overallprice + $value['onemonth_price'];
                         $onemonthprice = $totalprice / 540;
+                        $allocationfee = $value['allocation_fee'];
                         ?>
                             <p><span>Subscription Price(18 Months):&nbsp;&nbsp;</span>&#8358;<?php if($totalprice > 999 || $totalprice > 9999 || $totalprice > 99999 || $totalprice > 999999){
                           echo number_format($totalprice);
@@ -661,6 +671,12 @@ include "projectlog.php";
                         } else {
                             echo round($onemonthprice);
                         }?></p>
+                            <p><span>Allocation Fee:&nbsp;&nbsp;</span>&#8358;<?php if($allocationfee > 999 || $allocationfee > 9999 || $allocationfee > 99999 || $allocationfee > 999999 || $allocationfee > 9999999){
+                          echo number_format($allocationfee);
+                        } else {
+                           echo round($allocationfee);
+                        }?></p>
+
                             <?php } else {?>
                             <p style="color: #ff6600;">Outright Only</p>
                             <?php }?>
@@ -671,6 +687,14 @@ include "projectlog.php";
                             <div class="detail">
                                 <img src="images/ellipse.svg" alt="">
                                 <p><?php echo $value['product_description'];?></p>
+                            </div>
+                        </div>
+
+                        <div class="detail-four">
+                            <p>Purpose</p>
+                            <div class="detail">
+                                <img src="images/ellipse.svg" alt="">
+                                <p><?php echo $value['purpose'];?></p>
                             </div>
                         </div>
 

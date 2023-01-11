@@ -16,23 +16,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $nemail = $_POST['nextofkinemail'];
     $naddress = $_POST['nextofkinaddress'];
     $nphone = $_POST['nextofkinphone'];
-    $nrelation = $_POST['relation'];
+    $nrelation = $_GET['relation'];
     $filename = $_FILES['image']['name'];
     $earning = $_POST['earning'];
 
-if(empty($firstname) || empty($lastname) || empty($email) || empty($number)  || empty($nin) || empty($dob) || empty($nfirstname) || empty($nlastname) || empty($nemail) || empty($naddress) || empty($nphone) || empty($nrelation) || empty($unique) || empty($earning) || empty($address)){
-    $errormsg = "Please input all fields";
-}  
-    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+ 
+     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errormsg = "Invalid email format";
       }
       
-      else if(strlen($nin) !== 11){
-        $errormsg = "Please input your NIN correctly";
-    }  
-      else if(empty($filename)){
-        $errormsg = "Please Select Your File";
-    }
+      
 
     else {
     $user = new User;

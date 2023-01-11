@@ -169,7 +169,7 @@ include "projectlog.php";
 
     .detail-four p {
         color: #808080;
-        font-size: 15px;
+        font-size: 13px;
     }
 
     .detail-five {

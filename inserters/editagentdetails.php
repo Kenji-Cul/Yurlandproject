@@ -9,19 +9,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $address = $_POST['address'];
     $filename = $_FILES['image']['name'];
     $earning = $_POST['earning'];
+    $bankname = $_POST['bankname'];
+    $accountnum = $_POST['accountnum'];
+    $accountname = $_POST['accountname'];
     $unique = $_POST['uniqueuser'];
     $groupid = $_GET['groupid'];
 
-if(empty($agentname) || empty($agentnum) || empty($email)   || empty($address)   || empty($unique) || empty($earning)){
-    $errormsg = "Please input all fields";
-}  
-    else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errormsg = "Invalid email format";
       }
        
-      else if(empty($filename)){
-        $errormsg = "Please Select Your File";
-    }
 
     else {
     $user = new User;
@@ -36,7 +34,7 @@ if(empty($agentname) || empty($agentnum) || empty($email)   || empty($address)  
     }else if($emailuser6['agent_email'] != $email && !empty($emailuser2)){
       $errormsg = "Email Address already exists";
     } else {
-     $insertuser = $user->updateAgentInfo(check_input($agentname),check_input($agentnum),check_input($email),check_input($unique),check_input($address),check_input($earning),$groupid);
+     $insertuser = $user->updateAgentInfo(check_input($agentname),check_input($agentnum),check_input($email),check_input($unique),check_input($address),check_input($earning),$groupid,check_input($bankname),check_input($accountnum),check_input($accountname));
     }
     }
 

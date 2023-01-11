@@ -465,6 +465,16 @@ include "projectlog.php";
         </div>
         <?php }?>
 
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
         <?php 
              $user = new User;
              if(isset($_SESSION['unique_id'])){
@@ -476,9 +486,13 @@ include "projectlog.php";
              if(isset($_SESSION['uniquesubadmin_id'])){
                 $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
                 }
+
+                if(isset($_SESSION['uniquesupadmin_id'])){
+                    $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+                    }
             ?>
         <div class="nav">
-            <?php if(!isset($_SESSION['uniqueagent_id']) || !isset($_SESSION['uniquesubadmin_id'])){?>
+            <?php if(!isset($_SESSION['uniqueagent_id']) || !isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
             <a href="cartreview.php">
                 <div class="cart">
                     <div class="cart-notify"></div>
@@ -537,11 +551,33 @@ include "projectlog.php";
                 </p>
                 <div class="profile-image">
                     <?php if(!empty($newuser['subadmin_image'])){?>
-                    <a href="updatedetails.php" style="color: #808080;"><img
+                    <a href="subadmininfo.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['subadmin_image'])){?>
-                    <a href="updatedetails.php" style="color: #808080;">
+                    <a href="agentimg.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
+            <?php }?>
+
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <div class="user">
+                <p><?php if(isset($newuser['super_adminname'])){  ?>
+                    <span><?php echo $newuser['super_adminname']; ?></span>
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['admin_image'])){?>
+                    <a href="supadmininfo.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['admin_image'])){?>
+                    <a href="supadmininfo.php" style="color: #808080;">
                         <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>
@@ -635,7 +671,7 @@ include "projectlog.php";
             if(isset($_SESSION['unique_id'])){
                 $cart = $land->checkCartId($_SESSION['unique_id'],$value['unique_id']);
             }
-            if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
+            if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
                 $cart = $land->checkCartId($_GET['unique'],$value['unique_id']);
             }
                    
@@ -664,7 +700,7 @@ include "projectlog.php";
             <input type="hidden" name="quantity" value="1">
             <input type="hidden" name="user" value="<?php 
             if(isset($_SESSION['unique_id'])){ echo $_SESSION['unique_id'];}
-            if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){ echo $_GET['unique'];}
+            if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){ echo $_GET['unique'];}
             ?>">
         </form>
 
@@ -735,7 +771,7 @@ include "projectlog.php";
         $landuse = $land->selectProductPayment($value['unique_id'],$_SESSION['unique_id']);
         }
 
-        if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
+        if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
             $landuse = $land->selectProductPayment($value['unique_id'],$_GET['unique']);
             }
         if(!empty($landuse)){
@@ -812,7 +848,7 @@ include "projectlog.php";
              $landuse = $land->selectProductNewPayment($_GET['id'],$_SESSION['unique_id']);
            }
 
-           if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
+           if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
             $landuse = $land->selectProductNewPayment($_GET['id'],$_GET['unique']);
           }
 
@@ -1446,7 +1482,7 @@ include "projectlog.php";
                     `newpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${pricevalue}&subperiod=${manualInput.value}`;
                 <?php }?>
 
-                <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                 location.href =
                     `newpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${pricevalue}&subperiod=${manualInput.value}&user=<?php echo $_GET['unique'];?>`;
                 <?php }?>
@@ -1461,7 +1497,7 @@ include "projectlog.php";
                     `newpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${balanceValue}&subperiod=0`;
                 <?php }?>
 
-                <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                 location.href =
                     `newpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${balanceValue}&subperiod=0&user=<?php echo $_GET['unique'];?>`;
                 <?php }?>
@@ -1498,7 +1534,7 @@ include "projectlog.php";
         location.href =
             `outrightpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&startdate=${startDate}`;
         <?php }?>
-        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
         location.href =
             `outrightpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
         <?php }?>
@@ -1539,7 +1575,7 @@ include "projectlog.php";
                         location.href =
                             `outrightpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice *unitInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&unit=${unitInput.value}&con=9298383737&startdate=${startDate}`;
                         <?php }?>
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         let totprice = <?php foreach($landview as $key => $value){
                             echo $value['outright_price'];
                         }?>;
@@ -1739,7 +1775,7 @@ include "projectlog.php";
                             `intervalnum.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
                             `intervalnum2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
                         <?php }?>
@@ -1751,7 +1787,7 @@ include "projectlog.php";
                             `newpayment.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
                             `newpayment2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
                         <?php }?>
@@ -1796,7 +1832,7 @@ include "projectlog.php";
                             `intervalnum.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
                             `intervalnum2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
                         <?php }?>
@@ -1840,7 +1876,7 @@ include "projectlog.php";
                             `newpayment.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
                             `newpayment2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
                         <?php }?>
@@ -2117,7 +2153,7 @@ include "projectlog.php";
                             `intervalnum.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
                             `intervalnum2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
                         <?php }?>
@@ -2129,7 +2165,7 @@ include "projectlog.php";
                             `newpayment.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
                             `newpayment2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
                         <?php }?>
@@ -2170,7 +2206,7 @@ include "projectlog.php";
                             `intervalnum.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
                             `intervalnum2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique'];?>`;
                         <?php }?>
@@ -2211,7 +2247,7 @@ include "projectlog.php";
                             `newpayment.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
                         <?php }?>
 
-                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){?>
+                        <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
                             `newpayment2.php?data=${data}&uniqueid=${unique}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
                         <?php }?>

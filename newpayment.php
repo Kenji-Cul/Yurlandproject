@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if(!isset($_SESSION['unique_id'])){
-    header("Location: signup.html");
+    header("Location: signup.php");
 }
 include "projectlog.php";
 if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
@@ -91,6 +91,7 @@ if(isset($_POST["submit"])){
     
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
+    $allocationfee = $value['allocation_fee'];
    
 
     if(isset($_GET['remunit'])){
@@ -277,6 +278,12 @@ if(isset($_POST["submit"])){
             ],
 
             [
+                "display_name" => "Allocation Fee",
+                "variable_name" => "allocation fee",
+                "value" =>  $allocationfee
+            ],
+
+            [
                 "display_name" => "Chosen Plan",
                 "variable_name" => "chosenplan",
                 "value" => $chosenplan
@@ -442,7 +449,7 @@ if(empty($checklastpayment)){
     
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
-   
+    $allocationfee = $value['allocation_fee'];
 
     if(isset($_GET['remunit'])){
         $deducted_unit = $value['product_unit'];
@@ -623,6 +630,12 @@ if(empty($checklastpayment)){
                 "display_name" => "Agentid",
                 "variable_name" => "Agentid",
                 "value" => $agentid
+            ],
+
+            [
+                "display_name" => "Allocation Fee",
+                "variable_name" => "allocation fee",
+                "value" =>  $allocationfee
             ],
 
             [

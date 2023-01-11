@@ -20,7 +20,7 @@ header("Location: portallogin.php");
     <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
-        height: 120vh;
+        height: 140vh;
         background-image: none;
         overflow-x: hidden;
     }
@@ -466,6 +466,32 @@ header("Location: portallogin.php");
                     echo $newuser['home_address'];
                 }?>" />
                     </div>
+
+                    <div class="input-div name">
+                        <label for="bankname">Bank Name</label>
+                        <input type="text" id="bankname" placeholder="Fill in your bank name" name="bankname" value="<?php if(isset($newuser['bank_name'])){
+                    echo $newuser['bank_name'];
+                }?>" />
+                    </div>
+
+                    <div class="input-div name">
+                        <label for="accountnum">Account Number</label>
+                        <input type="number" id="accountnum" placeholder="Fill in your account number" name="accountnum"
+                            value="<?php if(isset($newuser['account_number'])){
+                    echo $newuser['account_number'];
+                }?>" />
+                    </div>
+
+                    <div class="input-div name">
+                        <label for="accountname">Registered Account Name</label>
+                        <input type="text" id="accountname" placeholder="Fill in registered account name"
+                            name="accountname" value="<?php if(isset($newuser['reg_account_name'])){
+                    echo $newuser['reg_account_name'];
+                }?>" />
+                    </div>
+
+
+
 
 
 

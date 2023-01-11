@@ -23,11 +23,14 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     <style>
     body {
         overflow-x: hidden;
-        height: 180vh;
+    }
+
+    .dropdown-links {
+        overflow-y: auto;
     }
 
     ::-webkit-scrollbar {
-        width: 0.7rem;
+        width: 0.5rem;
         background-color: #8d8989;
         border-radius: 1rem;
     }
@@ -41,12 +44,77 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         background-color: #aaa;
     }
 
+    .unverified {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5px;
+        padding: 1px 6px;
+        border-radius: 15px;
+        background-color: #808080;
+        color: #fff;
+    }
+
+    .unverified .unspan {
+        font-size: 14px;
+    }
+
+    .amountdiv {
+        width: 150px;
+        font-size: 18px;
+        font-weight: 500;
+        color: #ff6600 !important;
+    }
+
     .dropdown-links {
-        overflow-y: auto !important;
+        height: 18em;
+    }
+
+    .land-estate .land-details {
+        display: none;
+    }
+
+    .land_estate_container .land-estate {
+        filter: drop-shadow(0px 4px 8px rgba(128, 128, 128, 0.90));
+        min-height: 0px !important;
+        padding-top: 0;
+        gap: 0;
+        border-radius: 8px;
+        position: relative;
+    }
+
+
+
+    .land-estate .land-image {
+        border-radius: 8px !important;
+        height: 250px !important;
+        width: 100%;
+    }
+
+    .land-image img {
+        border-radius: 8px !important;
+        height: 250px !important;
     }
 
 
     @media only screen and (min-width: 1300px) {
+
+        .details2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6em;
+            flex-direction: row;
+        }
+
+        .details2 p {
+            color: #808080;
+        }
+
+        .details2 p,
+        .details2 h3 {
+            font-size: 22px;
+        }
 
         .signup .nav {
             position: absolute;
@@ -63,6 +131,16 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             justify-content: center;
             align-items: center;
             gap: 1em;
+        }
+
+        .user .profile-name {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5px;
         }
 
         .user p {
@@ -109,7 +187,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         .land-estate {
             border: 1px solid #d4d1d1;
             width: 320px;
-            height: 290px;
+            /* height: 290px; */
             padding-top: 8px;
             padding-bottom: 10px;
             display: flex;
@@ -123,7 +201,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
         .dropdown-links {
             width: 6%;
-            height: 90vh;
+            height: 84vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -226,7 +304,9 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
-
+        .amountdiv {
+            font-size: 14px;
+        }
 
         .user,
         #openicon {
@@ -235,6 +315,24 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
         .links img {
             display: none;
+        }
+
+        .profile-image {
+            position: relative;
+        }
+
+        #check {
+            position: absolute;
+            bottom: -7px;
+            right: -5px;
+        }
+
+
+        .unverified {
+            width: 100px;
+            position: absolute;
+            right: 20px;
+            margin-top: 0.4em;
         }
 
 
@@ -254,7 +352,52 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
 
         .dropdown-links {
-            height: 120vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 2em;
+            background: #7e252b;
+            transform: translateX(100%);
+            transition: all 1s;
+            width: 50%;
+            position: fixed;
+            bottom: 0;
+            border-radius: 8px 0px 0px 8px;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            grid-gap: 0;
+        }
+
+        .land-estate {
+            width: 290px;
+        }
+
+
+        .close {
+            padding-top: 12em;
+        }
+
+        /* .close {
+            position: absolute;
+            top: 4em;
+            right: 1em;
+        } */
+
+    }
+
+
+
+    @media only screen and (max-width: 800px) {
+        body {
+            height: 90vh;
+        }
+
+        .dropdown-links {
+            height: 90vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -274,48 +417,6 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             grid-gap: 0;
         }
 
-        .land-estate {
-            width: 290px;
-        }
-
-
-
-        .close {
-            position: absolute;
-            top: 1em;
-            right: 1em;
-        }
-
-    }
-
-
-
-
-
-
-
-
-
-    @media only screen and (max-width: 800px) {
-        body {
-            height: 90vh;
-        }
-
-        .dropdown-links {
-            margin-top: 4.7em !important;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            gap: 2em;
-            transform: translateX(100%);
-            transition: all 1s;
-            width: 200px;
-        }
-
-        .dropdown-links li {
-            height: 1em;
-            grid-gap: 0;
-        }
     }
     </style>
 </head>
@@ -329,30 +430,53 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
-
-
         </div>
+
 
         <?php 
              $user = new User;
              $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
             ?>
 
+
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
-                <p><?php if(isset($newuser['super_adminname'])){  ?>
-                    <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
+                <div class="profile-name">
+                    <?php if(empty($newuser['admin_image'])){
+    ?>
+                    <div class="unverified">
+                        <span style="text-transform: capitalize;" class="unspan">unverified</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z"
+                                fill="rgba(249,19,19,1)" />
+                        </svg>
+                    </div>
+                    <?php } else {?>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"
+                            fill="rgba(50,179,40,1)" />
+                    </svg>
                     <?php }?>
-                </p>
+                    <p><?php if(isset($newuser['super_adminname'])){  ?>
+                        <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
+                        <?php }?>
+                    </p>
+                </div>
+
                 <div class="profile-image">
                     <?php if(!empty($newuser['admin_image'])){?>
-                    <a href="supadmininfo.php" style="color: #808080;"><img
+                    <a href="supadminimg.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['admin_image'])){?>
-                    <a href="supadmininfo.php" style="color: #808080;">
-                        <div class="empty-img" style="border-radius: 50%;">
+                    <a href="supadminimg.php" style="color: #808080;">
+                        <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
@@ -362,6 +486,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         </div>
 
     </header>
+
     <?php 
              $user = new User;
              $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
@@ -375,11 +500,11 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
                 </li>
             </div>
             <li class="close">
@@ -388,6 +513,11 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             <li class="links select-link">
                 <a href="superadmin.php"><img src="images/home3.svg" /></a>
                 <a href="superadmin.php" class="link">Home</a>
+            </li>
+
+            <li class="links">
+                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allcustomers.php" class="link">All Customers</a>
             </li>
 
             <li class="links">
@@ -425,8 +555,8 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 <a href="supadmininfo.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
+                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
 
@@ -434,8 +564,9 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
 
         <div class="profile-container">
+
             <div class="profile-info">
-                <div class="details">
+                <div class="details2">
                     <p>Welcome Back!</p>
                     <h3><?php if(isset($newuser['super_adminname'])){  ?>
                         <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
@@ -445,26 +576,47 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
                 <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['admin_image'])){?>
-                    <img src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" />
+                    <a href="supadminimg.php" style="color: #808080;">
+                        <img src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" />
+                    </a>
                     <?php }?>
                     <?php if(empty($newuser['admin_image'])){?>
-                    <div class="empty-img">
-                        <i class="ri-user-fill"></i>
+                    <a href="supadminimg.php" style="color: #808080;">
+                        <div class="empty-img">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                    <?php if(empty($newuser['admin_image'])){
+              ?>
+                    <div class="unverified">
+                        <span style="text-transform: capitalize;" class="unspan">unverified</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                                d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-11.414L9.172 7.757 7.757 9.172 10.586 12l-2.829 2.828 1.415 1.415L12 13.414l2.828 2.829 1.415-1.415L13.414 12l2.829-2.828-1.415-1.415L12 10.586z"
+                                fill="rgba(249,19,19,1)" />
+                        </svg>
                     </div>
+                    <?php } else {?>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" id="check">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"
+                            fill="rgba(50,179,40,1)" />
+                    </svg>
                     <?php }?>
                 </div>
             </div>
-            <div class="land-btn-container">
-                <!-- <a href="allestates.html">
-                    <button class="btn land-btn">Buy a new land</button>
-                </a> -->
-            </div>
+
+
 
             <div class="profile-div-container">
                 <div class="profile-div">
                     <img class="profile-icon" src="images/land.svg" alt="land-icon-image" />
 
-                    <a href="allcustomers2.php">
+                    <a href="customercount.php">
                         <div class="navigate">
                             <p>Total Customer Count</p>
                             <img src="images/right_arrow.svg" alt="" />
@@ -574,7 +726,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="totaltransactions.php">
                         <div class="navigate">
                             <p>Transactions</p>
                             <img src="images/right_arrow.svg" alt="" />
@@ -585,13 +737,15 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/paystack.svg" alt="land-icon-image" />
 
-                    <div class="navigate">
-                        <div>
-                            <p>Make new</p>
-                            <p>Payment</p>
+                    <a href="allcustomers.php">
+                        <div class="navigate">
+                            <div>
+                                <p>Make new</p>
+                                <p>Payment</p>
+                            </div>
+                            <img src="images/right_arrow.svg" alt="" />
                         </div>
-                        <img src="images/right_arrow.svg" alt="" />
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -605,7 +759,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
              if(!empty($landview)){
                 foreach($landview as $key => $value){
             ?>
-                    <div class="land-estate swiper-slide">
+                    <div class="land-estate swiper-slide" style="height: 250px;">
                         <div class="land-image">
 
                             <img src="landimage/<?php if(isset($value['product_image'])){
@@ -625,11 +779,6 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
                     <?php   }
              } ?>
-
-
-
-
-
 
                 </div>
                 <div class="swiper-pagination"></div>

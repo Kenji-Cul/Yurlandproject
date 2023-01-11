@@ -8,18 +8,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $email = $_POST['email'];
     $address = $_POST['houseaddress'];
     $phone = $_POST['phonenum'];
-    $relationship = $_POST['relation'];
+    $relationship = $_GET['relation'];
 
 
-if(empty($firstname) || empty($lastname) || empty($email) || empty($address) || empty($phone) || empty($relationship)){
-    $errormsg = "Please input all fields";
-    
-}  
 
-else {
+
      $user = new User;
      $insertnextofkin = $user->insertNextOfKin(check_input($firstname), check_input($lastname), check_input($email), check_input($address), check_input($phone), check_input($relationship),$_SESSION['unique_id']);
-}
+
 
   
 

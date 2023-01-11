@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if(!isset($_SESSION['unique_id'])){
-    header("Location: signup.html");
+    header("Location: signup.php");
 }
 include "projectlog.php";
 if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
@@ -29,6 +29,7 @@ if(isset($_POST["submit"])){
     $uniqueproduct = $_GET['uniqueid'];
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
+    $allocationfee = $value['allocation_fee'];
     $deducted_unit = $value['product_unit'] - $_GET['unit'];
     $boughtunit = $_GET['unit']  + $value['bought_units'];
     $productlocation = $value['product_location'];
@@ -174,6 +175,12 @@ if(isset($_POST["submit"])){
                 "display_name" => "Agentid",
                 "variable_name" => "Agentid",
                 "value" => $agentid
+            ],
+
+            [
+                "display_name" => "Allocation Fee",
+                "variable_name" => "allocation fee",
+                "value" =>  $allocationfee
             ],
 
           ]

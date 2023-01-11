@@ -703,6 +703,16 @@ if(!isset($_GET['unique'])){
         </div>
         <?php }?>
 
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
+
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
         </div>
@@ -772,6 +782,101 @@ if(!isset($_GET['unique'])){
         </ul>
 
         <?php }?>
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <li class="links select-link">
+                <a href="superadmin.php"><img src="images/home3.svg" /></a>
+                <a href="superadmin.php" class="link">Home</a>
+            </li>
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
+            </li>
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                <a href="totaltransactions.php" class="link">View Transactions</a>
+            </li>
+
+            <li class="links">
+                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                <a href="totalref.php" class="link">View Referrals</a>
+            </li>
+
+            <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
+                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
+                <a href="createexecutive.php" class="link">Create Executive</a>
+            </li>
+
+            <li class="links">
+                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
+                <a href="createsubadmin.php" class="link">Create Subadmin</a>
+            </li>
+
+            <li class="links">
+                <a href="productperiod.php"><img src="images/land2.svg" /></a>
+                <a href="productperiod.php" class="link">Create Plan</a>
+            </li>
+
+            <li class="links">
+                <a href="selectprice.php"><img src="images/land2.svg" /></a>
+                <a href="selectprice.php" class="link">Create Product</a>
+            </li>
+
+            <li class="links">
+                <a href="#"><img src="images/updown.svg" /></a>
+                <a href="#" class="link">Pay Earnings</a>
+            </li>
+
+            <li class="links">
+                <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
+                <a href="supadmininfo.php" class="link">Profile</a>
+            </li>
+            <li class="links">
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
+            </li>
+        </ul>
+
+        <?php }?>
+
+
 
         <?php if(isset($_SESSION['uniqueagent_id'])){?>
 

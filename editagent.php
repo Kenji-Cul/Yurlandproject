@@ -370,7 +370,7 @@ if(!isset($_GET['unique'])){
 
                     <div class="input-div name">
                         <label for="agentnum">Agent Number</label>
-                        <input type="text" id="agentnum" placeholder="Edit agent number" name="agentnum"
+                        <input type="number" id="agentnum" placeholder="Edit agent number" name="agentnum"
                             value="<?php if(isset($newuser['agent_num'])){echo $newuser['agent_num'];}?>" />
                     </div>
 
@@ -386,6 +386,34 @@ if(!isset($_GET['unique'])){
                         <input type="text" id="address" placeholder="Edit home address" name="address"
                             value="<?php if(isset($newuser['home_address'])){echo $newuser['home_address'];}?>" />
                     </div>
+
+                    <div class="input-div name">
+                        <label for="bankname">Bank Name</label>
+                        <input type="text" id="bankname" placeholder="Fill in your bank name" name="bankname" value="<?php if(isset($newuser['bank_name'])){
+                    echo $newuser['bank_name'];
+                }?>" />
+                    </div>
+
+                    <div class="input-div name">
+                        <label for="accountnum">Account Number</label>
+                        <input type="number" id="accountnum" placeholder="Fill in your account number" name="accountnum"
+                            value="<?php if(isset($newuser['account_number'])){
+                    echo $newuser['account_number'];
+                }?>" />
+                    </div>
+
+                    <div class="input-div name">
+                        <label for="accountname">Registered Account Name</label>
+                        <input type="text" id="accountname" placeholder="Fill in registered account name"
+                            name="accountname" value="<?php if(isset($newuser['reg_account_name'])){
+                    echo $newuser['reg_account_name'];
+                }?>" />
+                    </div>
+
+
+
+
+
 
                     <div class="select-box">
                         <div class="options-container">
