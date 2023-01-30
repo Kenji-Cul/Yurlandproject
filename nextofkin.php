@@ -625,12 +625,14 @@ if(!isset($_SESSION['unique_id'])){
                         document.querySelector('.successmodal').style.display = "flex";
                         document.querySelector('.modalcon').classList.add('animation');
                         document.querySelector(".btn").textContent = "Save Changes";
-                    } else {
-                        document.querySelector("section .error").style.visibility =
-                            "visible";
-                        document.querySelector("section .error").textContent = data;
-                        document.querySelector(".btn").textContent = "Save Changes";
                     }
+
+                    // else {
+                    //     document.querySelector("section .error").style.visibility =
+                    //         "visible";
+                    //     document.querySelector("section .error").textContent = data;
+                    //     document.querySelector(".btn").textContent = "Save Changes";
+                    // }
                 }
             }
         };

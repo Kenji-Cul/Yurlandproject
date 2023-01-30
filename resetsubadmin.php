@@ -4,8 +4,8 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
-define("PASSWORD","gecxolzcdhjfeilm");
-define("EMAIL","gideonteibo@gmail.com");
+define("PASSWORD","cvofrbjulwvkkccb");
+define("EMAIL","yurland.ng@gmail.com");
 ob_start();
 
 

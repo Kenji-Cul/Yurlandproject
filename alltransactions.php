@@ -202,6 +202,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
             height: 1em;
             grid-gap: 0;
         }
+
+        .close {
+            position: absolute;
+            top: 4em;
+            right: 1em;
+        }
     }
 
     @media only screen and (min-width: 1300px) {

@@ -752,11 +752,11 @@ if(!isset($_SESSION['unique_id'])){
                 </div>
                 <div class="profile-image">
                     <?php if(!empty($newuser['photo'])){?>
-                    <a href="updatedetails.php" style="color: #808080;"><img
+                    <a href="profiledetails.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['photo'])){?>
-                    <a href="updatedetails.php" style="color: #808080;">
+                    <a href="profiledetails.php" style="color: #808080;">
                         <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>
@@ -844,11 +844,11 @@ if(!isset($_SESSION['unique_id'])){
 
                 <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['photo'])){?>
-                    <a href="updatedetails.php" style="color: #808080;"><img
+                    <a href="profiledetails.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['photo'])){?>
-                    <a href="updatedetails.php" style="color: #808080;">
+                    <a href="profiledetails.php" style="color: #808080;">
                         <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>
@@ -962,7 +962,6 @@ if(!isset($_SESSION['unique_id'])){
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
-              
             ?>
             <div class="transaction-details">
                 <div class="radius">

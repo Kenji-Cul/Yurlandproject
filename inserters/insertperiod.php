@@ -15,9 +15,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $onepercentage = $_POST['onepercent'];
 
 
-    if(empty( $eighteenperiod) || empty($twelveperiod) || empty($sixperiod) || empty($threeperiod) || empty($oneperiod) || empty($eighteenpercentage) || empty($twelvepercentage) || empty($sixpercentage) || empty($threepercentage) || empty($onepercentage)){
+    if(empty( $eighteenperiod) || empty($twelveperiod) || empty($sixperiod) || empty($threeperiod) || empty($oneperiod)){
         $errormsg = "Please input all fields";
-    }
+    } 
    else {
      $user = new User;
      $insertdocument = $user->insertPeriod(check_input($oneperiod),check_input($threeperiod),check_input($sixperiod),check_input($twelveperiod),check_input($eighteenperiod),check_input($eighteenpercentage),check_input($twelvepercentage),check_input($sixpercentage),check_input($threepercentage),check_input($onepercentage));

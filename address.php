@@ -542,14 +542,16 @@ if(!isset($_SESSION['unique_id'])){
                             "flex";
                         document.querySelector('.modalcon').classList.add('animation');
                         $(".btn").html("Save Changes");
-                    } else {
-                        $("section .error").html(response);
-                        $("section .error").css({
-                            visibility: "visible",
-                        });
-                        $(".btn").html("Save Changes");
-                        // console.log(response);
                     }
+
+                    // else {
+                    //     $("section .error").html(response);
+                    //     $("section .error").css({
+                    //         visibility: "visible",
+                    //     });
+                    //     $(".btn").html("Save Changes");
+                    //     // console.log(response);
+                    // }
                 },
             });
         });

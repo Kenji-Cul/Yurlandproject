@@ -156,6 +156,8 @@ include_once "projectlog.php";
                 type: "POST",
                 url: `inserters/insertuser.php?refuser=<?php if(isset($_GET['ref'])){
                     echo $_GET['ref'];
+                }else {
+                    echo "Yurland";
                 }?>`,
                 data: $("#signup-form input"),
                 success: function(response) {

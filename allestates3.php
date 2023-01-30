@@ -137,7 +137,7 @@ include "projectlog.php";
 
     .updated-img {
         width: 350px;
-        height: 341px;
+        height: 220px;
         border-radius: 8px 8px 0px 0px;
     }
 

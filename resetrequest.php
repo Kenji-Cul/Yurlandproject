@@ -1,11 +1,12 @@
 <?php 
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
-define("PASSWORD","gecxolzcdhjfeilm");
-define("EMAIL","gideonteibo@gmail.com");
+define("PASSWORD","cvofrbjulwvkkccb");
+define("EMAIL","yurland.ng@gmail.com");
 ob_start();
 
 
@@ -27,7 +28,7 @@ if(isset($_POST['fgtpass'])){
     // $token = random_bytes(32);
     
 
-    $url = "http://localhost/Yurland/random.php?selector=". $selector. "&rand=". $random;;
+    $url = "http://localhost/Yurland/random.php?selector=". $selector. "&rand=". $random;
 
     // $expires = date("U") + 1800;
 

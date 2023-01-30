@@ -457,7 +457,7 @@ if(!isset($_SESSION['unique_id'])){
                     <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
                 </div>
 
-                <a href="https://wa.link/ma3v20">
+                <a href="https://wa.link/bt0i7e">
                     <div class="account-detail2">
                         <div class="radius"></div>
                         <div class="flex">

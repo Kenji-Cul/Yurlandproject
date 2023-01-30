@@ -245,12 +245,12 @@ if(!isset($_GET['unique'])){
 
     .updated-img {
         width: 350px;
-        height: 241px !important;
+        height: 220px !important;
         border-radius: 8px 8px 0px 0px;
     }
 
     .updated-img img {
-        height: 241px !important;
+        height: 220px !important;
     }
 
     .updated-details {

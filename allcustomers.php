@@ -607,25 +607,7 @@ include_once "projectlog.php";
                 <a href="createagent.php" class="link">Create Agent</a>
             </li>
 
-            <li class="links">
-                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
-                <a href="createsubadmin.php" class="link">Create Subadmin</a>
-            </li>
 
-            <li class="links">
-                <a href="productperiod.php"><img src="images/land2.svg" /></a>
-                <a href="productperiod.php" class="link">Create Plan</a>
-            </li>
-
-            <li class="links">
-                <a href="selectprice.php"><img src="images/land2.svg" /></a>
-                <a href="selectprice.php" class="link">Create Product</a>
-            </li>
-
-            <li class="links">
-                <a href="#"><img src="images/updown.svg" /></a>
-                <a href="#" class="link">Pay Earnings</a>
-            </li>
 
             <li class="links">
                 <a href="supadmininfo.php"><img src="images/settings.svg" /></a>

@@ -338,7 +338,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 
@@ -353,7 +353,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
         .success {
             position: absolute;
             left: 50%;
-            top: 60em;
+            top: 65em;
             transform: translate(-50%, -50%);
             height: 10em;
         }

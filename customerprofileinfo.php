@@ -31,20 +31,31 @@ include_once "projectlog.php";
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 25%;
+        min-width: 280px;
         border-radius: 8px;
         gap: 0;
         height: 50px;
         background-color: #fee1e3;
+        position: relative;
+    }
+
+    .refdiv {
+        display: inline-block;
+        text-transform: capitalize;
+        width: 130px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     .detail-3 {
         box-shadow: none !important;
     }
 
-    .colored-div span {
+    .colored-div p {
         font-size: 16px;
         text-transform: capitalize;
+        color: #ff6600;
     }
 
     section {
@@ -546,38 +557,46 @@ include_once "projectlog.php";
                 </p>
                 <?php 
         if($newuser['referral_id'] !== "Yurland"){ ?>
-                <p class="referral colored-div">
+                <div class="referral colored-div">
+
                     <?php   $seconduser = $user->selectReferralUser($newuser['referral_id']);
-               $thirduser = $user->selectReferralAgent($newuser['referral_id']);
+                  $thirduser = $user->selectReferralAgent($newuser['referral_id']);
             
-            ?>
+                 ?>
                     <?php if(isset($seconduser['first_name'])){?>
                     <a href="referraldetails.php?ref=<?php if(isset($seconduser['unique_id'])){
-                echo $seconduser['unique_id'];
-            }?>">
+                 echo $seconduser['unique_id'];
+                      }?>"
+                        style=" display: flex!important; flex-direction: row; align-items: center!important; justify-content: center!important; padding-left: 10%;">
 
-                        <span>Referral:</span>&nbsp;<span><?php if(isset($seconduser['first_name'])){
-             echo $seconduser['first_name'];
-            }?></span>&nbsp;<span><?php if(isset($seconduser['last_name'])){
-                echo $seconduser['last_name'];
-            }?></span>
+                        <p style="display:inline;">Referral:</p>&nbsp;<p class="refdiv"><?php if(isset($seconduser['first_name'])){
+                  echo $seconduser['first_name'];
+                  }?>&nbsp;<?php if(isset($seconduser['last_name'])){
+                    echo $seconduser['last_name'];
+                   }?> </p>
 
                     </a>
                     <?php }?>
                     <?php if(isset($thirduser['agent_name'])){?>
                     <a href="agentdetails.php?ref=<?php if(isset($thirduser['uniqueagent_id'])){
-                echo $thirduser['uniqueagent_id'];
-            }?>">
-                        <span>Referral:</span>&nbsp;<span><?php if(isset($thirduser['agent_name'])){
-             echo $thirduser['agent_name'];
-            }?></span>
+                 echo $thirduser['uniqueagent_id'];
+                 }?>"
+                        style=" display: flex!important; flex-direction: row; align-items: center!important; justify-content: center!important; padding-left: 10%;">
+                        <p style="display:inline;">Referral:</p>&nbsp;<p class="refdiv"><?php if(isset($thirduser['agent_name'])){
+                  echo $thirduser['agent_name'];
+                    }?></p>
                     </a>
                     <?php }?>
-                </p>
+                </div>
                 <?php } else { ?>
-                <p class="referral colored-div">
-                    <span>Referral:</span>&nbsp;<span><?php echo "Yurland Support";?></span>
-                </p>
+                <div class="referral colored-div">
+                    <div
+                        style=" display: flex!important; flex-direction: row; align-items: center!important; justify-content: center!important;">
+                        <p style="display:inline;">Referral:</p>&nbsp;<p class="refdiv">
+                            <?php echo "Yurland Support";?></p>
+                        </p>
+                    </div>
+                </div>
                 <?php }?>
                 <div class="referral">
 

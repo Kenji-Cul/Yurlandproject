@@ -93,7 +93,7 @@ include_once "projectlog.php";
                 data: $("#subadmin-form input"),
                 success: function(response) {
                     if (response === "success") {
-                        location.href = "successpage/subadminsuccess.html";
+                        location.href = "successpage/subadminsuccess.php";
                     } else {
                         $("section .error").html(response);
                         $("section .error").css({

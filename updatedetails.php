@@ -727,14 +727,16 @@ header("Location: login.php");
                             document.querySelector('.successmodal').style.display = "flex";
                             document.querySelector('.modalcon').classList.add('animation');
                         };
-                    } else {
-                        error.textContent = data;
-                        error.style.visibility = "visible";
-                        //uploaddiv.style.display = "none";
-                        setTimeout(() => {
-                            error.style.visibility = "hidden";
-                        }, 20000);
                     }
+
+                    // else {
+                    //     error.textContent = data;
+                    //     error.style.visibility = "visible";
+                    //     //uploaddiv.style.display = "none";
+                    //     setTimeout(() => {
+                    //         error.style.visibility = "hidden";
+                    //     }, 20000);
+                    // }
                 }
             }
         };

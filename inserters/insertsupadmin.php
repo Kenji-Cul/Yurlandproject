@@ -24,7 +24,14 @@ else {
      if(!empty( $checkagent) || !empty( $checkagent2) || !empty( $checkagent3) || !empty( $checkagent4) || !empty( $checkagent5)){
      $errormsg = "Email Address already exists";
      }else{
-     $insertsupadmin = $supadmin->createSuperAdmin(check_input($name),check_input($password), check_input($email));
+     $superadmincount = $supadmin->selectSuperAdminCount();
+     foreach ($superadmincount as $key => $value) {
+     if($value < 1){
+         $insertsupadmin = $supadmin->createSuperAdmin(check_input($name),check_input($password), check_input($email));
+     } else {
+        $errormsg = "Super Admin Already Exists";
+     }
+    }
         }
 
 }

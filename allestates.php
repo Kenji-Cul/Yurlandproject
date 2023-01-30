@@ -136,7 +136,7 @@ if(!isset($_SESSION['unique_id'])){
 
     .updated-img {
         width: 350px;
-        height: 341px;
+        height: 220px;
         border-radius: 8px 8px 0px 0px;
     }
 
@@ -865,7 +865,9 @@ if(!isset($_SESSION['unique_id'])){
                 <?php }}?>
             </div>
 
-            <?php if(isset($_SESSION['unique_id'])){?>
+            <?php 
+           
+            if(!empty($landview)){?>
             <div class="price-container">
                 <a href="cartreview.php">
                     <div class="price">Continue</div>
@@ -880,6 +882,16 @@ if(!isset($_SESSION['unique_id'])){
                 <p>
                 <div class="estate_page_button action" onClick="load()" style="width: 200px; height: 30px;">Sign Up
                 </div>
+                </p>
+            </div>
+            <?php }?>
+
+            <?php if(empty($landview)){?>
+            <div class="success">
+                <img src="images/asset_success.svg" alt="" />
+                <p>
+                <p style="text-align: center; font-size: 18px;">No Estates Available at the moment!</p>
+                <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
                 </p>
             </div>
             <?php }?>

@@ -332,7 +332,7 @@ include "projectlog.php";
         }
 
         .close {
-            padding-top: 7em;
+            padding-top: 12em;
         }
 
 

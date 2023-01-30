@@ -337,7 +337,7 @@ if(!isset($_SESSION['unique_id'])){
         .success {
             position: absolute;
             left: 50%;
-            top: 60em;
+            top: 65em;
             transform: translate(-50%, -50%);
             height: 10em;
         }

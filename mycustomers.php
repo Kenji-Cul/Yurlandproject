@@ -418,7 +418,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 4em;
             right: 1em;
         }
 

@@ -582,7 +582,7 @@ if(!isset($_SESSION['unique_id'])){
 
             <?php 
              $land = new User;
-             $landview = $land->selectPayHistory($_SESSION['unique_id']);
+             $landview = $land->selectCurrentPayHistory($_SESSION['unique_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     

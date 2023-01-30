@@ -106,7 +106,7 @@ include "projectlog.php";
     .success {
         position: absolute;
         left: 50%;
-        top: 26em;
+        top: 36em;
         transform: translate(-50%, -50%);
         height: 10em;
         width: 90%;
@@ -651,25 +651,6 @@ include "projectlog.php";
                 <a href="createagent.php" class="link">Create Agent</a>
             </li>
 
-            <li class="links">
-                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
-                <a href="createsubadmin.php" class="link">Create Subadmin</a>
-            </li>
-
-            <li class="links">
-                <a href="productperiod.php"><img src="images/land2.svg" /></a>
-                <a href="productperiod.php" class="link">Create Plan</a>
-            </li>
-
-            <li class="links">
-                <a href="selectprice.php"><img src="images/land2.svg" /></a>
-                <a href="selectprice.php" class="link">Create Product</a>
-            </li>
-
-            <li class="links">
-                <a href="#"><img src="images/updown.svg" /></a>
-                <a href="#" class="link">Pay Earnings</a>
-            </li>
 
             <li class="links">
                 <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
@@ -777,7 +758,7 @@ include "projectlog.php";
             <?php if(empty($landview)){?>
             <div class="success">
                 <img src="images/whoops.svg" alt="" />
-                <p>Whoops, you have no payment records</p>
+                <p>Whoops, There are no payment records yet</p>
             </div>
         </div>
     </div>

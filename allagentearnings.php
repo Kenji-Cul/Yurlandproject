@@ -376,7 +376,7 @@ include_once "projectlog.php";
 
         .success {
             position: absolute;
-            top: 27em;
+            top: 38em;
         }
 
 

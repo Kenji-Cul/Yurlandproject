@@ -19,6 +19,7 @@ if(empty($firstname) || empty($lastname) || empty($email) || empty($phone_num) |
 
 
 
+
 else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errormsg = "Invalid email format";
   }

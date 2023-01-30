@@ -150,12 +150,11 @@ if(!isset($_GET['unique'])){
         filter: drop-shadow(0px 4px 16px rgba(128, 128, 128, 0.76));
         display: flex;
         flex-direction: column;
-
     }
 
     .updated-img {
         width: 350px;
-        height: 341px;
+        height: 220px;
         border-radius: 8px 8px 0px 0px;
     }
 
