@@ -20,8 +20,16 @@ header("Location:index.php");
     <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
-        height: 70vh !important;
+        height: 150vh !important;
         overflow-x: hidden;
+    }
+
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 40%;
     }
 
     .dropdown-links {
@@ -447,7 +455,23 @@ header("Location:index.php");
 
             <section class="login-form-container">
                 <form action="" class="login-form" id="upload-form">
+                    <div class="input-div name">
+                        <label for="phonenum">Phone Number</label>
+                        <input type="number" id="phonenum" name="phonenum" placeholder="Edit phone number"
+                            value="<?php if(isset($newuser['executive_num'])){echo $newuser['executive_num'];}?>" />
+                    </div>
 
+                    <div class="input-div name">
+                        <label for="bankname">Bank Name</label>
+                        <input type="text" id="bankname" name="bankname" placeholder="Edit bank name"
+                            value="<?php if(isset($newuser['bank_name'])){echo $newuser['bank_name'];}?>" />
+                    </div>
+
+                    <div class="input-div name">
+                        <label for="accountnum">Account Number</label>
+                        <input type="number" id="accountnum" name="accountnum" placeholder="Edit account number"
+                            value="<?php if(isset($newuser['account_number'])){echo $newuser['account_number'];}?>" />
+                    </div>
                     <div class="input-div email">
                         <label>Profile Image</label>
                         <input type="text" name="text" placeholder="Upload your profile Image" disabled />
@@ -475,6 +499,19 @@ header("Location:index.php");
                     </div>
                 </form>
             </section>
+        </div>
+    </div>
+
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>Details Updated</p>
+                    <a href="executiveprofileinfo.php"><button class="landing_page_button2">Back to
+                            Dashboard</button></a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -586,19 +623,23 @@ header("Location:index.php");
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     let data = xhr.response;
+                    console.log(data);
                     if (data === "success") {
-                        //console.log("uploaded");
+
+
                         submitbtn.onclick = () => {
-                            location.href = "successpage/executivesucceed.html";
+                            document.querySelector('.successmodal').style.display =
+                                "flex";
+                            document.querySelector('.modalcon').classList.add('animation');
                         };
-                    } else {
-                        error.textContent = data;
-                        error.style.visibility = "visible";
-                        //uploaddiv.style.display = "none";
-                        setTimeout(() => {
-                            error.style.visibility = "hidden";
-                        }, 20000);
-                    }
+                    } //else {
+                    //     error.textContent = data;
+                    //     error.style.visibility = "visible";
+                    //     //uploaddiv.style.display = "none";
+                    //     setTimeout(() => {
+                    //         error.style.visibility = "hidden";
+                    //     }, 20000);
+                    // }
                 }
             }
         };

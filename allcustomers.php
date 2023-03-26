@@ -28,7 +28,7 @@ include_once "projectlog.php";
         overflow: hidden;
         white-space: nowrap;
         display: inline-block;
-        width: 170px;
+        width: 150px;
     }
 
     .dropdown-links {
@@ -48,6 +48,36 @@ include_once "projectlog.php";
 
     ::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
+    }
+
+    .navig .payment {
+        font-size: 14px;
+    }
+
+    .navigation-div {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+    }
+
+    .transaction-details2 {
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 2.4em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 98%;
+    }
+
+    .details {
+        width: 150px;
+    }
+
+    .navig {
+        width: 98%;
+        gap: 7em;
     }
 
     .search-icon {
@@ -107,6 +137,10 @@ include_once "projectlog.php";
 
     }
 
+    .land-container {
+        position: relative;
+    }
+
     .success p {
         text-align: center;
     }
@@ -145,6 +179,55 @@ include_once "projectlog.php";
     }
 
     @media only screen and (min-width: 1300px) {
+
+        .select-box {
+            width: 100%;
+            border-radius: 0px !important;
+            background: #7e252b;
+        }
+
+        .selected {
+            border-radius: 0px !important;
+            background: #7e252b;
+            color: #fff;
+        }
+
+        .select-box .options-container {
+            border-radius: 0px !important;
+            background: #7e252b;
+            z-index: 200;
+        }
+
+        .select-box .option:hover {
+            background: var(--primary-black);
+            color: #ffffff;
+        }
+
+        .select-box .options-container::-webkit-scrollbar {
+            width: 6px;
+            background: #0d141f;
+            border-radius: 0;
+        }
+
+        .select-box .options-container::-webkit-scrollbar-thumb {
+            background: #525861;
+            border-radius: 0;
+        }
+
+        .option {
+            padding: 1em 0;
+        }
+
+
+        .details .detail {
+            width: 80px;
+            height: 24px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         .page-title2 a {
             display: none;
@@ -192,7 +275,7 @@ include_once "projectlog.php";
 
 
 
-        .details {
+        /* .details {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -206,7 +289,7 @@ include_once "projectlog.php";
         .details p,
         .details h3 {
             font-size: 22px;
-        }
+        } */
 
         .center {
             display: flex;
@@ -253,12 +336,28 @@ include_once "projectlog.php";
             transition: all 0.7s;
         }
 
-        .dropdown-links li {
+        .links-container li {
             height: 1em;
             width: 95%;
             text-transform: capitalize;
             font-size: 14px;
         }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 1.5em;
+            padding-top: 0;
+        }
+
+        /* .dropdown-links li {
+            height: 1em;
+            width: 95%;
+            text-transform: capitalize;
+            font-size: 14px;
+        } */
 
         .dropdown-links .select-link {
             background-color: #1a0709;
@@ -340,9 +439,58 @@ include_once "projectlog.php";
 
     @media only screen and (max-width: 1300px) {
 
+        .details .detail {
+            width: 60px;
+            height: 20px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details .detail p {
+            font-size: 10px;
+        }
+
+        .transaction-details2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            gap: 1.3em;
+            width: 85%;
+        }
+
+        .details p {
+            font-size: 12px;
+        }
+
+
+        .transaction-details2 {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
+        }
+
+        .hide {
+            display: none;
+        }
+
+
+        .navig {
+            gap: 1.7em;
+        }
+
+        .navig .payment {
+            font-size: 12px;
+        }
+
         .success {
             position: absolute;
-            top: 27em;
+            top: 20em;
         }
 
 
@@ -381,26 +529,90 @@ include_once "projectlog.php";
             background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
-            width: 50%;
+            width: 40%;
             position: fixed;
             bottom: 0;
             border-radius: 8px 0px 0px 8px;
         }
 
-        .dropdown-links li {
-            height: 1em;
+        .links-container li {
+            height: 2em;
             grid-gap: 0;
         }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 1em;
+        }
+
+
 
         .land-estate {
             width: 290px;
         }
 
-        .close {
-            padding-top: 12em;
+        .select-box {
+            width: 100%;
+            border-radius: 0px !important;
+            background: #7e252b;
+            margin-left: -1em;
+        }
+
+        .selected {
+            border-radius: 0px !important;
+            background: #7e252b;
+            color: #fff;
+        }
+
+        .select-box .options-container {
+            border-radius: 0px !important;
+            background: #7e252b;
+            z-index: 200;
+        }
+
+        .select-box .option:hover {
+            background: var(--primary-black);
+            color: #ffffff;
+        }
+
+        .select-box .options-container::-webkit-scrollbar {
+            width: 6px;
+            background: #0d141f;
+            border-radius: 0;
+        }
+
+        .select-box .options-container::-webkit-scrollbar-thumb {
+            background: #525861;
+            border-radius: 0;
+        }
+
+        .option {
+            padding: 0.6em 0;
         }
 
 
+
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])) {
+            ?>.close {
+                padding-top: 26em;
+            }
+
+            <?php
+        }
+
+        ?><?php if(isset($_SESSION['uniquesupadmin_id'])) {
+            ?>.close {
+                padding-top: 6em;
+            }
+
+            <?php
+        }
+
+        ?>
         /* .close {
             position: absolute;
             top: 4em;
@@ -417,7 +629,7 @@ include_once "projectlog.php";
         <div class="logo">
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
-            <?php }  else if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <?php }  else if(isset($_SESSION['uniquesupadmin_id'])){?>
             <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }  else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
@@ -449,8 +661,8 @@ include_once "projectlog.php";
                             src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['subadmin_image'])){?>
-                    <a href="agentprofileinfo.php" style="color: #808080;">
-                        <div class="empty-img">
+                    <a href="subadmininfo.php" style="color: #808080;">
+                        <div class="empty-img" style="border-radius: 50%;">
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
@@ -471,8 +683,8 @@ include_once "projectlog.php";
                             src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['admin_image'])){?>
-                    <a href="supadminimg.php" style="color: #808080;">
-                        <div class="empty-img">
+                    <a href="supadmininfo.php" style="color: #808080;">
+                        <div class="empty-img" style="border-radius: 50%;">
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
@@ -480,7 +692,7 @@ include_once "projectlog.php";
                 </div>
             </div>
             <?php }?>
-
+        </div>
     </header>
 
 
@@ -499,50 +711,81 @@ include_once "projectlog.php";
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links select-link">
-                <a href="subadmin.php"><img src="images/home3.svg" /></a>
-                <a href="subadmin.php" class="link">Home</a>
-            </li>
-            <li class="links">
-                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="defaultcustomers.php" class="link">Default Customers</a>
-            </li>
-            <li class="links">
-                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="allocationcustomers.php" class="link">Due Allocation</a>
-            </li>
-            <li class="links">
-                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="payingcustomers.php" class="link">Paying Customers</a>
-            </li>
-            <li class="links">
-                <a href="createagent.php"><img src="images/referral.svg" /> </a>
-                <a href="createagent.php" class="link">Create Agent</a>
-            </li>
+            <div class="links-container">
+                <li class="links">
+                    <a href="subadmin.php"><img src="images/home3.svg" /></a>
+                    <a href="subadmin.php" class="link">Home</a>
+                </li>
+                <li class="links select-link">
+                    <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="allcustomers.php" class="link">All Customers</a>
+                </li>
+                <li class="links">
+                    <a href="allagents.php"><img src="images/referral.svg" /></a>
+                    <a href="allagents.php" class="link">All Agents</a>
+                </li>
 
-            <li class="links">
-                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
-                <a href="totaltransactions.php" class="link">View Transactions</a>
-            </li>
+                <li class="links">
+                    <a href="allgroups.php"><img src="images/referral.svg" /></a>
+                    <a href="allgroups.php" class="link">All Groups</a>
+                </li>
+                <li class="links">
+                    <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                    <a href="allagentearnings.php" class="link">View Earnings</a>
+                </li>
+                <li class="links">
+                    <a href="newuser.php"><img src="images/referral.svg" /></a>
+                    <a href="newuser.php" class="link">New Customer</a>
+                </li>
+                <li class="links">
+                    <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                    <a href="createagent.php" class="link">Create Agent</a>
+                </li>
 
-            <li class="links">
-                <a href="totalref.php"><img src="images/referral.svg" /> </a>
-                <a href="totalref.php" class="link">View Referrals</a>
-            </li>
+                <li class="links">
+                    <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                    <a href="creategroup.php" class="link">Create Group</a>
+                </li>
 
-            <li class="links">
-                <a href="allagents.php"><img src="images/referral.svg" /> </a>
-                <a href="allagents.php" class="link">All Agents</a>
-            </li>
+                <li class="links">
+                    <a href="usertype.php"><img src="images/land2.svg" /></a>
+                    <a href="usertype.php" class="link">New Land</a>
+                </li>
 
-            <li class="links">
-                <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
-                <a href="subadmininfo.php" class="link">Profile</a>
-            </li>
-            <li class="links">
-                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
-                <a href="logout.php?user=subadmin" class="link">Logout</a>
-            </li>
+
+                <li class="links">
+                    <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="defaultcustomers.php" class="link">Default Customers</a>
+                </li>
+                <li class="links">
+                    <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="allocationcustomers.php" class="link">Due Allocation</a>
+                </li>
+                <li class="links">
+                    <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="payingcustomers.php" class="link">Paying Customers</a>
+                </li>
+
+                <li class="links">
+                    <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                    <a href="totaltransactions.php" class="link">View Transactions</a>
+                </li>
+
+                <li class="links">
+                    <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                    <a href="totalref.php" class="link">View Referrals</a>
+                </li>
+
+
+                <li class="links">
+                    <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
+                    <a href="subadmininfo.php" class="link">Profile</a>
+                </li>
+                <li class="links">
+                    <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                    <a href="logout.php?user=subadmin" class="link">Logout</a>
+                </li>
+            </div>
         </ul>
         <?php }?>
 
@@ -560,65 +803,206 @@ include_once "projectlog.php";
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links select-link">
-                <a href="superadmin.php"><img src="images/home3.svg" /></a>
-                <a href="superadmin.php" class="link">Home</a>
-            </li>
+            <div class="links-container">
+                <li class="links select-link">
+                    <a href="superadmin.php"><img src="images/home3.svg" /></a>
+                    <a href="superadmin.php" class="link">Home</a>
+                </li>
 
-            <li class="links">
-                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="defaultcustomers.php" class="link">Default Customers</a>
-            </li>
-            <li class="links">
-                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="allocationcustomers.php" class="link">Due Allocation</a>
-            </li>
-            <li class="links">
-                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="payingcustomers.php" class="link">Paying Customers</a>
-            </li>
-            <li class="links">
-                <a href="createagent.php"><img src="images/referral.svg" /> </a>
-                <a href="createagent.php" class="link">Create Agent</a>
-            </li>
+                <div class="select-box s-box1">
+                    <div class="options-container">
 
-            <li class="links">
-                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
-                <a href="totaltransactions.php" class="link">View Transactions</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                                <a href="newuser.php" class="link">New Customer</a>
+                            </li>
+                        </div>
 
-            <li class="links">
-                <a href="totalref.php"><img src="images/referral.svg" /> </a>
-                <a href="totalref.php" class="link">View Referrals</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                                <a href="usertype.php" class="link">New Land</a>
+                            </li>
+                        </div>
 
-            <li class="links">
-                <a href="allagents.php"><img src="images/referral.svg" /> </a>
-                <a href="allagents.php" class="link">All Agents</a>
-            </li>
+                        <div class="option">
+                            <li class="links ">
+                                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="defaultcustomers.php" class="link">Default Customers</a>
+                            </li>
+                        </div>
 
-            <li class="links">
-                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
-                <a href="createexecutive.php" class="link">Create Executive</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+                            </li>
+                        </div>
 
-            <li class="links">
-                <a href="createagent.php"><img src="images/referral.svg" /> </a>
-                <a href="createagent.php" class="link">Create Agent</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="payingcustomers.php" class="link">Paying Customers</a>
+                            </li>
+
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
 
 
+                <div class="select-box s-box2">
+                    <div class="options-container">
 
-            <li class="links">
-                <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
-                <a href="supadmininfo.php" class="link">Profile</a>
-            </li>
-            <li class="links">
-                <a href="logout.php"><img src="images/exit.svg" /></a>
-                <a href="logout.php" class="link">Logout</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="allcustomers.php" class="link">All Customers</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                                <a href="allagents.php" class="link">All Agents</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allsubadmins.php"><img src="images/referral.svg" /> </a>
+                                <a href="allsubadmins.php" class="link">All Subadmins</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allexecutives.php"><img src="images/referral.svg" /> </a>
+                                <a href="allexecutives.php" class="link">All Executives</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allgroups.php"><img src="images/referral.svg" /> </a>
+                                <a href="allgroups.php" class="link">All Groups</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+
+                <div class="select-box s-box3">
+                    <div class="options-container">
+                        <div class="option">
+                            <li class="links">
+                                <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="allagentearnings.php" class="link">View Earnings</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allexecutiveearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="allexecutiveearnings.php" class="link">Executive Earnings</a>
+                            </li>
+                        </div>
+
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                                <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                                <a href="totalref.php" class="link">View Referrals</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+                <div class="select-box s-box4">
+                    <div class="options-container">
+                        <div class="option">
+                            <li class="links">
+                                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
+                                <a href="createexecutive.php" class="link">Create Executive</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                                <a href="creategroup.php" class="link">Create Group</a>
+                            </li>
+                        </div>
+
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                                <a href="createagent.php" class="link">Create Agent</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
+                                <a href="createsubadmin.php" class="link">Create Subadmin</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="productperiod.php"><img src="images/land2.svg" /></a>
+                                <a href="productperiod.php" class="link">Create Plan</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="selectprice.php"><img src="images/land2.svg" /></a>
+                                <a href="selectprice.php" class="link">Create Product</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+                <li class="links">
+                    <a href="documentation.php"><img src="images/land2.svg" /></a>
+                    <a href="documentation.php" class="link">Documentation</a>
+                </li>
+
+                <li class="links">
+                    <a href="#"><img src="images/updown.svg" /></a>
+                    <a href="#" class="link">Pay Earnings</a>
+                </li>
+
+                <li class="links">
+                    <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
+                    <a href="supadmininfo.php" class="link">Profile</a>
+                </li>
+                <li class="links">
+                    <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                    <a href="logout.php?user=subadmin" class="link">Logout</a>
+                </li>
+            </div>
         </ul>
-
         <?php }?>
 
 
@@ -713,35 +1097,103 @@ include_once "projectlog.php";
                     <?php }}?>
                 </tbody>
             </table>
-            <div class="details-container">
+
+            <div class="navigation-div" style="margin-top: 2em;">
+                <div class="navig">
+                    <div class="payment">Name</div>
+                    <div class="payment hide">Email</div>
+                    <div class="payment">Units Bought</div>
+                    <div class="payment">Amount Paid</div>
+                    <div class="payment hide">Land Count</div>
+                    <div class="payment hide">Joined Date</div>
+                    <div class="payment">View</div>
+                </div>
+            </div>
 
 
+            <div class="land-container">
                 <?php 
+             $user = new User;
    
-   
-    $customer = $user ->selectAllUsers();
-    if(!empty($customer)){
-        foreach($customer as $key => $value){
-    ?>
-                <div class="account-detail2">
-                    <div class="radius">
-                        <?php if(!empty($value['photo'])){?>
-                        <img src="profileimage/<?php echo $value['photo'];?>" alt="profile image" />
-                        <?php }?>
-                        <?php if(empty($value['photo'])){?>
-                        <div class="empty-img">
-                            <i class="ri-user-fill"></i>
-                        </div>
-                        <?php }?>
-                    </div>
-                    <div class="flex">
-                        <p style="text-transform: capitalize;">
+             $customer = $user ->selectAllUsers();
+             //$totunit = $user->selectSumUnits($value['unique_id']);
+        
+             if(!empty($customer)){
+                 foreach($customer as $key => $value){
+                    
+             ?>
+
+
+                <div class="transaction-details2">
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname email-span">
                             <span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
                         </p>
-                        <span class="email-span"><?php echo $value['email'];?></span>
                     </div>
-                    <a href="customerprofileinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939"
-                        style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>
+
+                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                        <p class="pname email-span"> <?php echo $value['email'];?></p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname"><?php 
+                 $totunit = $user->selectSumUnits($value['unique_id']);
+                 $landcount = $user->selectLandCount($value['unique_id']);
+                 $total = $user->selectTotal($value['unique_id']);
+                 $date = $value['user_date'];
+                
+                 foreach ($totunit as $key => $value1) {
+                    if(is_null($value1)){
+                      echo "0";
+                    } else{
+                      echo $value1;
+                    }
+                  }
+                    
+                 ?></p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname">&#8358;<?php 
+              
+                 foreach ($total as $key => $value2) {
+              
+                 if(is_null($value2)){
+                    echo "0";
+                  } else{
+                    $unitprice = $value2;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                        echo number_format($unitprice);
+                      } else {
+                         echo $unitprice;
+                      }
+                  }
+                
+           
+                 }
+                 ?></p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="pname"><?php echo $landcount; ?></p>
+                    </div>
+
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="pname"> <?php echo $date;?></p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <div class="detail" style="">
+                            <a
+                                href="customerprofileinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939">
+                                <p style="font-size: 14px; color: #fff;">View</p>
+                            </a>
+                        </div>
+                    </div>
+
+
+
                 </div>
 
                 <?php }}?>
@@ -749,17 +1201,18 @@ include_once "projectlog.php";
                 <?php if(empty($customer)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
-                    <p>There are no customers yet!</p>
+                    <p>There are no customers yet</p>
                 </div>
                 <?php }?>
+            </div>
 
-                <div class="account-detail3">
-                    <a href="logout.php?user=subadmin">
-                        <p>Sign Out</p>
-                    </a>
-                </div>
+            <div class="account-detail3">
+                <a href="logout.php?user=subadmin">
+                    <p>Sign Out</p>
+                </a>
             </div>
         </div>
+    </div>
     </div>
 
     <script src="js/main.js"></script>
@@ -785,7 +1238,7 @@ include_once "projectlog.php";
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         let data = xhr.response;
-                        document.querySelector('.details-container').innerHTML = data;
+                        document.querySelector('.land-container').innerHTML = data;
                     }
                 }
             };
@@ -827,6 +1280,13 @@ include_once "projectlog.php";
             dropdownnav.style = `
         width: 14%;
         `;
+
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
+            document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
+            document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
+            document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
+            <?php }?>
             open.style.display = "none";
             closeicon.style.display = "block";
             document.querySelector(".profile-container").style = `
@@ -853,6 +1313,13 @@ include_once "projectlog.php";
             dropdownnav.style = `
         width: 6%;
         `;
+
+            <?php  if(isset($_SESSION['uniquesupadmin_id'])){?>
+            document.querySelector('.s-box1 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box2 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box3 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box4 .selected').innerHTML = '<img src="images/referral.svg" />';
+            <?php }?>
             open.style.display = "block";
             closeicon.style.display = "none";
             document.querySelector(".profile-container").style = `
@@ -876,6 +1343,12 @@ include_once "projectlog.php";
         }
     }
     if (window.innerWidth < 1300) {
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
+        document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
+        document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
+        document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
+        <?php }?>
         let dropdownnav = document.querySelector(".dropdown-links");
         let menu = document.querySelector(".menu");
         menu.onclick = () => {

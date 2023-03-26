@@ -25,7 +25,17 @@ include "projectlog.php";
     <!-- Header -->
     <header class="signup">
         <div class="logo">
+            <?php if(isset($_SESSION['unique_id'])){?>
+            <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniqueagent_id'])){?>
+            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
         </div>
 
 

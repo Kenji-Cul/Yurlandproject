@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "projectlog.php";
+
     // Retrieve the request's body and parse it as JSON
     $input = @file_get_contents("php://input");
     $event = json_decode($input);
@@ -11,14 +12,14 @@ include "projectlog.php";
     $plan = $event->data->plan->plan_code;
     $name = $event->data->plan->name;
     $amount = $event->data->plan->amount;
-     $product = substr($name, 0, 12);
+     $product = substr($name, 12, 22);
     $email = $event->data->customer->email;
     $check = $event->event;
     $paymentmethod = "Subscription";
     $land = $user->selectEmail($email);
      
        
-        $landuse = $user->selectProductPayment($product,$land['unique_id']);
+        $landuse = $user->selectProductPayment2($land['unique_id'],$product);
     $paymentmonth = date("M");
         $paymentday = date("d");
         $paymentyear = date("Y");
@@ -29,7 +30,8 @@ include "projectlog.php";
         $user = new User;
         
         foreach($landuse as $key => $value){
-            $balance = $value['product_price'] + $amount;
+            $balance = $value['balance'] - $amount;
+            $prodprice = $value['product_price'] + $amount;
             if($value['product_price'] == $value['total_price']){
                 
     $uniquename = rand();
@@ -184,6 +186,7 @@ $txt = '
             font-size: 18px;
           ">
         Once again, thank you for your purchase. Kind Regards.
+        <b>The yurLAND Team</b>
     </h2>
 </div>
 <div class="heading">
@@ -218,13 +221,13 @@ file_put_contents($filename, $output);
 rename("".$filename,"userdocuments/".$filename);
 fclose($myfile);
 
-$sub = $user->insertPayment3($land['unique_id'],$product,$balance,$value['allocation_fee'],$filename);
-$land->insertPayHistory3($land['unique_id'],$value['product_id'],$value['product_name'],$paymentmonth,$paymentday,$paymentyear,$paymenttime,$value['product_location'],$value['product_price'],$value['product_image'],$value['product_unit'],$paymentmethod,$paymentdate,$value['product_plan'],$value['sub_period'],$value['product_price'],$value['payee'],$value['agent_id'],$value['allocation_fee'],$value['period_num'],$filename);
+$sub = $user->insertPayment3($land['unique_id'],$product,$balance,$prodprice,$value['allocation_fee'],$filename);
+$land->insertPayHistory3($land['unique_id'],$value['product_id'],$value['product_name'],$paymentmonth,$paymentday,$paymentyear,$paymenttime,$value['product_location'],$value['product_price'],$value['product_image'],$value['product_unit'],$paymentmethod,$paymentdate,$value['product_plan'],$value['sub_period'],$value['product_price'],$value['payee'],$value['agent_id'],$value['allocation_fee'],$value['period_num'],$filename,$balance);
 }
-$sub = $user->insertPayment2($land['unique_id'],$product,$balance,$value['allocation_fee']);
+$sub = $user->insertPayment2($land['unique_id'],$product,$balance,$prodprice,$value['allocation_fee']);
 
 $inserthistory =
-$land->insertPayHistory($land['unique_id'],$value['product_id'],$value['product_name'],$paymentmonth,$paymentday,$paymentyear,$paymenttime,$value['product_location'],$value['product_price'],$value['product_image'],$value['product_unit'],$paymentmethod,$paymentdate,$value['product_plan'],$value['sub_period'],$value['product_price'],$value['payee'],$value['agent_id'],$value['allocation_fee'],$value['period_num']);
+$land->insertPayHistory($land['unique_id'],$value['product_id'],$value['product_name'],$paymentmonth,$paymentday,$paymentyear,$paymenttime,$value['product_location'],$value['product_price'],$value['product_image'],$value['product_unit'],$paymentmethod,$paymentdate,$value['product_plan'],$value['sub_period'],$value['product_price'],$value['payee'],$value['agent_id'],$value['allocation_fee'],$value['period_num'],$balance);
 
 }
 

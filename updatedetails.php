@@ -26,7 +26,6 @@ header("Location: login.php");
     }
 
 
-
     .successmodal {
         /* display: flex; */
         align-items: center;
@@ -661,6 +660,9 @@ header("Location: login.php");
             let fileTotal = Math.floor(total / 1000);
             let fileSize;
             fileTotal < 1024 ?
+
+
+
                 (fileSize = fileTotal + " KB") :
                 (fileSize = (loaded / (1024 * 1024)).toFixed(2) + " MB");
             let progressHTML = `

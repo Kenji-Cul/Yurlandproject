@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include_once "../projectlog.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -39,8 +40,15 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     $errormsg = "Email Address already exists";
     }else{
     if(isset($_GET['creator'])){
+    if(isset($_SESSION['uniquesubadmin_id'])){
+    $creatorid = $_SESSION['uniquesubadmin_id'];
+    }
+
+    if(isset($_SESSION['uniquesupadmin_id'])){
+    $creatorid = $_SESSION['uniquesupadmin_id'];
+    }
     $insertuser =
-    $user->createUser2(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral));
+    $user->createUser2(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral),$creatorid);
     } else {
     $insertuser =
     $user->createUser(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral));

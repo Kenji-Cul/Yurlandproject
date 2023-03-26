@@ -16,14 +16,17 @@ if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
 
 $land = new User;
 $landview = $land->selectLandImage($_GET['uniqueid']);
-$checklastsub= $land->selectLastSub($_SESSION['unique_id'],$_GET['uniqueid']);
+$checklastsub= $land->selectLastSub($_SESSION['unique_id'],$_GET['uniqueid'],$_GET['newpayid']);
+$checklatestpayment = $land->selectLatestPay($_SESSION['unique_id'],$_GET['uniqueid']);
 $checklastpaid = $land->selectSubPay($_SESSION['unique_id']);
 if(!empty($landview)){
     foreach($landview as $key => $value){ 
 
-       
-
 if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
+    if($checklatestpayment['product_id'] == $_GET['uniqueid'] && $checklatestpayment['newpay_id'] != $_GET['newpayid'] && $checklatestpayment['balance'] > "2"){
+        $error = "You have an ongoing subscription on this estate, please complete payment";
+        header("Location: verify3.php?error=".$error."");
+    } else {
     if(empty($checklastsub)){
         $landsub = $land->selectSubProduct($checklastpaid['product_id']);
    
@@ -52,22 +55,27 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
         $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['onemonth_period'];
         $limit = $value['onemonth_period'];
+        $balance = $totalprice - $price;
         } else if($_GET['data'] == "threemonths"){
             $totalprice = $_GET['tot'];
             $price = $_GET['tot'] / $value['threemonth_period'];
         $limit = $value['threemonth_period'];
+        $balance = $totalprice - $price;
         } else if($_GET['data'] == "sixmonths"){
             $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['sixmonth_period'];
         $limit = $value['sixmonth_period'];
+        $balance = $totalprice - $price;
         } else if($_GET['data'] == "twelvemonths"){
             $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['twelvemonth_period'];
         $limit = $value['twelvemonth_period'];
+        $balance = $totalprice - $price;
         } else if($_GET['data'] == "eighteenmonths"){
             $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['eighteen_period'];
         $limit = $value['eighteen_period'];
+        $balance = $totalprice - $price;
         }
 
        
@@ -88,6 +96,8 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
     $uniquesub = rand();
     $paymentmethod = "Subscription";
     $intervalinput = $_POST['intervalinput'];
+
+    $newpayid = rand();
     
     
     
@@ -113,7 +123,7 @@ CURLOPT_TIMEOUT => 30,
 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 CURLOPT_CUSTOMREQUEST => "POST",
 CURLOPT_POSTFIELDS => [
-"name" => "Subscription".$uniqueproduct,
+"name" => "Subscription".$newpayid,
 "interval" => $_POST['intervalinput'],
 "amount" => round($price * 100),
 "invoice_limit" => $limitperiod,
@@ -148,10 +158,12 @@ include_once "initialize.php";
 
 } 
             }
-    } else {
-        $error = "You have an ongoing subscription on this estate, please complete payment";
-        header("Location: verify3.php?error=".$error."");
-    }
+    } 
+}
+    //else {
+    //     $error = "You have an ongoing subscription on this estate, please complete payment";
+    //     header("Location: verify3.php?error=".$error."");
+    // }
 
 
 

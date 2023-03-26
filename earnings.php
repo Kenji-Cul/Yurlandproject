@@ -434,11 +434,11 @@ if(!isset($_SESSION['uniqueagent_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" />
                 </li>
             </div>
             <li class="close">
@@ -448,10 +448,17 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentprofile.php"><img src="images/home3.svg" /></a>
                 <a href="agentprofile.php" class="link">Home</a>
             </li>
+
             <li class="links">
                 <a href="usertype.php"><img src="images/land2.svg" /></a>
                 <a href="usertype.php" class="link">New Land</a>
             </li>
+
+            <li class="links">
+                <a href="allestates3.php"><img src="images/land2.svg" /></a>
+                <a href="allestates3.php" class="link">All Estates</a>
+            </li>
+
             <li class="links">
                 <a href="mycustomers.php"><img src="images/referral.svg" /></a>
                 <a href="mycustomers.php" class="link">Customers</a>
@@ -470,8 +477,6 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="alltransactions.php" class="link">View Transactions</a>
             </li>
 
-
-
             <li class="links">
                 <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
                 <a href="agentprofileinfo.php" class="link">Profile</a>
@@ -481,6 +486,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentlogout.php" class="link">Logout</a>
             </li>
         </ul>
+
 
 
         <div class="profile-container">

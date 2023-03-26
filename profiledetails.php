@@ -652,6 +652,16 @@ if(!isset($_SESSION['unique_id'])){
                         <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
                     </div>
                 </a>
+
+                <a href="bankdetails.php">
+                    <div class="account-detail2">
+                        <div>
+                            <p style="text-transform: capitalize;">Upload Bank Details
+                            </p>
+                        </div>
+                        <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
+                    </div>
+                </a>
                 <?php }?>
 
                 <div class="account-detail2 detail-3">

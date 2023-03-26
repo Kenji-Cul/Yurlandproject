@@ -141,6 +141,7 @@ $txt = '
             font-size: 18px;
           ">
         Once again, thank you for your purchase. Kind Regards.
+        <b>The yurLAND Team</b>
     </h2>
 </div>
 <div class="heading">

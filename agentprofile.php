@@ -706,12 +706,12 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
                 <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['agent_img'])){?>
-                    <a href="agentimg.php" style="color: #808080;">
+                    <a href="agentprofileinfo.php" style="color: #808080;">
                         <img src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" />
                     </a>
                     <?php }?>
                     <?php if(empty($newuser['agent_img'])){?>
-                    <a href="agentimg.php" style="color: #808080;">
+                    <a href="agentprofileinfo.php" style="color: #808080;">
                         <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>

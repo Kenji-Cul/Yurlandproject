@@ -641,7 +641,9 @@ if(!isset($_SESSION['unique_id'])){
                 foreach($landview as $key => $value){
                     
             ?>
-                <div class="updated-land" <?php if($value['product_unit'] == 0){?>style="order: 1;" <?php }?>>
+                <div class="updated-land" <?php if($value['product_unit'] == 0){?>style="order: 1;" <?php }?>
+                    <?php if($value['land_status'] == "Closed"){?>style="display: none;" <?php }?>
+                    <?php if($value['land_status'] == "Opened"){?>style="display: flex;" <?php }?>>
                     <div class="updated-img">
                         <?php if($value['product_unit'] != 0){?>
                         <a

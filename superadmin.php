@@ -99,6 +99,44 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
     @media only screen and (min-width: 1300px) {
 
+        .select-box {
+            width: 100%;
+            border-radius: 0px !important;
+            background: #7e252b;
+        }
+
+        .selected {
+            border-radius: 0px !important;
+            background: #7e252b;
+            color: #fff;
+        }
+
+        .select-box .options-container {
+            border-radius: 0px !important;
+            background: #7e252b;
+            z-index: 200;
+        }
+
+        .select-box .option:hover {
+            background: var(--primary-black);
+            color: #ffffff;
+        }
+
+        .select-box .options-container::-webkit-scrollbar {
+            width: 6px;
+            background: #0d141f;
+            border-radius: 0;
+        }
+
+        .select-box .options-container::-webkit-scrollbar-thumb {
+            background: #525861;
+            border-radius: 0;
+        }
+
+        .option {
+            padding: 1em 0;
+        }
+
         .details2 {
             display: flex;
             align-items: center;
@@ -218,12 +256,28 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             transition: all 0.7s;
         }
 
-        .dropdown-links li {
+        .links-container li {
             height: 1em;
             width: 95%;
             text-transform: capitalize;
             font-size: 14px;
         }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 1.5em;
+            padding-top: 0;
+        }
+
+        /* .dropdown-links li {
+            height: 1em;
+            width: 95%;
+            text-transform: capitalize;
+            font-size: 14px;
+        } */
 
         .dropdown-links .select-link {
             background-color: #1a0709;
@@ -367,10 +421,20 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             border-radius: 8px 0px 0px 8px;
         }
 
-        .dropdown-links li {
-            height: 1em;
+        .links-container li {
+            height: 2em;
             grid-gap: 0;
         }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 1em;
+        }
+
+
 
         .land-estate {
             width: 290px;
@@ -378,14 +442,61 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
 
         .close {
-            padding-top: 12em;
+            padding-top: 8em;
         }
+
+        /* .links-container {
+            margin-top: 10em;
+        } */
 
         /* .close {
             position: absolute;
-            top: 4em;
-            right: 1em;
+            top: 20em;
+            right: 2em;
         } */
+
+        .select-box {
+            width: 100%;
+            border-radius: 0px !important;
+            background: #7e252b;
+            margin-left: -1em;
+        }
+
+        .selected {
+            border-radius: 0px !important;
+            background: #7e252b;
+            color: #fff;
+        }
+
+        .select-box .options-container {
+            border-radius: 0px !important;
+            background: #7e252b;
+            z-index: 200;
+        }
+
+        .select-box .option:hover {
+            background: var(--primary-black);
+            color: #ffffff;
+        }
+
+        .select-box .options-container::-webkit-scrollbar {
+            width: 6px;
+            background: #0d141f;
+            border-radius: 0;
+        }
+
+        .select-box .options-container::-webkit-scrollbar-thumb {
+            background: #525861;
+            border-radius: 0;
+        }
+
+        .option {
+            padding: 0.6em 0;
+        }
+
+
+
+
 
     }
 
@@ -397,7 +508,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         }
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -412,10 +523,8 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             border-radius: 8px 0px 0px 8px;
         }
 
-        .dropdown-links li {
-            height: 1em;
-            grid-gap: 0;
-        }
+
+
 
     }
     </style>
@@ -426,7 +535,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     <header class="signup">
         <div class="logo">
             <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
-            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
@@ -471,11 +580,11 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
                 <div class="profile-image">
                     <?php if(!empty($newuser['admin_image'])){?>
-                    <a href="supadminimg.php" style="color: #808080;"><img
+                    <a href="supadmininfo.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
                     <?php }?>
                     <?php if(empty($newuser['admin_image'])){?>
-                    <a href="supadminimg.php" style="color: #808080;">
+                    <a href="supadmininfo.php" style="color: #808080;">
                         <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>
@@ -510,54 +619,205 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links select-link">
-                <a href="superadmin.php"><img src="images/home3.svg" /></a>
-                <a href="superadmin.php" class="link">Home</a>
-            </li>
+            <div class="links-container">
+                <li class="links select-link">
+                    <a href="superadmin.php"><img src="images/home3.svg" /></a>
+                    <a href="superadmin.php" class="link">Home</a>
+                </li>
 
-            <li class="links">
-                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="allcustomers.php" class="link">All Customers</a>
-            </li>
+                <div class="select-box s-box1">
+                    <div class="options-container">
 
-            <li class="links">
-                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
-                <a href="createexecutive.php" class="link">Create Executive</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                                <a href="newuser.php" class="link">New Customer</a>
+                            </li>
+                        </div>
 
-            <li class="links">
-                <a href="createagent.php"><img src="images/referral.svg" /> </a>
-                <a href="createagent.php" class="link">Create Agent</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                                <a href="usertype.php" class="link">New Land</a>
+                            </li>
+                        </div>
 
-            <li class="links">
-                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
-                <a href="createsubadmin.php" class="link">Create Subadmin</a>
-            </li>
+                        <div class="option">
+                            <li class="links ">
+                                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="defaultcustomers.php" class="link">Default Customers</a>
+                            </li>
+                        </div>
 
-            <li class="links">
-                <a href="productperiod.php"><img src="images/land2.svg" /></a>
-                <a href="productperiod.php" class="link">Create Plan</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+                            </li>
+                        </div>
 
-            <li class="links">
-                <a href="selectprice.php"><img src="images/land2.svg" /></a>
-                <a href="selectprice.php" class="link">Create Product</a>
-            </li>
+                        <div class="option">
+                            <li class="links">
+                                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="payingcustomers.php" class="link">Paying Customers</a>
+                            </li>
 
-            <li class="links">
-                <a href="#"><img src="images/updown.svg" /></a>
-                <a href="#" class="link">Pay Earnings</a>
-            </li>
+                        </div>
 
-            <li class="links">
-                <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
-                <a href="supadmininfo.php" class="link">Profile</a>
-            </li>
-            <li class="links">
-                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
-                <a href="logout.php?user=subadmin" class="link">Logout</a>
-            </li>
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+
+                <div class="select-box s-box2">
+                    <div class="options-container">
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="allcustomers.php" class="link">All Customers</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                                <a href="allagents.php" class="link">All Agents</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allsubadmins.php"><img src="images/referral.svg" /> </a>
+                                <a href="allsubadmins.php" class="link">All Subadmins</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allexecutives.php"><img src="images/referral.svg" /> </a>
+                                <a href="allexecutives.php" class="link">All Executives</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allgroups.php"><img src="images/referral.svg" /> </a>
+                                <a href="allgroups.php" class="link">All Groups</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+
+                <div class="select-box s-box3">
+                    <div class="options-container">
+                        <div class="option">
+                            <li class="links">
+                                <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="allagentearnings.php" class="link">View Earnings</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allexecutiveearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="allexecutiveearnings.php" class="link">Executive Earnings</a>
+                            </li>
+                        </div>
+
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                                <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                                <a href="totalref.php" class="link">View Referrals</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+                <div class="select-box s-box4">
+                    <div class="options-container">
+                        <div class="option">
+                            <li class="links">
+                                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
+                                <a href="createexecutive.php" class="link">Create Executive</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                                <a href="creategroup.php" class="link">Create Group</a>
+                            </li>
+                        </div>
+
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                                <a href="createagent.php" class="link">Create Agent</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
+                                <a href="createsubadmin.php" class="link">Create Subadmin</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="productperiod.php"><img src="images/land2.svg" /></a>
+                                <a href="productperiod.php" class="link">Create Plan</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="selectprice.php"><img src="images/land2.svg" /></a>
+                                <a href="selectprice.php" class="link">Create Product</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+                <li class="links">
+                    <a href="documentation.php"><img src="images/land2.svg" /></a>
+                    <a href="documentation.php" class="link">Documentation</a>
+                </li>
+
+                <li class="links">
+                    <a href="#"><img src="images/updown.svg" /></a>
+                    <a href="#" class="link">Pay Earnings</a>
+                </li>
+
+                <li class="links">
+                    <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
+                    <a href="supadmininfo.php" class="link">Profile</a>
+                </li>
+                <li class="links">
+                    <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                    <a href="logout.php?user=subadmin" class="link">Logout</a>
+                </li>
+            </div>
         </ul>
 
 
@@ -576,12 +836,12 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
                 <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['admin_image'])){?>
-                    <a href="supadminimg.php" style="color: #808080;">
+                    <a href="supadmininfo.php" style="color: #808080;">
                         <img src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" />
                     </a>
                     <?php }?>
                     <?php if(empty($newuser['admin_image'])){?>
-                    <a href="supadminimg.php" style="color: #808080;">
+                    <a href="supadmininfo.php" style="color: #808080;">
                         <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>
@@ -635,32 +895,136 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                     </a>
                 </div>
 
-                <a href="#">
-                    <div class="profile-div">
-                        <img class="profile-icon" src="images/Chart.svg" alt="land-icon-image" />
-
-                        <div class="navigate">
-                            <p>Total Payment</p>
-                            <img src="images/right_arrow.svg" alt="" />
-                        </div>
-                    </div>
-                </a>
 
                 <div class="profile-div">
-                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
-                        <div class="navigate">
-                            <p>Payment Count</p>
-                            <img src="images/right_arrow.svg" alt="" />
-                        </div>
-                    </a>
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p>Total Payment</p>
+                        <p class="amountdiv">
+                            &#8358;
+                            <?php 
+                               
+                                $totalpayment = $user->selectTotalUsersPayment();
+                           if($totalpayment > 999 || $totalpayment > 9999 || $totalpayment > 99999 || $totalpayment > 999999){
+                               echo number_format($totalpayment);
+                               
+                             } else {
+                                echo round($totalpayment);
+                             }
+                               
+                                ?></p>
+                    </div>
+                </div>
+
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p>Total Earnings</p>
+                        <p class="amountdiv">&#8358;
+                            <span class="totalearn"></span>
+                            <?php 
+                               
+                                $allusers = $user->selectAllUsers();
+                                foreach ($allusers as $key => $value3) {
+                                    $agentpercent = $value3['earning_percentage'];
+                                 
+                             $datearray = [];
+                                $userhistory = $user->selectAgentHistory($value3['unique_id']);
+                                foreach ($userhistory as $key => $value) {
+                                    if(empty($value3['earning_percentage'])){
+                                       $earnedprice = 0;
+                                    } else {
+                                        $earnedprice = $value3['earning_percentage'] / 100 * $value['product_price'];
+                                    }
+                                   
+                        
+                                     ?>
+                            <span name="userdate" style="display:none;"><?php echo $earnedprice;?></span>
+                            <?php    }
+                                }
+                               
+                                ?>
+                            <?php 
+                               
+                                $allagents = $user->selectAllAgents();
+                                foreach ($allagents as $key => $value2) {
+                                    $agentdate = $value2['agent_date'];
+                                    $agentpercent = $value2['earning_percentage'];
+                                 
+                             $datearray = [];
+                                $agenthistory = $user->selectAgentHistory($value2['uniqueagent_id']);
+                                foreach ($agenthistory as $key => $value) {
+                                    $earnedprice = $value2['earning_percentage'] / 100 * $value['product_price'];
+                        
+                                     ?>
+                            <span name="paydate" style="display:none;"><?php echo $earnedprice;?></span>
+                            <?php    }
+                                }
+                               
+                                ?>
+                        </p>
+                    </div>
+                </div>
+
+
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Yurland Referrals</p>
+                        <p class="amountdiv">
+
+                            <?php 
+                               
+                                $allrefusers = $user->selectAllYurlandUsers();
+                                foreach ($allrefusers as $key => $value) {
+                                   echo $value;
+                                }
+                                
+                                ?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Sold Out Lands</p>
+                        <p class="amountdiv">
+                            <?php 
+                                $alllands = $user->selectPurchasedLands();
+                                foreach ($alllands as $key => $value) {
+                                   echo $value;
+                                }
+                                
+                                ?>
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Payment Count</p>
+                        <p class="amountdiv">
+                            <?php 
+                                 $nums = $user->selectNumsCount();
+                                 foreach ($nums as $key => $value) {
+                                  echo $value;
+                                 }
+                                
+                                ?>
+                        </p>
+                    </div>
                 </div>
 
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="allagents.php">
+                    <a href="earningagents.php">
                         <div class="navigate">
                             <p>Total Earning Agents</p>
                             <img src="images/right_arrow.svg" alt="" />
@@ -691,14 +1055,32 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 </div>
 
                 <div class="profile-div">
-                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
-
-                    <a href="allexecutives.php">
-                        <div class="navigate">
-                            <p>Total Earning Executives</p>
-                            <img src="images/right_arrow.svg" alt="" />
-                        </div>
-                    </a>
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p>Total Executive Earnings</p>
+                        <p class="amountdiv">&#8358;
+                            <span class="totalearnexec"></span>
+                            <?php 
+                               
+                                $allagents = $user->selectAllExecutive();
+                                foreach ($allagents as $key => $value2) {
+                                    $agentdate = $value2['executive_date'];
+                                    $agentpercent = $value2['earning'];
+                                 
+                             $datearray = [];
+                                $agenthistory = $user->selectAllHistory();
+                                foreach ($agenthistory as $key => $value) {
+                                    if($value2['executive_date'] <= $value['payment_date']){
+                                    $earnedprice = $value2['earning'] / 100 * $value['product_price'];
+                        
+                                     ?>
+                            <span name="execdate" style="display:none;"><?php echo $earnedprice;?></span>
+                            <?php    }
+                                }}
+                               
+                                ?>
+                        </p>
+                    </div>
                 </div>
 
                 <div class="profile-div">
@@ -733,6 +1115,18 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                         </div>
                     </a>
                 </div>
+
+                <div class="profile-div">
+                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+                    <a href="totalearnings.php">
+                        <div class="navigate">
+                            <p>Earnings</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
+                </div>
+
 
                 <div class="profile-div">
                     <img class="profile-icon" src="images/paystack.svg" alt="land-icon-image" />
@@ -788,9 +1182,97 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
 
     <script src="js/swiper-bundle.min.js"></script>
+    <script src="js/main.js"></script>
 
     <!--========== SWIPER JS ============  -->
     <script>
+    if (window.innerWidth > 1200) {
+        let dropdownnav = document.querySelector(".dropdown-links");
+        let open = document.querySelector('#openicon');
+        let closeicon = document.querySelector('#closeicon');
+        open.onclick = () => {
+            dropdownnav.style = `
+        width: 14%;
+        `;
+
+            document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
+            document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
+            document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
+            document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
+            open.style.display = "none";
+            closeicon.style.display = "block";
+            document.querySelector(".profile-container").style = `
+         padding-left: 7em;
+        `;
+            let allLinks = document.querySelectorAll(".links-container .links .link");
+
+            let allLink = document.querySelectorAll(".links-container .links");
+            allLink.forEach((element) => {
+                element.style = `
+        gap: 10px;
+        `;
+
+            });
+            allLinks.forEach((element) => {
+                element.style = `
+         visibility: visible;
+         display: block;
+        `;
+            });
+        }
+
+        closeicon.onclick = () => {
+            dropdownnav.style = `
+        width: 6%;
+        `;
+
+            document.querySelector('.s-box1 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box2 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box3 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box4 .selected').innerHTML = '<img src="images/referral.svg" />';
+            open.style.display = "block";
+            closeicon.style.display = "none";
+            document.querySelector(".profile-container").style = `
+         padding-left: 1em;
+        `;
+
+            let allLink = document.querySelectorAll(".links-container .links");
+            allLink.forEach((element) => {
+                element.style = `
+        justify-content: center
+        `;
+            });
+
+            let allLinks = document.querySelectorAll(".links-container .links .link");
+            allLinks.forEach((element) => {
+                element.style = `
+         visibility: hidden;
+         display:none;
+        `;
+            });
+        }
+    }
+    if (window.innerWidth < 1300) {
+        document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
+        document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
+        document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
+        document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
+        let dropdownnav = document.querySelector(".dropdown-links");
+        let menu = document.querySelector(".menu");
+        menu.onclick = () => {
+            dropdownnav.style = `
+            transform: translateX(0);
+            `;
+        };
+
+        let close = document.querySelector(".close");
+        close.onclick = () => {
+            dropdownnav.style = `
+            transform: translateX(100%);
+            `;
+        };
+    }
+
     let swiperVerse = new Swiper(".swiper-counter", {
         loop: true,
         spaceBetween: 24,
@@ -811,78 +1293,58 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
             },
         },
     });
-    if (window.innerWidth > 1200) {
-        let dropdownnav = document.querySelector(".dropdown-links");
-        let open = document.querySelector('#openicon');
-        let closeicon = document.querySelector('#closeicon');
-        open.onclick = () => {
-            dropdownnav.style = `
-        width: 14%;
-        `;
-            open.style.display = "none";
-            closeicon.style.display = "block";
-            document.querySelector(".profile-container").style = `
-         padding-left: 7em;
-        `;
-            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
 
-            let allLink = document.querySelectorAll(".dropdown-links .links");
-            allLink.forEach((element) => {
-                element.style = `
-        gap: 10px;
-        `;
+    let userdate = document.getElementsByName("userdate");
 
-            });
-            allLinks.forEach((element) => {
-                element.style = `
-         visibility: visible;
-         display: block;
-        `;
-            });
-        }
+    let userdates = [];
+    userdate.forEach(element => {
+        userdates.push(parseInt(element.innerHTML));
+    });
 
-        closeicon.onclick = () => {
-            dropdownnav.style = `
-        width: 6%;
-        `;
-            open.style.display = "block";
-            closeicon.style.display = "none";
-            document.querySelector(".profile-container").style = `
-         padding-left: 1em;
-        `;
+    //console.log(paydates);
 
-            let allLink = document.querySelectorAll(".dropdown-links .links");
-            allLink.forEach((element) => {
-                element.style = `
-        justify-content: center
-        `;
-            });
+    let sum2 = 0;
 
-            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
-            allLinks.forEach((element) => {
-                element.style = `
-         visibility: hidden;
-         display:none;
-        `;
-            });
-        }
+    for (let i = 0; i < userdates.length; i++) {
+        sum2 += userdates[i];
     }
-    if (window.innerWidth < 1300) {
-        let dropdownnav = document.querySelector(".dropdown-links");
-        let menu = document.querySelector(".menu");
-        menu.onclick = () => {
-            dropdownnav.style = `
-            transform: translateX(0);
-            `;
-        };
+    //console.log(sum);
 
-        let close = document.querySelector(".close");
-        close.onclick = () => {
-            dropdownnav.style = `
-            transform: translateX(100%);
-            `;
-        };
+
+
+    let paydate = document.getElementsByName("paydate");
+
+    let paydates = [];
+    paydate.forEach(element => {
+        paydates.push(parseInt(element.innerHTML));
+    });
+
+    //console.log(paydates);
+
+    let sum = 0;
+
+    for (let i = 0; i < paydates.length; i++) {
+        sum += paydates[i];
     }
+    //console.log(sum);
+    document.querySelector('.totalearn').innerHTML = new Intl.NumberFormat().format(sum + sum2);
+
+    let execdate = document.getElementsByName("execdate");
+
+    let execdates = [];
+    execdate.forEach(element => {
+        execdates.push(parseInt(element.innerHTML));
+    });
+
+    //console.log(paydates);
+
+    let sumexec = 0;
+
+    for (let i = 0; i < execdates.length; i++) {
+        sumexec += execdates[i];
+    }
+    //console.log(sum);
+    document.querySelector('.totalearnexec').innerHTML = new Intl.NumberFormat().format(sumexec);
     </script>
 </body>
 

@@ -3,14 +3,17 @@ session_start();
 include_once "../projectlog.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $phonenum = $_POST['phonenum'];
+    $bankname = $_POST['bankname'];
+    $accountnum = $_POST['accountnum'];
     $filename = $_FILES['image']['name'];
     
-    if(empty($filename)){
-        $errormsg = "Please Select Your File";
-    } else {
-     $user = new User;
-     $insertdocument = $user->updateExecutiveDetails($_SESSION['uniqueexec_id']);
-    }
+  
+    $user = new User;
+    $insertdocument = $user->updateExecutiveDetails($_SESSION['uniqueexec_id'],$phonenum,$bankname,$accountnum);
+   
+    
+    
 
 }
 

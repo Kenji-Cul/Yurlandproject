@@ -656,7 +656,15 @@ section .error {
     padding-bottom: 0.5em;
 }
 
+.links-container li {
+    padding-bottom: 0.5em;
+}
+
 .dropdown-links li a {
+    color: #fff;
+}
+
+.links-container li a {
     color: #fff;
 }
 

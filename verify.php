@@ -126,6 +126,7 @@ $inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,
     $payee = $trans->data->metadata->custom_fields[20]->value;
     $agentid = $trans->data->metadata->custom_fields[21]->value;
     $allocationfee = $trans->data->metadata->custom_fields[22]->value;
+    $newpayid = $trans->data->metadata->custom_fields[23]->value;
     
    
     
@@ -134,10 +135,11 @@ if($unit % 4 == 0){
     $unit_added = $unit / 4;
     $added_unit = $unit + $unit_added;
 
-$checklastpayment = $user->selectLastPay($uniqueperson,$unique);
+$checklastpayment = $user->selectLastPay($uniqueperson,$unique,$newpayid);
 if(empty($checklastpayment)){
-    $chosenplan = $trans->data->metadata->custom_fields[23]->value;
-    $subprice = $trans->data->metadata->custom_fields[24]->value;
+    $chosenplan = $trans->data->metadata->custom_fields[24]->value;
+    $subprice = $trans->data->metadata->custom_fields[25]->value;
+
 
     $uniquename = rand();
     $filename = "offerletter".$uniquename.".pdf";
@@ -156,15 +158,15 @@ if(empty($checklastpayment)){
       }
 
       if($subprice > 999 || $subprice > 9999 || $subprice > 99999 || $subprice > 999999){
-        $subprice2 = number_format($subprice);
+        $subprice2 = number_format(ceil($subprice));
       } else {
-        $subprice2 =  round($subprice);
+        $subprice2 =  ceil($subprice);
       }
     header("Location: offer.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&totalcost=".$newbalance2."&allocationfee=".$allocationfee2."&units=".$added_unit."&subprice=".$subprice2."&paydate=".$paymentdate."&period=".$subperiod."&enddate=".$period."&customer=".$name."");
-    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newbalance);
+    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newbalance,$newpayid);
 
     
-    $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename);
+    $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid);
 
    
     
@@ -186,19 +188,19 @@ if(empty($checklastpayment)){
          
         header("Location: allocationletter.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&allocationfee=".$allocationfee2."&customer=".$name."");
     }
-$updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$added_unit,$payment_method,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid,$allocationfee);
+$updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$added_unit,$payment_method,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid,$allocationfee,$newpayid);
 
-$inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$payment_method,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee);
+$inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$payment_method,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$newpayid);
 
       
 }
 
-$updatenewpayment = $user->updatePayment($unique,$uniqueperson);
+$updatenewpayment = $user->updatePayment($unique,$uniqueperson,$newpayid);
 } else {
-    $checklastpayment = $user->selectLastPay($uniqueperson,$unique);
+    $checklastpayment = $user->selectLastPay($uniqueperson,$unique,$newpayid);
     if(empty($checklastpayment)){
-        $chosenplan = $trans->data->metadata->custom_fields[23]->value;
-        $subprice = $trans->data->metadata->custom_fields[24]->value;
+        $chosenplan = $trans->data->metadata->custom_fields[24]->value;
+        $subprice = $trans->data->metadata->custom_fields[25]->value;
 
         $uniquename = rand();
         $filename = "offerletter".$uniquename.".pdf";
@@ -217,15 +219,15 @@ $updatenewpayment = $user->updatePayment($unique,$uniqueperson);
           }
     
           if($subprice > 999 || $subprice > 9999 || $subprice > 99999 || $subprice > 999999){
-            $subprice2 = number_format($subprice);
+            $subprice2 = number_format(ceil($subprice));
           } else {
-            $subprice2 =  round($subprice);
+            $subprice2 =  ceil($subprice);
           }
         header("Location: offer.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&totalcost=".$newbalance2."&allocationfee=".$allocationfee2."&units=".$unit."&subprice=".$subprice2."&paydate=".$paymentdate."&period=".$subperiod."&enddate=".$period."&customer=".$name."");
-   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newbalance);
+   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newbalance,$newpayid);
 
 
-   $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename);
+   $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid);
 
    
 
@@ -247,13 +249,13 @@ $updatenewpayment = $user->updatePayment($unique,$uniqueperson);
              
             header("Location: allocationletter.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&allocationfee=".$allocationfee2."&customer=".$name."");
 
-            $updatepay = $user->updateNewPayment2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid,$allocationfee,$filename);
+            $updatepay = $user->updateNewPayment2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid,$allocationfee,$filename,$newpayid);
 
-            $inserthistory = $user->insertUpdateHistory2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$filename);
+            $inserthistory = $user->insertUpdateHistory2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$filename,$newpayid);
         } else {
-            $updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid,$allocationfee);
+            $updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid,$allocationfee,$newpayid);
 
-            $inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee);
+            $inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$newpayid);
         }
    
 
@@ -261,7 +263,7 @@ $updatenewpayment = $user->updatePayment($unique,$uniqueperson);
     
     }
     
-   $updatenewpayment = $user->updatePayment($unique,$uniqueperson);
+   $updatenewpayment = $user->updatePayment($unique,$uniqueperson,$newpayid);
 }
    }
 
@@ -322,7 +324,17 @@ if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
+            <?php if(isset($_SESSION['unique_id'])){?>
+            <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniqueagent_id'])){?>
+            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniquesubadmin_id'])){?>
+            <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
         </div>
 
 

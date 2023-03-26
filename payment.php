@@ -543,12 +543,16 @@ if(!isset($_SESSION['unique_id'])){
                 $user = new User;
                 $total = $user->selectTotal($_SESSION['unique_id']);
                foreach ($total as $key => $value) {
-                $unitprice = $value;
-             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                               echo number_format($unitprice);
-                             } else {
-                                echo $unitprice;
-                             }
+                if(is_null($value)){
+                    echo "0";
+                  } else{
+                    $unitprice = $value;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                        echo number_format($unitprice);
+                      } else {
+                         echo $unitprice;
+                      }
+                  }
                }
                 ?></div>
                     </div>

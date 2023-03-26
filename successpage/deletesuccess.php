@@ -46,10 +46,10 @@ session_start();
         <p>Product Opened Successfully!</p>
         <?php }?>
         <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
-        <a href="../allcustomers.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <a href="../allestates3.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>
         <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
-        <a href="../allcustomers.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <a href="../allproducts.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>
     </div>
 </body>

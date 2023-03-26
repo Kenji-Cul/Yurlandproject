@@ -16,7 +16,8 @@ $selectuser = $user->selectUser($_SESSION['unique_id']);
 
    
     $landview = $user->selectLandImage($_GET['uniqueid']);
-    $checklastpayment = $user->selectLastPay($_SESSION['unique_id'],$_GET['uniqueid']);
+    $checklastpayment = $user->selectLastPay($_SESSION['unique_id'],$_GET['uniqueid'],$_GET['newpayid']);
+    $checklatestpayment = $user->selectLatestPay($_SESSION['unique_id'],$_GET['uniqueid']);
     $checklastpaid = $user->selectSubPay($_SESSION['unique_id']);
    
     if(!empty($landview)){
@@ -33,7 +34,11 @@ if(isset($_POST["submit"])){
         header("Location: verify3.php?error=".$error."");
     } else {
         
-        if($checklastpayment['balance'] > "1" && isset($_GET['remprice'])){
+        if($checklatestpayment['product_id'] == $_GET['uniqueid'] && $checklatestpayment['newpay_id'] != $_GET['newpayid'] && $checklatestpayment['balance'] > "2"){
+            $error = "You have an ongoing subscription on this estate, please complete payment";
+            header("Location: verify3.php?error=".$error."");
+        } else {
+        if($checklastpayment['balance'] > "2" && isset($_GET['remprice'])){
     $email = htmlspecialchars($selectuser['email']);
     if(!isset($_GET['remprice'])){
         
@@ -74,10 +79,10 @@ if(isset($_POST["submit"])){
     }
     $uniqueperson = $_SESSION['unique_id'];
     $uniqueproduct = $_GET['uniqueid'];
+    $newpayid = $_GET['newpayid'];
     if(isset($_GET['remprice'])){
        $period = $_GET['period'];
-       $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_SESSION['unique_id']);
-       
+       $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_SESSION['unique_id'],$_GET['newpayid']);
        $subperiod = $landuse['period_num'] - $_GET['subperiod'];
        
     } else {
@@ -131,6 +136,8 @@ if(isset($_POST["submit"])){
     } else {
         $agentid = "noagent";
     }
+
+   
    
    
    
@@ -285,6 +292,12 @@ if(isset($_POST["submit"])){
             ],
 
             [
+                "display_name" => "NewPay Id",
+                "variable_name" => "newpayid",
+                "value" => $newpayid
+            ],
+
+            [
                 "display_name" => "Chosen Plan",
                 "variable_name" => "chosenplan",
                 "value" => $chosenplan
@@ -295,6 +308,8 @@ if(isset($_POST["submit"])){
                 "variable_name" => "subprice",
                 "value" => $subprice
             ],
+
+            
 
          
            
@@ -357,10 +372,7 @@ if(isset($_POST["submit"])){
 } 
 
 
-else {
-    $error = "You have an ongoing subscription on this estate, please complete payment";
-    header("Location: verify3.php?error=".$error."");
-}
+
 //
 
 
@@ -434,7 +446,7 @@ if(empty($checklastpayment)){
     $uniqueproduct = $_GET['uniqueid'];
     if(isset($_GET['remprice'])){
        $period = $_GET['period'];
-       $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_SESSION['unique_id']);
+       $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_SESSION['unique_id'],$_GET['newpayid']);
        
        $subperiod = $landuse['period_num'] - $_GET['subperiod'];
        
@@ -486,6 +498,9 @@ if(empty($checklastpayment)){
     } else {
         $agentid = "noagent";
     }
+
+    $newpayid = rand();
+    
    
    
    
@@ -640,6 +655,12 @@ if(empty($checklastpayment)){
             ],
 
             [
+                "display_name" => "NewPay Id",
+                "variable_name" => "newpayid",
+                "value" => $newpayid
+            ],
+
+            [
                 "display_name" => "Chosen Plan",
                 "variable_name" => "chosenplan",
                 "value" => $chosenplan
@@ -650,6 +671,10 @@ if(empty($checklastpayment)){
                 "variable_name" => "subprice",
                 "value" => $subprice
             ],
+
+           
+
+
 
          
            
@@ -704,7 +729,13 @@ if(empty($checklastpayment)){
     }
 }
     
-}
+}  
+        } 
+//  else{
+//     $error = "You have an ongoing subscription on this estate, please complete payment";
+//     header("Location: verify3.php?error=".$error."");
+// } 
+
         
 }
 
@@ -1178,7 +1209,10 @@ if(empty($checklastpayment)){
                                 } else {
                                     echo round($cost);
                                 }
-                        }?></label>
+                        }
+                        ?>
+
+                </label>
             </div>
             <?php   } else {?>
             <?php if($_GET['data'] == "onemonth"){?>

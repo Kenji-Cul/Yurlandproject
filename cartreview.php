@@ -102,7 +102,7 @@ if(!isset($_SESSION['unique_id'])){
 
     .updated-img {
         width: 350px;
-        height: 250px;
+        height: 220px;
         border-radius: 8px 8px 0px 0px;
     }
 
@@ -522,11 +522,11 @@ if(!isset($_SESSION['unique_id'])){
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
-                    <img src="images/home.svg" style="width: 20px; height: 20px;" />
+                    <img src="images/openmenu.svg" style="width: 20px; height: 20px;" />
                 </li>
             </div>
             <li class="close">

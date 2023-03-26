@@ -109,6 +109,12 @@ if(!isset($_SESSION['uniqueexec_id'])){
     }
 
     @media only screen and (min-width: 1300px) {
+
+        .payment-image-div2 img {
+            width: 16em;
+            height: 16em;
+        }
+
         .signup .nav {
             position: absolute;
             right: 40px;
@@ -284,6 +290,11 @@ if(!isset($_SESSION['uniqueexec_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .payment-image-div2 img {
+            width: 10em;
+            height: 10em;
+        }
 
         .success {
             position: absolute;
@@ -462,6 +473,39 @@ if(!isset($_SESSION['uniqueexec_id'])){
                 <p>My Earnings</p>
             </div>
 
+            <div class="payment-image-div2">
+                <div>
+                    <img src="images/image1.svg" alt="payment image" />
+                    <div class="payment-desc">
+                        <p style="width: 80%;">Total Earning</p>
+                        <div class="payment-count">
+                            &#8358;&nbsp;<span class="totalearn"></span>
+                            <span><?php 
+                        $user = new User;
+                                
+                        $agent = $user->selectExecutive($_SESSION['uniqueexec_id']);
+                        $earning = $user->selectAllHistory();
+                        if(!empty($earning)){
+                            foreach($earning as $key => $value){
+                                if($agent['executive_date'] <= $value['payment_date']){ 
+                                $percent = $agent['earning'];
+                    $earnedprice = $percent / 100 * $value['product_price'];
+                   
+                             ?>
+                                <span name="paydate" style="display:none;"><?php echo $earnedprice;?></span>
+                                <?php    }}} else { ?>
+                                <span name="paydate" style="display:none;"><?php echo "0";?></span>
+                                <?php          }
+                        
+                       
+                        ?>
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="details-container">
 
@@ -473,7 +517,7 @@ if(!isset($_SESSION['uniqueexec_id'])){
             if(!empty($earning)){
                 foreach($earning as $key => $value){
     ?>
-
+                <?php if($agent['executive_date'] <= $value['payment_date']){ ?>
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
@@ -517,7 +561,7 @@ if(!isset($_SESSION['uniqueexec_id'])){
                     </div>
                 </div>
 
-                <?php }} ?>
+                <?php }}} ?>
 
                 <?php if(empty($earning)){?>
                 <div class="success">
@@ -609,6 +653,23 @@ if(!isset($_SESSION['uniqueexec_id'])){
             `;
         };
     }
+
+    let paydate = document.getElementsByName("paydate");
+
+    let paydates = [];
+    paydate.forEach(element => {
+        paydates.push(parseInt(element.innerHTML));
+    });
+
+    //console.log(paydates);
+
+    let sum = 0;
+
+    for (let i = 0; i < paydates.length; i++) {
+        sum += paydates[i];
+    }
+    //console.log(sum);
+    document.querySelector('.totalearn').innerHTML = new Intl.NumberFormat().format(sum);
     </script>
 </body>
 

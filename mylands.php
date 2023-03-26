@@ -698,7 +698,7 @@ if(!isset($_SESSION['unique_id'])){
                                 <div class="detail-location">
                                     <p style="color: #808080;"><?php echo $value['product_location'];?></p>
                                     <p><a
-                                            href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
+                                            href="estateinfo.php?id=<?php echo $value['unique_id'];?>&idtwo=<?php echo $value['newpay_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
                                             here to view</a></p>
                                 </div>
                             </div>
@@ -716,7 +716,7 @@ if(!isset($_SESSION['unique_id'])){
                              }
                       ?> &nbsp;<span>daily</span></div>
 
-                        <?php } else if($value['balance'] < "1" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
+                        <?php } else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
                         <div class="cartbutton">&#8358;<?php 
                    $unitprice = $value['sub_payment'];
                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
@@ -730,18 +730,24 @@ if(!isset($_SESSION['unique_id'])){
                   else {?>
                         <div class="cartbutton"><?php 
                   if($value['balance'] != "0" && $value['payment_method'] == "NewPayment"){ ?>
-                            <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&remprice=<?php echo $value['balance'];?>"
+                            <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&idtwo=<?php echo $value['newpay_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&remprice=<?php echo $value['balance'];?>"
                                 style="color: #7e252b;">Pay Up</a>
                             <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
                             <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
                             <form id="priceform">
                                 <input type="hidden" value="<?php 
-                        $increase = 2 / 100 * $value['sub_payment'];
-                        $priceincrement = $increase + $value['sub_payment'];
+                        $increase = 2 / 100 * $value['sub_price'];
+                        $priceincrement = ($increase + $value['sub_price']) * $value['period_num'];
                         echo $priceincrement;
                         ?>" id="increase" name="increase">
+                                <input type="hidden" value="<?php 
+                          $increase = 2 / 100 * $value['sub_price'];
+                          $newsubprice = $increase + $value['sub_price'];
+                        echo $newsubprice;
+                        ?>" id="increase" name="newsubprice">
                                 <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
                                 <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
+                                <input type="hidden" value="<?php echo $value['newpay_id'];?>" name="newpayid">
                             </form>
                             <script>
                             let dateInput = document.querySelector('#date');
@@ -805,7 +811,7 @@ if(!isset($_SESSION['unique_id'])){
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
-                                 echo $unitprice;
+                                 echo round($unitprice);
                              }
              ?></span></p>
                             <p class="balance"><span>Balance:</span>&nbsp;&#8358;<span><?php 
@@ -869,7 +875,7 @@ if(!isset($_SESSION['unique_id'])){
                              }
              ?> &nbsp;<span><?php echo $value['sub_period']?></span></div>
 
-                            <?php } else if($value['balance'] < "1" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
+                            <?php } else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
              ?> &nbsp;</div>
@@ -878,18 +884,24 @@ if(!isset($_SESSION['unique_id'])){
                 else {?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
              if($value['balance'] != "0" && $value['payment_method'] == "NewPayment"){ ?>
-                                <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&remprice=<?php echo $value['balance'];?>"
+                                <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&idtwo=<?php echo $value['newpay_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=newpayment&keyref=09123454954848kdksuuejwej&remprice=<?php echo $value['balance'];?>"
                                     style="color: #7e252b;">Pay Up</a>
                                 <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
                                 <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
                                 <form id="priceform">
                                     <input type="hidden" value="<?php 
-                        $increase = 2 / 100 * $value['sub_payment'];
-                        $priceincrement = $increase + $value['sub_payment'];
+                          $increase = 2 / 100 * $value['sub_price'];
+                          $priceincrement = ($increase + $value['sub_price']) * $value['period_num'];
                         echo $priceincrement;
                         ?>" id="increase" name="increase">
+                                    <input type="hidden" value="<?php 
+                          $increase = 2 / 100 * $value['sub_price'];
+                          $newsubprice = $increase + $value['sub_price'];
+                        echo $newsubprice;
+                        ?>" id="increase" name="newsubprice">
                                     <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
                                     <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
+                                    <input type="hidden" value="<?php echo $value['newpay_id'];?>" name="newpayid">
                                 </form>
                                 <script>
                                 let dateInput<?php echo $value['product_id'];?> = document.querySelector('#date');

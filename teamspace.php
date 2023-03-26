@@ -21,6 +21,14 @@ include_once "projectlog.php";
         justify-content: space-between;
     }
 
+    .successmodal {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 2em;
+    }
+
     .footerdiv {
         margin-top: 9em;
     }
@@ -114,6 +122,18 @@ include_once "projectlog.php";
         </p>
     </footer>
 
+    <div class="successmodal">
+        <div class="modalcon">
+            <div class="modaldiv">
+                <div>
+                    <img src="images/asset_success.svg" alt="" />
+                    <p>This Account</p>
+                    <p>Has Been Disabled</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="js/main.js"></script>
     <script>
@@ -152,6 +172,9 @@ include_once "projectlog.php";
                     let data = xhr.response;
                     if (data === "subadminsuccess") {
                         location.href = "subadmin.php";
+                    } else if (data === "disabled") {
+                        document.querySelector('.successmodal').style.display = "flex";
+                        document.querySelector('.modalcon').classList.add('animation');
                     } else if (data === "superadminsuccess") {
                         location.href = "superadmin.php";
                     } else {

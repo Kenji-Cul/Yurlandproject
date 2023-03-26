@@ -9,7 +9,6 @@ if(empty($filename)){
     $errormsg = "Please select your File";
 }  
 
-
 else {
      $superadmin = new User;
         $insertland = $superadmin->uploadOtherOptions($unique);

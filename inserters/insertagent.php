@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include_once "../projectlog.php";
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -27,7 +28,14 @@ else {
      if(!empty( $checkagent) || !empty( $checkagent2) || !empty( $checkagent3) || !empty( $checkagent4) || !empty( $checkagent5)){
      $errormsg = "Email Address already exists";
      }else{
-     $insertagent = $agent->createAgent(check_input($name),check_input($agent_password),check_input($referralid),check_input($earningpercent), check_input($agentemail),$groupid);
+        if(isset($_SESSION['uniquesubadmin_id'])){
+            $creatorid = $_SESSION['uniquesubadmin_id'];
+            }
+        
+            if(isset($_SESSION['uniquesupadmin_id'])){
+            $creatorid = $_SESSION['uniquesupadmin_id'];
+            }
+     $insertagent = $agent->createAgent(check_input($name),check_input($agent_password),check_input($referralid),check_input($earningpercent), check_input($agentemail),$groupid,$creatorid);
         }
 
 }

@@ -11,6 +11,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         if($userdata == "subadmin"){
             $insertuser = $user->subAdminLogin(check_input($useremail));
             if(isset($insertuser['subadmin_password'])){
+                if($insertuser['subadmin_status'] == "Disabled"){
+                    echo "disabled";
+                } else {
                if(password_verify($userpassword,$insertuser['subadmin_password'])){
                    session_start();
                    session_unset();
@@ -18,7 +21,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                    echo "subadminsuccess";
                } else {
                    $errormsg = "Invalid Details Try Again";
-               }
+               } 
+            }
             } else {
                $errormsg = "User Not Found";
             }

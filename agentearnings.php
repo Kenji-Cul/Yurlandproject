@@ -1,9 +1,7 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['uniquesubadmin_id'])){
-    header("Location:teamspace.php");
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -16,6 +14,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
@@ -23,6 +22,26 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         min-height: 100vh;
         position: relative;
         overflow-x: hidden;
+    }
+
+
+    .dropdown-links {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
     }
 
     .account-detail2 {
@@ -233,7 +252,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
         .dropdown-links {
             width: 6%;
-            height: 90vh;
+            height: 84vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -250,12 +269,28 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             transition: all 0.7s;
         }
 
-        .dropdown-links li {
+        .links-container li {
             height: 1em;
             width: 95%;
             text-transform: capitalize;
             font-size: 14px;
         }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 1.5em;
+            padding-top: 0;
+        }
+
+        /* .dropdown-links li {
+            height: 1em;
+            width: 95%;
+            text-transform: capitalize;
+            font-size: 14px;
+        } */
 
         .dropdown-links .select-link {
             background-color: #1a0709;
@@ -400,7 +435,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -415,22 +450,47 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             border-radius: 8px 0px 0px 8px;
         }
 
-        .dropdown-links li {
-            height: 1em;
+        .links-container li {
+            height: 2em;
             grid-gap: 0;
         }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 1em;
+        }
+
 
         .land-estate {
             width: 290px;
         }
 
 
+        <?php if(isset($_SESSION['uniquesubadmin_id'])) {
+            ?>.close {
+                padding-top: 26em;
+            }
 
-        .close {
+            <?php
+        }
+
+        ?><?php if(isset($_SESSION['uniquesupadmin_id'])) {
+            ?>.close {
+                padding-top: 38em;
+            }
+
+            <?php
+        }
+
+        ?>
+        /* .close {
             position: absolute;
             top: 4em;
             right: 1em;
-        }
+        } */
 
 
         .update-data {
@@ -444,6 +504,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 <body class="profile-body">
     <!-- Header -->
     <header class="signup">
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
         <div class="logo">
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
@@ -451,10 +512,27 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
         </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <div class="logo">
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <a href="superadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else {?>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php }?>
+        </div>
+        <?php }?>
 
         <?php 
-             $user = new User;
-             $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+            $user = new User;
+            if(isset($_SESSION['uniquesubadmin_id'])){
+               $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+            }
+
+            if(isset($_SESSION['uniquesupadmin_id'])){
+               $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+            }
             ?>
 
         <div class="nav">
@@ -463,93 +541,337 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <p><?php if(isset($newuser['subadmin_name'])){  ?>
                     <span><?php echo $newuser['subadmin_name']; ?></span>&nbsp;
                     <?php }?>
+
+                    <?php if(isset($newuser['super_adminname'])){  ?>
+                    <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
+                    <?php }?>
                 </p>
+                <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
                 <div class="profile-image">
                     <?php if(!empty($newuser['subadmin_image'])){?>
-                    <a href="agentprofileinfo.php" style="color: #808080;"><img
+                    <a href="subadmininfo.php" style="color: #808080;"><img
                             src="profileimage/<?php echo $newuser['subadmin_image'];?>" alt="profile image" /></a>
-                    <?php }?>
+                    <?php } ?>
+
                     <?php if(empty($newuser['subadmin_image'])){?>
-                    <a href="agentprofileinfo.php" style="color: #808080;">
+                    <a href="subadmininfo.php" style="color: #808080;">
                         <div class="empty-img" style="border-radius: 50%;">
                             <i class="ri-user-fill"></i>
                         </div>
                     </a>
                     <?php }?>
                 </div>
+                <?php }?>
+
+                <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['admin_image'])){?>
+                    <a href="supadmininfo.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
+                    <?php } ?>
+
+                    <?php if(empty($newuser['admin_image'])){?>
+                    <a href="supadmininfo.php" style="color: #808080;">
+                        <div class="empty-img" style="border-radius: 50%;">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+                <?php }?>
             </div>
+        </div>
         </div>
 
     </header>
 
 
     <div class="flex-container">
+        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
         <ul class="dropdown-links">
             <div class="center">
                 <li id="openicon" style="cursor: pointer;">
                     <img src="images/openmenu.svg" />
-
                 </li>
 
                 <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
                     <img src="images/openmenu.svg" />
-
                 </li>
             </div>
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links select-link">
-                <a href="subadmin.php"><img src="images/home3.svg" /></a>
-                <a href="subadmin.php" class="link">Home</a>
-            </li>
-            <li class="links">
-                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
-                <a href="allcustomers.php" class="link">All Customers</a>
-            </li>
-            <li class="links">
-                <a href="newuser.php"><img src="images/referral.svg" /></a>
-                <a href="newuser.php" class="link">New Customer</a>
-            </li>
-            <li class="links">
-                <a href="createagent.php"><img src="images/referral.svg" /> </a>
-                <a href="createagent.php" class="link">Create Agent</a>
-            </li>
 
-            <li class="links">
-                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
-                <a href="totaltransactions.php" class="link">View Transactions</a>
-            </li>
+            <div class="links-container">
+                <li class="links select-link">
+                    <a href="superadmin.php"><img src="images/home3.svg" /></a>
+                    <a href="superadmin.php" class="link">Home</a>
+                </li>
 
-            <li class="links">
-                <a href="totalref.php"><img src="images/referral.svg" /> </a>
-                <a href="totalref.php" class="link">View Referrals</a>
-            </li>
+                <li class="links">
+                    <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="allcustomers.php" class="link">All Customers</a>
+                </li>
 
-            <li class="links">
-                <a href="allagents.php"><img src="images/referral.svg" /> </a>
-                <a href="allagents.php" class="link">All Agents</a>
-            </li>
+                <li class="links">
+                    <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                    <a href="allagents.php" class="link">All Agents</a>
+                </li>
 
-            <li class="links">
-                <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
-                <a href="subadmininfo.php" class="link">Profile</a>
-            </li>
-            <li class="links">
-                <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
-                <a href="logout.php?user=subadmin" class="link">Logout</a>
-            </li>
+
+                <li class="links">
+                    <a href="newuser.php"><img src="images/referral.svg" /></a>
+                    <a href="newuser.php" class="link">New Customer</a>
+                </li>
+
+                <li class="links">
+                    <a href="usertype.php"><img src="images/land2.svg" /></a>
+                    <a href="usertype.php" class="link">New Land</a>
+                </li>
+
+                <li class="links">
+                    <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                    <a href="allagentearnings.php" class="link">View Earnings</a>
+                </li>
+
+                <li class="links">
+                    <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
+                    <a href="createexecutive.php" class="link">Create Executive</a>
+                </li>
+
+                <li class="links">
+                    <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                    <a href="creategroup.php" class="link">Create Group</a>
+                </li>
+
+                <li class="links">
+                    <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                    <a href="createagent.php" class="link">Create Agent</a>
+                </li>
+
+                <li class="links">
+                    <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
+                    <a href="createsubadmin.php" class="link">Create Subadmin</a>
+                </li>
+
+                <li class="links">
+                    <a href="productperiod.php"><img src="images/land2.svg" /></a>
+                    <a href="productperiod.php" class="link">Create Plan</a>
+                </li>
+
+                <li class="links">
+                    <a href="selectprice.php"><img src="images/land2.svg" /></a>
+                    <a href="selectprice.php" class="link">Create Product</a>
+                </li>
+
+                <li class="links ">
+                    <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="defaultcustomers.php" class="link">Default Customers</a>
+                </li>
+                <li class="links">
+                    <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="allocationcustomers.php" class="link">Due Allocation</a>
+                </li>
+                <li class="links">
+                    <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="payingcustomers.php" class="link">Paying Customers</a>
+                </li>
+
+                <li class="links">
+                    <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                    <a href="totaltransactions.php" class="link">View Transactions</a>
+                </li>
+
+                <li class="links">
+                    <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                    <a href="totalref.php" class="link">View Referrals</a>
+                </li>
+
+                <li class="links">
+                    <a href="#"><img src="images/updown.svg" /></a>
+                    <a href="#" class="link">Pay Earnings</a>
+                </li>
+
+                <li class="links">
+                    <a href="supadmininfo.php"><img src="images/settings.svg" /></a>
+                    <a href="supadmininfo.php" class="link">Profile</a>
+                </li>
+                <li class="links">
+                    <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                    <a href="logout.php?user=subadmin" class="link">Logout</a>
+                </li>
+            </div>
         </ul>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/openmenu.svg" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/openmenu.svg" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <div class="links-container">
+                <li class="links">
+                    <a href="subadmin.php"><img src="images/home3.svg" /></a>
+                    <a href="subadmin.php" class="link">Home</a>
+                </li>
+                <li class="links">
+                    <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="allcustomers.php" class="link">All Customers</a>
+                </li>
+                <li class="links">
+                    <a href="allagents.php"><img src="images/referral.svg" /></a>
+                    <a href="allagents.php" class="link">All Agents</a>
+                </li>
+
+                <li class="links">
+                    <a href="allgroups.php"><img src="images/referral.svg" /></a>
+                    <a href="allgroups.php" class="link">All Groups</a>
+                </li>
+                <li class="links">
+                    <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                    <a href="allagentearnings.php" class="link">View Earnings</a>
+                </li>
+                <li class="links">
+                    <a href="newuser.php"><img src="images/referral.svg" /></a>
+                    <a href="newuser.php" class="link">New Customer</a>
+                </li>
+                <li class="links">
+                    <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                    <a href="createagent.php" class="link">Create Agent</a>
+                </li>
+
+                <li class="links">
+                    <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                    <a href="creategroup.php" class="link">Create Group</a>
+                </li>
+
+                <li class="links">
+                    <a href="usertype.php"><img src="images/land2.svg" /></a>
+                    <a href="usertype.php" class="link">New Land</a>
+                </li>
+
+
+                <li class="links">
+                    <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="defaultcustomers.php" class="link">Default Customers</a>
+                </li>
+                <li class="links">
+                    <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="allocationcustomers.php" class="link">Due Allocation</a>
+                </li>
+                <li class="links">
+                    <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                    <a href="payingcustomers.php" class="link">Paying Customers</a>
+                </li>
+
+                <li class="links">
+                    <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                    <a href="totaltransactions.php" class="link">View Transactions</a>
+                </li>
+
+                <li class="links select-link">
+                    <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                    <a href="totalref.php" class="link">View Referrals</a>
+                </li>
+
+                <li class="links">
+                    <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
+                    <a href="subadmininfo.php" class="link">Profile</a>
+                </li>
+                <li class="links">
+                    <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
+                    <a href="logout.php?user=subadmin" class="link">Logout</a>
+                </li>
+            </div>
+        </ul>
+        <?php }?>
 
 
         <div class="profile-container">
             <div class="page-title2">
-                <a href="subadmin.php">
+                <a href="totalearnings.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <p>Total Agent Earnings</p>
 
             </div>
+
+            <form action="" class="download-form">
+                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
+                        id="export"></i></button>
+            </form>
+
+            <table id="user-data" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Bank Name</th>
+                        <th>Account Number</th>
+                        <th>Amount Paid</th>
+                        <th>Amount Earned</th>
+                        <th>Balance Earning</th>
+                    </tr>
+                </thead>
+                <tbody class="table-data">
+
+                    <?php 
+    $user = new User;
+   
+    $allusers = $user->selectAllAgents2();
+    foreach ($allusers as $key => $value) {
+        $agentpercent = $value['earning_percentage'];
+    ?>
+                    <?php if($value['agent_date'] <= $value['payment_date']){ ?>
+                    <tr>
+                        <td><span><?php echo $value['agent_name']; ?></span>
+                        </td>
+                        <td>Agent</td>
+                        <td><?php echo $value['bank_name'];?></td>
+                        <td><?php echo $value['account_number'];?></td>
+                        <td>&#8358;<?php 
+                    $earnedprice = $value['product_price'];
+                    $unitprice = $earnedprice;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                      echo number_format(round($unitprice));
+                                    } else {
+                                        echo round($unitprice);
+                                    }
+                                
+                    ?></td>
+                        <td>&#8358;<?php $percent = $value['earning_percentage'];
+                    $earnedprice = $percent / 100 * $value['product_price'];
+                    $unitprice = $earnedprice;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                      echo number_format(round($unitprice));
+                                    } else {
+                                        echo round($unitprice);
+                                    }
+                                
+                    ?></td>
+                        <td>&#8358;<?php 
+                 $percent = $value['earning_percentage'];
+                 $earnedprice = $percent / 100 * $value['product_price'];
+                    $unitprice = $value['product_price'] - $earnedprice;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                      echo number_format(round($unitprice));
+                                    } else {
+                                        echo round($unitprice); }   
+                    ?></td>
+                    </tr>
+                    <?php }}?>
+                </tbody>
+            </table>
+
 
             <div class="land-btn-container" style="display: flex; gap: 2em;">
 
@@ -859,9 +1181,9 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             document.querySelector(".profile-container").style = `
          padding-left: 7em;
         `;
-            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            let allLinks = document.querySelectorAll(".links-container .links .link");
 
-            let allLink = document.querySelectorAll(".dropdown-links .links");
+            let allLink = document.querySelectorAll(".links-container .links");
             allLink.forEach((element) => {
                 element.style = `
         gap: 10px;
@@ -886,14 +1208,14 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
          padding-left: 1em;
         `;
 
-            let allLink = document.querySelectorAll(".dropdown-links .links");
+            let allLink = document.querySelectorAll(".links-container .links");
             allLink.forEach((element) => {
                 element.style = `
         justify-content: center
         `;
             });
 
-            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+            let allLinks = document.querySelectorAll(".links-container .links .link");
             allLinks.forEach((element) => {
                 element.style = `
          visibility: hidden;
@@ -917,6 +1239,31 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             transform: translateX(100%);
             `;
         };
+    }
+
+    let downloadbtn = document.querySelector('.download-form .land-btn');
+    let downloadform = document.querySelector('.download-form');
+    downloadform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    function htmlTableToExcel(type) {
+        var userdata = document.getElementById('user-data');
+        var file = XLSX.utils.table_to_book(userdata, {
+            sheet: "sheet1"
+        });
+        XLSX.write(file, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        });
+
+        XLSX.writeFile(file, 'Agentearningdata.' + type);
+    }
+
+    downloadbtn.onclick = () => {
+        htmlTableToExcel('xlsx');
+
     }
     </script>
 </body>

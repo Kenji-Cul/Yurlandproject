@@ -326,7 +326,7 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         }
 
         .close {
-            padding-top: 12em;
+            padding-top: 26em;
         }
 
 
@@ -405,12 +405,30 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                 <a href="allcustomers.php" class="link">All Customers</a>
             </li>
             <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /></a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
+                <a href="allgroups.php"><img src="images/referral.svg" /></a>
+                <a href="allgroups.php" class="link">All Groups</a>
+            </li>
+            <li class="links">
+                <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                <a href="allagentearnings.php" class="link">View Earnings</a>
+            </li>
+            <li class="links">
                 <a href="newuser.php"><img src="images/referral.svg" /></a>
                 <a href="newuser.php" class="link">New Customer</a>
             </li>
             <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
                 <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                <a href="creategroup.php" class="link">Create Group</a>
             </li>
 
             <li class="links">
@@ -440,11 +458,6 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
             <li class="links">
                 <a href="totalref.php"><img src="images/referral.svg" /> </a>
                 <a href="totalref.php" class="link">View Referrals</a>
-            </li>
-
-            <li class="links">
-                <a href="allagents.php"><img src="images/referral.svg" /> </a>
-                <a href="allagents.php" class="link">All Agents</a>
             </li>
 
             <li class="links select-link">

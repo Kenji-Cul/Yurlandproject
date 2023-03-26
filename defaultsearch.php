@@ -3,6 +3,7 @@ include "projectlog.php";
 $user = new User;
    
     $lastsevendays = date('M-d-Y', strtotime('today - '.$_POST['searchproduct'].' days'));
+
     $today = date('M-d-Y', strtotime('today'));
     $allpayusers = $user->selectAllPayment();
 
@@ -39,7 +40,11 @@ $output2 = '<div class="empty-img">
     <p style="text-transform: capitalize;">
         <span>'.$lastpaiduser['first_name'].'</span>&nbsp;<span>'.$lastpaiduser['last_name'].'</span>
 </p>
-<span>'.$lastpaiduser['email'].'</span>
+<p class="email-span" style="text-transform: lowercase;">'.$lastpaiduser['email'].'
+</p>
+<p style="text-transform: capitalize;">
+<span>Last Pay Date: '.$lastsevendays.'</span></span>
+</p>
 </div>
 <a href="customerprofileinfo.php?unique='.$lastpaiduser['unique_id'].'&real=91838JDFOJOEI939"
 style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>

@@ -24,7 +24,8 @@ if(isset($_SESSION['uniquesupadmin_id'])){
     }
    
     $landview = $user->selectLandImage($_GET['uniqueid']);
-    $checklastpayment = $user->selectLastPay($_GET['user'],$_GET['uniqueid']);
+    $checklastpayment = $user->selectLastPay($_GET['user'],$_GET['uniqueid'],$_GET['newpayid']);
+    $checklatestpayment = $user->selectLatestPay($_GET['user'],$_GET['uniqueid']);
     $checklastpaid = $user->selectSubPay($_GET['user']);
     if(!empty($landview)){
         foreach($landview as $key => $value){ 
@@ -37,7 +38,11 @@ if(isset($_POST["submit"])){
         $error = "Limit Reached";
         header("Location: verify3.php?error=".$error."");
     } else {
-        if($checklastpayment['balance'] > "1" && isset($_GET['remprice'])){
+        if($checklatestpayment['product_id'] == $_GET['uniqueid'] && $checklatestpayment['newpay_id'] != $_GET['newpayid'] && $checklatestpayment['balance'] > "2"){
+            $error = "This customer has an ongoing subscription on this estate, please complete payment";
+            header("Location: verify3.php?error=".$error."");
+        } else {
+        if($checklastpayment['balance'] > "2" && isset($_GET['remprice'])){
     $email = htmlspecialchars($selectuser['email']);
     if(!isset($_GET['remprice'])){
         if($_GET['data'] == "onemonth"){
@@ -77,9 +82,10 @@ if(isset($_POST["submit"])){
     }
     $uniqueperson = $_GET['user'];
     $uniqueproduct = $_GET['uniqueid'];
+    $newpayid = $_GET['newpayid'];
     if(isset($_GET['remprice'])){
        $period = $_GET['period'];
-       $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_GET['user']);
+       $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_GET['user'],$_GET['newpayid']);
        $subperiod = $landuse['period_num'] - $_GET['subperiod'];
     } else {
         $time = $limit - intval($_POST['period']);
@@ -208,7 +214,7 @@ if(isset($_POST["submit"])){
             [
                 "display_name" => "Price",
                 "variable_name" => "price",
-                "value" => $price
+                "value" => round($price)
             ],
 
             [
@@ -237,13 +243,13 @@ if(isset($_POST["submit"])){
             [
                 "display_name" => "New Price",
                 "variable_name" => "newprice",
-                "value" => $newprice
+                "value" => round($newprice)
             ],
 
             [
                 "display_name" => "New Price",
                 "variable_name" => "newprice",
-                "value" => $newpay
+                "value" => round($newpay)
             ],
 
             [
@@ -281,6 +287,12 @@ if(isset($_POST["submit"])){
                 "display_name" => "Allocation Fee",
                 "variable_name" => "allocation fee",
                 "value" =>  $allocationfee
+            ],
+
+            [
+                "display_name" => "NewPay Id",
+                "variable_name" => "newpayid",
+                "value" => $newpayid
             ],
 
 
@@ -352,10 +364,8 @@ if(isset($_POST["submit"])){
         $error = "You are not connected to the internet";
         header("Location: verify3.php?error=".$error."");
     }
-} else {
-    $error = "This customer has an ongoing subscription on this estate, please complete payment";
-    header("Location: verify3.php?error=".$error."");
-}
+}  
+
 
 
 if(empty($checklastpayment)){
@@ -425,7 +435,7 @@ if(empty($checklastpayment)){
     $uniqueproduct = $_GET['uniqueid'];
     if(isset($_GET['remprice'])){
        $period = $_GET['period'];
-       $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_GET['user']);
+       $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_GET['user'],$_GET['newpayid']);
        $subperiod = $landuse['period_num'] - $_GET['subperiod'];
     } else {
         $time = $limit - intval($_POST['period']);
@@ -477,6 +487,8 @@ if(empty($checklastpayment)){
         $payee = $subadmin['super_adminname'];
         $agentid = $subadmin['unique_id'];
     }
+
+    $newpayid = rand();
  
    
 
@@ -555,7 +567,7 @@ if(empty($checklastpayment)){
             [
                 "display_name" => "Price",
                 "variable_name" => "price",
-                "value" => $price
+                "value" => round($price)
             ],
 
             [
@@ -584,13 +596,13 @@ if(empty($checklastpayment)){
             [
                 "display_name" => "New Price",
                 "variable_name" => "newprice",
-                "value" => $newprice
+                "value" => round($newprice)
             ],
 
             [
                 "display_name" => "New Price",
                 "variable_name" => "newprice",
-                "value" => $newpay
+                "value" => round($newpay)
             ],
 
             [
@@ -628,6 +640,12 @@ if(empty($checklastpayment)){
                 "display_name" => "Allocation Fee",
                 "variable_name" => "allocation fee",
                 "value" =>  $allocationfee
+            ],
+
+            [
+                "display_name" => "NewPay Id",
+                "variable_name" => "newpayid",
+                "value" => $newpayid
             ],
 
 
@@ -702,6 +720,7 @@ if(empty($checklastpayment)){
 
 }
 }
+        }
 
 
 }
@@ -863,6 +882,8 @@ if(empty($checklastpayment)){
                             $cost = round($_GET['newpay']);
                             if($cost > 999 || $cost > 9999 || $cost > 99999 || $cost > 999999){
                                 echo number_format(round($cost));
+                                } else {
+                                    echo round($cost);
                                 }
                         }?></label>
             </div>

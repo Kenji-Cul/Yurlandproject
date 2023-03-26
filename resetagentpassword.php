@@ -111,7 +111,7 @@ if(isset($_SESSION['unique_id'])){
     <!-- Header -->
     <header>
         <div class="logo">
-            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
         </div>
     </header>
 

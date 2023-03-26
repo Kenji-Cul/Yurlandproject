@@ -380,13 +380,15 @@ include_once "projectlog.php";
         }
 
 
-
-
         .close {
+            padding-top: 4em;
+        }
+
+        /* .close {
             position: absolute;
             top: 4em;
             right: 1em;
-        }
+        } */
 
     }
     </style>
