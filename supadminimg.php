@@ -76,7 +76,7 @@ header("Location:index.php");
         background-color: #808080;
     }
 
-    .select-box {
+    .login-form .select-box {
         border: 1px solid #808080;
         border-radius: 8px;
         width: 80%;
@@ -102,6 +102,45 @@ header("Location:index.php");
     }
 
     @media only screen and (min-width: 1300px) {
+
+        .select-box {
+            width: 100%;
+            border-radius: 0px !important;
+            background: #7e252b;
+        }
+
+        .selected {
+            border-radius: 0px !important;
+            background: #7e252b;
+            color: #fff;
+        }
+
+        .select-box .options-container {
+            border-radius: 0px !important;
+            background: #7e252b;
+            z-index: 200;
+        }
+
+        .select-box .option:hover {
+            background: var(--primary-black);
+            color: #ffffff;
+        }
+
+        .select-box .options-container::-webkit-scrollbar {
+            width: 6px;
+            background: #0d141f;
+            border-radius: 0;
+        }
+
+        .select-box .options-container::-webkit-scrollbar-thumb {
+            background: #525861;
+            border-radius: 0;
+        }
+
+        .option {
+            padding: 1em 0;
+        }
+
 
         .account-detail {
             display: flex;
@@ -393,7 +432,7 @@ header("Location:index.php");
 
 
         .close {
-            padding-top: 32em;
+            padding-top: 8em;
         }
 
         /* .close {
@@ -401,6 +440,50 @@ header("Location:index.php");
             top: 4em;
             right: 1em;
         } */
+
+        .select-box {
+            width: 100%;
+            border-radius: 0px !important;
+            background: #7e252b;
+            margin-left: -1em;
+        }
+
+        .selected {
+            border-radius: 0px !important;
+            background: #7e252b;
+            color: #fff;
+        }
+
+        .select-box .options-container {
+            border-radius: 0px !important;
+            background: #7e252b;
+            z-index: 200;
+        }
+
+        .select-box .option:hover {
+            background: var(--primary-black);
+            color: #ffffff;
+        }
+
+        .select-box .options-container::-webkit-scrollbar {
+            width: 6px;
+            background: #0d141f;
+            border-radius: 0;
+        }
+
+        .select-box .options-container::-webkit-scrollbar-thumb {
+            background: #525861;
+            border-radius: 0;
+        }
+
+        .option {
+            padding: 0.6em 0;
+        }
+
+
+
+
+
 
     }
     </style>
@@ -467,78 +550,208 @@ header("Location:index.php");
                     <a href="superadmin.php" class="link">Home</a>
                 </li>
 
-                <li class="links">
-                    <a href="allcustomers.php"><img src="images/referral.svg" /></a>
-                    <a href="allcustomers.php" class="link">All Customers</a>
-                </li>
+                <div class="select-box s-box1">
+                    <div class="options-container">
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="newuser.php"><img src="images/referral.svg" /></a>
+                                <a href="newuser.php" class="link">New Customer</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                                <a href="usertype.php" class="link">New Land</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links ">
+                                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="defaultcustomers.php" class="link">Default Customers</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="payingcustomers.php" class="link">Paying Customers</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+
+                <div class="select-box s-box2">
+                    <div class="options-container">
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allcustomers.php"><img src="images/referral.svg" /></a>
+                                <a href="allcustomers.php" class="link">All Customers</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="allagents.php"><img src="images/referral.svg" /> </a>
+                                <a href="allagents.php" class="link">All Agents</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allsubadmins.php"><img src="images/referral.svg" /> </a>
+                                <a href="allsubadmins.php" class="link">All Subadmins</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allexecutives.php"><img src="images/referral.svg" /> </a>
+                                <a href="allexecutives.php" class="link">All Executives</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allgroups.php"><img src="images/referral.svg" /> </a>
+                                <a href="allgroups.php" class="link">All Groups</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+
+                <div class="select-box s-box3">
+                    <div class="options-container">
+                        <div class="option">
+                            <li class="links">
+                                <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="allagentearnings.php" class="link">View Earnings</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="allexecutiveearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="allexecutiveearnings.php" class="link">Executive Earnings</a>
+                            </li>
+                        </div>
+
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
+                                <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="totalref.php"><img src="images/referral.svg" /> </a>
+                                <a href="totalref.php" class="link">View Referrals</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
+
+                <div class="select-box s-box4">
+                    <div class="options-container">
+                        <div class="option">
+                            <li class="links">
+                                <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
+                                <a href="createexecutive.php" class="link">Create Executive</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                                <a href="creategroup.php" class="link">Create Group</a>
+                            </li>
+                        </div>
+
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="createagent.php"><img src="images/referral.svg" /> </a>
+                                <a href="createagent.php" class="link">Create Agent</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
+                                <a href="createsubadmin.php" class="link">Create Subadmin</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="productperiod.php"><img src="images/land2.svg" /></a>
+                                <a href="productperiod.php" class="link">Create Plan</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="selectprice.php"><img src="images/land2.svg" /></a>
+                                <a href="selectprice.php" class="link">Create Product</a>
+                            </li>
+                        </div>
+
+                    </div>
+                    <div class="selected"><span><img src="images/referral.svg" /></span>
+                    </div>
+                </div>
 
                 <li class="links">
-                    <a href="newuser.php"><img src="images/referral.svg" /></a>
-                    <a href="newuser.php" class="link">New Customer</a>
-                </li>
-
-                <li class="links">
-                    <a href="usertype.php"><img src="images/land2.svg" /></a>
-                    <a href="usertype.php" class="link">New Land</a>
-                </li>
-
-                <li class="links">
-                    <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
-                    <a href="allagentearnings.php" class="link">View Earnings</a>
-                </li>
-
-
-                <li class="links">
-                    <a href="createexecutive.php"><img src="images/referral.svg" /> </a>
-                    <a href="createexecutive.php" class="link">Create Executive</a>
-                </li>
-
-                <li class="links">
-                    <a href="creategroup.php"><img src="images/referral.svg" /> </a>
-                    <a href="creategroup.php" class="link">Create Group</a>
-                </li>
-
-                <li class="links">
-                    <a href="createagent.php"><img src="images/referral.svg" /> </a>
-                    <a href="createagent.php" class="link">Create Agent</a>
-                </li>
-
-                <li class="links">
-                    <a href="createsubadmin.php"><img src="images/referral.svg" /> </a>
-                    <a href="createsubadmin.php" class="link">Create Subadmin</a>
-                </li>
-
-                <li class="links">
-                    <a href="productperiod.php"><img src="images/land2.svg" /></a>
-                    <a href="productperiod.php" class="link">Create Plan</a>
-                </li>
-
-                <li class="links">
-                    <a href="selectprice.php"><img src="images/land2.svg" /></a>
-                    <a href="selectprice.php" class="link">Create Product</a>
-                </li>
-
-                <li class="links ">
-                    <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
-                    <a href="defaultcustomers.php" class="link">Default Customers</a>
-                </li>
-                <li class="links">
-                    <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
-                    <a href="allocationcustomers.php" class="link">Due Allocation</a>
-                </li>
-                <li class="links">
-                    <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
-                    <a href="payingcustomers.php" class="link">Paying Customers</a>
-                </li>
-
-                <li class="links">
-                    <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
-                    <a href="totaltransactions.php" class="link">View Transactions</a>
-                </li>
-
-                <li class="links">
-                    <a href="totalref.php"><img src="images/referral.svg" /> </a>
-                    <a href="totalref.php" class="link">View Referrals</a>
+                    <a href="documentation.php"><img src="images/land2.svg" /></a>
+                    <a href="documentation.php" class="link">Documentation</a>
                 </li>
 
                 <li class="links">
@@ -556,6 +769,7 @@ header("Location:index.php");
                 </li>
             </div>
         </ul>
+
         <div class="profile-container">
             <!-- Landing Page Text -->
             <div class="page-title2">
@@ -764,6 +978,11 @@ header("Location:index.php");
             dropdownnav.style = `
         width: 14%;
         `;
+
+            document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
+            document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
+            document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
+            document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
             open.style.display = "none";
             closeicon.style.display = "block";
             document.querySelector(".profile-container").style = `
@@ -790,6 +1009,11 @@ header("Location:index.php");
             dropdownnav.style = `
         width: 6%;
         `;
+
+            document.querySelector('.s-box1 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box2 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box3 .selected').innerHTML = '<img src="images/referral.svg" />';
+            document.querySelector('.s-box4 .selected').innerHTML = '<img src="images/referral.svg" />';
             open.style.display = "block";
             closeicon.style.display = "none";
             document.querySelector(".profile-container").style = `
@@ -813,6 +1037,10 @@ header("Location:index.php");
         }
     }
     if (window.innerWidth < 1300) {
+        document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
+        document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
+        document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
+        document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
         let dropdownnav = document.querySelector(".dropdown-links");
         let menu = document.querySelector(".menu");
         menu.onclick = () => {

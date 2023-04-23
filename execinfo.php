@@ -673,6 +673,22 @@ if(!isset($_GET['unique'])){
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -743,6 +759,13 @@ if(!isset($_GET['unique'])){
                             <li class="links">
                                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
                             </li>
                         </div>
 
@@ -918,25 +941,17 @@ if(!isset($_GET['unique'])){
                         <p style="text-transform: capitalize;">
                             Total Amount Earned
                         </p>
-                        <span>&#8358;</span>&nbsp;<span class="totalearn"></span>
+                        <span>&#8358;</span>
                         <span><?php 
                         $user = new User;
-                                
-                        $earning = $user->selectAllHistory();
-                        if(!empty($earning)){
-                            foreach($earning as $key => $value){
-
-                                if($agent['executive_date'] <= $value['payment_date']){
-                                $percent = $agent['earning'];
-                    $earnedprice = $percent / 100 * $value['product_price'];
-
-                             ?>
-                            <span name="paydate" style="display:none;"><?php echo $earnedprice;?></span>
-                            <?php    }}} else { ?>
-                            <span name="paydate" style="display:none;"><?php echo "0";?></span>
-                            <?php          }
-                        
-                            
+                        $unitprice2 = $user->selectExecutiveTotalEarnings($agent['unique_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                       
+                
                         ?>
 
                         </span>

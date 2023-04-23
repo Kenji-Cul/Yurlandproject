@@ -117,7 +117,7 @@ if(isset($_SESSION['unique_id'])){
 
     <!-- Landing Page Text -->
     <div class="page-title2">
-        <a href="subadminlogin.php">
+        <a href="teamspace.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <p>Reset Password</p>
@@ -145,7 +145,7 @@ if(isset($_SESSION['unique_id'])){
 
             <p class="error"></p>
             <button class="btn" type="submit">Submit</button>
-            <button class="backtologin" style="display: none;"><a href="subadminlogin.php"
+            <button class="backtologin" style="display: none;"><a href="teamspace.php"
                     style="color: #fff!important;">Back
                     to
                     Login</a></button>

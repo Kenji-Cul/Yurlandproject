@@ -848,6 +848,22 @@ include_once "projectlog.php";
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -918,6 +934,13 @@ include_once "projectlog.php";
                             <li class="links">
                                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
                             </li>
                         </div>
 
@@ -1060,6 +1083,7 @@ include_once "projectlog.php";
                         <th>NextOfKin Relation</th>
                         <th>NIN</th>
                         <th>Earning Percentage</th>
+                        <th>Yurland Percentage</th>
                         <th>Gender</th>
                         <th>Occupation</th>
                         <th>Date Of Birth</th>
@@ -1090,6 +1114,7 @@ include_once "projectlog.php";
                         <td><?php echo $value['nextofkin_relation'];?></td>
                         <td><?php echo $value['nin'];?></td>
                         <td><?php echo $value['earning_percentage'];?></td>
+                        <td><?php echo $value['yurland_percentage'];?></td>
                         <td><?php echo $value['gender'];?></td>
                         <td><?php echo $value['occupation'];?></td>
                         <td><?php echo $value['dateofbirth'];?></td>
@@ -1139,7 +1164,7 @@ include_once "projectlog.php";
                         <p class="pname"><?php 
                  $totunit = $user->selectSumUnits($value['unique_id']);
                  $landcount = $user->selectLandCount($value['unique_id']);
-                 $total = $user->selectTotal($value['unique_id']);
+                 $total = $user->selectTotal3($value['unique_id']);
                  $date = $value['user_date'];
                 
                  foreach ($totunit as $key => $value1) {

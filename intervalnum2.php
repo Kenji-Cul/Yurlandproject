@@ -51,31 +51,74 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
                 $error = "Current plan is below 70% payment,please payup to qualify for another location on Subscription";
                 header("Location: verify3.php?error=".$error."");
             } else {
+               
+
+                 
     if($_GET['data'] == "onemonth"){
         $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['onemonth_period'];
         $limit = $value['onemonth_period'];
-        $balance = $totalprice - $price;
+        $increaserate = $value['onemonth_increaserate'];
+        if($_POST['intervalinput'] == 'daily'){
+            $intervalprice = $price;
+         } else if ($_POST['intervalinput'] == 'weekly'){
+            $intervalprice =  $price * 7;
+         } else if($_POST['intervalinput'] == 'monthly'){
+             $intervalprice = $price * 30;
+         }
+        $balance = $totalprice - $intervalprice;
         } else if($_GET['data'] == "threemonths"){
             $totalprice = $_GET['tot'];
             $price = $_GET['tot'] / $value['threemonth_period'];
         $limit = $value['threemonth_period'];
-        $balance = $totalprice - $price;
+        $increaserate = $value['threemonth_increaserate'];
+        if($_POST['intervalinput'] == 'daily'){
+            $intervalprice = $price;
+         } else if ($_POST['intervalinput'] == 'weekly'){
+            $intervalprice =  $price * 7;
+         } else if($_POST['intervalinput'] == 'monthly'){
+             $intervalprice = $price * 30;
+         }
+        $balance = $totalprice - $intervalprice;
         } else if($_GET['data'] == "sixmonths"){
             $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['sixmonth_period'];
         $limit = $value['sixmonth_period'];
-        $balance = $totalprice - $price;
+        $increaserate = $value['sixmonth_increaserate'];
+        if($_POST['intervalinput'] == 'daily'){
+            $intervalprice = $price;
+         } else if ($_POST['intervalinput'] == 'weekly'){
+            $intervalprice =  $price * 7;
+         } else if($_POST['intervalinput'] == 'monthly'){
+             $intervalprice = $price * 30;
+         }
+        $balance = $totalprice - $intervalprice;
         } else if($_GET['data'] == "twelvemonths"){
             $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['twelvemonth_period'];
         $limit = $value['twelvemonth_period'];
-        $balance = $totalprice - $price;
+        $increaserate = $value['twelvemonth_increaserate'];
+        if($_POST['intervalinput'] == 'daily'){
+            $intervalprice = $price;
+         } else if ($_POST['intervalinput'] == 'weekly'){
+            $intervalprice =  $price * 7;
+         } else if($_POST['intervalinput'] == 'monthly'){
+             $intervalprice = $price * 30;
+         }
+        $balance = $totalprice - $intervalprice;
         } else if($_GET['data'] == "eighteenmonths"){
             $totalprice = $_GET['tot'];
         $price = $_GET['tot'] / $value['eighteen_period'];
         $limit = $value['eighteen_period'];
-        $balance = $totalprice - $price;
+        $increaserate = $value['eighteen_increaserate'];
+        if($_POST['intervalinput'] == 'daily'){
+            $intervalprice = $price;
+         } else if ($_POST['intervalinput'] == 'weekly'){
+            $intervalprice =  $price * 7;
+         } else if($_POST['intervalinput'] == 'monthly'){
+             $intervalprice = $price * 30;
+         }
+        $balance = $totalprice - $intervalprice;
         }
 
     
@@ -96,19 +139,21 @@ if(isset($_POST['submit']) && $_POST['intervalinput'] != ""){
     $uniquesub = rand();
     $paymentmethod = "Subscription";
     $intervalinput = $_POST['intervalinput'];
+    $firstDate = $_POST['planindicator'];
     
     $newpayid = rand();
 
+    if($_POST['intervalinput'] == 'daily'){
+        $intervalprice = $price;
+     } else if ($_POST['intervalinput'] == 'weekly'){
+        $intervalprice =  $price * 7;
+     } else if($_POST['intervalinput'] == 'monthly'){
+         $intervalprice = $price * 30;
+     }
+
    
     
-    if($_POST['intervalinput'] == 'daily'){
-        $limitperiod = $limit;
-     } else if ($_POST['intervalinput'] == 'weekly'){
-        $limitperiod =  $limit * 7;
-     } else if($_POST['intervalinput'] == 'monthly'){
-         $limitperiod = $limit * 30;
-     }
- 
+    
 
    
 $curl = curl_init();
@@ -123,9 +168,9 @@ CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 CURLOPT_CUSTOMREQUEST => "POST",
 CURLOPT_POSTFIELDS => [
 "name" => "Subscription".$newpayid,
-"interval" => "daily",
-"amount" => $price * 100,
-"invoice_limit" => $limitperiod
+"interval" => $_POST['intervalinput'],
+"amount" => round($intervalprice * 100),
+"invoice_limit" => $limit
 
 ],
 CURLOPT_HTTPHEADER => array(
@@ -393,7 +438,7 @@ include_once "initialize2.php";
                             </div>
 
                             <input type="text" style="display: none;" name="intervalinput" value="" id="input">
-
+                            <input type="hidden" name="planindicator" value="" id="plan">
 
 
                             <div class="btn-container">
@@ -416,6 +461,46 @@ include_once "initialize2.php";
 
     <script src="js/main.js"></script>
     <script>
+    const params = new URLSearchParams(window.location.search)
+
+    let planindicator = document.querySelector('#plan');
+
+    var date = new Date();
+
+    const plan = params.get('data')
+    if (plan == "onemonth") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                            month: 'short'
+                        })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    } else if (plan == "threemonths") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 3, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                            month: 'short'
+                        })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    } else if (plan == "sixmonths") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 6, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                            month: 'short'
+                        })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    } else if (plan == "twelvemonths") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 12, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                            month: 'short'
+                        })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    } else if (plan == "eighteenmonths") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 18, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                            month: 'short'
+                        })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    }
+
+
     let purpose = document.getElementsByName("interval");
     purpose.forEach((element) => {
         element.onclick = () => {

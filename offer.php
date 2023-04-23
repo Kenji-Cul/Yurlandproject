@@ -340,4 +340,19 @@ file_put_contents($_GET['filename'], $output);
 rename("".$_GET['filename']."","userdocuments/".$_GET['filename']."");
 fclose($myfile);
 
-header("Location: verify5.php");
+$paymentdate = date("M-d-Y");
+
+$unitprice = $_GET['amount'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount3 = number_format($unitprice);
+} else {
+$amount3 = round($unitprice);
+}
+
+$unitprice2 = $_GET['balance'];
+if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+$amount4 = number_format($unitprice2);
+} else {
+$amount4 = round($unitprice2);
+}
+header("Location:successemail.php?name=".$_GET['customer']."&date=".$paymentdate."&amount=".$amount3."&estate=".$_GET['estatename']."&balance=".$amount4."&payer=".$_GET['payer']."&email=".$_GET['email']."");

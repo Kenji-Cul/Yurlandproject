@@ -28,7 +28,7 @@ if(!isset($_SESSION['unique_id'])){
     }
 
     .details {
-        width: 140px !important;
+        width: 160px !important;
         position: relative;
     }
 
@@ -118,6 +118,10 @@ if(!isset($_SESSION['unique_id'])){
 
     @media only screen and (max-width: 1300px) {
 
+        .details .date {
+            font-size: 9px !important;
+        }
+
         .success {
             position: absolute;
             left: 50%;
@@ -166,6 +170,10 @@ if(!isset($_SESSION['unique_id'])){
             padding: 1em 2em;
             box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
             width: 80%;
+        }
+
+        .transaction-details .date {
+            font-size: 11px !important;
         }
 
         .user,
@@ -541,7 +549,7 @@ if(!isset($_SESSION['unique_id'])){
                         <p>Amount Paid</p>
                         <div class="price-div">&#8358;<?php 
                 $user = new User;
-                $total = $user->selectTotal($_SESSION['unique_id']);
+                $total = $user->selectTotal3($_SESSION['unique_id']);
                foreach ($total as $key => $value) {
                 if(is_null($value)){
                     echo "0";
@@ -592,15 +600,16 @@ if(!isset($_SESSION['unique_id'])){
                     
               
             ?>
-            <div class="transaction-details">
+            <div class="transaction-details" <?php if($value['sub_status'] == "Failed"){?>
+                style="border: 2px solid red;" <?php }?>>
                 <div class="radius">
                     <img src="landimage/<?php echo $value['product_image'];?>" alt="">
                 </div>
-                <div class="details">
+                <div class="details" style="font-size: 14px;">
                     <p class="pname"><?php echo $value['product_name'];?></p>
                     <div class="inner-detail">
-                        <div class="date">
-                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        <div class="date" style="font-size: 14px;">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
                         </div>
                     </div>
                 </div>
@@ -614,14 +623,22 @@ if(!isset($_SESSION['unique_id'])){
                 <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
-                <div class="price-detail">&#8358;<?php 
+                <?php  if($value['delete_status'] == "Deleted"){ ?>
+                <div class="detail-four">
+                    <div class="detail"
+                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <p style="font-size: 14px; color: #fff;">Deleted</p>
+                    </div>
+                </div>
+                <?php } else {?>
+                <div class="price-detail" <?php if($value['sub_status'] == "Failed"){?> style="color: red;" <?php }?>>&#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
                                 echo $unitprice;
                              }
-            ?>
+            ?><?php if($value['sub_status'] == "Failed") { echo "<span style='font-size: 12px;'>(Failed)</span>";}?>
                     <div class="payee">
                         <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
                         <p class="payee-name"
@@ -638,6 +655,7 @@ if(!isset($_SESSION['unique_id'])){
                         </p>
                     </div>
                 </div>
+                <?php } ?>
             </div>
 
 

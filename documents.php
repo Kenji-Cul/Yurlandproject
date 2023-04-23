@@ -125,6 +125,10 @@ if(!isset($_SESSION['unique_id'])){
             width: 80%;
         }
 
+        .transaction-details2 .date {
+            font-size: 11px !important;
+        }
+
         .navigation-div .offer {
             background: #ffffff;
             box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
@@ -526,8 +530,8 @@ if(!isset($_SESSION['unique_id'])){
                 <div class="details">
                     <p class="pname"><?php echo $value['product_name'];?></p>
                     <div class="inner-detail">
-                        <div class="date">
-                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        <div class="date" style="font-size: 12px;">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
                         </div>
                     </div>
                 </div>

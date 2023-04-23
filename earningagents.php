@@ -636,6 +636,22 @@ include_once "projectlog.php";
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -706,6 +722,13 @@ include_once "projectlog.php";
                             <li class="links">
                                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
                             </li>
                         </div>
 
@@ -878,7 +901,7 @@ include_once "projectlog.php";
     $customer2 = $user ->selectAllEarningAgents($value2['uniqueagent_id']);
     $agentid = [];
     foreach ($customer2 as $key => $value) { 
-        array_push($agentid,$value['agent_id']);
+        array_push($agentid,$value['earner_id']);
     }
     $agentid2 = array_unique($agentid);
     foreach ($agentid2 as $key => $value) { 
@@ -907,12 +930,7 @@ include_once "projectlog.php";
 
                 <?php }}?>
 
-                <?php if(empty($agentid2)){?>
-                <div class="success">
-                    <img src="images/asset_success.svg" alt="" />
-                    <p>There are no earning agents yet!</p>
-                </div>
-                <?php }?>
+
 
                 <div class="account-detail3">
                     <a href="logout.php?user=subadmin">

@@ -694,6 +694,23 @@ include_once "projectlog.php";
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -764,6 +781,13 @@ include_once "projectlog.php";
                             <li class="links">
                                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
                             </li>
                         </div>
 
@@ -1028,16 +1052,10 @@ include_once "projectlog.php";
                                
                                 $allusers = $user->selectAllUsers();
                                 foreach ($allusers as $key => $value3) {
-                                    $agentpercent = $value3['earning_percentage'];
-                                 
-                             $datearray = [];
+                                    
                                 $userhistory = $user->selectAgentHistory($value3['unique_id']);
                                 foreach ($userhistory as $key => $value) {
-                                    if(empty($value3['earning_percentage'])){
-                                       $earnedprice = 0;
-                                    } else {
-                                        $earnedprice = $value3['earning_percentage'] / 100 * $value['product_price'];
-                                    }
+                                    $earnedprice = $value['earned_amount'];
                                    
                         
                                      ?>
@@ -1050,13 +1068,10 @@ include_once "projectlog.php";
                                
                                 $allagents = $user->selectAllAgents();
                                 foreach ($allagents as $key => $value2) {
-                                    $agentdate = $value2['agent_date'];
-                                    $agentpercent = $value2['earning_percentage'];
-                                 
-                             $datearray = [];
+                            
                                 $agenthistory = $user->selectAgentHistory($value2['uniqueagent_id']);
                                 foreach ($agenthistory as $key => $value) {
-                                    $earnedprice = $value2['earning_percentage'] / 100 * $value['product_price'];
+                                    $earnedprice = $value['earned_amount'];
                         
                                      ?>
                             <span name="paydate" style="display:none;"><?php echo $earnedprice;?></span>
@@ -1077,19 +1092,15 @@ include_once "projectlog.php";
                                
                                 $allagents = $user->selectAllExecutive();
                                 foreach ($allagents as $key => $value2) {
-                                    $agentdate = $value2['executive_date'];
-                                    $agentpercent = $value2['earning'];
-                                 
-                             $datearray = [];
-                                $agenthistory = $user->selectAllHistory();
+                                    
+                             $agenthistory = $user->selectAgentHistory($value2['unique_id']);
                                 foreach ($agenthistory as $key => $value) {
-                                    if($value2['executive_date'] <= $value['payment_date']){
-                                    $earnedprice = $value2['earning'] / 100 * $value['product_price'];
+                                    $earnedprice = $value['earned_amount'];
                         
                                      ?>
                             <span name="execdate" style="display:none;"><?php echo $earnedprice;?></span>
                             <?php    }
-                                }}
+                                }
                                
                                 ?>
                         </div>

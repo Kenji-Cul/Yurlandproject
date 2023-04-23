@@ -17,6 +17,7 @@ if(!isset($_GET['unique'])){
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
@@ -47,7 +48,7 @@ if(!isset($_GET['unique'])){
     }
 
     .details {
-        width: 140px !important;
+        width: 160px !important;
         position: relative;
     }
 
@@ -143,6 +144,10 @@ if(!isset($_GET['unique'])){
 
     @media only screen and (max-width: 1300px) {
 
+        .details .date {
+            font-size: 9px !important;
+        }
+
         .payee {
             width: 100px;
             display: flex;
@@ -194,6 +199,10 @@ if(!isset($_GET['unique'])){
             padding: 1em 2em;
             box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
             width: 80%;
+        }
+
+        .transaction-details .date {
+            font-size: 11px !important;
         }
 
         .user,
@@ -924,6 +933,22 @@ if(!isset($_GET['unique'])){
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -994,6 +1019,13 @@ if(!isset($_GET['unique'])){
                             <li class="links">
                                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
                             </li>
                         </div>
 
@@ -1085,9 +1117,6 @@ if(!isset($_GET['unique'])){
 
 
 
-
-
-
         <div class="trans-container">
             <div class="page-title2">
                 <a href="customerprofileinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939">
@@ -1095,6 +1124,55 @@ if(!isset($_GET['unique'])){
                 </a>
                 <p>Transactions</p>
             </div>
+
+            <form action="" class="download-form">
+                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
+                        id="export"></i></button>
+            </form>
+
+            <table id="user-data" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Customer's Name</th>
+                        <th>Amount Paid</th>
+                        <th>Location Paid For</th>
+                        <th>Paid By</th>
+                        <th>Date</th>
+                        <th>Time of Payment</th>
+                    </tr>
+                </thead>
+                <tbody class="table-data">
+
+                    <?php 
+    $user = new User;
+   
+    $customer = $user ->selectPayHistory($_GET['unique']);
+    if(!empty($customer)){
+        foreach($customer as $key => $value){
+            $newuser = $user->selectUser($value['customer_id']);
+    ?>
+                    <tr>
+                        <td><?php echo $value['payment_id'];?></td>
+                        <td> <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
+                        </td>
+                        <td>&#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } else {
+                                echo round($unitprice);
+                             }
+            ?></td>
+                        <td><?php echo $value['product_name'];?></td>
+                        <td><?php echo $value['payee'];?></td>
+                        <td><?php echo $value['payment_date'];?></td>
+                        <td><?php echo $value['payment_time'];?></td>
+                    </tr>
+                    <?php }}?>
+                </tbody>
+            </table>
+
 
             <!-- <div class="no-lands">
         <img src="images/asset_success.svg" alt="success image" />
@@ -1110,15 +1188,16 @@ if(!isset($_GET['unique'])){
                     
               
             ?>
-            <div class="transaction-details">
+            <div class="transaction-details" <?php if($value['sub_status'] == "Failed"){?>
+                style="border: 2px solid red;" <?php }?>>
                 <div class="radius">
                     <img src="landimage/<?php echo $value['product_image'];?>" alt="">
                 </div>
                 <div class="details">
                     <p class="pname"><?php echo $value['product_name'];?></p>
                     <div class="inner-detail">
-                        <div class="date">
-                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        <div class="date" style="font-size: 14px;">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
                         </div>
                     </div>
                 </div>
@@ -1132,14 +1211,40 @@ if(!isset($_GET['unique'])){
                 <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
-                <div class="price-detail">&#8358;<?php 
+                <?php  if($value['delete_status'] == "Deleted"){ 
+                    if(isset($_SESSION['uniquesupadmin_id']) || isset($_SESSION['uniquesubadmin_id'])){
+                            $name = $value['product_id'].$value['payment_id'];
+                        ?>
+                <form action="" class="restore-form" method="POST">
+                    <input class="price" type="submit" value="Restore" name="restorel<?php echo $name?>"
+                        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+                </form>
+                <?php 
+                      if(isset($_POST["restorel".$name])){ 
+                        $insertupdate = $user->updateLandHistory4($value['product_id'],$value['payment_id'],$value['payment_method'],$value['newpay_id']);
+                       
+                        $deletedp = "restorel";
+                        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+               }
+                    ?>
+                <?php } ?>
+                <?php if(isset($_SESSION['unique_id']) || isset($_SESSION['uniqueagent_id'])){?>
+                <div class="detail-four">
+                    <div class="detail"
+                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <p style="font-size: 14px; color: #fff;">Deleted</p>
+                    </div>
+                </div>
+                <?php }?>
+                <?php } else {?>
+                <div class="price-detail" <?php if($value['sub_status'] == "Failed"){?> style="color: red;" <?php }?>>&#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
                                 echo round($unitprice);
                              }
-            ?>
+            ?><?php if($value['sub_status'] == "Failed") { echo "<span style='font-size: 12px;'>(Failed)</span>";}?>
                     <div class="payee">
                         <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
                         <p class="payee-name"
@@ -1176,7 +1281,23 @@ if(!isset($_GET['unique'])){
                                 ?>
                         </p>
                     </div>
+                    <?php   
+                        if(isset($_SESSION['uniquesupadmin_id']) || isset($_SESSION['uniquesubadmin_id'])){
+                        $name = $value['product_id'].$value['payment_id'];?>
+
+                    <form action="" class="deletep-form" method="POST">
+                        <input class="price" type="submit" value="Delete" name="deletel<?php echo $name?>"
+                            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+                    </form>
+                    <?php  if(isset($_POST["deletel".$name])){ 
+                                 $insertupdate = $user->updateLandHistory3($value['product_id'],$value['payment_id'],$value['payment_method'],$value['newpay_id']);
+                                
+                                 $deletedp = "deletedl";
+                                 header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+                        } }
+                        ?>
                 </div>
+                <?php }?>
             </div>
 
 
@@ -1296,6 +1417,31 @@ if(!isset($_GET['unique'])){
             transform: translateX(100%);
             `;
         };
+    }
+
+    let downloadbtn = document.querySelector('.download-form .land-btn');
+    let downloadform = document.querySelector('.download-form');
+    downloadform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    function htmlTableToExcel(type) {
+        var userdata = document.getElementById('user-data');
+        var file = XLSX.utils.table_to_book(userdata, {
+            sheet: "sheet1"
+        });
+        XLSX.write(file, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        });
+
+        XLSX.writeFile(file, 'Transactiondata.' + type);
+    }
+
+    downloadbtn.onclick = () => {
+        htmlTableToExcel('xlsx');
+
     }
     </script>
 </body>

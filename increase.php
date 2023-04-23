@@ -6,6 +6,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $customer = $_POST['customer'];
     $product = $_POST['product'];
     $newpayid = $_POST['newpayid'];
+    $increasedate = $_POST['increasedate'];
     $user = new User;
-    $increase = $user->updatePricePayment($customer,$product,$inc,$newpayid,$newsubprice);
+    $increase = $user->updatePricePayment($customer,$product,$inc,$newpayid,$newsubprice,$increasedate);
 }

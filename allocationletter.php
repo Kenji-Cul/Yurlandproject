@@ -2,6 +2,7 @@
 namespace Dompdf;
 require 'dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
+ob_start();
 //Getting image
 $png = file_get_contents('http://localhost/Yurland/images/yurlogo.png');
 $pngbase64 = base64_encode($png);
@@ -35,16 +36,6 @@ $txt = '
         font-family: DejaVu Sans !important;
     }
     
-    .watermark {
-        opacity: 0.6;
-        position: fixed;
-        left: 0;
-        top: 20%;
-        width: 90%;
-        height: auto;
-    }
-
-    
 
     .border {
         height: 100%;
@@ -75,6 +66,10 @@ $txt = '
         gap: 1em;
     }
 
+    .logo img{
+        width: 50px; 
+        height: 50px;
+    }
     .div {
         display: flex;
         gap: 1em;
@@ -99,7 +94,6 @@ $txt = '
     <div class="border">
         <div class="logo">
         <img src="data:image;base64,<?='.$pngbase64.';?>"/>
-<img class="watermark" src="data:image;base64,<?='.$pngbase64.';?>" />
 <h1>yurLAND</h1>
 </div>
 <div class="customer">
@@ -114,7 +108,8 @@ $txt = '
 <div class="heading">
     <h2 style="text-transform: uppercase">INVITE FOR ALLOCATION</h2>
     <p>
-        Once again, we appreciate your interest in yurLAND and are sending you this document to formerly affirm that you
+        Once again, we appreciate your interest in <b>yurLAND</b> and are sending you this document to formerly affirm
+        that you
         have made and we have received the complete payment for our estate project which you subscribed to. In
         accordance to our terms and promise
         for instant allocation, we are setting the ground by inviting you to the next phase of your purchase which is
@@ -134,21 +129,15 @@ $txt = '
 </div>
 
 <div class="heading">
+    <p>Regards</p>
     <h2 style="
-            text-transform: capitalize;
-            justify-self: left;
-            padding-right: 74%;
-            font-size: 18px;
-          ">
-        Once again, thank you for your purchase. Kind Regards.
+                    text-transform: capitalize;
+                    justify-self: left;
+                    padding-right: 74%;
+                    font-size: 18px;
+                  ">
         <b>The yurLAND Team</b>
     </h2>
-</div>
-<div class="heading">
-    <h2 style="text-transform: capitalize">Regards</h2>
-    <h2 style="text-transform: capitalize">Ahunanya, Ifeanyi Richard</h2>
-    <h2 style="text-transform: capitalize">Founder/ CTO Arklips Limited</h2>
-    <h2 style="text-transform: capitalize">For: yurLAND</h2>
 </div>
 </div>
 </body>
@@ -176,4 +165,20 @@ file_put_contents($_GET['filename'], $output);
 rename("".$_GET['filename']."","userdocuments/".$_GET['filename']."");
 fclose($myfile);
 
-header("Location: verify5.php");
+$paymentdate = date("M-d-Y");
+
+$unitprice = $_GET['amount'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount3 = number_format($unitprice);
+} else {
+$amount3 = round($unitprice);
+}
+
+$unitprice2 = $_GET['balance'];
+if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+$amount4 = number_format($unitprice2);
+} else {
+$amount4 = round($unitprice2);
+}
+header("Location:successemail.php?name=".$_GET['customer']."&date=".$paymentdate."&amount=".$amount3."&estate=".$_GET['estatename']."&balance=".$amount4."&payer=".$_GET['payer']."&email=".$_GET['email']."");
+ob_end_flush();

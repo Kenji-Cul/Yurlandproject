@@ -25,6 +25,10 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         overflow-x: hidden;
     }
 
+    .input-div {
+        gap: 1em;
+    }
+
     .dropdown-links {
         overflow-y: auto;
     }
@@ -49,11 +53,11 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         align-items: center;
         justify-content: center;
         position: absolute;
-        top: 60%;
+        top: 85em;
     }
 
     .body {
-        height: 200vh;
+        height: 330vh;
     }
 
     @media only screen (max-width: 800px) {
@@ -103,6 +107,8 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     }
 
     @media only screen and (min-width: 1300px) {
+
+
 
         .dropdown-links .select-box {
             width: 100%;
@@ -368,7 +374,9 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
-
+        .body {
+            height: 380vh;
+        }
 
         .user,
         #openicon {
@@ -591,6 +599,22 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -663,6 +687,14 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
                             </li>
                         </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
+                            </li>
+                        </div>
+
 
                         <div class="option">
                             <li class="links">
@@ -772,6 +804,10 @@ $rest = $user->selectPeriod();
                         <input type="text" id="eighteenpercent"
                             placeholder="Input percentage number for eighteen months plan" name="eighteenpercent"
                             value="<?php if(!empty($rest)) {echo $rest['eighteen_percent'] ;}?>" />
+                        <label for="eighteenupdate">Monthly Update Percentage</label>
+                        <input type="text" id="eighteenupdate"
+                            placeholder="Input percentage number for monthly update increase" name="eighteenupdate"
+                            value="<?php if(!empty($rest)) {echo $rest['eighteen_increaserate'] ;}?>" />
                     </div>
 
                     <div class="input-div name">
@@ -782,6 +818,10 @@ $rest = $user->selectPeriod();
                         <input type="text" id="twelvepercent"
                             placeholder="Input percentage number for twelve months plan" name="twelvepercent"
                             value="<?php if(!empty($rest)) {echo $rest['twelvemonth_percent'] ;}?>" />
+                        <label for="twelveupdate">Monthly Update Percentage</label>
+                        <input type="text" id="twelveupdate"
+                            placeholder="Input percentage number for monthly update increase" name="twelveupdate"
+                            value="<?php if(!empty($rest)) {echo $rest['twelvemonth_increaserate'] ;}?>" />
                     </div>
 
                     <div class="input-div name">
@@ -791,6 +831,10 @@ $rest = $user->selectPeriod();
                         <label for="sixpercent">Percentage increase</label>
                         <input type="text" id="sixpercent" placeholder="Input percentage number for six months plan"
                             name="sixpercent" value="<?php if(!empty($rest)) {echo $rest['sixmonth_percent'] ;}?>" />
+                        <label for="eighteenupdate">Monthly Update Percentage</label>
+                        <input type="text" id="sixupdate"
+                            placeholder="Input percentage number for monthly update increase" name="sixupdate"
+                            value="<?php if(!empty($rest)) {echo $rest['sixmonth_increaserate'] ;}?>" />
                     </div>
 
                     <div class="input-div name">
@@ -801,6 +845,10 @@ $rest = $user->selectPeriod();
                         <input type="text" id="threepercent" placeholder="Input percentage number for three months plan"
                             name="threepercent"
                             value="<?php if(!empty($rest)) {echo $rest['threemonth_percent'] ;}?>" />
+                        <label for="threeupdate">Monthly Update Percentage</label>
+                        <input type="text" id="threeupdate"
+                            placeholder="Input percentage number for monthly update increase" name="threeupdate"
+                            value="<?php if(!empty($rest)) {echo $rest['threemonth_increaserate'] ;}?>" />
                     </div>
 
                     <div class="input-div name">
@@ -810,6 +858,10 @@ $rest = $user->selectPeriod();
                         <label for="onepercent">Percentage increase</label>
                         <input type="text" id="onepercent" placeholder="Input percentage number for one month plan"
                             name="onepercent" value="<?php if(!empty($rest)) {echo $rest['onemonth_percent'] ;}?>" />
+                        <label for="oneupdate">Monthly Update Percentage</label>
+                        <input type="text" id="oneupdate"
+                            placeholder="Input percentage number for monthly update increase" name="oneupdate"
+                            value="<?php if(!empty($rest)) {echo $rest['onemonth_increaserate'] ;}?>" />
                     </div>
 
 

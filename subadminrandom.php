@@ -142,7 +142,7 @@ include_once "projectlog.php";
     </header>
 
     <div class="page-title2">
-        <a href="login.php">
+        <a href="teamspace.php">
             <img src="images/arrowleft.svg" alt="" />
         </a>
         <p>Reset Code</p>

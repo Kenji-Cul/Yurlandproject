@@ -727,6 +727,22 @@ include_once "projectlog.php";
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -797,6 +813,13 @@ include_once "projectlog.php";
                             <li class="links">
                                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
                             </li>
                         </div>
 
@@ -919,6 +942,7 @@ include_once "projectlog.php";
                         <th>Executive Role</th>
                         <th>Earning Percentage</th>
                         <th>Executive Email</th>
+                        <th>Amount Earned</th>
                     </tr>
                 </thead>
                 <tbody class="table-data">
@@ -936,6 +960,14 @@ include_once "projectlog.php";
                         <td><?php echo $value['exec_role'];?></td>
                         <td><?php echo $value['earning'];?></td>
                         <td><?php echo $value['executive_email'];?></td>
+                        <td>&#8358;<?php  $unitprice2 = $user->selectExecutiveTotalEarnings($value['unique_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+
+                            ?></td>
                     </tr>
                     <?php }}?>
                 </tbody>
@@ -987,25 +1019,12 @@ include_once "projectlog.php";
                     </div>
 
                     <div class="details" style="text-transform: capitalize;">
-                        <p class="pname">&#8358;<?php $earning = $user->selectAllHistory();
-if(!empty($earning)){
-$earnarray = [];
-foreach($earning as $key => $value2){
-
-if($value['executive_date'] <= $value2['payment_date']){
-$percent = $value['earning'];
-$earnedprice = $percent / 100 * $value2['product_price'];
-array_push($earnarray,$earnedprice);
-
-       }}
-$allprice = array_sum($earnarray);
-$unitprice = $allprice;
-if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    echo number_format($unitprice);
-  } else {
-     echo $unitprice;
-  }
-}
+                        <p class="pname">&#8358;<?php  $unitprice2 = $user->selectExecutiveTotalEarnings($value['unique_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
 
                             ?>
                         </p>

@@ -664,6 +664,24 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
+
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -734,6 +752,13 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                             <li class="links">
                                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
                             </li>
                         </div>
 
@@ -923,50 +948,77 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                         style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
                         <p>Total Earnings</p>
                         <p class="amountdiv">&#8358;
-                            <span class="totalearn"></span>
                             <?php 
                                
-                                $allusers = $user->selectAllUsers();
-                                foreach ($allusers as $key => $value3) {
-                                    $agentpercent = $value3['earning_percentage'];
-                                 
-                             $datearray = [];
-                                $userhistory = $user->selectAgentHistory($value3['unique_id']);
-                                foreach ($userhistory as $key => $value) {
-                                    if(empty($value3['earning_percentage'])){
-                                       $earnedprice = 0;
-                                    } else {
-                                        $earnedprice = $value3['earning_percentage'] / 100 * $value['product_price'];
-                                    }
-                                   
-                        
-                                     ?>
-                            <span name="userdate" style="display:none;"><?php echo $earnedprice;?></span>
-                            <?php    }
-                                }
-                               
-                                ?>
-                            <?php 
-                               
-                                $allagents = $user->selectAllAgents();
-                                foreach ($allagents as $key => $value2) {
-                                    $agentdate = $value2['agent_date'];
-                                    $agentpercent = $value2['earning_percentage'];
-                                 
-                             $datearray = [];
-                                $agenthistory = $user->selectAgentHistory($value2['uniqueagent_id']);
-                                foreach ($agenthistory as $key => $value) {
-                                    $earnedprice = $value2['earning_percentage'] / 100 * $value['product_price'];
-                        
-                                     ?>
-                            <span name="paydate" style="display:none;"><?php echo $earnedprice;?></span>
-                            <?php    }
-                                }
-                               
+                               $totalearnings = $user->selectTotalEarnings();
+                                if($totalearnings > 999 || $totalearnings > 9999 || $totalearnings > 99999 || $totalearnings > 999999){
+                                    echo number_format($totalearnings);
+                                    
+                                  } else {
+                                     echo round($totalearnings);
+                                  }
+                           
                                 ?>
                         </p>
                     </div>
                 </div>
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p>Total User Earnings</p>
+                        <p class="amountdiv">&#8358;
+                            <span class="totalearnuser"></span>
+                            <?php 
+                               
+                               $allusers2 = $user->selectAllUsers();
+                               foreach ($allusers2 as $key => $value3) {
+                                //    $agentdate = $value2['agent_date'];
+                                //    $agentpercent = $value2['earning_percentage'];
+                                
+                            // $datearray = [];
+                            $userearnings = $user->selectAgentHistory($value3['unique_id']);
+                            foreach ($userearnings as $key => $value) {
+                                $earnedprice = $value['earned_amount'];
+                                ?>
+
+                            <span name="userdate2" style="display:none;"><?php echo $earnedprice;?></span>
+                            <?php   }
+                              }
+                               ?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p>Agent Earnings</p>
+                        <p class="amountdiv">&#8358;
+                            <span class="totalearnagent"></span>
+                            <?php 
+                               
+                               $allagents2 = $user->selectAllAgents();
+                               foreach ($allagents2 as $key => $value2) {
+                                //    $agentdate = $value2['agent_date'];
+                                //    $agentpercent = $value2['earning_percentage'];
+                                
+                            // $datearray = [];
+                            $agentearnings = $user->selectAgentHistory($value2['uniqueagent_id']);
+                            foreach ($agentearnings as $key => $value) {
+                                $earnedprice = $value['earned_amount'];
+                                ?>
+
+                            <span name="paydate2" style="display:none;"><?php echo $earnedprice;?></span>
+                            <?php   }
+                              }
+                               ?>
+                        </p>
+                    </div>
+                </div>
+
+
+
 
 
 
@@ -1022,6 +1074,27 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 </div>
 
                 <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Yurland Earnings</p>
+                        <p class="amountdiv">&#8358;
+
+                            <?php 
+                               
+                               $yurlandearnings = $user->selectYurlandEarnings();
+                                if($yurlandearnings > 999 || $yurlandearnings > 9999 || $yurlandearnings > 99999 || $yurlandearnings > 999999){
+                                    echo number_format($yurlandearnings);
+                                    
+                                  } else {
+                                     echo round($yurlandearnings);
+                                  }
+                           
+                                ?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
                     <a href="earningagents.php">
@@ -1060,28 +1133,31 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                         <p>Total Executive Earnings</p>
                         <p class="amountdiv">&#8358;
                             <span class="totalearnexec"></span>
+
                             <?php 
                                
-                                $allagents = $user->selectAllExecutive();
-                                foreach ($allagents as $key => $value2) {
-                                    $agentdate = $value2['executive_date'];
-                                    $agentpercent = $value2['earning'];
-                                 
-                             $datearray = [];
-                                $agenthistory = $user->selectAllHistory();
-                                foreach ($agenthistory as $key => $value) {
-                                    if($value2['executive_date'] <= $value['payment_date']){
-                                    $earnedprice = $value2['earning'] / 100 * $value['product_price'];
-                        
-                                     ?>
-                            <span name="execdate" style="display:none;"><?php echo $earnedprice;?></span>
-                            <?php    }
-                                }}
-                               
+                               $allagents = $user->selectAllExecutive();
+                               foreach ($allagents as $key => $value2) {
+                                //    $agentdate = $value2['agent_date'];
+                                //    $agentpercent = $value2['earning_percentage'];
+                                
+                            // $datearray = [];
+                            $execearnings = $user->selectAgentHistory($value2['unique_id']);
+                            foreach ($execearnings as $key => $value) {
+                                $earnedprice = $value['earned_amount'];
                                 ?>
+
+                            <span name="execdate" style="display:none;"><?php echo $earnedprice;?></span>
+                            <?php   }
+                              }
+                               ?>
                         </p>
                     </div>
                 </div>
+
+
+
+
 
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
@@ -1294,6 +1370,20 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         },
     });
 
+    // var date = new Date();
+    // var firstDay = new Date(date.getFullYear(), date.getMonth() + 6, 1);
+    // let firstDate = `${firstDay.toLocaleString('default', {
+    //     month: 'short'
+    // })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+    // console.log(firstDate);
+    // let day = date.getDate();
+    // let Monthname = date.toLocaleString('default', {
+    //     month: 'short'
+    // });
+    // let year = date.getFullYear();
+    // let shortdate = `${Monthname}-${day}-${year}`;
+    // console.log(shortdate);
+
     let userdate = document.getElementsByName("userdate");
 
     let userdates = [];
@@ -1309,6 +1399,23 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
         sum2 += userdates[i];
     }
     //console.log(sum);
+
+    let userdate2 = document.getElementsByName("userdate2");
+
+    let userearndates = [];
+    userdate2.forEach(element => {
+        userearndates.push(parseInt(element.innerHTML));
+    });
+
+    //console.log(paydates);
+
+    let sumuser = 0;
+
+    for (let i = 0; i < userearndates.length; i++) {
+        sumuser += userearndates[i];
+    }
+
+    document.querySelector('.totalearnuser').innerHTML = new Intl.NumberFormat().format(sumuser);
 
 
 
@@ -1326,8 +1433,25 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     for (let i = 0; i < paydates.length; i++) {
         sum += paydates[i];
     }
+
+    let paydate2 = document.getElementsByName("paydate2");
+
+    let paydates2 = [];
+    paydate2.forEach(element => {
+        paydates2.push(parseInt(element.innerHTML));
+    });
+
+    //console.log(paydates);
+
+    let sumagent = 0;
+
+    for (let i = 0; i < paydates2.length; i++) {
+        sumagent += paydates2[i];
+    }
     //console.log(sum);
-    document.querySelector('.totalearn').innerHTML = new Intl.NumberFormat().format(sum + sum2);
+
+    document.querySelector('.totalearnagent').innerHTML = new Intl.NumberFormat().format(sumagent);
+
 
     let execdate = document.getElementsByName("execdate");
 
@@ -1345,6 +1469,25 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     }
     //console.log(sum);
     document.querySelector('.totalearnexec').innerHTML = new Intl.NumberFormat().format(sumexec);
+
+    let yurlanddate = document.getElementsByName("yurlanddate");
+
+    let yurlanddates = [];
+    yurlanddate.forEach(element => {
+        yurlanddates.push(parseInt(element.innerHTML));
+    });
+
+    //console.log(paydates);
+
+    let sumyurland = 0;
+
+    for (let i = 0; i < yurlanddates.length; i++) {
+        sumyurland += yurlanddates[i];
+    }
+    //console.log(sum);
+    document.querySelector('.totalearnyurland').innerHTML = new Intl.NumberFormat().format(sumyurland);
+
+    // document.querySelector('.totalearn').innerHTML = new Intl.NumberFormat().format(sum + sum2 + sumexec + sumyurland);
     </script>
 </body>
 

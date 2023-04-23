@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email</title>
+    <style>
+      .btn {
+        margin-top: 2em;
+        padding: 16px 16px;
+        width: 370px;
+        height: 44px;
+        background: #7e252b;
+        border-radius: 45px;
+        border: none;
+        color: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .body {
+        padding: 2em;
+      }
+    </style>
+  </head>
+
+  <body class="body">
+    <div class="logo">
+      <img src="images/logo.svg" alt="" />
+      <p>yurLAND</p>
+    </div>
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      "
+    >
+      <div
+        style="
+          display: flex;
+          align-items: left;
+          justify-content: center;
+          width: 70%;
+          flex-direction: column;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+          padding: 1.5em;
+          background: #7e252b;
+        "
+      >
+        <p style="font-size: 24px">Hi Gideon,</p>
+        <p style="font-size: 17px">
+          Your autodebit payment on your subscribed land was unsuccessful today.
+          You can log-in to your dashboard and use the <b>PayUp</b> button
+          available on the <b>My Land</b> page to pay manually.
+        </p>
+        <p>Amount: display amount that failed</p>
+        <p>Status: Failed</p>
+        <a href="http://localhost/Yurland/login.php"
+          ><button class="btn">Login</button></a
+        >
+        <p>If you have any issues please contact our support team.</p>
+        <p>yurLAND Team</p>
+      </div>
+    </div>
+  </body>
+</html>

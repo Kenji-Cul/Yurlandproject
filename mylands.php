@@ -670,7 +670,7 @@ if(!isset($_SESSION['unique_id'])){
                    
              ?>
 
-                <?php if($value['payment_status'] == "Deleted"){?>
+                <?php if($value['delete_status'] == "Deleted"){?>
                 <div class="updated-land" style="display:none;">
 
                     <div class="updated-img">
@@ -744,7 +744,7 @@ if(!isset($_SESSION['unique_id'])){
                           $increase = 2 / 100 * $value['sub_price'];
                           $newsubprice = $increase + $value['sub_price'];
                         echo $newsubprice;
-                        ?>" id="increase" name="newsubprice">
+                        ?>" id="increase2" name="newsubprice">
                                 <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
                                 <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
                                 <input type="hidden" value="<?php echo $value['newpay_id'];?>" name="newpayid">
@@ -755,8 +755,9 @@ if(!isset($_SESSION['unique_id'])){
                             var countDownDate = new Date(dateInput.value).getTime();
                             var now = new Date().getTime();
                             var timeleft = countDownDate - now;
+                            console.log(timeleft);
 
-                            var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+                            //var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
                             //console.log(timeleft);
                             if (timeleft < 0 && checkBal.value != 0) {
                                 let priceform = document.querySelector('#priceform');
@@ -776,13 +777,14 @@ if(!isset($_SESSION['unique_id'])){
                                     // we have to send the information through ajax to php
                                     let formData = new FormData(priceform); //creating new formData Object
 
+
                                     xhr.send(formData);
                                 }
                                 // 2592000
 
                                 setInterval(() => {
                                     increasePrice();
-                                }, 2592000000);
+                                }, 2592000);
                             }
                             </script>
                             <?php    } else {
@@ -865,17 +867,124 @@ if(!isset($_SESSION['unique_id'])){
                             </div>
                         </div>
                         <div class="detail-five">
-                            <?php if($value['payment_method'] == "Subscription"){?>
+                            <?php if($value['balance'] > "2" && $value['payment_method'] == "Subscription"){?>
+                            <?php if($value['failed_charges'] > "2"){?>
+                            <div class="cartbutton">
+                                <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&idtwo=<?php echo $value['newpay_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=failedpayment&keyref=09123454954848kdksuuejwej&remprice=<?php echo $value['failed_charges'];?>"
+                                    style="color: #7e252b;">Pay Up</a>
+                            </div>
+
+                            <input type="hidden" value="<?php echo $value['failed_charges'];?>" id="check2">
+                            <input type="hidden" value="<?php echo $value['increase_date'];?>" id="increasedate2">
+
+                            <form id="priceform2">
+                                <input type="hidden" value="<?php 
+                          $increasetwo = $value['increase_rate'] / 100 * $value['failed_charges'];
+                          $priceincrementtwo = $increasetwo + $value['failed_charges'];
+                        echo $priceincrementtwo;
+                        ?>" id="increase3" name="increase">
+                                <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
+                                <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
+                                <input type="hidden" value="<?php echo $value['newpay_id'];?>" name="newpayid">
+                                <input type="hidden" value="<?php 
+                                        $dt = strtotime($value['increase_date']); 
+                                        echo date("M-d-Y", strtotime("+1 month", $dt))
+                                        ?>" name="increasedate">
+                            </form>
+                            <script>
+                            let checkBaltwo<?php echo $value['newpay_id'];?> = document.querySelector('#check2')
+                                .value;
+                            let increaseDatetwo<?php echo $value['newpay_id'];?> = document.querySelector(
+                                    '#increasedate2')
+                                .value;
+
+                            var now<?php echo $value['newpay_id'];?> = new Date().getTime();
+
+                            // var date = new Date();
+                            // var firstDay = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+                            // let firstDate = `${firstDay.toLocaleString('default', {
+                            //         month: 'short'
+                            //     })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+                            // let firstDate = "Apr-8-2023";
+                            //console.log(firstDate);
+                            var date = new Date();
+                            let daytwo<?php echo $value['newpay_id'];?> = date.getDate();
+                            let Monthnametwo<?php echo $value['newpay_id'];?> = date.toLocaleString('default', {
+                                month: 'short'
+                            });
+                            let yeartwo<?php echo $value['newpay_id'];?> = date.getFullYear();
+                            let shortdatetwo<?php echo $value['newpay_id'];?> =
+                                `${Monthnametwo<?php echo $value['newpay_id'];?>}-${daytwo<?php echo $value['newpay_id'];?>}-${yeartwo<?php echo $value['newpay_id'];?>}`;
+                            // let shortdate = "Apr-8-2023";
+                            // console.log(shortdate);
+                            //let month = date.getMonth();
+
+
+                            // This arrangement can be altered based on how we want the date's format to appear.
+                            let currentDatetwo<?php echo $value['newpay_id'];?> =
+                                `${Monthnametwo<?php echo $value['newpay_id'];?>}-${daytwo<?php echo $value['newpay_id'];?>}-${yeartwo<?php echo $value['newpay_id'];?>}`;
+                            let checkBalValuetwo<?php echo $value['newpay_id'];?> =
+                                checkBaltwo<?php echo $value['newpay_id'];?>;
+                            //console.log(currentDate);
+
+
+
+
+
+                            if (checkBalValuetwo<?php echo $value['newpay_id'];?> > 2 &&
+                                currentDatetwo<?php echo $value['newpay_id'];?> >=
+                                increaseDatetwo<?php echo $value['newpay_id'];?>
+                            ) {
+                                let priceformtwo<?php echo $value['newpay_id'];?> = document.querySelector(
+                                    '#priceform2');
+
+                                function increasePricetwo<?php echo $value['newpay_id'];?>() {
+                                    let xhr = new XMLHttpRequest(); //creating XML Object
+                                    xhr.open("POST", "increase2.php", true);
+                                    xhr.onload = () => {
+                                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                                            if (xhr.status === 200) {
+                                                let data = xhr.response;
+                                                console.log(data);
+                                            }
+                                        }
+                                    }
+                                    // we have to send the information through ajax to php
+                                    let formData = new FormData(
+                                        priceformtwo<?php echo $value['newpay_id'];?>
+                                    ); //creating new formData Object
+
+                                    xhr.send(formData);
+                                }
+
+
+                                setTimeout(() => {
+                                    increasePricetwo<?php echo $value['newpay_id'];?>();
+                                }, 3000);
+
+
+                            }
+
+                            //console.log(timeleft);
+                            </script>
+                            <?php } else {?>
                             <div class="cartbutton">&#8358;<?php 
-             $unitprice = $value['sub_price'];
-             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                    $unitprice = $value['sub_price'];
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
-                                 echo round($unitprice);
+                                 echo $unitprice;
                              }
-             ?> &nbsp;<span><?php echo $value['sub_period']?></span></div>
+                      ?> &nbsp;<span><?php echo $value['sub_period']?></span></div>
+                            <?php }?>
 
-                            <?php } else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
+                            <?php } else if($value['balance'] < "2" && $value['payment_method'] == "Subscription" && $value['failed_charges'] < "2"){ ?>
+                            <div class="cartbutton" style="font-size: 12px;"><?php 
+                      echo "Payment Completed";
+             ?> &nbsp;</div>
+                            <?php  }
+                            
+                            else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
              ?> &nbsp;</div>
@@ -888,42 +997,96 @@ if(!isset($_SESSION['unique_id'])){
                                     style="color: #7e252b;">Pay Up</a>
                                 <input type="hidden" id="date" value="<?php echo $value['sub_period'];?>" />
                                 <input type="hidden" value="<?php echo $value['balance'];?>" id="check">
+                                <input type="hidden" value="<?php echo $value['increase_date'];?>" id="increasedate">
                                 <form id="priceform">
                                     <input type="hidden" value="<?php 
-                          $increase = 2 / 100 * $value['sub_price'];
+                          $increase = $value['increase_rate'] / 100 * $value['sub_price'];
                           $priceincrement = ($increase + $value['sub_price']) * $value['period_num'];
                         echo $priceincrement;
                         ?>" id="increase" name="increase">
                                     <input type="hidden" value="<?php 
-                          $increase = 2 / 100 * $value['sub_price'];
+                          $increase = $value['increase_rate'] / 100 * $value['sub_price'];
                           $newsubprice = $increase + $value['sub_price'];
                         echo $newsubprice;
-                        ?>" id="increase" name="newsubprice">
+                        ?>" id="increase2" name="newsubprice">
                                     <input type="hidden" name="customer" value="<?php echo $value['customer_id'];?>" />
                                     <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
                                     <input type="hidden" value="<?php echo $value['newpay_id'];?>" name="newpayid">
+                                    <input type="hidden" value="<?php 
+                                        $dt = strtotime($value['increase_date']); 
+                                        echo date("M-d-Y", strtotime("+1 month", $dt))
+                                        ?>" name="increasedate">
                                 </form>
+                                <?php 
+                                // $user = new User;
+                                // $increase = 2 / 100 * $value['sub_price'];
+                                // $inc = ($increase + $value['sub_price']) * $value['period_num'];
+                                // $increase = 2 / 100 * $value['sub_price'];
+                                // $newsubprice = $increase + $value['sub_price'];
+                                // $customer = $value['customer_id'];
+                                // $product = $value['product_id'];
+                                // $newpayid = $value['newpay_id'];
+                                // $paymentdate = "Apr-29-2023";
+                                // $balance = $value['balance'];
+                                // $completionDate = $value['sub_period'];
+                                // $firstDay = "Apr-29-2023";
+                                // //$firstDay = date('M-d-Y', strtotime('+1 month'));
+                                // $user = new User;
+                                // if($paymentdate > $completionDate && $balance > "2" && $paymentdate == $firstDay){
+                                // $increase = $user->updatePricePayment($customer,$product,$inc,$newpayid,$newsubprice);
+                                ?>
                                 <script>
-                                let dateInput<?php echo $value['product_id'];?> = document.querySelector('#date');
-                                let checkBal<?php echo $value['product_id'];?> = document.querySelector('#check');
-                                var countDownDate<?php echo $value['product_id'];?> = new Date(
-                                    dateInput<?php echo $value['product_id'];?>.value).getTime();
-                                var now<?php echo $value['product_id'];?> = new Date().getTime();
-                                var timeleft<?php echo $value['product_id'];?> =
-                                    countDownDate<?php echo $value['product_id'];?> -
-                                    now<?php echo $value['product_id'];?>;
+                                let dateInput<?php echo $value['newpay_id'];?> = document.querySelector('#date')
+                                    .value;
+                                let checkBal<?php echo $value['newpay_id'];?> = document.querySelector('#check')
+                                    .value;
+                                let increaseDate<?php echo $value['newpay_id'];?> = document.querySelector(
+                                        '#increasedate')
+                                    .value;
 
-                                var days<?php echo $value['product_id'];?> = Math.floor(
-                                    timeleft<?php echo $value['product_id'];?> /
-                                    (1000 * 60 * 60 * 24));
-                                //console.log(timeleft);
-                                if (timeleft<?php echo $value['product_id'];?> < 0 &&
-                                    checkBal<?php echo $value['product_id'];?>
-                                    .value != 0) {
-                                    let priceform = document.querySelector('#priceform');
+                                var now<?php echo $value['newpay_id'];?> = new Date().getTime();
 
 
-                                    function increasePrice<?php echo $value['product_id'];?>() {
+
+                                // var date = new Date();
+                                // var firstDay = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+                                // let firstDate = `${firstDay.toLocaleString('default', {
+                                //         month: 'short'
+                                //     })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+                                // let firstDate = "Apr-8-2023";
+                                //console.log(firstDate);
+                                var date = new Date();
+                                let day<?php echo $value['newpay_id'];?> = date.getDate();
+                                let Monthname<?php echo $value['newpay_id'];?> = date.toLocaleString('default', {
+                                    month: 'short'
+                                });
+                                let year<?php echo $value['newpay_id'];?> = date.getFullYear();
+                                let shortdate<?php echo $value['newpay_id'];?> =
+                                    `${Monthname<?php echo $value['newpay_id'];?>}-${day<?php echo $value['newpay_id'];?>}-${year<?php echo $value['newpay_id'];?>}`;
+                                // let shortdate = "Apr-8-2023";
+                                // console.log(shortdate);
+                                //let month = date.getMonth();
+
+
+                                // This arrangement can be altered based on how we want the date's format to appear.
+                                let currentDate<?php echo $value['newpay_id'];?> =
+                                    `${Monthname<?php echo $value['newpay_id'];?>}-${day<?php echo $value['newpay_id'];?>}-${year<?php echo $value['newpay_id'];?>}`;
+                                let completionDate<?php echo $value['newpay_id'];?> =
+                                    dateInput<?php echo $value['newpay_id'];?>;
+                                let checkBalValue<?php echo $value['newpay_id'];?> =
+                                    checkBal<?php echo $value['newpay_id'];?>;
+                                //console.log(currentDate);
+
+
+                                if (currentDate<?php echo $value['newpay_id'];?> >
+                                    completionDate<?php echo $value['newpay_id'];?> &&
+                                    checkBalValue<?php echo $value['newpay_id'];?> > 2 &&
+                                    currentDate<?php echo $value['newpay_id'];?> >=
+                                    increaseDate<?php echo $value['newpay_id'];?>) {
+                                    let priceform<?php echo $value['newpay_id'];?> = document.querySelector(
+                                        '#priceform');
+
+                                    function increasePrice<?php echo $value['newpay_id'];?>() {
                                         let xhr = new XMLHttpRequest(); //creating XML Object
                                         xhr.open("POST", "increase.php", true);
                                         xhr.onload = () => {
@@ -935,16 +1098,22 @@ if(!isset($_SESSION['unique_id'])){
                                             }
                                         }
                                         // we have to send the information through ajax to php
-                                        let formData = new FormData(priceform); //creating new formData Object
+                                        let formData = new FormData(
+                                            priceform<?php echo $value['newpay_id'];?>
+                                        ); //creating new formData Object
 
                                         xhr.send(formData);
                                     }
-                                    // 2592000
 
-                                    setInterval(() => {
-                                        increasePrice<?php echo $value['product_id'];?>();
-                                    }, 2592000000);
+
+                                    setTimeout(() => {
+                                        increasePrice<?php echo $value['newpay_id'];?>();
+                                    }, 3000);
+
+
                                 }
+
+                                //console.log(timeleft);
                                 </script>
                                 <?php    } else {
              ?>
@@ -987,6 +1156,17 @@ if(!isset($_SESSION['unique_id'])){
                             <?php if($value['payment_method'] == "Subscription" || $value['payment_method'] == "NewPayment"){  ?>
                             <p><span>Chosen Plan:</span>&nbsp;<span style="text-transform: capitalize;"><?php 
                         echo $value['product_plan'];         
+                    ?></span></p>
+                            <?php }?>
+                            <?php if($value['payment_method'] == "Subscription" && $value['failed_charges'] > "2"){  ?>
+                            <p><span>Failed Charges:</span>&nbsp;&#8358;<span><?php 
+                        $unprice = $value['failed_charges'];
+                        if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
+                                          echo number_format($unprice);
+                                        }  else {
+                                            echo number_format($unprice);
+                                        }
+                                        
                     ?></span></p>
                             <?php }?>
                             <p><span>Unit:</span>&nbsp;<span style="text-transform: capitalize;"><?php 

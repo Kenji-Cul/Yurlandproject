@@ -40,6 +40,7 @@ if(isset($_POST["submit"])){
     $paymenttime = date("h:i a");
     $paymentdate = date("M-d-Y");
     $paymentmethod = "Outright";
+    $newpayid = rand();
     $payee = $selectuser['first_name']." ".$selectuser['last_name'];
     if($selectuser['referral_id'] != "Yurland"){
         $agent = $user->selectAgentRef($selectuser['referral_id']);
@@ -181,6 +182,12 @@ if(isset($_POST["submit"])){
                 "display_name" => "Allocation Fee",
                 "variable_name" => "allocation fee",
                 "value" =>  $allocationfee
+            ],
+
+            [
+                "display_name" => "NewPay Id",
+                "variable_name" => "NewPay Id",
+                "value" =>  $newpayid
             ],
 
           ]

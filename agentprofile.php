@@ -77,7 +77,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     .details {
-        width: 140px !important;
+        width: 160px !important;
         position: relative;
     }
 
@@ -380,6 +380,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
     }
 
     @media only screen and (max-width: 1300px) {
+        .details .date {
+            font-size: 9px !important;
+        }
+
         .payee {
             width: 100px;
             display: flex;
@@ -452,6 +456,10 @@ if(!isset($_SESSION['uniqueagent_id'])){
             padding: 1em 2em;
             box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
             width: 80%;
+        }
+
+        .transaction-details .date {
+            font-size: 11px !important;
         }
 
         .detail3 {
@@ -817,15 +825,16 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     
               
             ?>
-            <div class="transaction-details">
+            <div class="transaction-details" <?php if($value['sub_status'] == "Failed"){?>
+                style="border: 2px solid red;" <?php }?>>
                 <div class="radius">
                     <img src="landimage/<?php echo $value['product_image'];?>" alt="">
                 </div>
                 <div class="details">
                     <p class="pname"><?php echo $value['product_name'];?></p>
                     <div class="inner-detail">
-                        <div class="date">
-                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        <div class="date" style="font-size: 14px;">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
                         </div>
                     </div>
                 </div>
@@ -839,14 +848,22 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
-                <div class="price-detail">&#8358;<?php 
+                <?php  if($value['payment_status'] == "Deleted"){ ?>
+                <div class="detail-four">
+                    <div class="detail"
+                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <p style="font-size: 14px; color: #fff;">Deleted</p>
+                    </div>
+                </div>
+                <?php } else {?>
+                <div class="price-detail" <?php if($value['sub_status'] == "Failed"){?> style="color: red;" <?php }?>>&#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
                                 echo round($unitprice);
                              }
-            ?>
+            ?><?php if($value['sub_status'] == "Failed") { echo "<span style='font-size: 12px;'>(Failed)</span>";}?>
                     <div class="payee">
                         <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
                         <p class="payee-name"
@@ -863,6 +880,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                         </p>
                     </div>
                 </div>
+                <?php }?>
             </div>
 
             <?php }}?>
@@ -923,26 +941,6 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
     <!--========== SWIPER JS ============  -->
     <script>
-    let swiperVerse = new Swiper(".swiper-counter", {
-        loop: true,
-        spaceBetween: 20,
-        slidesPerView: "auto",
-        grabCursor: true,
-        autoplay: true,
-        pagination: {
-            el: ".swiper-pagination",
-            dynamicBullets: true,
-            autoplay: true,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 3,
-            },
-            1024: {
-                spaceBetween: 20,
-            },
-        },
-    });
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');
@@ -1015,6 +1013,27 @@ if(!isset($_SESSION['uniqueagent_id'])){
             `;
         };
     }
+
+    let swiperVerse = new Swiper(".swiper-counter", {
+        loop: true,
+        spaceBetween: 20,
+        slidesPerView: "auto",
+        grabCursor: true,
+        autoplay: true,
+        pagination: {
+            el: ".swiper-pagination",
+            dynamicBullets: true,
+            autoplay: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                spaceBetween: 20,
+            },
+        },
+    });
     </script>
 </body>
 

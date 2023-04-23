@@ -137,7 +137,7 @@ include_once "projectlog.php";
     .success {
         position: absolute;
         left: 50%;
-        top: 40em;
+        top: 50em;
         transform: translate(-50%, -50%);
         height: 20%;
 
@@ -370,7 +370,7 @@ include_once "projectlog.php";
 
         .success {
             position: absolute;
-            top: 44em;
+            top: 47em;
             height: 20%;
         }
 
@@ -822,6 +822,7 @@ include_once "projectlog.php";
                         <th>Amount Paid</th>
                         <th>Amount Earned</th>
                         <th>Balance Earning</th>
+                        <th>Payment Date</th>
                     </tr>
                 </thead>
                 <tbody class="table-data">
@@ -829,20 +830,28 @@ include_once "projectlog.php";
                     <?php 
     $user = new User;
    
-    $allusers = $user->selectAllUsers2();
-    foreach ($allusers as $key => $value) {
-        $agentpercent = $value['earning_percentage'];
+    $allusers = $user->selectAllUsers();
+    
+        $agentid = [];
+                 foreach ($allusers as $key => $value3) { 
+                    array_push($agentid,$value3['unique_id']);
+                 }
+                 $agentid2 = array_unique($agentid);
+                 $agentid3 = [];
+                 foreach ($agentid2 as $key => $value2) { 
+                        $agentearnings = $user->selectAgentHistory($value2);
+                        foreach ($agentearnings as $key => $value) {
+                            $newuser = $user->selectUser($value['earner_id']);
     ?>
-                    <?php if($value['user_date'] <= $value['payment_date']){ ?>
+
                     <tr>
-                        <td><span><?php echo $value['first_name']; ?></span>&nbsp;<span><?php echo $value['last_name']; ?></span>
+                        <td><span><?php echo $value['earnee']; ?></span>
                         </td>
                         <td>User</td>
-                        <td><?php echo $value['bank_name'];?></td>
-                        <td><?php echo $value['account_number'];?></td>
+                        <td><?php echo $newuser['bank_name'];?></td>
+                        <td><?php echo $newuser['account_number'];?></td>
                         <td>&#8358;<?php 
-                    $earnedprice = $value['product_price'];
-                    $unitprice = $earnedprice;
+                    $unitprice = $value['product_price'];
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                       echo number_format(round($unitprice));
                                     } else {
@@ -850,25 +859,28 @@ include_once "projectlog.php";
                                     }
                                 
                     ?></td>
-                        <td>&#8358;<?php $percent = $value['earning_percentage'];
-                    $earnedprice = $percent / 100 * $value['product_price'];
-                    $unitprice = $earnedprice;
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                      echo number_format(round($unitprice));
-                                    } else {
-                                        echo round($unitprice);
-                                    }
+                        <td>&#8358;
+                            <?php
+                    $earnedprice = $value['earned_amount'];
+                    $unitprice2 = $earnedprice;
+                    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                        echo number_format(round($unitprice2));
+                      } else {
+                          echo round($unitprice2);
+                      }
+                  
                                 
-                    ?></td>
+                    ?>
+                        </td>
                         <td>&#8358;<?php 
-                 $percent = $value['earning_percentage'];
-                 $earnedprice = $percent / 100 * $value['product_price'];
+                 $earnedprice = $value['earned_amount'];
                     $unitprice = $value['product_price'] - $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                       echo number_format(round($unitprice));
                                     } else {
                                         echo round($unitprice); }   
                     ?></td>
+                        <td><?php echo $value['payment_date'];?></td>
                     </tr>
                     <?php }}?>
                 </tbody>
@@ -968,23 +980,28 @@ include_once "projectlog.php";
 
 
                 <?php 
-                 $allusers = $user->selectAllUsers2();
-                 foreach ($allusers as $key => $value3) {
-                     $agentpercent = $value3['earning_percentage'];
-  
+                 $allusers = $user->selectAllUsers();
+                 $agentid = [];
+                 foreach ($allusers as $key => $value3) { 
+                    array_push($agentid,$value3['unique_id']);
+                 }
+                 $agentid2 = array_unique($agentid);
+                 $agentid3 = [];
+                 foreach ($agentid2 as $key => $value2) { 
+                        $agentearnings = $user->selectAgentHistory($value2);
+                        foreach ($agentearnings as $key => $value) {
+                            $earnedprice = $value['earned_amount'];
+                            array_push($agentid3,$value['earner_id']);
           
     ?>
-                <?php if($value3['user_date'] <= $value3['payment_date']){
-                if($value3['earning_percentage'] != ""){  ?>
+
 
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
                         <p style="text-transform: uppercase;">
-                            <span
-                                style="color: #000000!important; font-size: 16px;"><?php echo $value3['first_name']." ".$value3['last_name']?>
-                                earned &#8358;<?php $percent = $value3['earning_percentage'];
-                    $earnedprice = $percent / 100 * $value3['product_price'];
+                            <span style="color: #000000!important; font-size: 16px;"><?php echo $value['earnee'];?>
+                                earned &#8358;<?php
                     $unitprice = $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                       echo number_format(round($unitprice));
@@ -999,37 +1016,36 @@ include_once "projectlog.php";
                             <p class="payee-tag" style="color: #808080;">
                                 <?php 
                                 
-                                if($value3['payee'] == $value3['first_name']." ".$value3['last_name'] ){ 
-                                echo "".$value3['first_name']." ".$value3['last_name']." Paid:"; 
+                                if($value['payee'] == $value['earnee']){ 
+                                    echo $value['earnee']." Paid:"; 
                             }   
                             else {
                                     echo "Customer Paid:"; }
                                  ?></p>&nbsp;
                             <p class="payee-name"
                                 style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                &#8358;<?php $unitprice = $value3['product_price']; 
+                                &#8358;<?php $unitprice = $value['product_price']; 
                                   if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                     echo number_format(round($unitprice));
                                   } else {
                                       echo round($unitprice);
                                   }
-                                ?> for <?php echo $value3['product_name'];?>
+                                ?> for <?php echo $value['product_name'];?>
                             </p>
                         </div>
                         <div class="inner-detail">
                             <div class="date">
-                                <span style="font-size: 13px;"><?php echo $value3['payment_month'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value3['payment_day'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value3['payment_year'];?>
+                                <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php } }?>
 
-                <?php }?>
 
-                <?php if(empty($allusers)){?>
+
+                <?php $agentid4 = array_unique($agentid3);
+                if(empty($agentid4)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
                     <p>There are no earnings yet!</p>
@@ -1056,16 +1072,89 @@ include_once "projectlog.php";
                 document.querySelector('.search-form').style.display = "block";
                 document.querySelector('.search-form2').style.display = "none";
                 document.querySelector('.search-form3').style.display = "none";
+
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadearnname&user=customer`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
             }
             if (element.value == "Date") {
                 document.querySelector('.search-form2').style.display = "block";
                 document.querySelector('.search-form3').style.display = "none";
                 document.querySelector('.search-form').style.display = "none";
+
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadearndate&data=${valuediv.innerHTML}&user=customer`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
             }
             if (element.value == "Range") {
                 document.querySelector('.search-form3').style.display = "block";
                 document.querySelector('.search-form').style.display = "none";
                 document.querySelector('.search-form2').style.display = "none";
+
+
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadearnrange&data=${valuediv2.innerHTML}&user=customer`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
             }
         }
     });

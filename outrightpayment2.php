@@ -49,6 +49,7 @@ if(isset($_POST["submit"])){
     $paymenttime = date("h:i a");
     $paymentdate = date("M-d-Y");
     $paymentmethod = "Outright";
+    $newpayid = rand();
     if(isset($_SESSION['uniqueagent_id'])){
         $payee = $selectagent['agent_name'];
         $agentid = $selectagent['uniqueagent_id'];
@@ -56,13 +57,15 @@ if(isset($_POST["submit"])){
 
     if(isset($_SESSION['uniquesubadmin_id'])){
         $payee = $subadmin['subadmin_name'];
-        $agentid = $subadmin['unique_id'];
+        $agentid = "noagent";
     }
 
     if(isset($_SESSION['uniquesupadmin_id'])){
         $payee = $subadmin['super_adminname'];
-        $agentid = $subadmin['unique_id'];
+        $agentid = "noagent";
     }
+
+   
    
 
 
@@ -189,6 +192,12 @@ if(isset($_POST["submit"])){
                 "display_name" => "Allocation Fee",
                 "variable_name" => "allocation fee",
                 "value" =>  $allocationfee
+            ],
+
+            [
+                "display_name" => "NewPay Id",
+                "variable_name" => "NewPay Id",
+                "value" =>  $newpayid
             ],
 
 

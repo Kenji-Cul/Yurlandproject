@@ -25,10 +25,7 @@ $selectuser = $user->selectUser($_SESSION['unique_id']);
 
 // Integrate Paystack
 if(isset($_POST["submit"])){
-    
-  
-       
-   
+
     if($_POST['period'] > $_POST['dayno']){
         $error = "Limit Reached";
         header("Location: verify3.php?error=".$error."");
@@ -46,22 +43,27 @@ if(isset($_POST["submit"])){
         $realprice = $_GET['tot'] * $_POST['period'] / $value['onemonth_period'];
         $subprice = $_GET['tot'] / $value['onemonth_period'];
         $limit = $value['onemonth_period'];
+        $increaserate = $value['onemonth_increaserate'];
         } else if($_GET['data'] == "threemonths"){
         $realprice =$_GET['tot'] * $_POST['period'] / $value['threemonth_period'];
         $subprice = $_GET['tot'] / $value['threemonth_period'];
         $limit = $value['threemonth_period'];
+        $increaserate = $value['threemonth_increaserate'];
         } else if($_GET['data'] == "sixmonths"){
         $realprice = $_GET['tot'] * $_POST['period'] / $value['sixmonth_period'];
         $subprice = $_GET['tot'] / $value['sixmonth_period'];
         $limit = $value['sixmonth_period'];
+        $increaserate = $value['sixmonth_increaserate'];
         } else if($_GET['data'] == "twelvemonths"){
         $realprice = $_GET['tot'] * $_POST['period'] / $value['twelvemonth_period'];
-        $subprice = $_GET['tot'] / $ $value['twelvemonth_period'];
+        $subprice = $_GET['tot'] / $value['twelvemonth_period'];
         $limit = $value['twelvemonth_period'];
+        $increaserate = $value['twelvemonth_increaserate'];
         } else if($_GET['data'] == "eighteenmonths"){
         $realprice = $_GET['tot'] * $_POST['period'] / $value['eighteen_period'];
         $subprice = $_GET['tot'] / $value['eighteen_period'];
         $limit = $value['eighteen_period'];
+        $increaserate = $value['eighteen_increaserate'];
         }
     }
 
@@ -84,7 +86,18 @@ if(isset($_POST["submit"])){
        $period = $_GET['period'];
        $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_SESSION['unique_id'],$_GET['newpayid']);
        $subperiod = $landuse['period_num'] - $_GET['subperiod'];
-       
+       $firstDate = $landuse['increase_date'];
+       if($landuse['product_plan'] == "onemonth"){
+        $increaserate = $value['onemonth_increaserate'];
+        } else if($landuse['product_plan'] == "threemonths"){
+        $increaserate = $value['threemonth_increaserate'];
+        } else if($landuse['product_plan'] == "sixmonths"){
+        $increaserate = $value['sixmonth_increaserate'];
+        } else if($landuse['product_plan'] == "twelvemonths"){
+        $increaserate = $value['twelvemonth_increaserate'];
+        } else if($landuse['product_plan'] == "eighteenmonths"){
+        $increaserate = $value['eighteen_increaserate'];
+        }
     } else {
         $time = $limit - intval($_POST['period']);
     $date = date("y-m-d");
@@ -93,6 +106,7 @@ if(isset($_POST["submit"])){
     $period = date_format($time2, "M-d-Y");
     $subperiod = $limit - intval($_POST['period']);
     $chosenplan = $_GET['data'];
+    $firstDate = $_POST['planindicator'];
     }
     
     $product_name = $value['product_name'];
@@ -310,6 +324,19 @@ if(isset($_POST["submit"])){
             ],
 
             
+            [
+                "display_name" => "First Date",
+                "variable_name" => "First Date",
+                "value" => $firstDate
+            ],
+
+            [
+                "display_name" => "Increase Rate",
+                "variable_name" => "Increase Rate",
+                "value" => $increaserate
+            ],
+
+            
 
          
            
@@ -411,22 +438,27 @@ if(empty($checklastpayment)){
         $realprice = $_GET['tot'] * $_POST['period'] / $value['onemonth_period'];
         $subprice = $_GET['tot'] / $value['onemonth_period'];
         $limit = $value['onemonth_period'];
+        $increaserate = $value['onemonth_increaserate'];
         } else if($_GET['data'] == "threemonths"){
         $realprice =$_GET['tot'] * $_POST['period'] / $value['threemonth_period'];
         $subprice = $_GET['tot'] / $value['threemonth_period'];
         $limit = $value['threemonth_period'];
+        $increaserate = $value['threemonth_increaserate'];
         } else if($_GET['data'] == "sixmonths"){
         $realprice = $_GET['tot'] * $_POST['period'] / $value['sixmonth_period'];
         $subprice = $_GET['tot'] / $value['sixmonth_period'];
         $limit = $value['sixmonth_period'];
+        $increaserate = $value['sixmonth_increaserate'];
         } else if($_GET['data'] == "twelvemonths"){
         $realprice = $_GET['tot'] * $_POST['period'] / $value['twelvemonth_period'];
-        $subprice = $_GET['tot'] / $ $value['twelvemonth_period'];
+        $subprice = $_GET['tot'] / $value['twelvemonth_period'];
         $limit = $value['twelvemonth_period'];
+        $increaserate = $value['twelvemonth_increaserate'];
         } else if($_GET['data'] == "eighteenmonths"){
         $realprice = $_GET['tot'] * $_POST['period'] / $value['eighteen_period'];
         $subprice = $_GET['tot'] / $value['eighteen_period'];
         $limit = $value['eighteen_period'];
+        $increaserate = $value['eighteen_increaserate'];
         }
     }
 
@@ -435,7 +467,7 @@ if(empty($checklastpayment)){
         $newpay = $_GET['newpay'];
         $realprice = round($newpay);
     } else {
-        $newpay = $realprice;
+        $newpay = round($realprice);
     }
    
     $newprice = $price - $realprice;
@@ -449,7 +481,18 @@ if(empty($checklastpayment)){
        $landuse = $user->selectProductOldPayment($_GET['uniqueid'],$_SESSION['unique_id'],$_GET['newpayid']);
        
        $subperiod = $landuse['period_num'] - $_GET['subperiod'];
-       
+       $firstDate = $landuse['increase_date'];
+       if($landuse['product_plan'] == "onemonth"){
+        $increaserate = $value['onemonth_increaserate'];
+        } else if($landuse['product_plan'] == "threemonths"){
+        $increaserate = $value['threemonth_increaserate'];
+        } else if($landuse['product_plan'] == "sixmonths"){
+        $increaserate = $value['sixmonth_increaserate'];
+        } else if($landuse['product_plan'] == "twelvemonths"){
+        $increaserate = $value['twelvemonth_increaserate'];
+        } else if($landuse['product_plan'] == "eighteenmonths"){
+        $increaserate = $value['eighteen_increaserate'];
+        }
     } else {
         $time = $limit - intval($_POST['period']);
     $date = date("y-m-d");
@@ -458,6 +501,7 @@ if(empty($checklastpayment)){
     $period = date_format($time2, "M-d-Y");
     $subperiod = $limit - intval($_POST['period']);
     $chosenplan = $_GET['data'];
+    $firstDate = $_POST['planindicator'];
     }
     
     $product_name = $value['product_name'];
@@ -672,13 +716,17 @@ if(empty($checklastpayment)){
                 "value" => $subprice
             ],
 
-           
+            [
+                "display_name" => "First Date",
+                "variable_name" => "First Date",
+                "value" => $firstDate
+            ],
 
-
-
-         
-           
-
+            [
+                "display_name" => "Increase Rate",
+                "variable_name" => "Increase Rate",
+                "value" => $increaserate
+            ],
           ]
        ]
     ];
@@ -726,6 +774,11 @@ if(empty($checklastpayment)){
         $transaction = json_decode($result);
       //Automatically redirect customers to the payment page
         header("Location: ".$transaction->data->authorization_url);
+    }
+
+    else {
+        $error = "You are not connected to the internet";
+        header("Location: verify3.php?error=".$error."");
     }
 }
     
@@ -1350,6 +1403,7 @@ if(empty($checklastpayment)){
 
                             </div>
                             <?php }?>
+                            <input type="hidden" name="planindicator" value="" id="plan">
 
 
                             <div class="btn-container">
@@ -1372,6 +1426,45 @@ if(empty($checklastpayment)){
 
     <script src="js/main.js"></script>
     <script>
+    const params = new URLSearchParams(window.location.search)
+
+    let planindicator = document.querySelector('#plan');
+
+    var date = new Date();
+
+    const plan = params.get('data')
+    if (plan == "onemonth") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                                month: 'short'
+                            })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    } else if (plan == "threemonths") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 3, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                                month: 'short'
+                            })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    } else if (plan == "sixmonths") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 6, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                                month: 'short'
+                            })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    } else if (plan == "twelvemonths") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 12, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                                month: 'short'
+                            })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    } else if (plan == "eighteenmonths") {
+        var firstDay = new Date(date.getFullYear(), date.getMonth() + 18, 1);
+        let firstDate = `${firstDay.toLocaleString('default', {
+                                month: 'short'
+                            })}-${firstDay.getDate()}-${firstDay.getFullYear()}`;
+        planindicator.value = firstDate;
+    }
+
     <?php if(!isset($_GET['remprice'])){  ?>
     let inputprice = document.querySelector('#period');
     let dailyprice = document.querySelector('#dailyprice');

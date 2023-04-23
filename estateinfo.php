@@ -607,7 +607,11 @@ include "projectlog.php";
             <div class="info-details">
                 <div class="info1">
                     <img src="landimage/<?php if(isset($value['product_image'])){
-                echo $value['image_one'];
+                        if(!empty($value['image_one'])){
+                            echo $value['image_one'];
+                        } else {
+                            echo $value['product_image'];
+                        }
             }?>" alt="" />
                 </div>
                 <div class="info2">
@@ -766,7 +770,7 @@ include "projectlog.php";
 
     <input type="hidden" name="" id="unitnum" value=<?php echo $value['product_unit'];?>>
     <?php 
-    if(isset($_GET['remprice'])){
+    if(isset($_GET['remprice']) && $_GET['payment'] == "newpayment"){
         if(isset($_SESSION['unique_id'])){
                $landuse = $land->selectProductPayment($value['unique_id'],$_SESSION['unique_id'],$_GET['idtwo']);
         }
@@ -812,7 +816,9 @@ include "projectlog.php";
             <div class="estateinfo">
                 <div class="input-div">
                     <input type="number" placeholder="Input number of units and click outside the box when done"
-                        id="unit" name="unit" />
+                        id="unit" name="unit" pattern="[0-9]" onkeydown="if(event.key==='.'){event.preventDefault();}"
+                        onpaste="let pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} "
+                        oninput="this.value=(parseInt(this.value)||'')" />
                 </div>
             </div>
             <p class="error">Please fill </p>
@@ -830,9 +836,11 @@ include "projectlog.php";
             <input type="hidden" name="tot" value="<?php if(isset($_GET['remprice'])){
                 echo $_GET['remprice'];
             }?>" id="tot">
-            <?php if(isset($_GET['remprice'])){?>
+            <?php if(isset($_GET['remprice']) && $_GET['payment'] == "newpayment"){?>
             <p>Remaining Price:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
 
+            <?php }else if(isset($_GET['remprice']) && $_GET['payment'] == "failedpayment") {?>
+            <p>Failed Charges:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
             <?php }else {?>
 
             <p>Total Cost:&nbsp;&nbsp;&nbsp;&#8358;<span id="numformat"></span></p>
@@ -866,7 +874,9 @@ include "projectlog.php";
                     <?php }}?>
 
                     <input type="number" style="margin-top: 2em;" placeholder="Input number of days" id="period"
-                        name="period" />
+                        name="period" pattern="[0-9]" onkeydown="if(event.key==='.'){event.preventDefault();}"
+                        onpaste="let pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} "
+                        oninput="this.value=(parseInt(this.value)||'')" />
 
                 </div>
             </div>
@@ -881,6 +891,23 @@ include "projectlog.php";
                 <span class="span">Continue</span>
             </div>
         </form>
+
+        <div action="" id="failedpaymentform">
+            <div class="estateinfo">
+                <div class="input-div">
+                </div>
+            </div>
+
+            <p class="error2">Please fill </p>
+            <div class="btn-container">
+                <button class="estate_page_button" type="submit">Continue</p></button>
+            </div>
+
+            <div style="display: none">
+                <img src="images/loading.svg" alt="" class="loading-img" />
+                <span class="span">Continue</span>
+            </div>
+        </div>
     </div>
 
 
@@ -1322,11 +1349,13 @@ include "projectlog.php";
 
 
 
+
     let form1 = document.querySelector('.first-section');
     let form2 = document.querySelector('.second-section');
     let form3 = document.querySelector('.thirdsection');
     let form4 = document.querySelector('.fourthsection');
     let form5 = document.querySelector('.fifthsection');
+    let form6 = document.querySelector('#failedpaymentform');
     let totalInput = document.querySelector('#tot');
     let unitNum = document.querySelector("#unitnum")
     let Successdiv = document.querySelector(".success")
@@ -1349,9 +1378,11 @@ include "projectlog.php";
                         let price = unitInput.value * realprice;
                         if (params.get('payment')) {
                             form1.style.display = "none";
+                            form6.style.display = "none";
                             form3.style.display = "block";
                         } else {
                             form1.style.display = "none";
+                            form6.style.display = "none";
                             form2.style.display = "block";
                         }
                         let first = parseInt(unitInput.value);
@@ -1411,6 +1442,13 @@ include "projectlog.php";
 
     if (params.get('remprice')) {
         form1.style.display = "none";
+
+        if (params.get('payment') == "failedpayment") {
+            document.querySelector('#newpaymentform').style.display = "none";
+            document.querySelector('#failedpaymentform').style.display = "block";
+        } else {
+            form6.style.display = "none";
+        }
         form3.style.display = "block";
         formatnum.innerHTML = new Intl.NumberFormat().format(params.get('remprice'));
     }
@@ -1445,10 +1483,34 @@ include "projectlog.php";
         //     checkNoOfDays();
         // }
 
+        if (params.get('payment') == "failedpayment") {
+            const failedpayform = document.querySelector('#failedpaymentform');
+            const failedpaybtn = document.querySelector('#failedpaymentform .estate_page_button');
+
+
+            function failedPaymentMode() {
+                <?php if(isset($_SESSION['unique_id'])){?>
+                location.href =
+                    `failedpayment.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${params.get('remprice')}&pice=029283837iiagjfauhuiyipalaknlnf&con=9298383737&newpayid=${params.get('idtwo')}`;
+                <?php }?>
+                <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
+                location.href =
+                    `failedpayment2.php?uniqueid=${unique}&tech=91938udjd992992929&tot=${params.get('remprice')}&pice=029283837iiagjfauhuiyipalaknlnf&con=9298383737&newpayid=${params.get('idtwo')}&user=<?php echo $_GET['unique'];?>`;
+                <?php }?>
+            }
+
+
+            failedpaybtn.onclick = () => {
+                failedPaymentMode();
+            }
+
+        }
+
         let payInput = document.querySelector("#newpay")
         let remInput = document.querySelector("#remunit")
         const newpayform = document.querySelector('#newpaymentform');
         const newpaybtn = document.querySelector('#newpaymentform .estate_page_button');
+
 
         newpayform.onsubmit = (e) => {
             e.preventDefault();
@@ -1934,9 +1996,11 @@ include "projectlog.php";
                         let price = unitInput.value * realprice;
                         if (params.get('payment')) {
                             form1.style.display = "none";
+                            form6.style.display = "none";
                             form3.style.display = "block";
                         } else {
                             form1.style.display = "none";
+                            form6.style.display = "none";
                             document.querySelector('.fifthsection .payment-mode').style.display = "block";
                             form5.style.display = "block";
                             let purpose = document.getElementsByName("mode");

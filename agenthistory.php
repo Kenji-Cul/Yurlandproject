@@ -16,6 +16,7 @@ if(!isset($_GET['unique'])){
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
@@ -779,6 +780,22 @@ if(!isset($_GET['unique'])){
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -849,6 +866,13 @@ if(!isset($_GET['unique'])){
                             <li class="links">
                                 <a href="totaltransactions.php"><img src="images/updown.svg" /> </a>
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
                             </li>
                         </div>
 
@@ -968,26 +992,88 @@ if(!isset($_GET['unique'])){
             </div>
 
 
+            <form action="" class="download-form">
+                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
+                        id="export"></i></button>
+            </form>
+
+            <table id="user-data" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Bank Name</th>
+                        <th>Account Number</th>
+                        <th>Amount Paid</th>
+                        <th>Amount Earned</th>
+                        <th>Balance Earning</th>
+                    </tr>
+                </thead>
+                <tbody class="table-data">
+
+                    <?php 
+    $user = new User;
+   
+    $earn = $user->selectAgentHistory($_GET['unique']);
+    if(!empty($earn)){
+        foreach($earn as $key => $value){
+            $newuser = $user->selectAgent($value['earner_id']);
+        
+    ?>
+                    <tr>
+                        <td><span><?php echo $value['earnee']; ?></span>
+                        </td>
+                        <td>Agent</td>
+                        <td><?php echo $newuser['bank_name'];?></td>
+                        <td><?php echo $newuser['account_number'];?></td>
+                        <td>&#8358;<?php 
+                    $unitprice = $value['product_price'];
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                      echo number_format(round($unitprice));
+                                    } else {
+                                        echo round($unitprice);
+                                    }
+                                
+                    ?></td>
+                        <td>&#8358;<?php
+                    $earnedprice = $value['earned_amount'];
+                    $unitprice2 = $earnedprice;
+                    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                        echo number_format(round($unitprice2));
+                      } else {
+                          echo round($unitprice2);
+                      }
+                  
+                                
+                    ?></td>
+                        <td>&#8358;<?php 
+                 $earnedprice = $value['earned_amount'];
+                    $unitprice = $value['product_price'] - $earnedprice;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                                      echo number_format(round($unitprice));
+                                    } else {
+                                        echo round($unitprice); }   
+                    ?></td>
+                    </tr>
+                    <?php }}?>
+                </tbody>
+            </table>
 
             <div class="details-container">
-
-
-
 
                 <?php   $earning = $user->selectAgentHistory($_GET['unique']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
+                    $earnedprice = $value['earned_amount'];
     ?>
-                <?php if($agent['agent_date'] <= $value['payment_date']){
-                if($agent['earning_percentage'] != ""){  ?>
+
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
                         <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;"><?php echo $agent['agent_name'];?>
+                            <span style="color: #000000!important; font-size: 16px;"><?php echo $value['earnee'];?>
                                 has
-                                earned &#8358;<?php $percent = $agent['earning_percentage'];
-                    $earnedprice = $percent / 100 * $value['product_price'];
+                                earned &#8358;<?php 
                     $unitprice = $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                       echo number_format(round($unitprice));
@@ -1001,8 +1087,8 @@ if(!isset($_GET['unique'])){
                             <p class="payee-tag" style="color: #808080;">
                                 <?php 
                               
-                               if($value['payee'] == $agent['agent_name']){
-                                echo $agent['agent_name']." Paid:";
+                               if($value['payee'] == $value['earnee']){
+                                echo $value['earnee']." Paid:";
                             } 
                             
                             else {
@@ -1024,16 +1110,13 @@ if(!isset($_GET['unique'])){
                         </div>
                         <div class="inner-detail">
                             <div class="date">
-                                <span style="font-size: 13px;"><?php echo $value['payment_month'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_day'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_year'];?>
+                                <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php } }?>
 
-                <?php }} ?>
 
 
                 <?php if(empty($earning)){?>
@@ -1164,6 +1247,31 @@ if(!isset($_GET['unique'])){
             transform: translateX(100%);
             `;
         };
+    }
+
+    let downloadbtn = document.querySelector('.download-form .land-btn');
+    let downloadform = document.querySelector('.download-form');
+    downloadform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    function htmlTableToExcel(type) {
+        var userdata = document.getElementById('user-data');
+        var file = XLSX.utils.table_to_book(userdata, {
+            sheet: "sheet1"
+        });
+        XLSX.write(file, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        });
+
+        XLSX.writeFile(file, 'Agentearningdata.' + type);
+    }
+
+    downloadbtn.onclick = () => {
+        htmlTableToExcel('xlsx');
+
     }
     </script>
 </body>

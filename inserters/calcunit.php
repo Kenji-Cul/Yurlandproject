@@ -6,11 +6,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $unit = $_POST['unit'];
     $unique = $_GET['uniqueid'];
 
+ 
+    
 if(empty($unit)){
     $errormsg = "Please Fill in your Data";
 }   else if($unique < 10){
     $errormsg = "There was an error";
-}
+}  
     else {
     $user = new User;
     $insertuser = $user->selectUnit($unique);

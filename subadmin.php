@@ -707,46 +707,16 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
                         style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
                         <p>Total Earnings</p>
                         <p class="amountdiv">&#8358;
-                            <span class="totalearn"></span>
                             <?php 
                                
-                                $allusers = $user->selectAllUsers();
-                                foreach ($allusers as $key => $value3) {
-                                    $agentpercent = $value3['earning_percentage'];
-                                 
-                             $datearray = [];
-                                $userhistory = $user->selectAgentHistory($value3['unique_id']);
-                                foreach ($userhistory as $key => $value) {
-                                    if(empty($value3['earning_percentage'])){
-                                       $earnedprice = 0;
-                                    } else {
-                                        $earnedprice = $value3['earning_percentage'] / 100 * $value['product_price'];
-                                    }
-                                   
-                        
-                                     ?>
-                            <span name="userdate" style="display:none;"><?php echo $earnedprice;?></span>
-                            <?php    }
-                                }
-                               
-                                ?>
-                            <?php 
-                               
-                                $allagents = $user->selectAllAgents();
-                                foreach ($allagents as $key => $value2) {
-                                    $agentdate = $value2['agent_date'];
-                                    $agentpercent = $value2['earning_percentage'];
-                                 
-                             $datearray = [];
-                                $agenthistory = $user->selectAgentHistory($value2['uniqueagent_id']);
-                                foreach ($agenthistory as $key => $value) {
-                                    $earnedprice = $value2['earning_percentage'] / 100 * $value['product_price'];
-                        
-                                     ?>
-                            <span name="paydate" style="display:none;"><?php echo $earnedprice;?></span>
-                            <?php    }
-                                }
-                               
+                               $totalearnings = $user->selectTotalEarnings();
+                                if($totalearnings > 999 || $totalearnings > 9999 || $totalearnings > 99999 || $totalearnings > 999999){
+                                    echo number_format($totalearnings);
+                                    
+                                  } else {
+                                     echo round($totalearnings);
+                                  }
+                           
                                 ?>
                         </p>
                     </div>
@@ -889,26 +859,6 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
     <script src="js/swiper-bundle.min.js"></script>
     <!--========== SWIPER JS ============  -->
     <script>
-    let swiperVerse = new Swiper(".swiper-counter", {
-        loop: true,
-        spaceBetween: 20,
-        slidesPerView: "auto",
-        grabCursor: true,
-        autoplay: true,
-        pagination: {
-            el: ".swiper-pagination",
-            dynamicBullets: true,
-            autoplay: true,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 3,
-            },
-            1024: {
-                spaceBetween: 20,
-            },
-        },
-    });
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');
@@ -982,40 +932,61 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
         };
     }
 
-    let userdate = document.getElementsByName("userdate");
-
-    let userdates = [];
-    userdate.forEach(element => {
-        userdates.push(parseInt(element.innerHTML));
+    let swiperVerse = new Swiper(".swiper-counter", {
+        loop: true,
+        spaceBetween: 20,
+        slidesPerView: "auto",
+        grabCursor: true,
+        autoplay: true,
+        pagination: {
+            el: ".swiper-pagination",
+            dynamicBullets: true,
+            autoplay: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                spaceBetween: 20,
+            },
+        },
     });
 
-    //console.log(paydates);
+    // let userdate = document.getElementsByName("userdate");
 
-    let sum2 = 0;
+    // let userdates = [];
+    // userdate.forEach(element => {
+    //     userdates.push(parseInt(element.innerHTML));
+    // });
 
-    for (let i = 0; i < userdates.length; i++) {
-        sum2 += userdates[i];
-    }
+    // //console.log(paydates);
+
+    // let sum2 = 0;
+
+    // for (let i = 0; i < userdates.length; i++) {
+    //     sum2 += userdates[i];
+    // }
+    // //console.log(sum);
+
+
+
+    // let paydate = document.getElementsByName("paydate");
+
+    // let paydates = [];
+    // paydate.forEach(element => {
+    //     paydates.push(parseInt(element.innerHTML));
+    // });
+
+    // //console.log(paydates);
+
+    // let sum = 0;
+
+    // for (let i = 0; i < paydates.length; i++) {
+    //     sum += paydates[i];
+    // }
     //console.log(sum);
 
-
-
-    let paydate = document.getElementsByName("paydate");
-
-    let paydates = [];
-    paydate.forEach(element => {
-        paydates.push(parseInt(element.innerHTML));
-    });
-
-    //console.log(paydates);
-
-    let sum = 0;
-
-    for (let i = 0; i < paydates.length; i++) {
-        sum += paydates[i];
-    }
-    //console.log(sum);
-    document.querySelector('.totalearn').innerHTML = new Intl.NumberFormat().format(sum + sum2);
 
 
 

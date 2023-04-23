@@ -36,8 +36,14 @@ session_start();
         <?php if($_GET['detect'] == "restored"){?>
         <p>Product Restored Successfully!</p>
         <?php }?>
+        <?php if($_GET['detect'] == "restorel"){?>
+        <p>History Restored!</p>
+        <?php }?>
         <?php if($_GET['detect'] == "deletedp"){?>
         <p>Product Deleted Permanently!</p>
+        <?php }?>
+        <?php if($_GET['detect'] == "deletedl"){?>
+        <p>History Deleted!</p>
         <?php }?>
         <?php if($_GET['detect'] == "closed"){?>
         <p>Product Closed Successfully!</p>

@@ -507,16 +507,15 @@ if(!isset($_SESSION['uniqueagent_id'])){
             if(!empty($earning)){
                 foreach($earning as $key => $value){
     ?>
-                <?php if($newuser['agent_date'] <= $value['payment_date']){
-                if($newuser['earning_percentage'] != ""){  ?>
+
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
-                        <p style="text-transform: capitalize;"><span>Hello <?php echo $newuser['agent_name'];?></span>
+                        <p style="text-transform: capitalize;"><span>Hello <?php echo $value['earnee'];?></span>
                         </p>
                         <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $newuser['earning_percentage'];
-                    $earnedprice = $percent / 100 * $value['product_price'];
+                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php 
+                    $earnedprice = $value['earned_amount'];
                     $unitprice = $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                       echo number_format(round($unitprice));
@@ -528,7 +527,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                         </p>
                         <div class="payee">
                             <p class="payee-tag" style="color: #808080;">
-                                <?php if($value['payee'] == $newuser['agent_name']){ 
+                                <?php if($value['payee'] == $value['earnee']){ 
                                 echo "You Paid:"; 
                             } else {
                                     echo "Customer Paid:"; }
@@ -546,16 +545,14 @@ if(!isset($_SESSION['uniqueagent_id'])){
                         </div>
                         <div class="inner-detail">
                             <div class="date">
-                                <span style="font-size: 13px;"><?php echo $value['payment_month'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_day'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_year'];?>
+                                <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php } }?>
 
-                <?php }} ?>
+
 
                 <?php if(empty($earning)){?>
                 <div class="success">

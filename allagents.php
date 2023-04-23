@@ -851,6 +851,22 @@ include_once "projectlog.php";
 
                         </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="editpercentage.php"><img src="images/referral.svg" /></a>
+                                <a href="editpercentage.php" class="link">Customer Percentage</a>
+                            </li>
+
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="edityurland.php"><img src="images/referral.svg" /></a>
+                                <a href="edityurland.php" class="link">Yurland Percentage</a>
+                            </li>
+
+                        </div>
+
                     </div>
                     <div class="selected"><span><img src="images/referral.svg" /></span>
                     </div>
@@ -923,6 +939,14 @@ include_once "projectlog.php";
                                 <a href="totaltransactions.php" class="link">View Transactions</a>
                             </li>
                         </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="yurlandreferrals.php"><img src="images/updown.svg" /> </a>
+                                <a href="yurlandreferrals.php" class="link">Yurland Referrals</a>
+                            </li>
+                        </div>
+
 
                         <div class="option">
                             <li class="links">
@@ -1052,6 +1076,8 @@ include_once "projectlog.php";
                         <th>Reg Account Name</th>
                         <th>Agent Email</th>
                         <th>Earning Percentage</th>
+                        <th>Earning</th>
+                        <th>Payment Processed</th>
                         <th>Home Address</th>
                     </tr>
                 </thead>
@@ -1063,6 +1089,8 @@ include_once "projectlog.php";
     $customer = $user ->selectAllAgents();
     if(!empty($customer)){
         foreach($customer as $key => $value){
+            $agentid = $value['uniqueagent_id'];
+            // $refid = $value['referral_id'];
     ?>
                     <tr>
                         <td><?php echo $value['agent_id'];?></td>
@@ -1074,6 +1102,31 @@ include_once "projectlog.php";
                         <td><?php echo $value['reg_account_name'];?></td>
                         <td><?php echo $value['agent_email'];?></td>
                         <td><?php echo $value['earning_percentage'];?></td>
+                        <td>&#8358;<?php 
+                        
+                                $unitprice2 = $user->selectAgentTotalEarnings($agentid);
+                            
+                                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                                            echo number_format(round($unitprice2));
+                                          } else {
+                                              echo round($unitprice2);
+                                          }
+                                        
+                                        ?></td>
+                        <td>&#8358;<?php 
+                         
+                                $agenttotalearnings = $user->selectAgentTotalPayment($agentid);
+                              
+                                        
+                                        if( $agenttotalearnings  > 999 ||  $agenttotalearnings  > 9999 ||  $agenttotalearnings  > 99999 ||  $agenttotalearnings  > 999999){
+                                            echo number_format(round($agenttotalearnings ));
+                                          } else {
+                                              echo round($agenttotalearnings );
+                                          }
+                                        
+                                        ?></td>
+
+
                         <td><?php echo $value['home_address'];?></td>
                     </tr>
                     <?php }}?>
@@ -1126,45 +1179,34 @@ include_once "projectlog.php";
                          $refid = $value['referral_id'];
                          $percentage = $value['earning_percentage'];
                          $agentdate = $value['agent_date'];
-                                $totalpayment = $user->selectAgentTotalEarnings($agentid,$agentdate);
-                                if(!empty($totalpayment)){
-                                    foreach ($totalpayment as $key => $value2) {
-                                      
-                                        $percent = $value['earning_percentage'];
-                                        $earnedprice = $percent / 100 * $value2;
-                                        $unitprice2 = $earnedprice;
-                                        
+                                $unitprice2 = $user->selectAgentTotalEarnings($agentid);
+                            
                                         if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
                                             echo number_format(round($unitprice2));
                                           } else {
                                               echo round($unitprice2);
                                           }
-                                        }
-                                }  ?>
+                                        
+                                        ?>
                         </p>
                     </div>
 
-                    <div class="details" style="text-transform: capitalize;">
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
                         <p class="sname">&#8358;<?php 
                          
                          $agentid = $value['uniqueagent_id'];
                          $refid = $value['referral_id'];
                          $agentdate = $value['agent_date'];
-                                $totalpayment = $user->selectAgentTotalEarnings($agentid,$agentdate);
-                                if(!empty($totalpayment)){
-                                    foreach ($totalpayment as $key => $value2) {
-                                      
-                                       
-                                        $earnedprice = $value2;
-                                        $unitprice2 = $earnedprice;
+                                $agenttotalearnings = $user->selectAgentTotalPayment($agentid);
+                              
                                         
-                                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-                                            echo number_format(round($unitprice2));
+                                        if( $agenttotalearnings  > 999 ||  $agenttotalearnings  > 9999 ||  $agenttotalearnings  > 99999 ||  $agenttotalearnings  > 999999){
+                                            echo number_format(round($agenttotalearnings ));
                                           } else {
-                                              echo round($unitprice2);
+                                              echo round($agenttotalearnings );
                                           }
-                                        }
-                                }  ?>
+                                        
+                                ?>
                         </p>
                     </div>
 

@@ -522,36 +522,31 @@ if(!isset($_SESSION['unique_id'])){
     $user = new User;
     $agent = $user->selectUser($_SESSION['unique_id']);
     $customer = $user ->selectAgentCustomer($agent['personal_ref']);
-    if(!empty($customer)){
-        foreach($customer as $key => $value){
-         $total = $user->selectTotal($value['unique_id']);
-         foreach($total as $key => $value){
-            
-            $percent = $agent['earning_percentage'];
-             
-            ?>
-
-                <input type="text" name="price" style="display:none;" value="<?php 
-                 if($percent != ""){
-                    $earnedprice = $percent / 100 * $value;
-                    $unitprice = $earnedprice;
-        echo $unitprice;
-    } else {
-        echo "0";
-    }
-        ?>">
-                <?php 
-                       
-         } 
-        }} else {
-            // echo "0";
-        } 
+    
             ?>
                 <div>
                     <img src="images/image2.svg" alt="payment image" />
                     <div class="payment-desc2">
                         <p>Referral Earnings</p>
-                        <div class="payment-count">&#8358; <span class="total"></span>
+                        <div class="payment-count">&#8358;
+                            <?php  
+                          
+              $total = $user->selectTotal($_SESSION['unique_id']);
+              
+              foreach ($total as $key => $value) {
+                if(is_null($value)){
+                    echo "0";
+                  } else{
+                    $unitprice = $value;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                        echo number_format($unitprice);
+                      } else {
+                         echo $unitprice;
+                      }
+                  }
+               }
+            
+         ?>
                         </div>
                     </div>
                 </div>
@@ -598,32 +593,27 @@ if(!isset($_SESSION['unique_id'])){
 
                 <?php 
    
-            $earning = $user->selectAgentHistory2($newuser['unique_id']);
+   $earning = $user->selectAgentHistory2($newuser['unique_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
                     
     ?>
-                <?php 
-                 if($newuser['user_date'] <= $value['payment_date']){
-                if($newuser['earning_percentage'] != ""){?>
+
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
-                        <p style="text-transform: capitalize;"><span>Hello <?php echo $newuser['first_name'];?></span>
+                        <p style="text-transform: capitalize;"><span>Hello <?php echo $value['earnee'];?></span>
                         </p>
                         <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $newuser['earning_percentage'];
-                           
-                    if($percent != ""){
-                    $earnedprice = $percent / 100 * $value['product_price'];
+                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php 
+                        $earnedprice = $value['earned_amount'];
                     $unitprice = $earnedprice;
             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                               echo number_format(round($unitprice));
                             } else {
                                 echo round($unitprice);
-                            } }else {
-                                echo "0";
-                            }
+                            } 
+                            
                         
                     ?>
                             </span>
@@ -643,15 +633,13 @@ if(!isset($_SESSION['unique_id'])){
                         </div>
                         <div class="inner-detail">
                             <div class="date">
-                                <span style="font-size: 13px;"><?php echo $value['payment_month'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_day'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_year'];?>
+                                <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <?php }}} }?>
+                <?php }}?>
 
                 <?php if(empty($earning)){?>
                 <div class="success">
@@ -665,19 +653,6 @@ if(!isset($_SESSION['unique_id'])){
 
         <script src="js/cart.js"></script>
         <script>
-        let total = document.getElementsByName("price");
-        let values = [];
-        total.forEach(element => {
-
-            values.push(parseInt(element.value));
-        });
-
-        let sum = 0;
-
-        for (let i = 0; i < values.length; i++) {
-            sum += values[i];
-        }
-        document.querySelector('.total').innerHTML = new Intl.NumberFormat().format(sum);
         let landuser = document.getElementsByName("landuser");
 
         let landvalues = [];

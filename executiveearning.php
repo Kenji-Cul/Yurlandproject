@@ -479,23 +479,14 @@ if(!isset($_SESSION['uniqueexec_id'])){
                     <div class="payment-desc">
                         <p style="width: 80%;">Total Earning</p>
                         <div class="payment-count">
-                            &#8358;&nbsp;<span class="totalearn"></span>
-                            <span><?php 
+                            &#8358;<span><?php 
                         $user = new User;
-                                
-                        $agent = $user->selectExecutive($_SESSION['uniqueexec_id']);
-                        $earning = $user->selectAllHistory();
-                        if(!empty($earning)){
-                            foreach($earning as $key => $value){
-                                if($agent['executive_date'] <= $value['payment_date']){ 
-                                $percent = $agent['earning'];
-                    $earnedprice = $percent / 100 * $value['product_price'];
-                   
-                             ?>
-                                <span name="paydate" style="display:none;"><?php echo $earnedprice;?></span>
-                                <?php    }}} else { ?>
-                                <span name="paydate" style="display:none;"><?php echo "0";?></span>
-                                <?php          }
+                        $unitprice2 = $user->selectExecutiveTotalEarnings($_SESSION['uniqueexec_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
                         
                        
                         ?>
@@ -513,19 +504,18 @@ if(!isset($_SESSION['uniqueexec_id'])){
                 <?php 
     $user = new User;
     $agent = $user->selectExecutive($_SESSION['uniqueexec_id']);
-            $earning = $user->selectAllHistory();
+            $earning = $user->selectAgentHistory($agent['unique_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
     ?>
-                <?php if($agent['executive_date'] <= $value['payment_date']){ ?>
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
                         <p style="text-transform: capitalize;"><span>Hello <?php echo $newuser['full_name'];?></span>
                         </p>
                         <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php $percent = $agent['earning'];
-                    $earnedprice = $percent / 100 * $value['product_price'];
+                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php 
+                    $earnedprice = $value['earned_amount'];
                     $unitprice = $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                       echo number_format(round($unitprice));
@@ -553,15 +543,13 @@ if(!isset($_SESSION['uniqueexec_id'])){
                         </div>
                         <div class="inner-detail">
                             <div class="date">
-                                <span style="font-size: 13px;"><?php echo $value['payment_month'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_day'];?></span>&nbsp;<span
-                                    style="font-size: 13px;"><?php echo $value['payment_year'];?>
+                                <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <?php }}} ?>
+                <?php }} ?>
 
                 <?php if(empty($earning)){?>
                 <div class="success">
