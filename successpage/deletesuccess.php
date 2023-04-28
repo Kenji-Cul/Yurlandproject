@@ -33,6 +33,9 @@ session_start();
         <?php if($_GET['detect'] == "deleted"){?>
         <p>Product Deleted Successfully!</p>
         <?php }?>
+        <?php if($_GET['detect'] == "approved"){?>
+        <p>Product Approved Successfully!</p>
+        <?php }?>
         <?php if($_GET['detect'] == "restored"){?>
         <p>Product Restored Successfully!</p>
         <?php }?>

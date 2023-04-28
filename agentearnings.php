@@ -820,6 +820,7 @@ include_once "projectlog.php";
                         <th>Amount Paid</th>
                         <th>Amount Earned</th>
                         <th>Balance Earning</th>
+                        <th>Payment Date</th>
                     </tr>
                 </thead>
                 <tbody class="table-data">

@@ -46,28 +46,28 @@ if(isset($_POST["submit"])){
     $email = htmlspecialchars($selectuser['email']);
     if(!isset($_GET['remprice'])){
         if($_GET['data'] == "onemonth"){
-            $realprice = $_GET['tot'] * $_POST['period'] / $value['onemonth_period'];
-            $subprice = $_GET['tot'] / $value['onemonth_period'];
+            $realprice = $_GET['subpayment'] * $_POST['period'];
+            $subprice = $_GET['subpayment'];
             $limit = $value['onemonth_period'];
             $increaserate = $value['onemonth_increaserate'];
             } else if($_GET['data'] == "threemonths"){
-            $realprice =$_GET['tot'] * $_POST['period'] / $value['threemonth_period'];
-            $subprice = $_GET['tot'] / $value['threemonth_period'];
+                $realprice = $_GET['subpayment'] * $_POST['period'];
+                $subprice = $_GET['subpayment'];
             $limit = $value['threemonth_period'];
             $increaserate = $value['threemonth_increaserate'];
             } else if($_GET['data'] == "sixmonths"){
-            $realprice = $_GET['tot'] * $_POST['period'] / $value['sixmonth_period'];
-            $subprice = $_GET['tot'] / $value['sixmonth_period'];
+                $realprice = $_GET['subpayment'] * $_POST['period'];
+                $subprice = $_GET['subpayment'];
             $limit = $value['sixmonth_period'];
             $increaserate = $value['sixmonth_increaserate'];
             } else if($_GET['data'] == "twelvemonths"){
-            $realprice = $_GET['tot'] * $_POST['period'] / $value['twelvemonth_period'];
-            $subprice = $_GET['tot'] / $value['twelvemonth_period'];
+                $realprice = $_GET['subpayment'] * $_POST['period'];
+                $subprice = $_GET['subpayment'];
             $limit = $value['twelvemonth_period'];
             $increaserate = $value['twelvemonth_increaserate'];
             } else if($_GET['data'] == "eighteenmonths"){
-            $realprice = $_GET['tot'] * $_POST['period'] / $value['eighteen_period'];
-            $subprice = $_GET['tot'] / $value['eighteen_period'];
+                $realprice = $_GET['subpayment'] * $_POST['period'];
+                $subprice = $_GET['subpayment'];
             $limit = $value['eighteen_period'];
             $increaserate = $value['eighteen_increaserate'];
             }
@@ -451,28 +451,28 @@ if(empty($checklastpayment)){
     $email = htmlspecialchars($selectuser['email']);
     if(!isset($_GET['remprice'])){
         if($_GET['data'] == "onemonth"){
-            $realprice = $_GET['tot'] * $_POST['period'] / $value['onemonth_period'];
-            $subprice = $_GET['tot'] / $value['onemonth_period'];
+            $realprice = $_GET['subpayment'] * $_POST['period'];
+            $subprice = $_GET['subpayment'];
             $limit = $value['onemonth_period'];
             $increaserate = $value['onemonth_increaserate'];
             } else if($_GET['data'] == "threemonths"){
-            $realprice =$_GET['tot'] * $_POST['period'] / $value['threemonth_period'];
-            $subprice = $_GET['tot'] / $value['threemonth_period'];
+                $realprice = $_GET['subpayment'] * $_POST['period'];
+                $subprice = $_GET['subpayment'];
             $limit = $value['threemonth_period'];
             $increaserate = $value['threemonth_increaserate'];
             } else if($_GET['data'] == "sixmonths"){
-            $realprice = $_GET['tot'] * $_POST['period'] / $value['sixmonth_period'];
-            $subprice = $_GET['tot'] / $value['sixmonth_period'];
+                $realprice = $_GET['subpayment'] * $_POST['period'];
+                $subprice = $_GET['subpayment'];
             $limit = $value['sixmonth_period'];
             $increaserate = $value['sixmonth_increaserate'];
             } else if($_GET['data'] == "twelvemonths"){
-            $realprice = $_GET['tot'] * $_POST['period'] / $value['twelvemonth_period'];
-            $subprice = $_GET['tot'] / $value['twelvemonth_period'];
+                $realprice = $_GET['subpayment'] * $_POST['period'];
+                $subprice = $_GET['subpayment'];
             $limit = $value['twelvemonth_period'];
             $increaserate = $value['twelvemonth_increaserate'];
             } else if($_GET['data'] == "eighteenmonths"){
-            $realprice = $_GET['tot'] * $_POST['period'] / $value['eighteen_period'];
-            $subprice = $_GET['tot'] / $value['eighteen_period'];
+                $realprice = $_GET['subpayment'] * $_POST['period'];
+                $subprice = $_GET['subpayment'];
             $limit = $value['eighteen_period'];
             $increaserate = $value['eighteen_increaserate'];
             }
@@ -981,7 +981,7 @@ if(empty($checklastpayment)){
             <?php if($_GET['data'] == "onemonth"){?>
             <div class="input-div">
                 <label for="day" style="width: 20em; padding-bottom: 3em;">Daily Amount: &#8358;<?php 
-                $dailycost = $_GET['tot'] / $value['onemonth_period'];
+                $dailycost =$_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {
@@ -990,7 +990,7 @@ if(empty($checklastpayment)){
                 ?></label>
                 <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?> style="display: none;">
                 <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
-                $dailycost = $_GET['tot'] / $value['onemonth_period'];
+                $dailycost = $_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {
@@ -1008,7 +1008,7 @@ if(empty($checklastpayment)){
             <div class="input-div">
                 <div class="input-div">
                     <label for="day" style="width: 20em; padding-bottom: 3em;">Daily Amount: &#8358;<?php 
-                      $dailycost = $_GET['tot'] / $value['threemonth_period'];
+                      $dailycost = $_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {
@@ -1017,7 +1017,7 @@ if(empty($checklastpayment)){
                 ?></label>
                     <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?> style="display: none;">
                     <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
-                $dailycost = $_GET['tot'] / $value['threemonth_period'];
+                $dailycost = $_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {
@@ -1033,7 +1033,7 @@ if(empty($checklastpayment)){
                 <div class="input-div">
                     <div class="input-div">
                         <label for="day" style="width: 20em; padding-bottom: 3em;">Daily Amount: &#8358;<?php
-                          $dailycost = $_GET['tot'] / $value['sixmonth_period'];
+                          $dailycost =$_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {
@@ -1042,7 +1042,7 @@ if(empty($checklastpayment)){
                 ?></label>
                         <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?> style="display: none;">
                         <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
-                $dailycost = $_GET['tot'] / $value['sixmonth_period'];
+                $dailycost = $_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {
@@ -1058,7 +1058,7 @@ if(empty($checklastpayment)){
                     <div class="input-div">
                         <div class="input-div">
                             <label for="day" style="width: 20em; padding-bottom: 3em;">Daily Amount: &#8358;<?php 
-                             $dailycost = $_GET['tot'] / $value['twelvemonth_period'];
+                             $dailycost = $_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 }  else {
@@ -1067,7 +1067,7 @@ if(empty($checklastpayment)){
                 ?></label>
                             <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?> style="display: none;">
                             <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
-                $dailycost = $_GET['tot'] / $value['twelvemonth_period'];
+                $dailycost = $_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {
@@ -1083,7 +1083,7 @@ if(empty($checklastpayment)){
                         <div class="input-div">
                             <div class="input-div" style="width: 20em; padding-bottom: 3em;">
                                 <label for="day">Daily Amount: &#8358;<?php
-                                $dailycost = $_GET['tot'] / $value['eighteen_period'];
+                                $dailycost = $_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {
@@ -1093,7 +1093,7 @@ if(empty($checklastpayment)){
                                 <input type="hidden" id="dailyprice" value=<?php echo $dailycost;?>
                                     style="display: none;">
                                 <label style="width: 15em;">Amount Due Today: &#8358;<span id="totalprice"><?php
-                $dailycost = $_GET['tot'] / $value['eighteen_period'];
+                $dailycost = $_GET['subpayment'];
                 if($dailycost > 999 || $dailycost > 9999 || $dailycost > 99999 || $dailycost > 999999){
                 echo number_format(round($dailycost));
                 } else {

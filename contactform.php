@@ -5,8 +5,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
-define("PASSWORD","cvofrbjulwvkkccb");
-define("EMAIL","yurland.ng@gmail.com");
+include_once "enc.php";
 ob_start();
 
 
@@ -66,7 +65,7 @@ $mail->Body = '<p>From: '.$fullname.'</p>
 $mail->AltBody = "This is the plain text version of the email content";
 $mail->From = $emailFrom;
 $mail->FromName = $fullname;
-$mail->AddAddress("yurland.ng@gmail.com");
+$mail->AddAddress($mainemail);
 // $mail->addReplyTo('info@simpletech.com.ng');
 try {
     $mail->send();

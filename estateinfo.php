@@ -813,6 +813,7 @@ include "projectlog.php";
 
 
         <form action="" id="unit-form">
+            <input type="hidden" name="data3" value="" id="data3">
             <div class="estateinfo">
                 <div class="input-div">
                     <input type="number" placeholder="Input number of units and click outside the box when done"
@@ -1357,10 +1358,12 @@ include "projectlog.php";
     let form5 = document.querySelector('.fifthsection');
     let form6 = document.querySelector('#failedpaymentform');
     let totalInput = document.querySelector('#tot');
+    let subpayinput = document.querySelector('#data3');
     let unitNum = document.querySelector("#unitnum")
     let Successdiv = document.querySelector(".success")
     let formatnum = document.querySelector('#numformat')
     let goback = document.querySelector('#goback');
+
 
 
 
@@ -1400,6 +1403,7 @@ include "projectlog.php";
 
                         }
                         totalInput.value = price;
+
                         if (params.get('payment')) {
                             let formatnum = document.querySelector('.thirdsection #numformat')
                             formatnum.innerHTML = new Intl.NumberFormat().format(price);
@@ -1535,8 +1539,10 @@ include "projectlog.php";
             let periodValue = parseInt(periodNum.value);
             let balanceValue = parseInt(balanceNum.value);
 
+
             let manualerror = document.querySelector('#newpaymentform .error2');
             let pricevalue = amountNum.value * manualInput.value;
+
 
             let endDate = dateNum.value;
 
@@ -1550,12 +1556,12 @@ include "projectlog.php";
             } else {
                 <?php if(isset($_SESSION['unique_id'])){?>
                 location.href =
-                    `newpayment.php?uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${pricevalue}&subperiod=${manualInput.value}`;
+                    `newpayment.php?uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${pricevalue}&subperiod=${manualInput.value}&subpayment=${subpayinput.value}`;
                 <?php }?>
 
                 <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                 location.href =
-                    `newpayment2.php?uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${pricevalue}&subperiod=${manualInput.value}&user=<?php echo $_GET['unique'];?>`;
+                    `newpayment2.php?uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${pricevalue}&subperiod=${manualInput.value}&user=<?php echo $_GET['unique'];?>&subpayment=${subpayinput.value}`;
                 <?php }?>
 
 
@@ -1565,12 +1571,12 @@ include "projectlog.php";
                 manualerror.style.visibility = "hidden";
                 <?php if(isset($_SESSION['unique_id'])){?>
                 location.href =
-                    `newpayment.php?uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${balanceValue}&subperiod=0`;
+                    `newpayment.php?uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${balanceValue}&subperiod=0&subpayment=${subpayinput.value}`;
                 <?php }?>
 
                 <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                 location.href =
-                    `newpayment2.php?uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${balanceValue}&subperiod=0&user=<?php echo $_GET['unique'];?>`;
+                    `newpayment2.php?uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagjfauhuiyipalaknlnf&remunit=${remInput.value}&unit=${remInput.value}&con=9298383737&remprice=payment&period=${endDate}&newpay=${balanceValue}&subperiod=0&user=<?php echo $_GET['unique'];?>&subpayment=${subpayinput.value}`;
                 <?php }?>
 
             }
@@ -1677,7 +1683,9 @@ include "projectlog.php";
                                     let percentvalue = percent / 100 * viewprice;
                                     let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
                                     console.log(totprice);
+                                    let subpayment = totprice / viewperiod;
                                     document.querySelector('#data2').innerHTML = totprice;
+                                    document.querySelector('#data3').value = subpayment;
                                     let realprice = new Intl.NumberFormat().format(Math.round(totprice /
                                         viewperiod));
                                     let totalprice = new Intl.NumberFormat().format(
@@ -1689,7 +1697,6 @@ include "projectlog.php";
                                     document.querySelector('#pricetot').innerHTML = totalprice;
                                     let formatnum = document.querySelector('.second-section #numformat')
                                     formatnum.innerHTML = totalprice;
-
                                 }
 
                                 if (element.value == "threemonths") {
@@ -1700,7 +1707,9 @@ include "projectlog.php";
 
                                     let percentvalue = percent / 100 * viewprice;
                                     let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
-                                    document.querySelector('#data2').innerHTML = totprice
+                                    let subpayment = totprice / viewperiod;
+                                    document.querySelector('#data2').innerHTML = totprice;
+                                    document.querySelector('#data3').value = subpayment;
                                     let realprice = new Intl.NumberFormat().format(Math.round(totprice /
                                         viewperiod));
                                     let totalprice = new Intl.NumberFormat().format(
@@ -1725,7 +1734,9 @@ include "projectlog.php";
 
                                     let percentvalue = percent / 100 * viewprice;
                                     let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
-                                    document.querySelector('#data2').innerHTML = totprice
+                                    let subpayment = totprice / viewperiod;
+                                    document.querySelector('#data2').innerHTML = totprice;
+                                    document.querySelector('#data3').value = subpayment;
                                     let realprice = new Intl.NumberFormat().format(Math.round(totprice /
                                         viewperiod));
                                     let totalprice = new Intl.NumberFormat().format(
@@ -1750,7 +1761,9 @@ include "projectlog.php";
 
                                     let percentvalue = percent / 100 * viewprice;
                                     let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
-                                    document.querySelector('#data2').innerHTML = totprice
+                                    let subpayment = totprice / viewperiod;
+                                    document.querySelector('#data2').innerHTML = totprice;
+                                    document.querySelector('#data3').value = subpayment;
                                     let realprice = new Intl.NumberFormat().format(Math.round(totprice /
                                         viewperiod));
                                     let totalprice = new Intl.NumberFormat().format(
@@ -1775,7 +1788,9 @@ include "projectlog.php";
 
                                     let percentvalue = percent / 100 * viewprice;
                                     let totprice = parseInt(totalInput.value) + parseInt(percentvalue);
-                                    document.querySelector('#data2').innerHTML = totprice
+                                    let subpayment = totprice / viewperiod;
+                                    document.querySelector('#data2').innerHTML = totprice;
+                                    document.querySelector('#data3').value = subpayment;
                                     let realprice = new Intl.NumberFormat().format(Math.round(totprice /
                                         viewperiod));
                                     let totalprice = new Intl.NumberFormat().format(
@@ -1844,6 +1859,7 @@ include "projectlog.php";
                     let data = xhr.response;
                     if (data == "autodebit") {
                         let subprice = document.querySelector('#data2').innerHTML;
+
                         <?php if(isset($_SESSION['unique_id'])){?>
                         location.href =
                             `intervalnum.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${subprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
@@ -1858,12 +1874,12 @@ include "projectlog.php";
                         let totprice = document.querySelector('#data2').innerHTML;
                         <?php if(isset($_SESSION['unique_id'])){?>
                         location.href =
-                            `newpayment.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                            `newpayment.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&subpayment=${subpayinput.value}`;
                         <?php }?>
 
                         <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
-                            `newpayment2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
+                            `newpayment2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>&subpayment=${subpayinput.value}`;
                         <?php }?>
                     }
 
@@ -1949,16 +1965,17 @@ include "projectlog.php";
                     let totprice = <?php foreach($landview as $key => $value){
                             echo $value['outright_price'];
                         }?>;
+
                     //console.log(data);
                     if (data) {
                         <?php if(isset($_SESSION['unique_id'])){?>
                         location.href =
-                            `newpayment.php?data=${data}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                            `newpayment.php?data=${data}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&subpayment=${subpayinput.value}`;
                         <?php }?>
 
                         <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
-                            `newpayment2.php?data=${data}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
+                            `newpayment2.php?data=${data}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice * unitInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>&subpayment=${subpayinput.value}`;
                         <?php }?>
                     }
 
@@ -2021,18 +2038,24 @@ include "projectlog.php";
                                         let percentvalue = percent / 100 * viewprice;
                                         let totprice = parseInt(totalInput.value) + parseInt(
                                             percentvalue);
-                                        console.log(totprice);
-                                        document.querySelector('#data2').innerHTML = totprice;
-                                        let realprice = new Intl.NumberFormat().format(Math.round(
-                                            totprice /
-                                            viewperiod));
+                                        let subpayment = totprice / viewperiod;
+                                        document
+                                            .querySelector('#data2').innerHTML = totprice;
+                                        document.querySelector('#data3').value = subpayment;
+                                        let realprice = new Intl.NumberFormat().format(Math
+                                            .round(
+                                                totprice /
+                                                viewperiod));
                                         let totalprice = new Intl.NumberFormat().format(
                                             totprice);
 
-                                        document.querySelector('.fifthsection .detail-four').style =
+                                        document.querySelector('.fifthsection .detail-four')
+                                            .style =
                                             "visibility: visible;";
-                                        document.querySelector('#pricedaily').innerHTML = realprice;
-                                        document.querySelector('#pricetot').innerHTML = totalprice;
+                                        document.querySelector(
+                                            '#pricedaily').innerHTML = realprice;
+                                        document
+                                            .querySelector('#pricetot').innerHTML = totalprice;
                                         let formatnum = document.querySelector(
                                             '.second-section #numformat')
                                         formatnum.innerHTML = totalprice;
@@ -2048,7 +2071,9 @@ include "projectlog.php";
                                         let percentvalue = percent / 100 * viewprice;
                                         let totprice = parseInt(totalInput.value) + parseInt(
                                             percentvalue);
-                                        document.querySelector('#data2').innerHTML = totprice
+                                        let subpayment = totprice / viewperiod;
+                                        document.querySelector('#data2').innerHTML = totprice;
+                                        document.querySelector('#data3').value = subpayment;
                                         let realprice = new Intl.NumberFormat().format(Math.round(
                                             totprice /
                                             viewperiod));
@@ -2074,7 +2099,9 @@ include "projectlog.php";
                                         let percentvalue = percent / 100 * viewprice;
                                         let totprice = parseInt(totalInput.value) + parseInt(
                                             percentvalue);
-                                        document.querySelector('#data2').innerHTML = totprice
+                                        let subpayment = totprice / viewperiod;
+                                        document.querySelector('#data2').innerHTML = totprice;
+                                        document.querySelector('#data3').value = subpayment;
                                         let realprice = new Intl.NumberFormat().format(Math.round(
                                             totprice /
                                             viewperiod));
@@ -2100,7 +2127,9 @@ include "projectlog.php";
                                         let percentvalue = percent / 100 * viewprice;
                                         let totprice = parseInt(totalInput.value) + parseInt(
                                             percentvalue);
-                                        document.querySelector('#data2').innerHTML = totprice
+                                        let subpayment = totprice / viewperiod;
+                                        document.querySelector('#data2').innerHTML = totprice;
+                                        document.querySelector('#data3').value = subpayment;
                                         let realprice = new Intl.NumberFormat().format(Math.round(
                                             totprice /
                                             viewperiod));
@@ -2118,7 +2147,8 @@ include "projectlog.php";
                                     }
 
                                     if (element.value == "eighteenmonths") {
-                                        document.querySelector('#data').innerHTML = "eighteenmonths";
+                                        document.querySelector('#data').innerHTML =
+                                            "eighteenmonths";
                                         let percent = <?php echo $value['eighteen_percent'];?>;
                                         let viewperiod = <?php echo $value['eighteen_period'];?>;
                                         let viewprice = <?php echo $value['onemonth_price'];?>;
@@ -2126,7 +2156,9 @@ include "projectlog.php";
                                         let percentvalue = percent / 100 * viewprice;
                                         let totprice = parseInt(totalInput.value) + parseInt(
                                             percentvalue);
-                                        document.querySelector('#data2').innerHTML = totprice
+                                        let subpayment = totprice / viewperiod;
+                                        document.querySelector('#data2').innerHTML = totprice;
+                                        document.querySelector('#data3').value = subpayment;
                                         let realprice = new Intl.NumberFormat().format(Math.round(
                                             totprice /
                                             viewperiod));
@@ -2248,12 +2280,12 @@ include "projectlog.php";
                         let totprice = document.querySelector('#data2').innerHTML;
                         <?php if(isset($_SESSION['unique_id'])){?>
                         location.href =
-                            `newpayment.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                            `newpayment.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&subpayment=${subpayinput.value}`;
                         <?php }?>
 
                         <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
-                            `newpayment2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
+                            `newpayment2.php?data=${document.querySelector('#data').innerHTML}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totprice}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>&subpayment=${subpayinput.value}`;
                         <?php }?>
                     }
 
@@ -2330,12 +2362,12 @@ include "projectlog.php";
                     if (data) {
                         <?php if(isset($_SESSION['unique_id'])){?>
                         location.href =
-                            `newpayment.php?data=${data}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737`;
+                            `newpayment.php?data=${data}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&subpayment=${subpayinput.value}`;
                         <?php }?>
 
                         <?php if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
                         location.href =
-                            `newpayment2.php?data=${data}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>`;
+                            `newpayment2.php?data=${data}&uniqueid=${unique}&newpayid=${newpayid}&tech=91938udjd992992929&tot=${totalInput.value}&pice=029283837iiagj098655454&unit=${unitInput.value}&con=9298383737&user=<?php echo $_GET['unique']?>&subpayment=${subpayinput.value}`;
                         <?php }?>
                     }
 

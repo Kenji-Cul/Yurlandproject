@@ -14,6 +14,7 @@ include_once "projectlog.php";
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
@@ -22,13 +23,7 @@ include_once "projectlog.php";
         overflow-x: hidden;
     }
 
-    .email-span {
-        text-overflow: ellipsis !important;
-        overflow: hidden;
-        white-space: nowrap;
-        display: inline-block;
-        width: 170px;
-    }
+
 
     .dropdown-links {
         overflow-y: auto;
@@ -40,6 +35,21 @@ include_once "projectlog.php";
         border-radius: 1rem;
     }
 
+    .navig .payment {
+        font-size: 14px;
+    }
+
+    .navig {
+        width: 98%;
+        gap: 3em;
+    }
+
+    .navigation-div {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+    }
+
     ::-webkit-scrollbar-thumb {
         background-color: #ddd;
         border-radius: 1rem;
@@ -47,6 +57,21 @@ include_once "projectlog.php";
 
     ::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
+    }
+
+    .transaction-details2 {
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 0.5em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 100%;
+    }
+
+    .details {
+        width: 150px;
     }
 
     .search-icon {
@@ -59,6 +84,11 @@ include_once "projectlog.php";
         align-items: center;
         justify-content: center;
     }
+
+    .land-container {
+        position: relative;
+    }
+
 
     .search-input {
         display: none;
@@ -100,7 +130,7 @@ include_once "projectlog.php";
     .success {
         position: absolute;
         left: 50%;
-        top: 20em;
+        top: 40em;
         transform: translate(-50%, -50%);
         height: 40%;
 
@@ -144,6 +174,14 @@ include_once "projectlog.php";
     }
 
     @media only screen and (min-width: 1300px) {
+        .email-span {
+            text-overflow: ellipsis !important;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            width: 100px !important;
+        }
+
         .select-box {
             width: 100%;
             border-radius: 0px !important;
@@ -182,8 +220,15 @@ include_once "projectlog.php";
             padding: 1em 0;
         }
 
-
-
+        .details .detail {
+            width: 80px;
+            height: 24px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         .page-title2 a {
             display: none;
@@ -231,7 +276,7 @@ include_once "projectlog.php";
 
 
 
-        .details {
+        /* .details {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -245,7 +290,7 @@ include_once "projectlog.php";
         .details p,
         .details h3 {
             font-size: 22px;
-        }
+        } */
 
         .center {
             display: flex;
@@ -387,6 +432,62 @@ include_once "projectlog.php";
     }
 
     @media only screen and (max-width: 1300px) {
+        .email-span {
+            text-overflow: ellipsis !important;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            width: 80px !important;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 3em;
+        }
+
+
+
+        .details .detail {
+            width: 60px;
+            height: 20px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details .detail p {
+            font-size: 10px;
+        }
+
+        .details p {
+            font-size: 12px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+
+        .navig {
+            gap: 1.7em;
+        }
+
+        .navig .payment {
+            font-size: 12px;
+        }
+
+
+
+        .transaction-details2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            gap: 1.3em;
+            width: 85%;
+        }
 
         .page-title2 p {
             font-size: 15px;
@@ -394,9 +495,16 @@ include_once "projectlog.php";
 
         .success {
             position: absolute;
-            top: 27em;
+            top: 35em;
         }
 
+        .transaction-details2 {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 85%;
+        }
 
         .user,
         #openicon {
@@ -959,8 +1067,88 @@ include_once "projectlog.php";
                 </a>
                 <?php }?>
                 <p>Customers Due For Allocation</p>
+                <div class="search-icon">
+                    <img src="images/search.svg" alt="search image" id="searchimg">
 
+                    <div class="search-input">
+                        <form action="" class="search-form">
+                            <input type="email" class="search" type="search" name="searchproduct"
+                                placeholder="Search For User">
+                        </form>
+                    </div>
+                </div>
+            </div>
 
+            <form action="" class="download-form">
+                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
+                        id="export"></i></button>
+            </form>
+
+            <table id="user-data" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Customer's Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Estate Name</th>
+                        <th>Location</th>
+                        <th>Number of Units Bought</th>
+                        <th>Amount Paid</th>
+                        <th>Allocation Fee Status</th>
+                    </tr>
+                </thead>
+                <tbody class="table-data">
+
+                    <?php 
+       $user = new User;
+   
+       $user = new User;
+       $total = $user->selectLandInfo();
+      if(!empty($total)){
+      
+       foreach ($total as $key => $value) {
+        if($value['allocation_status'] != "approved"){
+    ?>
+                    <tr>
+                        <td><span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
+                        </td>
+                        <td><?php echo $value['email'];?></td>
+                        <td><?php echo $value['phone_number'];?></td>
+                        <td><?php echo $value['product_name'];?></td>
+                        <td><?php echo $value['product_location'];?></td>
+                        <td><?php echo $value['product_unit'];?></td>
+                        <td>&#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } else {
+                                 echo round($unitprice);
+                             }
+             ?></td>
+                        <td><?php 
+                         if($value['allocation_status'] == "approved"){
+                            echo "Paid";
+                         }
+
+                         if($value['allocation_status'] == "unapproved"){
+                            echo "Pending Payment";
+                         }
+                        ?></td>
+                    </tr>
+                    <?php }}}?>
+                </tbody>
+            </table>
+
+            <div class="navigation-div" style="margin-top: 2em;">
+                <div class="navig">
+                    <div class="payment">Customer's Name</div>
+                    <div class="payment hide">Estate Name</div>
+                    <div class="payment hide">Location</div>
+                    <div class="payment hide">Number of Units bought</div>
+                    <div class="payment hide">Amount Paid</div>
+                    <div class="payment">Allocation Fee Status</div>
+                    <div class="payment">View</div>
+                </div>
             </div>
 
 
@@ -969,52 +1157,74 @@ include_once "projectlog.php";
 
                 <?php 
     $user = new User;
-   
-    $customer = $user ->selectAllUsers();
-    
-    if(!empty($customer)){
-        $customers = [];
-        foreach($customer as $key => $value){
-array_push($customers,$value['unique_id']);
-        }
-        for ($i = 0; $i <= count($customers) - 1; $i++) {
-            $total = $user->selectAllocatedCustomers($customers[$i]);
-            
+            $total = $user->selectLandInfo();
            if(!empty($total)){
-            $landusers = [];
-            foreach($total as $key => $value){
-                array_push($landusers,$value); 
-                $allocateduser = $user->selectUser($value);
+           
+          
+            foreach ($total as $key => $value) {
+                  if($value['allocation_status'] != "approved"){
                  ?>
-
-                <div class="account-detail2">
-                    <div class="radius">
-                        <?php if(!empty( $allocateduser['photo'])){?>
-                        <img src="profileimage/<?php echo  $allocateduser['photo'];?>" alt="profile image" />
-                        <?php }?>
-                        <?php if(empty( $allocateduser['photo'])){?>
-                        <div class="empty-img">
-                            <i class="ri-user-fill"></i>
-                        </div>
-                        <?php }?>
-                    </div>
-                    <div class="flex">
-                        <p style="text-transform: capitalize;">
-                            <span><?php echo  $allocateduser['first_name'];?></span>&nbsp;<span><?php echo  $allocateduser['last_name'];?></span>
+                <div class="transaction-details2">
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname email-span">
+                            <span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
                         </p>
-                        <span class="email-span"><?php echo $allocateduser['email'];?></span>
                     </div>
-                    <a href="customerprofileinfo.php?unique=<?php echo  $allocateduser['unique_id'];?>&real=91838JDFOJOEI939"
-                        style="color: #808080;"><i class="ri-arrow-right-s-line"></i></a>
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="pname email-span"> <?php echo $value['product_name'];?></p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="pname email-span"> <?php echo $value['product_location'];?></p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="pname email-span"> <?php echo $value['product_unit'];?></p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="pname email-span">&#8358;<span><?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } else {
+                                 echo round($unitprice);
+                             }
+             ?></span></p>
+                    </div>
+
+                    <div class="details flexdetail" style="text-transform: capitalize;">
+                        <p class="pname"> <?php 
+                         if($value['allocation_status'] == "approved"){
+                            echo "Paid";
+                         }
+
+                         if($value['allocation_status'] == "unapproved"){
+                            echo "Pending Payment";
+                         }
+                        ?></p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <div class="detail" style="">
+                            <a
+                                href="customerprofileinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939">
+                                <p style="font-size: 14px; color: #fff;">View</p>
+                            </a>
+                        </div>
+                    </div>
+
+
                 </div>
 
+                <?php   
+            }       }
+         }
+           ?>
 
-                <?php          }
-        } 
-           }  }?>
 
-
-                <?php if(empty($customer)){?>
+                <?php if(empty($total)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
                     <p>There are no allocated customers yet!</p>
@@ -1032,6 +1242,64 @@ array_push($customers,$value['unique_id']);
 
     <script src="js/main.js"></script>
     <script>
+    let searchIcon = document.querySelector('.search-icon');
+    searchIcon.onclick = () => {
+        let searchinput = document.querySelector('.search-input');
+        let searchinput2 = document.querySelector('.search');
+        searchinput.style.display = "flex";
+        document.querySelector('#searchimg').style.display = "none";
+
+        let searchform = document.querySelector('.search-form');
+        searchform.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+
+        searchinput2.onkeyup = () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchallocation.php?user=supadmin`);
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+                    }
+                }
+            };
+            let formData = new FormData(searchform);
+            xhr.send(formData);
+        }
+
+
+    }
+
+
+    let downloadbtn = document.querySelector('.download-form .land-btn');
+    let downloadform = document.querySelector('.download-form');
+    downloadform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    function htmlTableToExcel(type) {
+        var userdata = document.getElementById('user-data');
+        var file = XLSX.utils.table_to_book(userdata, {
+            sheet: "sheet1"
+        });
+        XLSX.write(file, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        });
+
+        XLSX.writeFile(file, 'allocationcustomers.' + type);
+    }
+
+    downloadbtn.onclick = () => {
+        htmlTableToExcel('xlsx');
+
+    }
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

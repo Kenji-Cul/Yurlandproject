@@ -29,13 +29,13 @@ if(!isset($_SESSION['unique_id'])){
 
     .success {
         position: absolute;
-        top: 20em;
+        top: 28em;
         width: 90%;
     }
 
     .success img {
         width: 25em;
-        height: 25em;
+        height: 20em;
     }
 
 
@@ -61,6 +61,41 @@ if(!isset($_SESSION['unique_id'])){
         overflow: hidden;
         white-space: nowrap;
     }
+
+    .search-form,
+    .search-form2,
+    .search-form3,
+    .dropdown-form {
+        display: none;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-top: 2em;
+        position: unset;
+        gap: 2em;
+    }
+
+    .search-container .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
+        width: 240px;
+    }
+
+    .search-input2 input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+        border-radius: 8px;
+        border: 2px solid #ff6600;
+        margin-bottom: 1em;
+    }
+
+
 
     .transaction-details2 {
         border-radius: 8px;
@@ -139,6 +174,13 @@ if(!isset($_SESSION['unique_id'])){
             padding: 0.3em 0.3em;
         }
 
+        .details-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
         .navig .offer,
         .navig .payment,
         .navig .allocation {
@@ -147,7 +189,7 @@ if(!isset($_SESSION['unique_id'])){
 
         .success {
             position: absolute;
-            top: 40%;
+            top: 32em;
             height: 10em;
             width: 100%;
         }
@@ -516,144 +558,286 @@ if(!isset($_SESSION['unique_id'])){
                 </div>
             </div>
 
-            <?php 
+            <div class="search-container">
+
+                <div class="select-box">
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode1" name="searchmode" value="Land" />
+                            <label for="searchmode1">By Land</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode2" name="searchmode" value="Date" />
+                            <label for="searchmode2">By Date</label>
+                        </div>
+
+                    </div>
+
+                    <div class="selected">Choose Search Mode</div>
+
+
+                </div>
+
+
+                <div class="search-input2">
+                    <form action="" class="search-form3">
+                        <input type="text" class="search2" type="search" name="searchproduct2"
+                            placeholder="Search By Land">
+                    </form>
+                </div>
+
+
+                <form action="" class="search-form2">
+                    <div class="select-box">
+                        <div class="options-container">
+                            <?php 
+$lastsevendays = date('M-d-Y', strtotime('today - 7 days'));
+$today = date('M-d-Y', strtotime('today'));
+$dates = [];
+for ($i = 0; $i < 31; $i++) { 
+
+?>
+                            <div class="option">
+                                <input type="radio" class="radio" id="date<?php echo $i;?>" name="searchproduct3"
+                                    value="<?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?>" />
+                                <label
+                                    for="date<?php echo $i;?>"><?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?></label>
+                            </div>
+                            <?php }?>
+                        </div>
+
+                        <div class="selected">Choose Date</div>
+
+                    </div>
+                    <div class="valuediv" style="display: none;"></div>
+                </form>
+
+
+
+
+            </div>
+
+
+
+            <div class="details-container">
+
+                <?php 
              $land = new User;
              $landview = $land->selectAllocationLetter($_SESSION['unique_id']);
              if(!empty($landview)){
                 foreach($landview as $key => $value){
                     
             ?>
-            <div class="transaction-details2">
-                <div class="radius">
-                    <img src="landimage/<?php echo $value['product_image'];?>" alt="">
-                </div>
-                <div class="details">
-                    <p class="pname"><?php echo $value['product_name'];?></p>
-                    <div class="inner-detail">
-                        <div class="date" style="font-size: 12px;">
-                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
+                <div class="transaction-details2">
+                    <div class="radius">
+                        <img src="landimage/<?php echo $value['product_image'];?>" alt="">
+                    </div>
+                    <div class="details">
+                        <p class="pname"><?php echo $value['product_name'];?></p>
+                        <div class="inner-detail">
+                            <div class="date" style="font-size: 12px;">
+                                <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="price-detail detail3"><?php 
+                    <div class="price-detail detail3"><?php 
             if($value['product_unit'] == "1"){
                 echo $value['product_unit']." Unit";
             } else {
                 echo $value['product_unit']." Units";
             }
          ?>
-                </div>
-                <div class="price-detail detail3"><?php 
+                    </div>
+                    <div class="price-detail detail3"><?php 
             echo $value['allocation_letter'];
             ?></div>
-                <div class="price-detail">
+                    <div class="price-detail">
 
-                    <a href="userdocuments/<?php echo $value['allocation_letter'];?>">
-                        <button class="btn land-btn" style="width: 70px; margin-top: 0;"><i class="ri-download-line"
-                                id="export"></i></button>
-                    </a>
+                        <a href="userdocuments/<?php echo $value['allocation_letter'];?>">
+                            <button class="btn land-btn" style="width: 70px; margin-top: 0;"><i class="ri-download-line"
+                                    id="export"></i></button>
+                        </a>
 
-                    </p>
+                        </p>
+                    </div>
                 </div>
+
+                <?php }}?>
+
+                <?php if(empty($landview)){?>
+                <div class="success">
+                    <img src="images/whoops.svg" alt="" />
+                    <p>Whoops, You don't have allocation letters yet</p>
+                </div>
+                <?php }?>
             </div>
 
-
-
-
-
-
-            <?php }}?>
-
-            <?php if(empty($landview)){?>
-            <div class="success">
-                <img src="images/whoops.svg" alt="" />
-                <p>Whoops, You don't have allocation letters yet</p>
-            </div>
-            <?php }?>
         </div>
-    </div>
 
 
 
 
 
-    <script src="js/main.js"></script>
-    <script src="js/cart.js"></script>
-    <script>
-    if (window.innerWidth > 1200) {
-        let dropdownnav = document.querySelector(".dropdown-links");
-        let open = document.querySelector('#openicon');
-        let closeicon = document.querySelector('#closeicon');
-        open.onclick = () => {
-            dropdownnav.style = `
+        <script src="js/main.js"></script>
+        <script src="js/cart.js"></script>
+        <script>
+        let purpose4 = document.getElementsByName("searchmode");
+
+        purpose4.forEach((element) => {
+            element.onclick = () => {
+                if (element.value == "Land") {
+                    document.querySelector('.search-form3').style.display = "block";
+                    document.querySelector('.search-form2').style.display = "none";
+
+                }
+                if (element.value == "Date") {
+                    document.querySelector('.search-form2').style.display = "block";
+                    document.querySelector('.search-form3').style.display = "none";
+
+                }
+
+            }
+        });
+        //let searchIcon = document.querySelector('.search-icon');
+
+        //let searchinput = document.querySelector('.search-input2');
+        let searchinput3 = document.querySelector('.search2');
+
+        //searchinput.style.display = "flex";
+        //document.querySelector('#searchimg').style.display = "none";
+        let searchform2 = document.querySelector('.search-form3');
+        let searchform3 = document.querySelector('.search-form2');
+
+
+        searchform2.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+        searchform3.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+
+        searchinput3.onkeyup = () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchbyland.php?user=allocationuser&unique=<?php echo $_SESSION['unique_id'];?>`);
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+                    }
+                }
+            };
+            let formData = new FormData(searchform2);
+            xhr.send(formData);
+        }
+
+
+        let valuediv = document.querySelector('.valuediv');
+
+        let purpose = document.getElementsByName("searchproduct3");
+        purpose.forEach((element) => {
+            element.onclick = () => {
+                valuediv.innerHTML = element.value;
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST",
+                    `searchbydate.php?data=${valuediv.innerHTML}&user=allocationuser&unique=<?php echo $_SESSION['unique_id'];?>`
+                );
+
+                xhr.onload = () => {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            let data = xhr.response;
+                            document.querySelector('.details-container').innerHTML = data;
+
+                        }
+                    }
+                };
+                let formData = new FormData(searchform3);
+                xhr.send(formData);
+            }
+
+        });
+
+        if (window.innerWidth > 1200) {
+            let dropdownnav = document.querySelector(".dropdown-links");
+            let open = document.querySelector('#openicon');
+            let closeicon = document.querySelector('#closeicon');
+            open.onclick = () => {
+                dropdownnav.style = `
         width: 14%;
         `;
-            open.style.display = "none";
-            closeicon.style.display = "block";
-            document.querySelector(".doc-container").style = `
+                open.style.display = "none";
+                closeicon.style.display = "block";
+                document.querySelector(".doc-container").style = `
          padding-left: 13em;
         `;
-            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+                let allLinks = document.querySelectorAll(".dropdown-links .links .link");
 
-            let allLink = document.querySelectorAll(".dropdown-links .links");
-            allLink.forEach((element) => {
-                element.style = `
+                let allLink = document.querySelectorAll(".dropdown-links .links");
+                allLink.forEach((element) => {
+                    element.style = `
         gap: 10px;
         `;
 
-            });
-            allLinks.forEach((element) => {
-                element.style = `
+                });
+                allLinks.forEach((element) => {
+                    element.style = `
          visibility: visible;
          display: block;
         `;
-            });
-        }
+                });
+            }
 
-        closeicon.onclick = () => {
-            dropdownnav.style = `
+            closeicon.onclick = () => {
+                dropdownnav.style = `
         width: 6%;
         `;
-            open.style.display = "block";
-            closeicon.style.display = "none";
-            document.querySelector(".doc-container").style = `
+                open.style.display = "block";
+                closeicon.style.display = "none";
+                document.querySelector(".doc-container").style = `
          padding-left: 5em;
         `;
 
-            let allLink = document.querySelectorAll(".dropdown-links .links");
-            allLink.forEach((element) => {
-                element.style = `
+                let allLink = document.querySelectorAll(".dropdown-links .links");
+                allLink.forEach((element) => {
+                    element.style = `
         justify-content: center
         `;
-            });
+                });
 
-            let allLinks = document.querySelectorAll(".dropdown-links .links .link");
-            allLinks.forEach((element) => {
-                element.style = `
+                let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+                allLinks.forEach((element) => {
+                    element.style = `
          visibility: hidden;
          display:none;
         `;
-            });
+                });
+            }
         }
-    }
 
-    if (window.innerWidth < 1300) {
-        let dropdownnav = document.querySelector(".dropdown-links");
-        let menu = document.querySelector(".menu");
-        menu.onclick = () => {
-            dropdownnav.style = `
+        if (window.innerWidth < 1300) {
+            let dropdownnav = document.querySelector(".dropdown-links");
+            let menu = document.querySelector(".menu");
+            menu.onclick = () => {
+                dropdownnav.style = `
             transform: translateX(0);
             `;
-        };
+            };
 
-        let close = document.querySelector(".close");
-        close.onclick = () => {
-            dropdownnav.style = `
+            let close = document.querySelector(".close");
+            close.onclick = () => {
+                dropdownnav.style = `
             transform: translateX(100%);
             `;
-        };
-    }
-    </script>
+            };
+        }
+        </script>
 </body>
 
 </html>

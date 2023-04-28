@@ -7,8 +7,7 @@ require 'vendor/autoload.php';
 // define("PASSWORD","cvofrbjulwvkkccb");
 // define("EMAIL","yurland.ng@gmail.com");
 
-define("PASSWORD","gecxolzcdhjfeilm");
-define("EMAIL","gideonteibo@gmail.com");
+include_once "enc.php";
 
 
 

@@ -1564,11 +1564,14 @@ if(!isset($_GET['unique'])){
                              }
                       ?> &nbsp;<span>daily</span></div>
                             <?php }?>
-                            <?php } else if($value['balance'] < "2" && $value['payment_method'] == "Subscription" && $value['failed_charges'] < "2"){ ?>
+                            <?php } else if($value['balance'] < "2" && $value['payment_method'] == "Subscription" && $value['failed_charges'] < "2" && $value['allocation_status'] == "approved"){ ?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
              ?> &nbsp;</div>
-
+                            <?php } else if($value['allocation_status'] == "unapproved"){?>
+                            <div class="cartbutton" style="font-size: 12px;"><?php 
+                      echo "Pending Allocation";
+             ?> &nbsp;</div>
                             <?php } else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
                             <div class="cartbutton">&#8358;<?php 
                    $unitprice = $value['sub_payment'];
@@ -1696,7 +1699,11 @@ if(!isset($_GET['unique'])){
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
                                           echo number_format($unprice);
                                         } else {
+                                            if($unprice < "2"){
+                                                echo "0";
+                                            }else {
                                             echo number_format($unprice);
+                                            }
                                         }
                                        
                     ?></span></p>
@@ -1852,10 +1859,14 @@ if(!isset($_GET['unique'])){
                              }
                       ?> &nbsp;<span><?php echo $value['sub_period']?></span></div>
                                 <?php }?>
-                                <?php } else if($value['balance'] < "2" && $value['payment_method'] == "Subscription"){ ?>
+                                <?php } else if($value['balance'] < "2" && $value['payment_method'] == "Subscription" && $value['allocation_status'] == "approved"){ ?>
 
                                 <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
+             ?> &nbsp;</div>
+                                <?php } else if($value['allocation_status'] == "unapproved" && $value['balance'] < "2"){?>
+                                <div class="cartbutton" style="font-size: 12px;"><?php 
+                      echo "Pending Allocation";
              ?> &nbsp;</div>
 
                                 <?php } else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
@@ -2012,6 +2023,44 @@ if(!isset($_GET['unique'])){
             ?>
                                 <?php }?>
                             </div>
+
+                            <?php if($value['allocation_status'] == "unapproved" && $value['balance'] < "2"){?>
+                            <div class="detail-four">
+                                <?php 
+            $name = $value['product_id'].$value['payment_id'];
+            if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
+            ?>
+                                <form action="" class="approve-form" method="POST">
+                                    <input class="price" type="submit" value="Approve" name="approve<?php echo $name?>"
+                                        style="background-color: #7e252b; color: #fff;" />
+
+                                </form>
+                                <?php 
+             
+                
+                if(isset($_POST["approve".$name])){
+                    if(isset($_SESSION['uniquesupadmin_id'])){
+                        $approverid = $_SESSION['uniquesupadmin_id'];
+                        $supname = $user->selectSupadmin($approverid);
+                        $approvername = $supname['super_adminname'];
+                    }
+
+                    if(isset($_SESSION['uniquesubadmin_id'])){
+                        $approverid = $_SESSION['uniquesubadmin_id'];
+                        $supname = $user->selectSubadmin($approverid);
+                        $approvername = $supname['subadmin_name'];
+                    }
+                    $insertuser = $user->approveProduct($value['product_id'],$_GET['unique'],$value['payment_method'],$value['payment_id'],$approvername);
+                    $deleted = "approved";
+                        header("Location: successpage/deletesuccess.php?detect=".$deleted."");
+                    
+                }
+            
+            ?>
+                                <?php }?>
+                            </div>
+                            <?php }?>
+
                             <div class="detail-four">
                                 <p><span>Amount
                                         Paid:</span>&nbsp;&#8358;<span><?php
@@ -2028,7 +2077,11 @@ if(!isset($_GET['unique'])){
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
                                           echo number_format($unprice);
                                         }  else {
+                                            if($unprice < "2"){
+                                                echo "0";
+                                            }else {
                                             echo number_format($unprice);
+                                            }
                                         }
                                         
                     ?></span></p>
@@ -2087,6 +2140,25 @@ if(!isset($_GET['unique'])){
                         } 
                              
                     ?></span></p>
+                                <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+                                <p><span>Approved By:</span>&nbsp;<span style="text-transform: capitalize;">
+                                        <?php 
+                                   
+                                    if(isset($_SESSION['uniquesupadmin_id'])){
+                                        $supadmin = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+                                        if(!empty($value['allocator_id'])){
+                                            if($value['allocator_id'] == $supadmin['super_adminname']){
+                                                echo "You";
+                                            } else {
+                                                echo $value['allocator_id'];   
+                                            }
+                                        } else {
+                                            echo "Nil";
+                                        }
+                                    } 
+                                 ?>
+                                    </span></p>
+                                <?php }?>
                             </div>
                         </div>
 

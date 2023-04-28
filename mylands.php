@@ -821,8 +821,13 @@ if(!isset($_SESSION['unique_id'])){
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
                                           echo number_format($unprice);
                                         } else {
-                                            echo number_format($unprice);
+                                            if($unprice < "2"){
+                                                echo "0";
+                                            }else {
+                                                echo number_format($unprice);
+                                            }
                                         }
+                           
                                        
                     ?></span></p>
                         </div>
@@ -982,8 +987,11 @@ if(!isset($_SESSION['unique_id'])){
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
              ?> &nbsp;</div>
+                            <?php } else if($value['allocation_status'] == "unapproved" && $value['balance'] < "2"){?>
+                            <div class="cartbutton" style="font-size: 12px;"><?php 
+                      echo "Pending Allocation";
+             ?> &nbsp;</div>
                             <?php  }
-                            
                             else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
@@ -1142,8 +1150,15 @@ if(!isset($_SESSION['unique_id'])){
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
                                           echo number_format($unprice);
                                         }  else {
-                                            echo number_format($unprice);
+                                            if($unprice < "2"){
+                                                echo "0";
+                                            }else {
+                                                echo number_format($unprice);
+                                            }
+
                                         }
+
+                         
                                         
                     ?></span></p>
                             <p><span>Start

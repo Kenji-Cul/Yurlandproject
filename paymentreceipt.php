@@ -191,6 +191,10 @@ if(!isset($_SESSION['unique_id'])){
             width: 80%;
         }
 
+        .transaction-details2 .date {
+            font-size: 11px !important;
+        }
+
         .user,
         #openicon {
             display: none;
@@ -584,37 +588,47 @@ if(!isset($_SESSION['unique_id'])){
                     
             ?>
 
-            <div class="transaction-details2">
+
+
+            <div class="transaction-details2" <?php if($value['sub_status'] == "Failed"){?>
+                style="border: 2px solid red;" <?php }?>>
                 <div class="radius">
                     <img src="landimage/<?php echo $value['product_image'];?>" alt="">
                 </div>
-                <div class="details">
+                <div class="details" style="font-size: 14px;">
                     <p class="pname"><?php echo $value['product_name'];?></p>
                     <div class="inner-detail">
-                        <div class="date">
-                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?>
+                        <div class="date" style="font-size: 12px;">
+                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
                         </div>
                     </div>
                 </div>
                 <div class="price-detail detail3"><?php 
-            if($value['product_unit'] == "1"){
+             if($value['product_unit'] == "1"){
                 echo $value['product_unit']." Unit";
             } else {
                 echo $value['product_unit']." Units";
             }
-        ?>
-                </div>
+            ?></div>
                 <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
-                <div class="price-detail">&#8358;<?php 
+                <?php  if($value['delete_status'] == "Deleted"){ ?>
+                <div class="detail-four">
+                    <div class="detail"
+                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <p style="font-size: 14px; color: #fff;">Deleted</p>
+                    </div>
+                </div>
+                <?php } else {?>
+                <div class="price-detail" <?php if($value['sub_status'] == "Failed"){?> style="color: red;" <?php }?>>&#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              } else {
-                                echo round($unitprice);
+                                echo $unitprice;
                              }
-            ?>
+            ?><?php if($value['sub_status'] == "Failed") { echo "<span style='font-size: 12px;'>(Failed)</span>";}?>
                     <div class="payee">
                         <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
                         <p class="payee-name"
@@ -631,7 +645,10 @@ if(!isset($_SESSION['unique_id'])){
                         </p>
                     </div>
                 </div>
+                <?php } ?>
             </div>
+
+
 
             <?php }}?>
 
