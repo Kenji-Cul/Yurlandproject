@@ -1,5 +1,5 @@
 <?php 
 define("PASSWORD","gecxolzcdhjfeilm");
-define("EMAIL","gideont@gmail.com");
+define("EMAIL","gideonteibo@gmail.com");
 
-$mainemail = "gideont@gmail.com";
+$mainemail = "gideonteibo@gmail.com";
