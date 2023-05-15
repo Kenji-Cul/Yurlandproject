@@ -43,7 +43,7 @@ $mail->Body = '<div style="width:100%; height: 100%; background: #7e252b;
     <h2 style="color: white;">yurLAND Team</h2>
 </div>';
 $mail->AltBody = "This is the plain text version of the email content";
-$mail->From = "gideonteibo@gmail.com";
+$mail->From = "$mainemail";
 $mail->FromName = "Yurland";
 $mail->AddAddress($_GET['email']);
 $mail->AddReplyTo('no-reply@example.com');

@@ -1,5 +1,6 @@
 <?php 
 session_start();
+ob_start();
 include "projectlog.php";
 
 
@@ -82,6 +83,41 @@ if(!isset($_GET['unique'])){
         font-size: 13px;
     }
 
+    .search-form,
+    .search-form2,
+    .search-form3,
+    .dropdown-form {
+        display: none;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-top: 2em;
+        position: unset;
+        gap: 2em;
+    }
+
+    .search-container .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
+        width: 240px;
+    }
+
+    .search-input2 input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+        border-radius: 8px;
+        border: 2px solid #ff6600;
+        margin-bottom: 1em;
+    }
+
+
+
 
     header {
         background: #fee1e3;
@@ -112,7 +148,7 @@ if(!isset($_GET['unique'])){
     .success {
         position: absolute;
         left: 50%;
-        top: 26em;
+        top: 45em;
         transform: translate(-50%, -50%);
         height: 10em;
         width: 90%;
@@ -173,7 +209,7 @@ if(!isset($_GET['unique'])){
 
         .success {
             position: absolute;
-            top: 20em;
+            top: 45em;
         }
 
 
@@ -196,9 +232,10 @@ if(!isset($_GET['unique'])){
         .transaction-details {
             border-radius: 8px;
             /* border: 2px solid black; */
-            padding: 1em 2em;
+            padding: 1em 1em;
+            gap: 1em;
             box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-            width: 80%;
+            width: 95%;
         }
 
         .transaction-details .date {
@@ -1097,8 +1134,8 @@ if(!isset($_GET['unique'])){
                 </li>
 
                 <li class="links">
-                    <a href="#"><img src="images/updown.svg" /></a>
-                    <a href="#" class="link">Pay Earnings</a>
+                    <a href="totalearnings.php"><img src="images/updown.svg" /></a>
+                    <a href="totalearnings.php" class="link">Pay Earnings</a>
                 </li>
 
                 <li class="links">
@@ -1124,6 +1161,8 @@ if(!isset($_GET['unique'])){
                 </a>
                 <p>Transactions</p>
             </div>
+
+
 
             <form action="" class="download-form">
                 <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
@@ -1173,13 +1212,102 @@ if(!isset($_GET['unique'])){
                 </tbody>
             </table>
 
+            <div class="search-container">
 
-            <!-- <div class="no-lands">
+                <div class="select-box">
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode1" name="searchmode" value="Land" />
+                            <label for="searchmode1">By Land</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode2" name="searchmode" value="Date" />
+                            <label for="searchmode2">By Date</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode4" name="searchmode" value="Failed" />
+                            <label for="searchmode4">Failed Transactions</label>
+
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode5" name="searchmode" value="Success" />
+                            <label for="searchmode5">Successful Transactions</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode6" name="searchmode" value="Deleted" />
+                            <label for="searchmode6">Deleted Transactions</label>
+                        </div>
+                    </div>
+
+                    <div class="selected">Choose Search Mode</div>
+
+
+                </div>
+
+                <div class="search-input2">
+                    <form action="" class="search-form">
+                        <input type="email" class="search" type="search" name="searchproduct"
+                            placeholder="Search By Payer">
+                    </form>
+                </div>
+
+                <div class="search-input2">
+                    <form action="" class="dropdown-form">
+                        <div class="valuediv2" style="display: none;"></div>
+                    </form>
+                </div>
+
+                <div class="search-input2">
+                    <form action="" class="search-form3">
+                        <input type="text" class="search2" type="search" name="searchproduct2"
+                            placeholder="Search By Land">
+                    </form>
+                </div>
+
+
+                <form action="" class="search-form2">
+                    <div class="select-box">
+                        <div class="options-container">
+                            <?php 
+$lastsevendays = date('M-d-Y', strtotime('today - 7 days'));
+$today = date('M-d-Y', strtotime('today'));
+$dates = [];
+for ($i = 0; $i < 31; $i++) { 
+
+?>
+                            <div class="option">
+                                <input type="radio" class="radio" id="date<?php echo $i;?>" name="searchproduct3"
+                                    value="<?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?>" />
+                                <label
+                                    for="date<?php echo $i;?>"><?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?></label>
+                            </div>
+                            <?php }?>
+                        </div>
+
+                        <div class="selected">Choose Date</div>
+
+                    </div>
+                    <div class="valuediv" style="display: none;"></div>
+                </form>
+
+
+
+
+            </div>
+
+
+
+            <div class="details-container">
+                <!-- <div class="no-lands">
         <img src="images/asset_success.svg" alt="success image" />
         <p>You have not done any transaction yet!!</p>
       </div> -->
 
-            <?php 
+                <?php 
            
             $user = new User;
              $landview = $user->selectPayHistory($_GET['unique']);
@@ -1188,38 +1316,38 @@ if(!isset($_GET['unique'])){
                     
               
             ?>
-            <div class="transaction-details" <?php if($value['sub_status'] == "Failed"){?>
-                style="border: 2px solid red;" <?php }?>>
-                <div class="radius">
-                    <img src="landimage/<?php echo $value['product_image'];?>" alt="">
-                </div>
-                <div class="details">
-                    <p class="pname"><?php echo $value['product_name'];?></p>
-                    <div class="inner-detail">
-                        <div class="date" style="font-size: 14px;">
-                            <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
+                <div class="transaction-details" <?php if($value['sub_status'] == "Failed"){?>
+                    style="border: 2px solid red;" <?php }?>>
+                    <div class="radius">
+                        <img src="landimage/<?php echo $value['product_image'];?>" alt="">
+                    </div>
+                    <div class="details">
+                        <p class="pname"><?php echo $value['product_name'];?></p>
+                        <div class="inner-detail">
+                            <div class="date" style="font-size: 14px;">
+                                <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="price-detail detail3"><?php 
+                    <div class="price-detail detail3"><?php 
            if($value['product_unit'] == "1"){
             echo $value['product_unit']." Unit";
         } else {
             echo $value['product_unit']." Units";
         }
             ?></div>
-                <div class="price-detail detail3"><?php 
+                    <div class="price-detail detail3"><?php 
             echo $value['payment_method'];
             ?></div>
-                <?php  if($value['delete_status'] == "Deleted"){ 
+                    <?php  if($value['delete_status'] == "Deleted"){ 
                     if(isset($_SESSION['uniquesupadmin_id']) || isset($_SESSION['uniquesubadmin_id'])){
                             $name = $value['product_id'].$value['payment_id'];
                         ?>
-                <form action="" class="restore-form" method="POST">
-                    <input class="price" type="submit" value="Restore" name="restorel<?php echo $name?>"
-                        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                </form>
-                <?php 
+                    <form action="" class="restore-form" method="POST">
+                        <input class="price" type="submit" value="Restore" name="restorel<?php echo $name?>"
+                            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+                    </form>
+                    <?php 
                       if(isset($_POST["restorel".$name])){ 
                         $insertupdate = $user->updateLandHistory4($value['product_id'],$value['payment_id'],$value['payment_method'],$value['newpay_id']);
                        
@@ -1227,17 +1355,18 @@ if(!isset($_GET['unique'])){
                         header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
                }
                     ?>
-                <?php } ?>
-                <?php if(isset($_SESSION['unique_id']) || isset($_SESSION['uniqueagent_id'])){?>
-                <div class="detail-four">
-                    <div class="detail"
-                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <p style="font-size: 14px; color: #fff;">Deleted</p>
+                    <?php } ?>
+                    <?php if(isset($_SESSION['unique_id']) || isset($_SESSION['uniqueagent_id'])){?>
+                    <div class="detail-four">
+                        <div class="detail"
+                            style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <p style="font-size: 14px; color: #fff;">Deleted</p>
+                        </div>
                     </div>
-                </div>
-                <?php }?>
-                <?php } else {?>
-                <div class="price-detail" <?php if($value['sub_status'] == "Failed"){?> style="color: red;" <?php }?>>&#8358;<?php 
+                    <?php }?>
+                    <?php } else {?>
+                    <div class="price-detail" <?php if($value['sub_status'] == "Failed"){?> style="color: red;"
+                        <?php }?>>&#8358;<?php 
              $unitprice = $value['product_price'];
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
@@ -1245,12 +1374,12 @@ if(!isset($_GET['unique'])){
                                 echo round($unitprice);
                              }
             ?><?php if($value['sub_status'] == "Failed") { echo "<span style='font-size: 12px;'>(Failed)</span>";}?>
-                    <div class="payee">
-                        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                        <p class="payee-name"
-                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                        <div class="payee">
+                            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+                            <p class="payee-name"
+                                style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
 
-                            <?php
+                                <?php
                                 if(isset($_SESSION['uniqueagent_id'])){
                                 $newagent = $user->selectAgent($_SESSION['uniqueagent_id']);
                                 if($value['payee'] == $newagent['agent_name']){
@@ -1279,43 +1408,45 @@ if(!isset($_GET['unique'])){
                                 } 
                                 
                                 ?>
-                        </p>
-                    </div>
-                    <?php   
+                            </p>
+                        </div>
+                        <?php   
                         if(isset($_SESSION['uniquesupadmin_id']) || isset($_SESSION['uniquesubadmin_id'])){
                         $name = $value['product_id'].$value['payment_id'];?>
 
-                    <form action="" class="deletep-form" method="POST">
-                        <input class="price" type="submit" value="Delete" name="deletel<?php echo $name?>"
-                            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                    </form>
-                    <?php  if(isset($_POST["deletel".$name])){ 
+                        <form action="" class="deletep-form" method="POST">
+                            <input class="price" type="submit" value="Delete" name="deletel<?php echo $name?>"
+                                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+                        </form>
+                        <?php  if(isset($_POST["deletel".$name])){ 
                                  $insertupdate = $user->updateLandHistory3($value['product_id'],$value['payment_id'],$value['payment_method'],$value['newpay_id']);
                                 
                                  $deletedp = "deletedl";
                                  header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
                         } }
                         ?>
+                    </div>
+                    <?php }?>
                 </div>
-                <?php }?>
-            </div>
 
 
 
 
-            <?php }}?>
+                <?php }}?>
 
-            <?php if(empty($landview)){?>
-            <div class="success">
-                <img src="images/whoops.svg" alt="" />
-                <p>Whoops, This user has no payment records</p>
+
+                <?php if(empty($landview)){?>
+                <div class="success">
+                    <img src="images/whoops.svg" alt="" />
+                    <p>Whoops, This user has no payment records</p>
+                </div>
             </div>
         </div>
     </div>
 
     <?php }?>
 
-
+    <?php ob_end_flush();?>
 
     <!-- <div class="directions">
         <img src="images/leftpage.svg" alt="" />
@@ -1325,6 +1456,316 @@ if(!isset($_GET['unique'])){
 
     <script src="js/main.js"></script>
     <script>
+    let purpose4 = document.getElementsByName("searchmode");
+
+    purpose4.forEach((element) => {
+        element.onclick = () => {
+            if (element.value == "Land") {
+                document.querySelector('.search-form3').style.display = "block";
+                document.querySelector('.search-form').style.display = "none";
+                document.querySelector('.search-form2').style.display = "none";
+
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadland&user=supadmin&userid=<?php echo $_GET['unique'];?>`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform2);
+                    xhr.send(formData);
+
+                }
+
+            }
+            if (element.value == "Date") {
+                document.querySelector('.search-form2').style.display = "block";
+                document.querySelector('.search-form3').style.display = "none";
+                document.querySelector('.search-form').style.display = "none";
+
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloaddate&data=${valuediv.innerHTML}&user=supadmin&userid=<?php echo $_GET['unique'];?>`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform3);
+                    xhr.send(formData);
+
+                }
+            }
+
+        }
+    });
+    //let searchIcon = document.querySelector('.search-icon');
+
+    //let searchinput = document.querySelector('.search-input2');
+    let searchinput2 = document.querySelector('.search');
+    let searchinput3 = document.querySelector('.search2');
+
+    //searchinput.style.display = "flex";
+    //document.querySelector('#searchimg').style.display = "none";
+    let searchform = document.querySelector('.search-form');
+    let searchform2 = document.querySelector('.search-form3');
+    let searchform3 = document.querySelector('.search-form2');
+    let searchform4 = document.querySelector('.dropdown-form');
+
+
+    searchform.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    searchform2.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    searchform3.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    searchform4.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+
+
+    <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+
+
+    searchinput3.onkeyup = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST",
+            `searchbyland.php?user=supadmin2&unique=<?php echo $_SESSION['uniquesupadmin_id'];?>&userid=<?php echo $_GET['unique'];?>`
+        );
+
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    document.querySelector('.details-container').innerHTML = data;
+                }
+            }
+        };
+        let formData = new FormData(searchform2);
+        xhr.send(formData);
+    }
+
+    <?php }?>
+
+    <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+
+
+    searchinput3.onkeyup = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST",
+            `searchbyland.php?user=subadmin2&unique=<?php echo $_SESSION['uniquesubadmin_id'];?>&userid=<?php echo $_GET['unique'];?>`
+        );
+
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    document.querySelector('.details-container').innerHTML = data;
+                }
+            }
+        };
+        let formData = new FormData(searchform2);
+        xhr.send(formData);
+    }
+
+    <?php }?>
+
+
+    let valuediv2 = document.querySelector('.valuediv2');
+
+    let purpose1 = document.querySelector("#searchmode4");
+    let purpose2 = document.querySelector("#searchmode5");
+    let purpose3 = document.querySelector("#searchmode6");
+    let purposearray = [purpose1, purpose2, purpose3];
+    document.querySelector('.dropdown-form').style.display = "block";
+    purposearray.forEach((element) => {
+        element.onclick = () => {
+            document.querySelector('.search-form3').style.display = "none";
+            document.querySelector('.search-form').style.display = "none";
+            document.querySelector('.search-form2').style.display = "none";
+            valuediv2.innerHTML = element.value;
+
+            let xhr = new XMLHttpRequest();
+
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            xhr.open("POST",
+                `searchstatus.php?data=${valuediv2.innerHTML}&user=supadmin2&unique=<?php echo $_SESSION['uniquesupadmin_id'];?>&userid=<?php echo $_GET['unique'];?>`
+            );
+            <?php }?>
+
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+            xhr.open("POST",
+                `searchstatus.php?data=${valuediv2.innerHTML}&user=subadmin2&unique=<?php echo $_SESSION['uniquesubadmin_id'];?>&userid=<?php echo $_GET['unique'];?>`
+            );
+            <?php }?>
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+
+                    }
+                }
+            };
+            let formData = new FormData(searchform4);
+            xhr.send(formData);
+
+
+
+            if (element.value == "Failed") {
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadfailed&user=supadmin&userid=<?php echo $_GET['unique'];?>`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
+            }
+
+            if (element.value == "Success") {
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadsuccess&user=supadmin&userid=<?php echo $_GET['unique'];?>`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
+            }
+
+            if (element.value == "Deleted") {
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloaddeleted&user=supadmin&userid=<?php echo $_GET['unique'];?>`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
+            }
+
+        }
+
+    });
+
+
+
+    let valuediv = document.querySelector('.valuediv');
+
+    let purpose = document.getElementsByName("searchproduct3");
+    purpose.forEach((element) => {
+        element.onclick = () => {
+            valuediv.innerHTML = element.value;
+
+            let xhr = new XMLHttpRequest();
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+
+            xhr.open("POST",
+                `searchbydate.php?data=${valuediv.innerHTML}&user=supadmin2&unique=<?php echo $_SESSION['uniquesupadmin_id'];?>&userid=<?php echo $_GET['unique'];?>`
+            );
+
+            <?php }?>
+
+            <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+
+            xhr.open("POST",
+                `searchbydate.php?data=${valuediv.innerHTML}&user=subadmin2&unique=<?php echo $_SESSION['uniquesubadmin_id'];?>&userid=<?php echo $_GET['unique'];?>`
+            );
+
+            <?php }?>
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+
+                    }
+                }
+            };
+            let formData = new FormData(searchform3);
+            xhr.send(formData);
+        }
+
+    });
+
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

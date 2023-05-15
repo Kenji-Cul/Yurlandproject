@@ -652,6 +652,25 @@ if(!isset($_SESSION['uniqueagent_id'])){
                                 <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                             </div>
                         </div>
+                        <?php 
+                        if($value['balance_earning'] != ""){
+                        if($value['balance_earning'] > 0){?>
+                        <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>
+                        <?php }?>
+
+                        <?php if($value['balance_earning'] == 0){?>
+                        <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>
+                        <?php }}?>
                     </div>
                 </div>
                 <?php }}?>

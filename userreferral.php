@@ -588,6 +588,56 @@ if(!isset($_SESSION['unique_id'])){
                 </div>
             </div>
 
+            <div style="display: flex; align-items: center; justify-content: left;">
+                <div class="payment-image-div2">
+                    <div>
+                        <img src="images/image1.svg" alt="payment image" />
+                        <div class="payment-desc">
+                            <p style="width: 80%;">Total Paid Earnings</p>
+                            <div class="payment-count">
+                                &#8358;<span><?php 
+                        $user = new User;
+                        $unitprice2 = $user->selectAgentTotalPaidEarnings($newuser['unique_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                        
+                       
+                        ?>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-image-div2">
+                    <div>
+                        <img src="images/image1.svg" alt="payment image" />
+                        <div class="payment-desc">
+                            <p style="width: 80%;">Total Pending Earnings</p>
+                            <div class="payment-count">
+                                &#8358;<span><?php 
+                        $user = new User;
+                        $unitprice2 = $user->selectAgentTotalPendingEarnings($newuser['unique_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                        
+                       
+                        ?>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="details-container">
 
 
@@ -636,6 +686,25 @@ if(!isset($_SESSION['unique_id'])){
                                 <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                             </div>
                         </div>
+                        <?php 
+                        if($value['balance_earning'] != ""){
+                        if($value['balance_earning'] > 0){?>
+                        <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>
+                        <?php }?>
+
+                        <?php if($value['balance_earning'] == 0){?>
+                        <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>
+                        <?php }}?>
                     </div>
                 </div>
 

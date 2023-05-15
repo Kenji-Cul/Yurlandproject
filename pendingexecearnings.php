@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['uniqueagent_id'])){
+if(!isset($_SESSION['uniqueexec_id'])){
     header("Location:index.php");
 }
 
@@ -392,8 +392,8 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <?php if(isset($_SESSION['uniqueagent_id'])){?>
-            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php if(isset($_SESSION['uniqueexec_id'])){?>
+            <a href="executiveprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
@@ -401,23 +401,23 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
         <?php 
              $user = new User;
-             $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
+             $newuser = $user->selectExecutive($_SESSION['uniqueexec_id']);
             ?>
 
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
-                <p><?php if(isset($newuser['agent_name'])){  ?>
-                    <span><?php echo $newuser['agent_name']; ?></span>&nbsp;
+                <p><?php if(isset($newuser['full_name'])){  ?>
+                    <span><?php echo $newuser['full_name']; ?></span>&nbsp;
                     <?php }?>
                 </p>
                 <div class="profile-image">
-                    <?php if(!empty($newuser['agent_img'])){?>
-                    <a href="agentprofileinfo.php" style="color: #808080;"><img
-                            src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" /></a>
+                    <?php if(!empty($newuser['executive_img'])){?>
+                    <a href="executiveprofileinfo.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['executive_img'];?>" alt="profile image" /></a>
                     <?php }?>
-                    <?php if(empty($newuser['agent_img'])){?>
-                    <a href="agentprofileinfo.php" style="color: #808080;">
+                    <?php if(empty($newuser['executive_img'])){?>
+                    <a href="executiveprofileinfo.php" style="color: #808080;">
                         <div class="empty-img" style="border-radius: 50%;">
                             <i class="ri-user-fill"></i>
                         </div>
@@ -445,48 +445,14 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
             <li class="links select-link">
-                <a href="agentprofile.php"><img src="images/home3.svg" /></a>
-                <a href="agentprofile.php" class="link">Home</a>
-            </li>
-
-            <li class="links">
-                <a href="usertype.php"><img src="images/land2.svg" /></a>
-                <a href="usertype.php" class="link">New Land</a>
-            </li>
-
-            <li class="links">
-                <a href="allestates3.php"><img src="images/land2.svg" /></a>
-                <a href="allestates3.php" class="link">All Estates</a>
-            </li>
-
-            <li class="links">
-                <a href="mycustomers.php"><img src="images/referral.svg" /></a>
-                <a href="mycustomers.php" class="link">Customers</a>
+                <a href="executiveprofile.php"><img src="images/home3.svg" /></a>
+                <a href="executiveprofile.php" class="link">Profile</a>
             </li>
             <li class="links">
-                <a href="newcustomer.php"><img src="images/referral.svg" /> </a>
-                <a href="newcustomer.php" class="link">New Customer</a>
-            </li>
-            <li class="links">
-                <a href="referral.php"><img src="images/chart2.svg" /></a>
-                <a href="referral.php" class="link">Referrals</a>
-            </li>
-
-            <li class="links">
-                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
-                <a href="alltransactions.php" class="link">View Transactions</a>
-            </li>
-
-            <li class="links">
-                <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
-                <a href="agentprofileinfo.php" class="link">Profile</a>
-            </li>
-            <li class="links">
-                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
-                <a href="agentlogout.php" class="link">Logout</a>
+                <a href="logout.php?user=executive"><img src="images/exit.svg" /></a>
+                <a href="logout.php?user=executive" class="link">Logout</a>
             </li>
         </ul>
-
 
 
         <div class="profile-container">
@@ -494,8 +460,33 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentprofile.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
-                <p>My Earnings</p>
+                <p>My Pending Earnings</p>
             </div>
+
+            <div class="payment-image-div2">
+                <div>
+                    <img src="images/image1.svg" alt="payment image" />
+                    <div class="payment-desc">
+                        <p style="width: 80%;">Total Pending Earnings</p>
+                        <div class="payment-count">
+                            &#8358;<span><?php 
+                        $user = new User;
+                        $unitprice2 = $user->selectAgentTotalPendingEarnings($_SESSION['uniqueexec_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                        
+                       
+                        ?>
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
             <div class="details-container">
@@ -503,7 +494,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
                 <?php 
   
-            $earning = $user->selectAgentHistory($newuser['uniqueagent_id']);
+            $earning = $user->selectAgentPendingHistory($newuser['unique_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
     ?>
@@ -576,7 +567,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <?php if(empty($earning)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
-                    <p>You have no earnings yet!</p>
+                    <p>You have no pending earnings yet!</p>
                 </div>
                 <?php }?>
 

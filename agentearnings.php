@@ -15,6 +15,7 @@ include_once "projectlog.php";
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
@@ -22,6 +23,11 @@ include_once "projectlog.php";
         min-height: 100vh;
         position: relative;
         overflow-x: hidden;
+    }
+
+    .error,
+    .error2 {
+        width: 50%;
     }
 
 
@@ -137,7 +143,7 @@ include_once "projectlog.php";
     .success {
         position: absolute;
         left: 50%;
-        top: 50em;
+        top: 60em;
         transform: translate(-50%, -50%);
         height: 20%;
 
@@ -180,6 +186,26 @@ include_once "projectlog.php";
     }
 
     @media only screen and (min-width: 1300px) {
+
+        .error2,
+        .error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Space Grotesk";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 31px;
+            text-align: center;
+            color: #e11900;
+            border: 1px solid #e11900;
+            width: 30%;
+            padding: 10px 10px;
+            background-color: #e1dede;
+            visibility: hidden;
+        }
+
         .signup .nav {
             position: absolute;
             right: 40px;
@@ -372,10 +398,29 @@ include_once "projectlog.php";
 
     @media only screen and (max-width: 1300px) {
 
+        .error2,
+        .error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Space Grotesk";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 31px;
+            text-align: center;
+            color: #e11900;
+            border: 1px solid #e11900;
+            width: 70%;
+            padding: 4px 4px;
+            background-color: #e1dede;
+            visibility: hidden;
+        }
+
         .success {
             height: 20%;
             position: absolute;
-            top: 44em;
+            top: 58em;
         }
 
         .payee {
@@ -810,15 +855,41 @@ include_once "projectlog.php";
                         id="export"></i></button>
             </form>
 
+            <p class="error2" style="visibility:hidden;">Choose appropriate excel file</p>
+
+            <form action="" class="upload-form" id="upload-form">
+                <input type="file" id="passport" placeholder="Upload your profile image" name="image" hidden="hidden"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+
+                <div class="file-container">
+                    <div class="browse-filediv">
+                        <div class="centrediv">
+                            <p>Drop files here to upload</p>
+                            <label>Browse files</label>
+                        </div>
+                        <div class="uploading-div"></div>
+                        <div class="uploading-div2"></div>
+                    </div>
+                </div>
+
+                <p class="error" style="visibility:hidden;">Please select field</p>
+
+                <button class="btn land-btn" style="width: 70px; margin-left: 2em;" type="submit" name="importSubmit"><i
+                        class="ri-upload-line" id="export"></i></i></button>
+            </form>
+
             <table id="user-data" style="display: none;">
                 <thead>
                     <tr>
+                        <th>S/N</th>
                         <th>Name</th>
+                        <th>Customer ID(Do Not Edit)</th>
+                        <th>Earner ID(Do Not Edit)</th>
                         <th>Role</th>
                         <th>Bank Name</th>
                         <th>Account Number</th>
-                        <th>Amount Paid</th>
                         <th>Amount Earned</th>
+                        <th>Amount Paid</th>
                         <th>Balance Earning</th>
                         <th>Payment Date</th>
                     </tr>
@@ -842,21 +913,15 @@ include_once "projectlog.php";
         
     ?>
                     <tr>
+                        <td><span><?php echo $value['earning_id']; ?></span></td>
                         <td><span><?php echo $value['earnee']; ?></span>
                         </td>
+                        <td><span><?php echo $value['customer_id']; ?></span></td>
+                        <td><span><?php echo $value['earner_id']; ?></span></td>
                         <td>Agent</td>
                         <td><?php echo $newuser['bank_name'];?></td>
                         <td><?php echo $newuser['account_number'];?></td>
-                        <td>&#8358;<?php 
-                    $unitprice = $value['product_price'];
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                      echo number_format(round($unitprice));
-                                    } else {
-                                        echo round($unitprice);
-                                    }
-                                
-                    ?></td>
-                        <td>&#8358;<?php
+                        <td><?php
                     $earnedprice = $value['earned_amount'];
                     $unitprice2 = $earnedprice;
                     if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
@@ -867,14 +932,9 @@ include_once "projectlog.php";
                   
                                 
                     ?></td>
-                        <td>&#8358;<?php 
-                 $earnedprice = $value['earned_amount'];
-                    $unitprice = $value['product_price'] - $earnedprice;
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                      echo number_format(round($unitprice));
-                                    } else {
-                                        echo round($unitprice); }   
-                    ?></td>
+                        <td><?php echo $value['amount_paid'];?></td>
+                        <td><?php echo $value['balance_earning'];?></td>
+                        <td><?php echo $value['payment_date'];?></td>
                     </tr>
                     <?php }}?>
                 </tbody>
@@ -905,6 +965,18 @@ include_once "projectlog.php";
                             <input type="radio" class="radio" id="searchmode3" name="searchmode" value="Range" />
                             <label for="searchmode3">By Range</label>
                         </div>
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode4" name="searchmode" value="Pending" />
+                            <label for="searchmode4">Pending</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode5" name="searchmode" value="Paid" />
+                            <label for="searchmode5">Paid</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode6" name="searchmode" value="Unpaid" />
+                            <label for="searchmode6">Unpaid</label>
+                        </div>
                     </div>
 
                     <div class="selected">Choose Search Mode</div>
@@ -915,6 +987,12 @@ include_once "projectlog.php";
                     <form action="" class="search-form">
                         <input type="text" class="search" type="search" name="searchproduct"
                             placeholder="Search For Agent By Name">
+                    </form>
+                </div>
+
+                <div class="search-input2">
+                    <form action="" class="dropdown-form">
+                        <div class="valuediv2" style="display: none;"></div>
                     </form>
                 </div>
 
@@ -1038,6 +1116,25 @@ include_once "projectlog.php";
                                     <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                                 </div>
                             </div>
+                            <?php 
+                        if($value['balance_earning'] != ""){
+                        if($value['balance_earning'] > 0){?>
+                            <div class="detail-four">
+                                <div class="detail"
+                                    style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                    <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                                </div>
+                            </div>
+                            <?php }?>
+
+                            <?php if($value['balance_earning'] == 0){?>
+                            <div class="detail-four">
+                                <div class="detail"
+                                    style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                    <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                                </div>
+                            </div>
+                            <?php }}?>
                         </div>
                     </div>
                 </a>
@@ -1169,6 +1266,7 @@ include_once "projectlog.php";
     let searchform = document.querySelector('.search-form');
     let searchform2 = document.querySelector('.search-form2');
     let searchform3 = document.querySelector('.search-form3');
+    let searchform4 = document.querySelector('.dropdown-form');
     searchform.onsubmit = (e) => {
         e.preventDefault();
     }
@@ -1251,6 +1349,119 @@ include_once "projectlog.php";
 
     });
 
+    let purpose1 = document.querySelector("#searchmode4");
+    let purpose3 = document.querySelector("#searchmode5");
+    let purpose5 = document.querySelector("#searchmode6");
+    let purposearray = [purpose1, purpose3, purpose5];
+    document.querySelector('.dropdown-form').style.display = "block";
+    purposearray.forEach((element) => {
+        element.onclick = () => {
+            document.querySelector('.search-form3').style.display = "none";
+            document.querySelector('.search-form').style.display = "none";
+            document.querySelector('.search-form2').style.display = "none";
+            valuediv2.innerHTML = element.value;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchstatus.php?data=${valuediv2.innerHTML}&user=agent`
+            );
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+
+                    }
+                }
+            };
+            let formData = new FormData(searchform4);
+            xhr.send(formData);
+
+
+            if (element.value == "Pending") {
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadpending&user=agent`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
+            }
+
+            if (element.value == "Paid") {
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadpaid&user=agent`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
+            }
+
+            if (element.value == "Unpaid") {
+                let downloadbtn = document.querySelector('.download-form .land-btn');
+                let searchform2 = document.querySelector('.search-form3');
+
+                downloadbtn.onclick = () => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST",
+                        `downloadbyland.php?mode=downloadunpaid&user=agent`
+                    );
+
+                    xhr.onload = () => {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                let data = xhr.response;
+                                //console.log(data);
+                                document.querySelector('.table-data').innerHTML = data;
+                                htmlTableToExcel('xlsx');
+                            }
+                        }
+                    };
+                    let formData = new FormData(searchform);
+                    xhr.send(formData);
+
+                }
+            }
+        }
+
+    });
+
+
+
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');
@@ -1329,6 +1540,205 @@ include_once "projectlog.php";
     downloadform.onsubmit = (e) => {
         e.preventDefault();
     }
+
+    const form = document.querySelector("#upload-form"),
+        fileInput = form.querySelector("#passport"),
+        progressArea = document.querySelector(".uploading-div"),
+        uploadArea = document.querySelector(".uploading-div2"),
+        startbtn = document.querySelector(".centrediv label");
+    let uploadbtn = document.querySelector("#upload-form .btn");
+    let uploaddiv = document.querySelector(".file-container");
+    let submitbtn = document.querySelector("#upload-form .btn");
+    const error = document.querySelector(".error");
+    const error2 = document.querySelector(".error2");
+
+    uploadbtn.addEventListener("click", () => {
+        uploaddiv.style.display = "block";
+    });
+
+
+    form.onsubmit = (e) => {
+        e.preventDefault();
+    };
+
+
+    startbtn.addEventListener("click", () => {
+        fileInput.click();
+    });
+
+    fileInput.onchange = ({
+        target
+    }) => {
+        readXlsxFile(target.files[0]).then(function(data) {
+            var i = 0;
+
+            let earningID = [];
+            let customerID = [];
+            let earnerID = [];
+            let paidEarnings = [];
+            let balanceEarnings = [];
+            data.map((row, index) => {
+                // if (i == 0) {
+                //     let table = document.getElementById('upload-data');
+                //     generateTableHead(table, row);
+                // }
+                if (i > 0) {
+                    earningID.push(row[0]);
+                    customerID.push(row[2]);
+                    earnerID.push(row[3]);
+                    paidEarnings.push(row[8]);
+                    balanceEarnings.push(row[9]);
+
+                    // function uploadExcel() {
+                    //     let xhr = new XMLHttpRequest();
+                    //     xhr.open("POST",
+                    //         `uploadexceldata.php?customerid=${row[1]}&earnerid=${row[2]}&paidearnings=${row[7]}&balanceearnings=${row[8]}&earningid=${row[0]}`,
+                    //         true);
+
+                    //     xhr.onload = () => {
+                    //         if (xhr.readyState === XMLHttpRequest.DONE) {
+                    //             if (xhr.status === 200) {
+                    //                 let data = xhr.response;
+                    //                 console.log(data);
+                    //             }
+                    //         }
+                    //     };
+                    //     let formData = new FormData(form)
+                    //     xhr.send(formData);
+                    // }
+
+                    // uploadExcel();
+
+                    // let table = document.getElementById('upload-data');
+                    // generateTableRows(table, row);
+                }
+
+                i++;
+            })
+
+
+
+        })
+
+        function generateTableHead(table, data) {
+            let thead = table.createTHead();
+            let row = thead.insertRow();
+            for (let key of data) {
+                let th = document.createElement('th');
+                let text = document.createTextNode(key);
+                th.appendChild(text);
+                row.appendChild(th);
+            }
+        }
+
+        function generateTableRows(table, data) {
+            let newRow = table.insertRow(-1);
+            data.map((row, index) => {
+                let newCell = newRow.insertCell();
+                let newText = document.createTextNode(row);
+                newCell.appendChild(newText);
+            })
+        }
+
+        let file = target.files[0];
+        if (file) {
+            let fileName = file.name;
+            if (fileName.length >= 12) {
+                let splitName = fileName.split(".");
+                fileName = splitName[0].substring(0, 12) + "..." + splitName[1];
+            }
+            if (fileName.includes("Agent")) {
+                uploadFile(fileName);
+            } else {
+                error2.style.visibility = "visible";
+            }
+        }
+    };
+
+    function uploadFile(name) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "uploadexceldata.php", true);
+        xhr.upload.addEventListener("progress", ({
+            loaded,
+            total
+        }) => {
+            let fileLoaded = Math.floor((loaded / total) * 100);
+            let fileTotal = Math.floor(total / 1000);
+            let fileSize;
+            fileTotal < 1024 ?
+
+
+
+                (fileSize = fileTotal + " KB") :
+                (fileSize = (loaded / (1024 * 1024)).toFixed(2) + " MB");
+            let progressHTML = `
+                <div class="progress-bar">
+                            <div class="progress-element" style="width: ${fileLoaded}%"></div>
+                        </div>
+                        <p class="percent"><span class="percent">${fileLoaded}</span>% Complete</p>
+                        <div class="upload-state">
+                            <p class="file-name">${name}</p>
+                        </div>
+                `;
+
+            uploadArea.innerHTML = "";
+            progressArea.innerHTML = progressHTML;
+
+            if (loaded == total) {
+                progressArea.innerHTML = "";
+                let uploadedHTML = `
+                    <div class="progress-bar">
+                            <div class="progress-element" style="width: ${fileLoaded}%"></div>
+                        </div>
+                        <p class="percent"><span class="percent">Uploaded</p>
+                        <div class="upload-state">
+                            <p class="file-name">${name}</p>
+                            <p class="file-size">${fileSize}</p>
+                        </div>
+                `;
+                uploadArea.innerHTML = uploadedHTML;
+                error.style.visibility = "hidden";
+            }
+
+            if (total > 2097152) {
+                progressArea.innerHTML = "";
+                let uploadedHTML = `
+                    <div class="progress-bar">
+                            <div class="progress-element" style="width: 50%!important; background: #808080!important;"></div>
+                        </div>
+                        <p class="percent"><span class="percent">Upload Failed</p>
+                `;
+                uploadArea.innerHTML = uploadedHTML;
+                error.textContent = "File Should be 2mb or less";
+                error.style.visibility = "visible";
+                setTimeout(() => {
+                    error.style.visibility = "hidden";
+                }, 20000);
+                loaded = 0;
+            }
+        });
+
+        let formData = new FormData(form);
+        xhr.send(formData);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    //console.log(data);
+                    if (data.includes("BadUpdate")) {
+                        alert("Wrong Update Detected");
+                        location.reload();
+                    } else {
+                        alert("Correct Update");
+                        location.reload();
+                    }
+
+                }
+            }
+        }
+
+    }
+
 
     function htmlTableToExcel(type) {
         var userdata = document.getElementById('user-data');

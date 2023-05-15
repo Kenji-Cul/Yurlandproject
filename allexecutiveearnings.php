@@ -835,8 +835,8 @@ include_once "projectlog.php";
                 </li>
 
                 <li class="links">
-                    <a href="#"><img src="images/updown.svg" /></a>
-                    <a href="#" class="link">Pay Earnings</a>
+                    <a href="totalearnings.php"><img src="images/updown.svg" /></a>
+                    <a href="totalearnings.php" class="link">Pay Earnings</a>
                 </li>
 
                 <li class="links">
@@ -903,6 +903,7 @@ include_once "projectlog.php";
                 <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
                         id="export"></i></button>
             </form>
+
 
             <table id="agent-data" style="display: none;">
                 <thead>

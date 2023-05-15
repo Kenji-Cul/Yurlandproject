@@ -494,8 +494,33 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <a href="agentprofile.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
-                <p>My Earnings</p>
+                <p>My Pending Earnings</p>
             </div>
+
+            <div class="payment-image-div2">
+                <div>
+                    <img src="images/image1.svg" alt="payment image" />
+                    <div class="payment-desc">
+                        <p style="width: 80%;">Total Pending Earnings</p>
+                        <div class="payment-count">
+                            &#8358;<span><?php 
+                        $user = new User;
+                        $unitprice2 = $user->selectAgentTotalPendingEarnings($_SESSION['uniqueagent_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                        
+                       
+                        ?>
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
             <div class="details-container">
@@ -503,7 +528,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
                 <?php 
   
-            $earning = $user->selectAgentHistory($newuser['uniqueagent_id']);
+            $earning = $user->selectAgentPendingHistory($newuser['uniqueagent_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
     ?>
@@ -576,7 +601,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <?php if(empty($earning)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
-                    <p>You have no earnings yet!</p>
+                    <p>You have no pending earnings yet!</p>
                 </div>
                 <?php }?>
 

@@ -31,11 +31,14 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
 
     else {
     $user = new User;
+    $newuser = $user->selectOneUser();
     $emailuser = $user->checkEmailAddress(check_input($email));
     $emailuser2 = $user->checkAgentEmailAddress(check_input($email));
     $emailuser3 = $user->checkExecutiveEmailAddress(check_input($email));
     $emailuser4 = $user->checkSubadminEmailAddress(check_input($email));
     $emailuser5 = $user->checkSuperadminEmailAddress(check_input($email));
+    $yurlandpercentage = $newuser['yurland_percentage'];
+    $earningpercentage = $newuser['earning_percentage'];
     if(!empty($emailuser) || !empty($emailuser2) || !empty($emailuser3) || !empty($emailuser4) || !empty($emailuser5)){
     $errormsg = "Email Address already exists";
     }else{
@@ -48,10 +51,10 @@ else if(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/',$password)){
     $creatorid = $_SESSION['uniquesupadmin_id'];
     }
     $insertuser =
-    $user->createUser2(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral),$creatorid);
+    $user->createUser2(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral),$creatorid,$yurlandpercentage,$earningpercentage);
     } else {
     $insertuser =
-    $user->createUser(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral));
+    $user->createUser(check_input($firstname),check_input($lastname),check_input($email),check_input($phone_num),check_input($password),check_input($referral),check_input($inforeferral),$yurlandpercentage,$earningpercentage);
     }
 
 

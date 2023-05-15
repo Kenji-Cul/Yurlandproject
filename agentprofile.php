@@ -798,9 +798,20 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="paidearnings.php">
                         <div class="navigate">
                             <p>Paid Earnings</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
+                </div>
+
+                <div class="profile-div">
+                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+                    <a href="pendingearnings.php">
+                        <div class="navigate">
+                            <p style="font-size: 14px;">Pending Earnings</p>
                             <img src="images/right_arrow.svg" alt="" />
                         </div>
                     </a>

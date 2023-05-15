@@ -19,15 +19,17 @@ else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   }
     else {
     $user = new User;
+    $newuser = $user->selectOneUser();
     $emailuser = $user->checkEmailAddress(check_input($email));
     $emailuser2 = $user->checkAgentEmailAddress(check_input($email));
     $emailuser3 = $user->checkExecutiveEmailAddress(check_input($email));
     $emailuser4 = $user->checkSubadminEmailAddress(check_input($email));
     $emailuser5 = $user->checkSuperadminEmailAddress(check_input($email));
+    $earningpercentage = $newuser['earning_percentage'];
     if(!empty($emailuser) || !empty($emailuser2) || !empty($emailuser3) || !empty($emailuser4) || !empty($emailuser5)){
     $errormsg = "Email Address already exists";
     }else{
-    $insertuser = $user->createReferralUser(check_input($referral), check_input($email),check_input($firstname), check_input($lastname),check_input($phone_num),check_input($personalref));
+    $insertuser = $user->createReferralUser(check_input($referral), check_input($email),check_input($firstname), check_input($lastname),check_input($phone_num),check_input($personalref),$earningpercentage);
     }
 
 }

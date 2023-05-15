@@ -1018,8 +1018,8 @@ include_once "projectlog.php";
                 </li>
 
                 <li class="links">
-                    <a href="#"><img src="images/updown.svg" /></a>
-                    <a href="#" class="link">Pay Earnings</a>
+                    <a href="totalearnings.php"><img src="images/updown.svg" /></a>
+                    <a href="totalearnings.php" class="link">Pay Earnings</a>
                 </li>
 
                 <li class="links">

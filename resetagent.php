@@ -98,7 +98,7 @@ to make this request, you can ignore this email</p><br><p>Here is your 6 digit c
 This is your reset link '.$url.'
 </p>';
 $mail->AltBody = "This is the plain text version of the email content";
-$mail->From = "gideonboy012@gmail.com";
+$mail->From = "$mainemail";
 $mail->FromName = "Yurland";
 $mail->AddAddress($userEmail);
 // $mail->addReplyTo('info@simpletech.com.ng');

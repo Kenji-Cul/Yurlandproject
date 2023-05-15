@@ -234,7 +234,7 @@ include_once "projectlog.php";
         <section class="forgot-text">
 
             <?php 
-  if($_GET['error'] != ""){
+  if(isset($_GET['error'])){
   ?>
             <p class="error2" style="color: red;">
                 <?php echo $_GET['error'];?>
@@ -242,7 +242,7 @@ include_once "projectlog.php";
             <?php }?>
 
             <?php 
-  if($_GET['success'] != ""){
+  if(isset($_GET['success'])){
   ?>
             <p class="error2" style="color: green;">
                 <?php echo $_GET['success'];?>

@@ -582,9 +582,20 @@ if(!isset($_SESSION['uniqueexec_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="paidexecearnings.php">
                         <div class="navigate">
                             <p>Paid Earnings</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
+                </div>
+
+                <div class="profile-div">
+                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+                    <a href="pendingexecearnings.php">
+                        <div class="navigate">
+                            <p>Pending Earnings</p>
                             <img src="images/right_arrow.svg" alt="" />
                         </div>
                     </a>

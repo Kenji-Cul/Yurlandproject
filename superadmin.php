@@ -830,8 +830,8 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 </li>
 
                 <li class="links">
-                    <a href="#"><img src="images/updown.svg" /></a>
-                    <a href="#" class="link">Pay Earnings</a>
+                    <a href="totalearnings.php"><img src="images/updown.svg" /></a>
+                    <a href="totalearnings.php" class="link">Pay Earnings</a>
                 </li>
 
                 <li class="links">
@@ -1095,6 +1095,48 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 </div>
 
                 <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Total Paid Earnings</p>
+                        <p class="amountdiv">&#8358;
+
+                            <?php 
+                               
+                               $paidearnings = $user->selectAllPaidEarnings();
+                                if($paidearnings > 999 ||   $paidearnings > 9999 ||   $paidearnings > 99999 ||   $paidearnings > 999999){
+                                    echo number_format($paidearnings);
+                                    
+                                  } else {
+                                     echo round($paidearnings);
+                                  }
+                           
+                                ?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-div">
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Total Pending Earnings</p>
+                        <p class="amountdiv">&#8358;
+
+                            <?php 
+                               
+                               $pendingearnings = $user->selectAllPendingEarnings();
+                                if($pendingearnings > 999 ||  $pendingearnings > 9999 ||  $pendingearnings > 99999 ||  $pendingearnings > 999999){
+                                    echo number_format($pendingearnings);
+                                    
+                                  } else {
+                                     echo round($pendingearnings);
+                                  }
+                           
+                                ?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
                     <a href="earningagents.php">
@@ -1108,7 +1150,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="paidearningagents.php">
                         <div class="navigate">
                             <p>Total Paid Earning Agents</p>
                             <img src="images/right_arrow.svg" alt="" />
@@ -1119,13 +1161,14 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="pendingagents.php">
                         <div class="navigate">
                             <p>Total Pending Earning Agents</p>
                             <img src="images/right_arrow.svg" alt="" />
                         </div>
                     </a>
                 </div>
+
 
                 <div class="profile-div">
                     <div class="navigate"
@@ -1159,10 +1202,11 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
 
 
 
+
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="paidexecutives.php">
                         <div class="navigate">
                             <p>Total Paid Earning Executives</p>
                             <img src="images/right_arrow.svg" alt="" />
@@ -1173,7 +1217,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
 
-                    <a href="#">
+                    <a href="pendingexecutives.php">
                         <div class="navigate">
                             <p>Total Pending Earning Executives</p>
                             <img src="images/right_arrow.svg" alt="" />
