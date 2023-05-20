@@ -14,6 +14,7 @@ include_once "projectlog.php";
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
 
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
@@ -21,6 +22,10 @@ include_once "projectlog.php";
     .profile-body {
         height: 100vh;
         overflow-x: hidden;
+    }
+
+    .error2 {
+        width: 50%;
     }
 
     .search-form2 .select-box {
@@ -55,6 +60,37 @@ include_once "projectlog.php";
     ::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
     }
+
+    .land-container {
+        position: relative;
+    }
+
+    .navigation-div {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+    }
+
+    .transaction-details2 {
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 2.4em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 98%;
+    }
+
+    .details {
+        width: 200px;
+    }
+
+    .navig {
+        width: 98%;
+        gap: 8em;
+    }
+
 
     .search-icon {
         position: absolute;
@@ -131,7 +167,7 @@ include_once "projectlog.php";
     .success {
         position: absolute;
         left: 50%;
-        top: 39em;
+        top: 20em;
         transform: translate(-50%, -50%);
         height: 40%;
 
@@ -212,6 +248,16 @@ include_once "projectlog.php";
             padding: 1em 0;
         }
 
+        .details .detail {
+            width: 80px;
+            height: 24px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
 
         .page-title2 a {
             display: none;
@@ -259,7 +305,7 @@ include_once "projectlog.php";
 
 
 
-        .details {
+        /* .details {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -273,7 +319,7 @@ include_once "projectlog.php";
         .details p,
         .details h3 {
             font-size: 22px;
-        }
+        } */
 
         .center {
             display: flex;
@@ -422,6 +468,56 @@ include_once "projectlog.php";
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .details .detail {
+            width: 60px;
+            height: 20px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details .detail p {
+            font-size: 10px;
+        }
+
+        .transaction-details2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            gap: 1.3em;
+            width: 85%;
+        }
+
+        .details p {
+            font-size: 12px;
+        }
+
+
+        .transaction-details2 {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
+        }
+
+        .hide {
+            display: none;
+        }
+
+
+        .navig {
+            gap: 1.7em;
+        }
+
+        .navig .payment {
+            font-size: 12px;
+        }
+
 
 
         .page-title2 p {
@@ -900,8 +996,36 @@ include_once "projectlog.php";
             </form>
 
             <form action="" class="download-form">
-                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
-                        id="export"></i></button>
+                <button class="btn land-btn" style="width: 270px; margin-left: 2em;"><span
+                        style="font-size: 14px;">Download Filtered Earnings</span></button>
+            </form>
+
+            <form action="" class="download-form2">
+                <button class="btn land-btn" style="width: 270px; margin-left: 2em;"><span
+                        style="font-size: 14px;">Download Executive Earnings</span></button>
+            </form>
+
+            <p class="error2" style="visibility:hidden;">Choose appropriate excel file</p>
+
+            <form action="" class="upload-form" id="upload-form">
+                <input type="file" id="passport" placeholder="Upload your profile image" name="image" hidden="hidden"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+
+                <div class="file-container">
+                    <div class="browse-filediv">
+                        <div class="centrediv">
+                            <p>Drop files here to upload</p>
+                            <label>Browse files</label>
+                        </div>
+                        <div class="uploading-div"></div>
+                        <div class="uploading-div2"></div>
+                    </div>
+                </div>
+
+                <p class="error" style="visibility:hidden;">Please select field</p>
+
+                <button class="btn land-btn" style="width: 170px; margin-left: 2em;" type="submit"
+                    name="importSubmit"><span style="font-size: 14px;">Upload Earnings</span></button>
             </form>
 
 
@@ -918,50 +1042,141 @@ include_once "projectlog.php";
                 </thead>
                 <tbody class="table-data">
 
+
+                </tbody>
+            </table>
+
+            <table id="exec-data" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Name</th>
+                        <th>Earner ID(Do Not Edit)</th>
+                        <th>Role</th>
+                        <th>Bank Name</th>
+                        <th>Account Number</th>
+                        <th>Amount Earned</th>
+                        <th>Amount Paid</th>
+                        <th>Balance Earning</th>
+                    </tr>
+                </thead>
+                <tbody class="table-data">
+
+                    <?php 
+    $user = new User;
+   
+    $allusers = $user->selectAllExecutive();
+        $agentid = [];
+        foreach ($allusers as $key => $value3) { 
+           array_push($agentid,$value3['unique_id']);
+        }
+        $agentid2 = array_unique($agentid);
+        $agentid3 = [];
+        foreach ($agentid2 as $key => $value2) { 
+           $agentearnings = $user->selectAgentHistory($value2);
+           $earnerid = [];
+           foreach ($agentearnings as $key => $value) {
+            array_push($earnerid,$value['earner_id']);
+
+          }
+          $earnerid2 = array_unique($earnerid);
+          foreach ($earnerid2 as $key => $value) {
+            $newuser = $user->selectExecutive($value);
+        
+    ?>
+                    <tr>
+                        <td><span><?php echo $newuser['executive_id']; ?></span></td>
+                        <td><span><?php echo $newuser['full_name']; ?></span>
+                        </td>
+                        <td><span><?php echo $value; ?></span></td>
+                        <td>Executive</td>
+                        <td><?php echo $newuser['bank_name'];?></td>
+                        <td><?php echo $newuser['account_number'];?></td>
+                        <td> <?php
+                          $unitprice2 = $user->selectAgentTotalEarnings($value);
+                          echo round($unitprice2);
+                
+                    ?></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php }}?>
+
                 </tbody>
             </table>
 
 
 
-            <div class="details-container">
+            <div class="navigation-div" style="margin-top: 2em;">
+                <div class="navig">
+                    <div class="payment">Name</div>
+                    <div class="payment hide">Email</div>
+                    <div class="payment hide">Earning Percentage</div>
+                    <div class="payment">Amount Earned</div>
+                    <div class="payment">View</div>
+                </div>
+            </div>
+
+
+            <div class="land-container">
 
 
                 <?php 
-    $user = new User;
-   
+
+
     $customer = $user ->selectAllExecutive();
     if(!empty($customer)){
-        foreach($customer as $key => $value){
-           
+    foreach($customer as $key => $value){
+        $execid  = $value['unique_id'];
     ?>
-                <a href="executivehistory.php?unique=<?php echo $value['unique_id'];?>">
-                    <div class="account-detail2">
-                        <div class="radius">
-                            <?php if(!empty($value['executive_img'])){?>
-                            <img src="profileimage/<?php echo $value['executive_img'];?>" alt="profile image" />
-                            <?php }?>
-                            <?php if(empty($value['executive_img'])){?>
-                            <div class="empty-img">
-                                <i class="ri-user-fill" style="color: #000;"></i>
-                            </div>
-                            <?php }?>
-                        </div>
-                        <div class="flex">
-                            <p style="text-transform: capitalize;">
-                                <span><?php echo $value['full_name'];?></span>
-                            </p>
-                            <span class="email-span">Total Earnings: &#8358;<?php 
-                        $unitprice2 = $user->selectExecutiveTotalEarnings($value['unique_id']);
+
+
+
+                <div class="transaction-details2">
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname email-span">
+                            <span><?php echo $value['full_name'];?></span>
+                        </p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                        <p class="pname email-span">
+                            <span><?php echo $value['executive_email'];?></span>
+                        </p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                        <p class="pname email-span">
+                            <span><?php echo $value['earning'];?>%</span>
+                        </p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname">&#8358;<?php  $unitprice2 = $user->selectExecutiveTotalEarnings($value['unique_id']);
                         if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
                             echo number_format(round($unitprice2));
                           } else {
                               echo round($unitprice2);
                           }
-                  
-                        ?></span>
+
+                            ?>
+                        </p>
+                    </div>
+
+
+
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <div class="detail" style="">
+                            <a href="execinfo.php?unique=<?php echo $execid;?>&real=91838JDFOJOEI939">
+                                <p style="font-size: 14px; color: #fff;">View</p>
+                            </a>
                         </div>
                     </div>
-                </a>
+
+
+
+                </div>
 
                 <?php }}?>
 
@@ -971,14 +1186,16 @@ include_once "projectlog.php";
                     <p>There are no executives yet!</p>
                 </div>
                 <?php }?>
+            </div>
 
-                <div class="account-detail3">
-                    <a href="logout.php?user=subadmin">
-                        <p>Sign Out</p>
-                    </a>
-                </div>
+
+            <div class="account-detail3">
+                <a href="logout.php?user=subadmin">
+                    <p>Sign Out</p>
+                </a>
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -987,6 +1204,7 @@ include_once "projectlog.php";
     let valuediv2 = document.querySelector('.valuediv');
     let filterbtn = document.querySelector('.filter-btn');
     let downloadbtn = document.querySelector('.download-form .land-btn');
+    let downloadbtn2 = document.querySelector('.download-form2 .land-btn');
     let searchform2 = document.querySelector('.search-form2');
     let searchforminput = document.querySelector('.search-form2 .search');
     let searchformbox = document.querySelector('.search-form2 .select-box');
@@ -1018,7 +1236,7 @@ include_once "projectlog.php";
                     if (xhr.status === 200) {
                         let data = xhr.response;
                         if (data.length > 20) {
-                            document.querySelector('.details-container').innerHTML = data;
+                            document.querySelector('.land-container').innerHTML = data;
                         }
 
 
@@ -1056,7 +1274,7 @@ include_once "projectlog.php";
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         let data = xhr.response;
-                        document.querySelector('.details-container').innerHTML = data;
+                        document.querySelector('.land-container').innerHTML = data;
                     }
                 }
             };
@@ -1081,7 +1299,31 @@ include_once "projectlog.php";
             type: 'base64'
         });
 
-        XLSX.writeFile(file, 'executiveearning.' + type);
+        XLSX.writeFile(file, 'Earningsdata.' + type);
+    }
+
+    let downloadform2 = document.querySelector('.download-form2');
+    downloadform2.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    function htmlTableToExcel2(type) {
+        var agentdata = document.getElementById('exec-data');
+        var file = XLSX.utils.table_to_book(agentdata, {
+            sheet: "sheet1"
+        });
+        XLSX.write(file, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        });
+
+        XLSX.writeFile(file, 'Executiveearning.' + type);
+    }
+
+    downloadbtn2.onclick = () => {
+        htmlTableToExcel2('xlsx');
+
     }
 
     downloadbtn.onclick = () => {
@@ -1103,6 +1345,207 @@ include_once "projectlog.php";
         xhr.send(formData);
 
     }
+
+
+    const form = document.querySelector("#upload-form"),
+        fileInput = form.querySelector("#passport"),
+        progressArea = document.querySelector(".uploading-div"),
+        uploadArea = document.querySelector(".uploading-div2"),
+        startbtn = document.querySelector(".centrediv label");
+    let uploadbtn = document.querySelector("#upload-form .btn");
+    let uploaddiv = document.querySelector(".file-container");
+    let submitbtn = document.querySelector("#upload-form .btn");
+    const error = document.querySelector(".error");
+    const error2 = document.querySelector(".error2");
+
+    uploadbtn.addEventListener("click", () => {
+        uploaddiv.style.display = "block";
+    });
+
+
+    form.onsubmit = (e) => {
+        e.preventDefault();
+    };
+
+
+    startbtn.addEventListener("click", () => {
+        fileInput.click();
+    });
+
+    fileInput.onchange = ({
+        target
+    }) => {
+        readXlsxFile(target.files[0]).then(function(data) {
+            var i = 0;
+
+            let earningID = [];
+            let customerID = [];
+            let earnerID = [];
+            let paidEarnings = [];
+            let balanceEarnings = [];
+            data.map((row, index) => {
+                // if (i == 0) {
+                //     let table = document.getElementById('upload-data');
+                //     generateTableHead(table, row);
+                // }
+                if (i > 0) {
+                    earningID.push(row[0]);
+                    customerID.push(row[2]);
+                    earnerID.push(row[3]);
+                    paidEarnings.push(row[8]);
+                    balanceEarnings.push(row[9]);
+
+                    // function uploadExcel() {
+                    //     let xhr = new XMLHttpRequest();
+                    //     xhr.open("POST",
+                    //         `uploadexceldata.php?customerid=${row[1]}&earnerid=${row[2]}&paidearnings=${row[7]}&balanceearnings=${row[8]}&earningid=${row[0]}`,
+                    //         true);
+
+                    //     xhr.onload = () => {
+                    //         if (xhr.readyState === XMLHttpRequest.DONE) {
+                    //             if (xhr.status === 200) {
+                    //                 let data = xhr.response;
+                    //                 console.log(data);
+                    //             }
+                    //         }
+                    //     };
+                    //     let formData = new FormData(form)
+                    //     xhr.send(formData);
+                    // }
+
+                    // uploadExcel();
+
+                    // let table = document.getElementById('upload-data');
+                    // generateTableRows(table, row);
+                }
+
+                i++;
+            })
+
+
+
+        })
+
+        function generateTableHead(table, data) {
+            let thead = table.createTHead();
+            let row = thead.insertRow();
+            for (let key of data) {
+                let th = document.createElement('th');
+                let text = document.createTextNode(key);
+                th.appendChild(text);
+                row.appendChild(th);
+            }
+        }
+
+        function generateTableRows(table, data) {
+            let newRow = table.insertRow(-1);
+            data.map((row, index) => {
+                let newCell = newRow.insertCell();
+                let newText = document.createTextNode(row);
+                newCell.appendChild(newText);
+            })
+        }
+
+        let file = target.files[0];
+        if (file) {
+            let fileName = file.name;
+            if (fileName.length >= 12) {
+                let splitName = fileName.split(".");
+                fileName = splitName[0].substring(0, 12) + "..." + splitName[1];
+            }
+            if (fileName.includes("Executive")) {
+                uploadFile(fileName);
+            } else {
+                error2.style.visibility = "visible";
+            }
+
+        }
+    };
+
+    function uploadFile(name) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "uploadexceldata.php", true);
+        xhr.upload.addEventListener("progress", ({
+            loaded,
+            total
+        }) => {
+            let fileLoaded = Math.floor((loaded / total) * 100);
+            let fileTotal = Math.floor(total / 1000);
+            let fileSize;
+            fileTotal < 1024 ?
+
+
+
+                (fileSize = fileTotal + " KB") :
+                (fileSize = (loaded / (1024 * 1024)).toFixed(2) + " MB");
+            let progressHTML = `
+                <div class="progress-bar">
+                            <div class="progress-element" style="width: ${fileLoaded}%"></div>
+                        </div>
+                        <p class="percent"><span class="percent">${fileLoaded}</span>% Complete</p>
+                        <div class="upload-state">
+                            <p class="file-name">${name}</p>
+                        </div>
+                `;
+
+            uploadArea.innerHTML = "";
+            progressArea.innerHTML = progressHTML;
+
+            if (loaded == total) {
+                progressArea.innerHTML = "";
+                let uploadedHTML = `
+                    <div class="progress-bar">
+                            <div class="progress-element" style="width: ${fileLoaded}%"></div>
+                        </div>
+                        <p class="percent"><span class="percent">Uploaded</p>
+                        <div class="upload-state">
+                            <p class="file-name">${name}</p>
+                            <p class="file-size">${fileSize}</p>
+                        </div>
+                `;
+                uploadArea.innerHTML = uploadedHTML;
+                error.style.visibility = "hidden";
+            }
+
+            if (total > 2097152) {
+                progressArea.innerHTML = "";
+                let uploadedHTML = `
+                    <div class="progress-bar">
+                            <div class="progress-element" style="width: 50%!important; background: #808080!important;"></div>
+                        </div>
+                        <p class="percent"><span class="percent">Upload Failed</p>
+                `;
+                uploadArea.innerHTML = uploadedHTML;
+                error.textContent = "File Should be 2mb or less";
+                error.style.visibility = "visible";
+                setTimeout(() => {
+                    error.style.visibility = "hidden";
+                }, 20000);
+                loaded = 0;
+            }
+        });
+
+        let formData = new FormData(form);
+        xhr.send(formData);
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    //console.log(data);
+                    if (data.includes("BadUpdate")) {
+                        alert("Wrong Update Detected");
+                        location.reload();
+                    } else {
+                        alert("Correct Update");
+                        location.reload();
+                    }
+
+                }
+            }
+        }
+
+    }
+
 
 
 

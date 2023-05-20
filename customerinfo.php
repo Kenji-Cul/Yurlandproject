@@ -1607,61 +1607,61 @@ if(!isset($_GET['unique'])){
                                 </form>
 
                                 <script>
-                                let dateInput<?php echo $value['newpay_id'];?> = document.querySelector('#date');
-                                let checkBal<?php echo $value['newpay_id'];?> = document.querySelector('#check').value;
-                                var countDownDate<?php echo $value['newpay_id'];?> = new Date(
-                                    dateInput<?php echo $value['newpay_id'];?>.value);
-                                var now<?php echo $value['newpay_id'];?> = new Date().getTime();
-                                var timeleft<?php echo $value['newpay_id'];?> =
-                                    countDownDate<?php echo $value['newpay_id'];?> -
-                                    now<?php echo $value['newpay_id'];?>;
-                                var date = new Date();
+                                // let dateInput<?php echo $value['newpay_id'];?> = document.querySelector('#date');
+                                // let checkBal<?php echo $value['newpay_id'];?> = document.querySelector('#check').value;
+                                // var countDownDate<?php echo $value['newpay_id'];?> = new Date(
+                                //     dateInput<?php echo $value['newpay_id'];?>.value);
+                                // var now<?php echo $value['newpay_id'];?> = new Date().getTime();
+                                // var timeleft<?php echo $value['newpay_id'];?> =
+                                //     countDownDate<?php echo $value['newpay_id'];?> -
+                                //     now<?php echo $value['newpay_id'];?>;
+                                // var date = new Date();
 
-                                let day = date.getDate();
-                                var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
-                                    "July",
-                                    "Aug", "Sept", "Oct",
-                                    "Nov", "Dec"
-                                ];
-                                let month = date.getMonth();
-                                let year = date.getFullYear();
+                                // let day = date.getDate();
+                                // var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+                                //     "July",
+                                //     "Aug", "Sept", "Oct",
+                                //     "Nov", "Dec"
+                                // ];
+                                // let month = date.getMonth();
+                                // let year = date.getFullYear();
 
-                                // This arrangement can be altered based on how we want the date's format to appear.
-                                let currentDate = "Apr-29-2023";
-                                let completionDate = "Apr-28-2023";
-                                let checkBalValue = "2000";
-                                var firstDay = new Date(date.getFullYear(), date.getMonth(), 8);
+                                // // This arrangement can be altered based on how we want the date's format to appear.
+                                // let currentDate = "Apr-29-2023";
+                                // let completionDate = "Apr-28-2023";
+                                // let checkBalValue = "2000";
+                                // var firstDay = new Date(date.getFullYear(), date.getMonth(), 8);
 
-                                if (currentDate > completionDate &&
-                                    checkBalValue > 2) {
-                                    let priceform<?php echo $value['newpay_id'];?> = document.querySelector(
-                                        '#priceform');
+                                // if (currentDate == completionDate &&
+                                //     checkBalValue > 2) {
+                                //     let priceform<?php echo $value['newpay_id'];?> = document.querySelector(
+                                //         '#priceform');
 
-                                    function increasePrice<?php echo $value['newpay_id'];?>() {
-                                        let xhr = new XMLHttpRequest(); //creating XML Object
-                                        xhr.open("POST", "increase.php", true);
-                                        xhr.onload = () => {
-                                            if (xhr.readyState === XMLHttpRequest.DONE) {
-                                                if (xhr.status === 200) {
-                                                    let data = xhr.response;
-                                                    console.log(data);
-                                                }
-                                            }
-                                        }
-                                        // we have to send the information through ajax to php
-                                        let formData = new FormData(
-                                            priceform<?php echo $value['newpay_id'];?>); //creating new formData Object
+                                //     function increasePrice<?php echo $value['newpay_id'];?>() {
+                                //         let xhr = new XMLHttpRequest(); //creating XML Object
+                                //         xhr.open("POST", "increase.php", true);
+                                //         xhr.onload = () => {
+                                //             if (xhr.readyState === XMLHttpRequest.DONE) {
+                                //                 if (xhr.status === 200) {
+                                //                     let data = xhr.response;
+                                //                     console.log(data);
+                                //                 }
+                                //             }
+                                //         }
+                                //         // we have to send the information through ajax to php
+                                //         let formData = new FormData(
+                                //             priceform<?php echo $value['newpay_id'];?>); //creating new formData Object
 
-                                        xhr.send(formData);
-                                    }
+                                //         xhr.send(formData);
+                                //     }
 
-                                    setTimeout(() => {
-                                        increasePrice<?php echo $value['newpay_id'];?>();
-                                    }, 1000);
+                                //     setTimeout(() => {
+                                //         increasePrice<?php echo $value['newpay_id'];?>();
+                                //     }, 1000);
 
 
 
-                                }
+                                // }
 
                                 //console.log(timeleft);
                                 </script>
@@ -1814,7 +1814,7 @@ if(!isset($_GET['unique'])){
 
 
                                 if (checkBalValuetwo<?php echo $value['newpay_id'];?> > 2 &&
-                                    currentDatetwo<?php echo $value['newpay_id'];?> >=
+                                    currentDatetwo<?php echo $value['newpay_id'];?> ==
                                     increaseDatetwo<?php echo $value['newpay_id'];?>
                                 ) {
                                     let priceformtwo<?php echo $value['newpay_id'];?> = document.querySelector(
@@ -1949,10 +1949,9 @@ if(!isset($_GET['unique'])){
 
 
 
-                                    if (currentDate<?php echo $value['newpay_id'];?> >
-                                        completionDate<?php echo $value['newpay_id'];?> &&
+                                    if (
                                         checkBalValue<?php echo $value['newpay_id'];?> > 2 &&
-                                        currentDate<?php echo $value['newpay_id'];?> >=
+                                        currentDate<?php echo $value['newpay_id'];?> ==
                                         increaseDate<?php echo $value['newpay_id'];?>
                                     ) {
                                         let priceform<?php echo $value['newpay_id'];?> = document.querySelector(

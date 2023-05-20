@@ -6,7 +6,7 @@ if($_GET['data'] == "Failed"){
         $land = $user->searchFailedTransactions($_GET['data'],$_GET['user'],$_GET['unique']);
     }
 
-    if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2"){
+    if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2" || $_GET['user'] == "agent2"){
         $land = $user->searchFailedTransactions3($_GET['data'],$_GET['user'],$_GET['unique'],$_GET['userid']);
     }
     
@@ -29,7 +29,7 @@ if($_GET['data'] == "Success"){
         $land = $user->searchSuccessfulTransactions($_GET['data'],$_GET['user'],$_GET['unique']);
     }
 
-    if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2"){
+    if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2" || $_GET['user'] == "agent2"){
         $land = $user->searchSuccessfulTransactions3($_GET['data'],$_GET['user'],$_GET['unique'],$_GET['userid']);
     }
 
@@ -47,7 +47,7 @@ if($_GET['data'] == "Deleted"){
         $land = $user->searchDeletedTransactions($_GET['data'],$_GET['user'],$_GET['unique']);
     }
 
-    if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2"){
+    if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2" || $_GET['user'] == "agent2"){
         $land = $user->searchDeletedTransactions3($_GET['data'],$_GET['user'],$_GET['unique'],$_GET['userid']);
     }
 
@@ -56,7 +56,7 @@ if($_GET['data'] == "Deleted"){
     }
 }
 
-if($_GET['data'] == "Pending" || $_GET['data'] == "Paid" || $_GET['data'] == "Unpaid"){
+if($_GET['data'] == "Pending" || $_GET['data'] == "Paid"){
     if($_GET['user'] == "customer"){
         $land = $user->selectUserEarningStatus($_GET['data']);
     }

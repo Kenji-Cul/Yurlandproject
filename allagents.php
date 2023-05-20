@@ -1104,7 +1104,7 @@ include_once "projectlog.php";
                         <td><?php echo $value['earning_percentage'];?></td>
                         <td>&#8358;<?php 
                         
-                                $unitprice2 = $user->selectAgentTotalEarnings($agentid);
+                                $unitprice2 = $user->selectAgentTotalEarnings2($agentid);
                             
                                         if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
                                             echo number_format(round($unitprice2));
@@ -1179,7 +1179,7 @@ include_once "projectlog.php";
                          $refid = $value['referral_id'];
                          $percentage = $value['earning_percentage'];
                          $agentdate = $value['agent_date'];
-                                $unitprice2 = $user->selectAgentTotalEarnings($agentid);
+                                $unitprice2 = $user->selectAgentTotalEarnings2($agentid);
                             
                                         if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
                                             echo number_format(round($unitprice2));

@@ -24,6 +24,6 @@ if($_GET['user'] == "allocationuser"){
     $land = $user->searchDocumentDate($_GET['data'],$_GET['user'],$_GET['unique'],$type);
 }
 
-if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2"){
+if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2" || $_GET['user'] == "agent2"){
     $land = $user->searchByDate2($_GET['data'],$_GET['user'],$_GET['unique'],$_GET['userid']);
 }

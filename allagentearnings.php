@@ -23,6 +23,36 @@ include_once "projectlog.php";
         overflow-x: hidden;
     }
 
+    .land-container {
+        position: relative;
+    }
+
+    .navigation-div {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+    }
+
+    .transaction-details2 {
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 2.4em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 98%;
+    }
+
+    .details {
+        width: 150px;
+    }
+
+    .navig {
+        width: 98%;
+        gap: 7em;
+    }
+
     .search-form2 .select-box {
         border: 1px solid #808080;
         border-radius: 8px;
@@ -131,7 +161,7 @@ include_once "projectlog.php";
     .success {
         position: absolute;
         left: 50%;
-        top: 39em;
+        top: 20em;
         transform: translate(-50%, -50%);
         height: 40%;
 
@@ -213,6 +243,16 @@ include_once "projectlog.php";
             padding: 1em 0;
         }
 
+        .details .detail {
+            width: 80px;
+            height: 24px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
 
 
         .page-title2 a {
@@ -261,7 +301,7 @@ include_once "projectlog.php";
 
 
 
-        .details {
+        /* .details {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -275,7 +315,7 @@ include_once "projectlog.php";
         .details p,
         .details h3 {
             font-size: 22px;
-        }
+        } */
 
         .center {
             display: flex;
@@ -424,6 +464,55 @@ include_once "projectlog.php";
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .details .detail {
+            width: 60px;
+            height: 20px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details .detail p {
+            font-size: 10px;
+        }
+
+        .transaction-details2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            gap: 1.3em;
+            width: 85%;
+        }
+
+        .details p {
+            font-size: 12px;
+        }
+
+
+        .transaction-details2 {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
+        }
+
+        .hide {
+            display: none;
+        }
+
+
+        .navig {
+            gap: 1.7em;
+        }
+
+        .navig .payment {
+            font-size: 12px;
+        }
 
 
         .page-title2 p {
@@ -1024,8 +1113,8 @@ include_once "projectlog.php";
             </form>
 
             <form action="" class="download-form">
-                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
-                        id="export"></i></button>
+                <button class="btn land-btn" style="width: 270px; margin-left: 2em;"><span
+                        style="font-size: 14px;">Download Filtered Earnings</span></button>
             </form>
 
             <table id="agent-data" style="display: none;">
@@ -1041,6 +1130,8 @@ include_once "projectlog.php";
                         <th style="width: 220px;">Account Number</th>
                         <th style="width: 220px;">Reg Account Name</th>
                         <th style="width: 220px;">Amount Earned</th>
+                        <th style="width: 220px;">Payment Processed</th>
+                        <th style="width: 220px;">Units Sold</th>
                     </tr>
                 </thead>
                 <tbody class="table-data">
@@ -1050,44 +1141,138 @@ include_once "projectlog.php";
 
 
 
-            <div class="details-container">
+            <div class="navigation-div" style="margin-top: 2em;">
+                <div class="navig">
+                    <div class="payment">Name</div>
+                    <div class="payment hide">Email</div>
+                    <div class="payment">Earning</div>
+                    <div class="payment hide">Payment Processed</div>
+                    <div class="payment hide">Units Sold</div>
+                    <div class="payment ">Ref Count</div>
+                    <div class="payment">View</div>
+                </div>
+            </div>
+
+
+            <div class="land-container">
 
 
                 <?php 
-    $user = new User;
+  
    
-    $customer = $user ->selectAllAgents();
-    if(!empty($customer)){
-        foreach($customer as $key => $value){
-    ?>
-                <a href="agenthistory.php?unique=<?php echo $value['uniqueagent_id'];?>">
-                    <div class="account-detail2">
-                        <div class="radius">
-                            <?php if(!empty($value['agent_img'])){?>
-                            <img src="profileimage/<?php echo $value['agent_img'];?>" alt="profile image" />
-                            <?php }?>
-                            <?php if(empty($value['agent_img'])){?>
-                            <div class="empty-img">
-                                <i class="ri-user-fill" style="color: #000;"></i>
-                            </div>
-                            <?php }?>
-                        </div>
-                        <div class="flex">
-                            <p style="text-transform: capitalize;">
-                                <span><?php echo $value['agent_name'];?></span>
-                            </p>
-                            <span class="email-span">Total Earnings: &#8358;<?php 
-                        $unitprice2 = $user->selectAgentTotalEarnings($value['uniqueagent_id']);
-                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-                            echo number_format(round($unitprice2));
-                          } else {
-                              echo round($unitprice2);
-                          }
-                  
-                        ?></span>
+                    $customer = $user ->selectAllAgents();
+                    if(!empty($customer)){
+                    foreach($customer as $key => $value){
+                    ?>
+
+
+
+                <div class="transaction-details2">
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname email-span">
+                            <span><?php echo $value['agent_name'];?></span>
+                        </p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                        <p class="pname email-span">
+                            <span><?php echo $value['agent_email'];?></span>
+                        </p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="sname">&#8358;<?php 
+                         
+                         $agentid = $value['uniqueagent_id'];
+                         $refid = $value['referral_id'];
+                         $percentage = $value['earning_percentage'];
+                         $agentdate = $value['agent_date'];
+                                $unitprice2 = $user->selectAgentTotalEarnings2($agentid);
+                            
+                                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                                            echo number_format(round($unitprice2));
+                                          } else {
+                                              echo round($unitprice2);
+                                          }
+                                        
+                                        ?>
+                        </p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="sname">&#8358;<?php 
+                         
+                         $agentid = $value['uniqueagent_id'];
+                         $refid = $value['referral_id'];
+                         $agentdate = $value['agent_date'];
+                                $agenttotalearnings = $user->selectAgentTotalPayment($agentid);
+                              
+                                        
+                                        if( $agenttotalearnings  > 999 ||  $agenttotalearnings  > 9999 ||  $agenttotalearnings  > 99999 ||  $agenttotalearnings  > 999999){
+                                            echo number_format(round($agenttotalearnings ));
+                                          } else {
+                                              echo round($agenttotalearnings );
+                                          }
+                                        
+                                ?>
+                        </p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="sname"><?php 
+                        $refid = $value['referral_id'];
+                        $customer2 = $user ->selectAgentCustomer($value['referral_id']);
+                             if(!empty($customer2)){
+       
+       
+                                $percent = $percentage / 100;
+                                $agenttotalunits = [];
+                                foreach($customer2 as $key => $value2){
+                                     $total1 = $user->selectSumUnits($value2['unique_id']);
+                                foreach($total1 as $key => $value3){
+                                  if(is_null($value3)){
+                                    //echo "0";
+                                  } else {
+                                    array_push($agenttotalunits,$value3);
+                                  }  } 
+                           
+                                }
+                                $sumunits = array_sum($agenttotalunits);
+                                echo $sumunits;
+                             } else {
+                                    echo "0";
+                                }?>
+
+                        </p>
+                    </div>
+
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname"><?php 
+                         $refid = $value['referral_id'];
+                    $newuser2 = $user->selectReferredUsers($refid);
+            // $customer = $user ->selectAgentCustomer($refid);
+                    foreach ($newuser2 as $key => $value) {
+                        echo $value;
+                    };
+                    
+                 ?>
+                        </p>
+                    </div>
+
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <div class="detail" style="">
+                            <a href="agentinfo.php?unique=<?php echo $agentid;?>&real=91838JDFOJOEI939">
+                                <p style="font-size: 14px; color: #fff;">View</p>
+                            </a>
                         </div>
                     </div>
-                </a>
+
+
+
+                </div>
+
 
                 <?php }}?>
 
@@ -1097,14 +1282,15 @@ include_once "projectlog.php";
                     <p>There are no agents yet!</p>
                 </div>
                 <?php }?>
+            </div>
 
-                <div class="account-detail3">
-                    <a href="logout.php?user=subadmin">
-                        <p>Sign Out</p>
-                    </a>
-                </div>
+            <div class="account-detail3">
+                <a href="logout.php?user=subadmin">
+                    <p>Sign Out</p>
+                </a>
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -1145,7 +1331,7 @@ include_once "projectlog.php";
                         let data = xhr.response;
                         if (data.length > 20) {
                             console.log(data);
-                            document.querySelector('.details-container').innerHTML = data;
+                            document.querySelector('.land-container').innerHTML = data;
                         }
 
 
@@ -1183,7 +1369,7 @@ include_once "projectlog.php";
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         let data = xhr.response;
-                        document.querySelector('.details-container').innerHTML = data;
+                        document.querySelector('.land-container').innerHTML = data;
                     }
                 }
             };

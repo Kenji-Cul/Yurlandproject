@@ -81,6 +81,41 @@ include_once "projectlog.php";
         border: none;
     }
 
+    .navig .payment {
+        font-size: 14px;
+    }
+
+    .navigation-div {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+    }
+
+    .transaction-details2 {
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 2.4em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 98%;
+    }
+
+    .details {
+        width: 150px;
+    }
+
+    .navig {
+        width: 98%;
+        gap: 7em;
+    }
+
+    .land-container {
+        position: relative;
+    }
+
+
     .radius {
         position: relative;
     }
@@ -183,6 +218,16 @@ include_once "projectlog.php";
             padding: 1em 0;
         }
 
+        .details .detail {
+            width: 80px;
+            height: 24px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
 
         .page-title2 a {
             display: none;
@@ -230,7 +275,7 @@ include_once "projectlog.php";
 
 
 
-        .details {
+        /* .details {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -244,7 +289,7 @@ include_once "projectlog.php";
         .details p,
         .details h3 {
             font-size: 22px;
-        }
+        } */
 
         .center {
             display: flex;
@@ -393,6 +438,56 @@ include_once "projectlog.php";
     }
 
     @media only screen and (max-width: 1300px) {
+
+        .details .detail {
+            width: 60px;
+            height: 20px;
+            background-color: green;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details .detail p {
+            font-size: 10px;
+        }
+
+        .transaction-details2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            gap: 1.3em;
+            width: 85%;
+        }
+
+        .details p {
+            font-size: 12px;
+        }
+
+
+        .transaction-details2 {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            width: 80%;
+        }
+
+        .hide {
+            display: none;
+        }
+
+
+        .navig {
+            gap: 1.7em;
+        }
+
+        .navig .payment {
+            font-size: 12px;
+        }
+
 
         .success {
             position: absolute;
@@ -904,8 +999,20 @@ include_once "projectlog.php";
                 </tbody>
             </table>
 
+            <div class="navigation-div" style="margin-top: 2em;">
+                <div class="navig">
+                    <div class="payment">Name</div>
+                    <div class="payment hide">Email</div>
+                    <div class="payment">Units Bought</div>
+                    <div class="payment">Amount Paid</div>
+                    <div class="payment hide">Land Count</div>
+                    <div class="payment hide">Joined Date</div>
+                    <div class="payment">View</div>
+                </div>
+            </div>
 
-            <div class="details-container">
+
+            <div class="land-container">
 
 
                 <?php 
@@ -918,44 +1025,96 @@ include_once "projectlog.php";
   if(!empty($customer)){
       foreach($customer as $key => $value){
     ?>
-                <div class="account-detail2">
-                    <div class="radius">
-                        <?php if(!empty($value['photo'])){?>
-                        <img src="profileimage/<?php echo $value['photo'];?>" alt="profile image" />
-                        <?php }?>
-                        <?php if(empty($value['photo'])){?>
-                        <div class="empty-img">
-                            <i class="ri-user-fill"></i>
-                        </div>
-                        <?php }?>
-                    </div>
-                    <div class="flex">
-                        <p style="text-transform: capitalize;">
+                <div class="transaction-details2">
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname email-span">
                             <span><?php echo $value['first_name'];?></span>&nbsp;<span><?php echo $value['last_name'];?></span>
                         </p>
-                        <span class="email-span"><?php echo $value['email'];?></span>
                     </div>
-                    <a href="customerprofileinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939">
-                        <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
-                    </a>
+
+                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                        <p class="pname email-span"> <?php echo $value['email'];?></p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname"><?php 
+                 $totunit = $user->selectSumUnits($value['unique_id']);
+                 $landcount = $user->selectLandCount($value['unique_id']);
+                 $total = $user->selectTotal3($value['unique_id']);
+                 $date = $value['user_date'];
+                
+                 foreach ($totunit as $key => $value1) {
+                    if(is_null($value1)){
+                      echo "0";
+                    } else{
+                      echo $value1;
+                    }
+                  }
+                    
+                 ?></p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname">&#8358;<?php 
+              
+                 foreach ($total as $key => $value2) {
+              
+                 if(is_null($value2)){
+                    echo "0";
+                  } else{
+                    $unitprice = $value2;
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                        echo number_format($unitprice);
+                      } else {
+                         echo $unitprice;
+                      }
+                  }
+                
+           
+                 }
+                 ?></p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="pname"><?php echo $landcount; ?></p>
+                    </div>
+
+
+                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                        <p class="pname"> <?php echo $date;?></p>
+                    </div>
+
+                    <div class="details" style="text-transform: capitalize;">
+                        <div class="detail" style="">
+                            <a
+                                href="customerprofileinfo.php?unique=<?php echo $value['unique_id'];?>&real=91838JDFOJOEI939">
+                                <p style="font-size: 14px; color: #fff;">View</p>
+                            </a>
+                        </div>
+                    </div>
+
+
+
                 </div>
+
 
                 <?php }}?>
 
                 <?php if(empty($customer)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
-                    <p>There are no yurland referrals yet!</p>
+                    <p>There are no customers yet</p>
                 </div>
                 <?php }?>
+            </div>
 
-                <div class="account-detail3">
-                    <a href="logout.php?user=subadmin">
-                        <p>Sign Out</p>
-                    </a>
-                </div>
+            <div class="account-detail3">
+                <a href="logout.php?user=subadmin">
+                    <p>Sign Out</p>
+                </a>
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -982,7 +1141,7 @@ include_once "projectlog.php";
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         let data = xhr.response;
-                        document.querySelector('.details-container').innerHTML = data;
+                        document.querySelector('.land-container').innerHTML = data;
                     }
                 }
             };

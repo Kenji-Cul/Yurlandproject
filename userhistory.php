@@ -1163,7 +1163,7 @@ if(!isset($_GET['unique'])){
             </div>
 
 
-
+            <?php if(!isset($_SESSION['uniqueagent_id'])){?>
             <form action="" class="download-form">
                 <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
                         id="export"></i></button>
@@ -1211,6 +1211,7 @@ if(!isset($_GET['unique'])){
                     <?php }}?>
                 </tbody>
             </table>
+            <?php }?>
 
             <div class="search-container">
 
@@ -1600,6 +1601,30 @@ for ($i = 0; $i < 31; $i++) {
 
     <?php }?>
 
+    <?php if(isset($_SESSION['uniqueagent_id'])){?>
+
+
+    searchinput3.onkeyup = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST",
+            `searchbyland.php?user=agent2&unique=<?php echo $_SESSION['uniqueagent_id'];?>&userid=<?php echo $_GET['unique'];?>`
+        );
+
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    document.querySelector('.details-container').innerHTML = data;
+                }
+            }
+        };
+        let formData = new FormData(searchform2);
+        xhr.send(formData);
+    }
+
+    <?php }?>
+
+
 
     let valuediv2 = document.querySelector('.valuediv2');
 
@@ -1626,6 +1651,12 @@ for ($i = 0; $i < 31; $i++) {
             <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
             xhr.open("POST",
                 `searchstatus.php?data=${valuediv2.innerHTML}&user=subadmin2&unique=<?php echo $_SESSION['uniquesubadmin_id'];?>&userid=<?php echo $_GET['unique'];?>`
+            );
+            <?php }?>
+
+            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+            xhr.open("POST",
+                `searchstatus.php?data=${valuediv2.innerHTML}&user=agent2&unique=<?php echo $_SESSION['uniqueagent_id'];?>&userid=<?php echo $_GET['unique'];?>`
             );
             <?php }?>
 
@@ -1747,6 +1778,15 @@ for ($i = 0; $i < 31; $i++) {
 
             xhr.open("POST",
                 `searchbydate.php?data=${valuediv.innerHTML}&user=subadmin2&unique=<?php echo $_SESSION['uniquesubadmin_id'];?>&userid=<?php echo $_GET['unique'];?>`
+            );
+
+            <?php }?>
+
+
+            <?php if(isset($_SESSION['uniqueagent_id'])){?>
+
+            xhr.open("POST",
+                `searchbydate.php?data=${valuediv.innerHTML}&user=agent2&unique=<?php echo $_SESSION['uniqueagent_id'];?>&userid=<?php echo $_GET['unique'];?>`
             );
 
             <?php }?>

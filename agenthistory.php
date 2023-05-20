@@ -1113,6 +1113,25 @@ if(!isset($_GET['unique'])){
                                 <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
                             </div>
                         </div>
+                        <?php 
+                        if($value['balance_earning'] != ""){
+                        if($value['earning_status'] == "unpaid"){?>
+                        <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>
+                        <?php }?>
+
+                        <?php if($value['balance_earning'] == 0 && $value['earning_status'] == "paid"){?>
+                        <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>
+                        <?php }}?>
                     </div>
                 </div>
                 <?php } }?>

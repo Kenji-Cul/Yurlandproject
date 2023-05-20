@@ -654,7 +654,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                         </div>
                         <?php 
                         if($value['balance_earning'] != ""){
-                        if($value['balance_earning'] > 0){?>
+                        if($value['earning_status'] == "unpaid"){?>
                         <div class="detail-four">
                             <div class="detail"
                                 style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -663,7 +663,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                         </div>
                         <?php }?>
 
-                        <?php if($value['balance_earning'] == 0){?>
+                        <?php if($value['balance_earning'] == 0 && $value['earning_status'] == "paid"){?>
                         <div class="detail-four">
                             <div class="detail"
                                 style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">

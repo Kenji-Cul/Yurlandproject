@@ -30,6 +30,6 @@ if($_GET['user'] == "allocationuser"){
     $land = $user->searchLandDocument($_POST['searchproduct2'],$_GET['user'],$_GET['unique'],$type);
 }
 
-if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2"){
+if($_GET['user'] == "subadmin2" || $_GET['user'] == "supadmin2" || $_GET['user'] == "agent2"){
     $land = $user->searchByLand2($_POST['searchproduct2'],$_GET['user'],$_GET['unique'],$_GET['userid']);
 }

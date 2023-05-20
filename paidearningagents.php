@@ -1200,7 +1200,7 @@ include_once "projectlog.php";
                          $refid = $customer['referral_id'];
                          $percentage = $customer['earning_percentage'];
                          $agentdate =$customer['agent_date'];
-                                $unitprice2 = $user->selectAgentTotalEarnings($agentid);
+                                $unitprice2 = $user->selectAgentTotalEarnings2($agentid);
                             
                                         if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
                                             echo number_format(round($unitprice2));
@@ -1289,10 +1289,10 @@ include_once "projectlog.php";
 
                 <?php }}}?>
 
-                <?php if(empty($customer)){?>
+                <?php if(empty($customer2)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
-                    <p>There are no agents yet!</p>
+                    <p>There are no pending agents yet!</p>
                 </div>
                 <?php }?>
             </div>

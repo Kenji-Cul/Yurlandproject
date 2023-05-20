@@ -1062,10 +1062,10 @@ include_once "projectlog.php";
 
                 <?php }}}?>
 
-                <?php if(empty($customer)){?>
+                <?php if(empty($customer2)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
-                    <p>There are no executives yet!</p>
+                    <p>There are no pending executives yet!</p>
                 </div>
                 <?php }?>
             </div>

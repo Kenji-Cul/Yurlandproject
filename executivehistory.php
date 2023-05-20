@@ -954,8 +954,8 @@ if(!isset($_GET['unique'])){
             </div>
 
             <form action="" class="download-form">
-                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
-                        id="export"></i></button>
+                <button class="btn land-btn" style="width: 170px; margin-left: 2em;"><span
+                        style="font-size: 14px;">Download Earnings</span></button>
             </form>
 
             <p class="error2" style="visibility:hidden;">Choose appropriate excel file</p>
@@ -977,8 +977,8 @@ if(!isset($_GET['unique'])){
 
                 <p class="error" style="visibility:hidden;">Please select field</p>
 
-                <button class="btn land-btn" style="width: 70px; margin-left: 2em;" type="submit" name="importSubmit"><i
-                        class="ri-upload-line" id="export"></i></i></button>
+                <button class="btn land-btn" style="width: 170px; margin-left: 2em;" type="submit"
+                    name="importSubmit"><span style="font-size: 14px;">Upload Earnings</span></button>
             </form>
 
             <table id="user-data" style="display: none;">
@@ -986,7 +986,6 @@ if(!isset($_GET['unique'])){
                     <tr>
                         <th>S/N</th>
                         <th>Name</th>
-                        <th>Customer ID(Do Not Edit)</th>
                         <th>Earner ID(Do Not Edit)</th>
                         <th>Role</th>
                         <th>Bank Name</th>
@@ -994,7 +993,6 @@ if(!isset($_GET['unique'])){
                         <th>Amount Earned</th>
                         <th>Amount Paid</th>
                         <th>Balance Earning</th>
-                        <th>Payment Date</th>
                     </tr>
                 </thead>
                 <tbody class="table-data">
@@ -1004,33 +1002,31 @@ if(!isset($_GET['unique'])){
    
     $earn = $user->selectAgentHistory($_GET['unique']);
     if(!empty($earn)){
+        $earnerid = [];
         foreach($earn as $key => $value){
-            $newuser = $user->selectExecutive($value['earner_id']);
+            array_push($earnerid,$value['earner_id']);
+
+        }
+        $earnerid2 = array_unique($earnerid);
+        foreach ($earnerid2 as $key => $value) {
+            $newuser = $user->selectExecutive($value);
         
     ?>
                     <tr>
-                        <td><span><?php echo $value['earning_id']; ?></span>
-                        <td><span><?php echo $value['earnee']; ?></span>
+                        <td><span><?php echo $newuser['executive_id']; ?></span>
+                        <td><span><?php echo $newuser['full_name']; ?></span>
                         </td>
-                        <td><span><?php echo $value['customer_id']; ?></span></td>
-                        <td><span><?php echo $value['earner_id']; ?></span></td>
+                        <td><span><?php echo $value; ?></span></td>
                         <td>Executive</td>
                         <td><?php echo $newuser['bank_name'];?></td>
                         <td><?php echo $newuser['account_number'];?></td>
                         <td><?php
-                    $earnedprice = $value['earned_amount'];
-                    $unitprice2 = $earnedprice;
-                    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-                        echo number_format(round($unitprice2));
-                      } else {
+                          $unitprice2 = $user->selectAgentTotalEarnings($value);
                           echo round($unitprice2);
-                      }
-                  
-                                
+                
                     ?></td>
-                        <td><?php echo $value['amount_paid'];?></td>
-                        <td><?php echo $value['balance_earning'];?></td>
-                        <td><?php echo $value['payment_date'];?></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <?php }}?>
                 </tbody>
@@ -1047,10 +1043,6 @@ if(!isset($_GET['unique'])){
                         <div class="option">
                             <input type="radio" class="radio" id="searchmode2" name="searchmode" value="Paid" />
                             <label for="searchmode2">Paid</label>
-                        </div>
-                        <div class="option">
-                            <input type="radio" class="radio" id="searchmode3" name="searchmode" value="Unpaid" />
-                            <label for="searchmode3">Unpaid</label>
                         </div>
                     </div>
 
@@ -1117,7 +1109,7 @@ if(!isset($_GET['unique'])){
                         </div>
                         <?php 
                         if($value['balance_earning'] != ""){
-                        if($value['balance_earning'] > 0){?>
+                        if($value['earning_status'] == "unpaid"){?>
                         <div class="detail-four">
                             <div class="detail"
                                 style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -1126,7 +1118,7 @@ if(!isset($_GET['unique'])){
                         </div>
                         <?php }?>
 
-                        <?php if($value['balance_earning'] == 0){?>
+                        <?php if($value['balance_earning'] == 0 && $value['earning_status'] == "paid"){?>
                         <div class="detail-four">
                             <div class="detail"
                                 style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -1187,8 +1179,7 @@ if(!isset($_GET['unique'])){
     let searchform4 = document.querySelector('.dropdown-form');
     let purpose1 = document.querySelector("#searchmode1");
     let purpose3 = document.querySelector("#searchmode2");
-    let purpose5 = document.querySelector("#searchmode3");
-    let purposearray = [purpose1, purpose3, purpose5];
+    let purposearray = [purpose1, purpose3];
     document.querySelector('.dropdown-form').style.display = "block";
     purposearray.forEach((element) => {
         element.onclick = () => {
@@ -1227,7 +1218,7 @@ if(!isset($_GET['unique'])){
                                 let data = xhr.response;
                                 //console.log(data);
                                 document.querySelector('.table-data').innerHTML = data;
-                                htmlTableToExcel('xlsx');
+                                htmlTableToExcel2('xlsx');
                             }
                         }
                     };
@@ -1253,7 +1244,7 @@ if(!isset($_GET['unique'])){
                                 let data = xhr.response;
                                 //console.log(data);
                                 document.querySelector('.table-data').innerHTML = data;
-                                htmlTableToExcel('xlsx');
+                                htmlTableToExcel2('xlsx');
                             }
                         }
                     };
@@ -1263,31 +1254,7 @@ if(!isset($_GET['unique'])){
                 }
             }
 
-            if (element.value == "Unpaid") {
-                let downloadbtn = document.querySelector('.download-form .land-btn');
 
-
-                downloadbtn.onclick = () => {
-                    let xhr = new XMLHttpRequest();
-                    xhr.open("POST",
-                        `downloadbyland.php?mode=downloadunpaid&user=executive&execuser=<?php echo $_GET['unique'];?>`
-                    );
-
-                    xhr.onload = () => {
-                        if (xhr.readyState === XMLHttpRequest.DONE) {
-                            if (xhr.status === 200) {
-                                let data = xhr.response;
-                                //console.log(data);
-                                document.querySelector('.table-data').innerHTML = data;
-                                htmlTableToExcel('xlsx');
-                            }
-                        }
-                    };
-                    let formData = new FormData(searchform4);
-                    xhr.send(formData);
-
-                }
-            }
         }
 
     });
@@ -1601,6 +1568,20 @@ if(!isset($_GET['unique'])){
         });
 
         XLSX.writeFile(file, 'Executiveearningdata.' + type);
+    }
+
+    function htmlTableToExcel2(type) {
+        var userdata = document.getElementById('user-data');
+        var file = XLSX.utils.table_to_book(userdata, {
+            sheet: "sheet1"
+        });
+        XLSX.write(file, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        });
+
+        XLSX.writeFile(file, 'Earningsdata.' + type);
     }
 
     downloadbtn.onclick = () => {

@@ -2073,7 +2073,20 @@ function checkGroupName($name){
     }
 
     function selectAgentTotalEarnings($unique){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND earning_status = 'unpaid' ORDER BY earning_id DESC";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            foreach ($row as $key => $value) {
+                return $value;
+               }
+        }else{
+            return $row;
+        }
+    }
+
+    function selectAgentTotalEarnings2($unique){
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}'  ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2125,7 +2138,7 @@ function checkGroupName($name){
     }
 
     function selectAgentTotalPendingEarnings($unique){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND balance_earning > 0 ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND earning_status='unpaid' ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -3192,7 +3205,7 @@ function selectAgentPaidHistory($id){
     }
 
     function selectAgentPendingHistory($id){
-        $sql = "SELECT * FROM earning_history WHERE earner_id='{$id}' AND balance_earning > 0 ORDER BY earning_id DESC";
+        $sql = "SELECT * FROM earning_history WHERE earner_id='{$id}' AND earning_status='unpaid' ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $rows = array();
         if($this->dbcon->affected_rows > 0){
@@ -3403,7 +3416,7 @@ function selectAllPaidAgents($id){
 
 
         function selectAllPendingEarnings(){
-            $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE balance_earning > 0";
+            $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earning_status = 'unpaid'";
             $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -3433,7 +3446,7 @@ function selectAllPaidAgents($id){
         }
 
         function selectAllPendingExecutives($id){
-            $sql = "SELECT * FROM earning_history WHERE earner_id = '{$id}' AND balance_earning > 0 AND earning_status = 'paid'";
+            $sql = "SELECT * FROM earning_history WHERE earner_id = '{$id}' AND earning_status='unpaid'";
             $result = $this->dbcon->query($sql);
             $rows = array();
             if($this->dbcon->affected_rows > 0){
@@ -3449,7 +3462,7 @@ function selectAllPaidAgents($id){
 
 
     function selectAllPendingAgents($id){
-        $sql = "SELECT * FROM earning_history WHERE earner_id = '{$id}' AND balance_earning > 0";
+        $sql = "SELECT * FROM earning_history WHERE earner_id = '{$id}' AND earning_status='unpaid'";
         $result = $this->dbcon->query($sql);
         $rows = array();
         if($this->dbcon->affected_rows > 0){
@@ -5645,13 +5658,25 @@ if($this->dbcon->affected_rows > 0){
 
                                         $name = $value['product_id'].$value['payment_id'];
 
-                                        $output3 = '<form action="" class="restore-form" method="POST">
+                                        if($user == "agent2"){
+                                            $output3 = ' <div class="detail-four">
+                                            <div class="detail"
+                                                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                                <p style="font-size: 14px; color: #fff;">Deleted</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                                        } else {
+                                            $output3 = '<form action="" class="restore-form" method="POST">
                                             <input class="price" type="submit" value="Restore"
                                                 name="restorel'.$name.'"
                                                 style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                                         </form>
                                     </div>
                                 </div>';
+                                        }
+                                       
 
                                 $output4 = "";
                                 $output5 = "";
@@ -5697,27 +5722,49 @@ if($this->dbcon->affected_rows > 0){
                                 }
                                 }
 
+                                
+                        if($user == "agent2"){
+                            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+                            $result3 = $this->dbcon->query($sql3);
+                            $row3 = $result3->fetch_assoc();
+                            if($value['payee'] == $row3['agent_name']){
+                            $payeename = "You";
+                            } else {
+                            $payeename = $value['payee'];
+                            }
+                            }
+
                                 $output3 = "";
+
+                             
                                 $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-                                    <span style="font-size: 12px;">(Failed)</span>
-                                    <div class="payee">
-                                        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                                        <p class="payee-name"
-                                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                            '.$payeename.'
-                                        </p>
-                                    </div> ';
+                                <span style="font-size: 12px;">(Failed)</span>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        '.$payeename.'
+                                    </p>
+                                </div> ';
+                               
+                                
 
 
 
                                     $name = $value['product_id'].$value['payment_id'];
-
-                                    $output5 = '<form action="" class="deletep-form" method="POST">
+                                    if($user == "agent2"){
+                                        $output5 = '
+                                        
+                                        </div>
+                                </div>';
+                                    } else {
+                                        $output5 = '<form action="" class="deletep-form" method="POST">
                                         <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                                             style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                                     </form>
                                 </div>
-                            </div>';
+                                </div>';
+                                    }
                             if(isset($_POST["deletel".$name])){
                             $insertupdate =
                             $user->updateLandHistory3($value['product_id'],$value['payment_id'],$value['payment_method'],$value['newpay_id']);
@@ -5758,12 +5805,24 @@ if($this->dbcon->affected_rows > 0){
 
                                 $name = $value['product_id'].$value['payment_id'];
 
-                                $output3 = '<form action="" class="restore-form" method="POST">
+                                if($user == "agent2"){
+                                    $output3 = ' <div class="detail-four">
+                                    <div class="detail"
+                                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                        <p style="font-size: 14px; color: #fff;">Deleted</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>';
+                                } else {
+                                    $output3 = '<form action="" class="restore-form" method="POST">
                                     <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
                                         style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                                 </form>
                             </div>
                             <div>';
+                                }
+                                
 
                                 $output4 = "";
                                 $output5 = "";
@@ -5809,9 +5868,22 @@ if($this->dbcon->affected_rows > 0){
                                 }
                                 }
 
+                                
+                        if($user == "agent2"){
+                            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+                            $result3 = $this->dbcon->query($sql3);
+                            $row3 = $result3->fetch_assoc();
+                            if($value['payee'] == $row3['agent_name']){
+                            $payeename = "You";
+                            } else {
+                            $payeename = $value['payee'];
+                            }
+                            }
+
                                 $output3 = "";
 
-                                $output4 = '<div class="price-detail">&#8358;'.$amount.'
+                             
+                                    $output4 = '<div class="price-detail">&#8358;'.$amount.'
                                     <div class="payee">
                                         <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
                                         <p class="payee-name"
@@ -5820,17 +5892,25 @@ if($this->dbcon->affected_rows > 0){
                                         </p>
                                     </div>';
 
+                                
+                               
 
 
                                     $name = $value['product_id'].$value['payment_id'];
 
-                                    $output5 = '<form action="" class="deletep-form" method="POST">
+                                    if($user == "agent2"){
+                                        $output5 = '
+                                        
+                                        </div>
+                                </div>';
+                                    } else {
+                                        $output5 = '<form action="" class="deletep-form" method="POST">
                                         <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                                             style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                                     </form>
                                 </div>
-                            </div>
-                            ';
+                                </div>';
+                                    }
 
                             if(isset($_POST["deletel".$name])){
                             $insertupdate =
@@ -6303,12 +6383,24 @@ if($this->dbcon->affected_rows > 0){
 
                                 $name = $data['product_id'].$data['payment_id'];
 
-                                $output3 = '<form action="" class="restore-form" method="POST">
+                                if($user == "agent2"){
+                                    $output3 = ' <div class="detail-four">
+                                    <div class="detail"
+                                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                        <p style="font-size: 14px; color: #fff;">Deleted</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+                                } else {
+                                    $output3 = '<form action="" class="restore-form" method="POST">
                                     <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
                                         style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                                 </form>
                             </div>
                         </div>';
+                                }
+                                
 
                         $output4 = "";
                         $output5 = "";
@@ -6353,6 +6445,17 @@ if($this->dbcon->affected_rows > 0){
                         }
                         }
 
+                        if($user == "agent2"){
+                            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+                            $result3 = $this->dbcon->query($sql3);
+                            $row3 = $result3->fetch_assoc();
+                            if($data['payee'] == $row3['agent_name']){
+                            $payeename = "You";
+                            } else {
+                            $payeename = $data['payee'];
+                            }
+                            }
+
                         $output3 = "";
                         $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
                             <span style="font-size: 12px;">(Failed)</span>
@@ -6367,13 +6470,17 @@ if($this->dbcon->affected_rows > 0){
 
 
                             $name = $data['product_id'].$data['payment_id'];
-
-                            $output5 = '<form action="" class="deletep-form" method="POST">
+                            if($user == "agent2"){
+                                $output5 = '</div>
+                        </div>';
+                            } else {
+                                $output5 = '<form action="" class="deletep-form" method="POST">
                                 <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                                     style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                             </form>
                         </div>
-                    </div>';
+                        </div>';
+                            }
                     if(isset($_POST["deletel".$name])){
                     $insertupdate =
                     $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
@@ -6413,13 +6520,24 @@ if($this->dbcon->affected_rows > 0){
                         if($data['delete_status'] == "Deleted"){
 
                         $name = $data['product_id'].$data['payment_id'];
-
-                        $output3 = '<form action="" class="restore-form" method="POST">
-                            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                        </form>
+                      if($user == "agent2"){
+                        $output3 = '  <div class="detail-four">
+                        <div class="detail"
+                            style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <p style="font-size: 14px; color: #fff;">Deleted</p>
+                        </div>
                     </div>
-                    <div>';
+                </div>
+                <div>';
+                      } else {
+                        $output3 = '<form action="" class="restore-form" method="POST">
+                        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+                            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+                    </form>
+                </div>
+                <div>';
+                      }
+                       
 
                         $output4 = "";
                         $output5 = "";
@@ -6464,6 +6582,17 @@ if($this->dbcon->affected_rows > 0){
                         }
                         }
 
+                        if($user == "agent2"){
+                            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+                            $result3 = $this->dbcon->query($sql3);
+                            $row3 = $result3->fetch_assoc();
+                            if($data['payee'] == $row3['agent_name']){
+                            $payeename = "You";
+                            } else {
+                            $payeename = $data['payee'];
+                            }
+                        }
+
                         $output3 = "";
 
                         $output4 = '<div class="price-detail">&#8358;'.$amount.'
@@ -6479,13 +6608,17 @@ if($this->dbcon->affected_rows > 0){
 
                             $name = $data['product_id'].$data['payment_id'];
 
-                            $output5 = '<form action="" class="deletep-form" method="POST">
+                            if($user == "agent2"){
+                                $output5 = '</div>
+                        </div>';
+                            } else {
+                                $output5 = '<form action="" class="deletep-form" method="POST">
                                 <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                                     style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                             </form>
                         </div>
-                    </div>
-                    ';
+                        </div>';
+                            }
 
                     if(isset($_POST["deletel".$name])){
                     $insertupdate =
@@ -7804,7 +7937,7 @@ if($this->dbcon->affected_rows > 0){
                 '.$data['payment_method'].'</div> ';
     
     
-            if($data['delete_status'] == "Deleted"){
+            if($data['delete_status'] == "Deleted" && $user != "agent2"){
     
             $name = $data['product_id'].$data['payment_id'];
     
@@ -7857,6 +7990,18 @@ if($this->dbcon->affected_rows > 0){
         $payeename = $data['payee'];
         }
         }
+
+        if($user == "agent2"){
+            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+            $result3 = $this->dbcon->query($sql3);
+            $row3 = $result3->fetch_assoc();
+            if($data['payee'] == $row3['agent_name']){
+            $payeename = "You";
+            } else {
+            $payeename = $data['payee'];
+            }
+            }
+
     
         $output3 = "";
         $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
@@ -7872,12 +8017,17 @@ if($this->dbcon->affected_rows > 0){
     
             $name = $data['product_id'].$data['payment_id'];
     
-            $output5 = '<form action="" class="deletep-form" method="POST">
+            if($user == "agent2"){
+                $output5 = '</div>
+        </div>';
+            } else {
+                $output5 = '<form action="" class="deletep-form" method="POST">
                 <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                     style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
             </form>
         </div>
         </div>';
+            }
         if(isset($_POST["deletel".$name])){
         $insertupdate =
         $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
@@ -7914,7 +8064,7 @@ if($this->dbcon->affected_rows > 0){
             <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
     
     
-            if($data['delete_status'] == "Deleted"){
+            if($data['delete_status'] == "Deleted" && $user != "agent2"){
     
             $name = $data['product_id'].$data['payment_id'];
     
@@ -7967,6 +8117,18 @@ if($this->dbcon->affected_rows > 0){
             $payeename = $data['payee'];
             }
             }
+
+            if($user == "agent2"){
+                $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+                $result3 = $this->dbcon->query($sql3);
+                $row3 = $result3->fetch_assoc();
+                if($data['payee'] == $row3['agent_name']){
+                $payeename = "You";
+                } else {
+                $payeename = $data['payee'];
+                }
+                }
+
     
             $output3 = "";
     
@@ -7982,13 +8144,17 @@ if($this->dbcon->affected_rows > 0){
     
                 $name = $data['product_id'].$data['payment_id'];
     
-                $output5 = '<form action="" class="deletep-form" method="POST">
+                if($user == "agent2"){
+                    $output5 = '</div>
+            </div>';
+                } else {
+                    $output5 = '<form action="" class="deletep-form" method="POST">
                     <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                         style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                 </form>
             </div>
-        </div>
-        ';
+            </div>';
+                }
     
         if(isset($_POST["deletel".$name])){
         $insertupdate =
@@ -8496,13 +8662,26 @@ if($this->dbcon->affected_rows > 0){
             if($data['delete_status'] == "Deleted"){
     
             $name = $data['product_id'].$data['payment_id'];
-    
-            $output3 = '<form action="" class="restore-form" method="POST">
+
+            if($user == "agent2"){
+                $output3 = ' <div class="detail-four">
+                <div class="detail"
+                    style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <p style="font-size: 14px; color: #fff;">Deleted</p>
+                </div>
+            </div>
+        </div>
+        </div>';
+            } else {
+                $output3 = '<form action="" class="restore-form" method="POST">
                 <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
                     style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
             </form>
         </div>
         </div>';
+            }
+    
+           
     
         $output4 = "";
         $output5 = "";
@@ -8546,9 +8725,24 @@ if($this->dbcon->affected_rows > 0){
         $payeename = $data['payee'];
         }
         }
+
+        if($user == "agent2"){
+            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+            $result3 = $this->dbcon->query($sql3);
+            $row3 = $result3->fetch_assoc();
+            if($data['payee'] == $row3['agent_name']){
+            $payeename = "You";
+            } else {
+            $payeename = $data['payee'];
+            }
+            }
+
     
         $output3 = "";
-        $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+        if($user == "agent2"){
+            $output4 = '';
+        } else {
+            $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
             <span style="font-size: 12px;">(Failed)</span>
             <div class="payee">
                 <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
@@ -8556,17 +8750,31 @@ if($this->dbcon->affected_rows > 0){
                     '.$payeename.'
                 </p>
             </div> ';
+        }
+       
     
     
     
             $name = $data['product_id'].$data['payment_id'];
     
-            $output5 = '<form action="" class="deletep-form" method="POST">
+            if($user == "agent2"){
+                $output5 = '
+                <div class="detail-four">
+                <div class="detail"
+                    style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <p style="font-size: 14px; color: #fff;">Deleted</p>
+                </div>
+            </div>
+                </div>
+        </div>';
+            } else {
+                $output5 = '<form action="" class="deletep-form" method="POST">
                 <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                     style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
             </form>
         </div>
         </div>';
+            }
         if(isset($_POST["deletel".$name])){
         $insertupdate =
         $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
@@ -8603,7 +8811,7 @@ if($this->dbcon->affected_rows > 0){
             <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
     
     
-            if($data['delete_status'] == "Deleted"){
+            if($data['delete_status'] == "Deleted" && $user != "agent2"){
     
             $name = $data['product_id'].$data['payment_id'];
     
@@ -8656,28 +8864,56 @@ if($this->dbcon->affected_rows > 0){
             $payeename = $data['payee'];
             }
             }
+
+            if($user == "agent2"){
+                $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+                $result3 = $this->dbcon->query($sql3);
+                $row3 = $result3->fetch_assoc();
+                if($data['payee'] == $row3['agent_name']){
+                $payeename = "You";
+                } else {
+                $payeename = $data['payee'];
+                }
+                }
+
     
             $output3 = "";
     
-            $output4 = '<div class="price-detail">&#8358;'.$amount.'
+            if($user == "agent2"){
+                $output4 = '';
+            } else {
+                $output4 = '<div class="price-detail">&#8358;'.$amount.'
                 <div class="payee">
                     <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
                     <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
                         '.$payeename.'
                     </p>
                 </div>';
+            }
+            
     
     
     
                 $name = $data['product_id'].$data['payment_id'];
     
-                $output5 = '<form action="" class="deletep-form" method="POST">
+                if($user == "agent2"){
+                    $output5 = '
+                    <div class="detail-four">
+                    <div class="detail"
+                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <p style="font-size: 14px; color: #fff;">Deleted</p>
+                    </div>
+                </div>
+                    </div>
+            </div>';
+                } else {
+                    $output5 = '<form action="" class="deletep-form" method="POST">
                     <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                         style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
                 </form>
             </div>
-        </div>
-        ';
+            </div>';
+                }
     
         if(isset($_POST["deletel".$name])){
         $insertupdate =
@@ -9184,13 +9420,25 @@ if($this->dbcon->affected_rows > 0){
             if($data['delete_status'] == "Deleted"){
     
             $name = $data['product_id'].$data['payment_id'];
-    
-            $output3 = '<form action="" class="restore-form" method="POST">
+             if($user == "agent2"){
+                $output3 = ' <div class="detail-four">
+                <div class="detail"
+                    style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <p style="font-size: 14px; color: #fff;">Deleted</p>
+                </div>
+            </div>
+        </div>
+        </div>';
+               
+             } else {
+                $output3 = '<form action="" class="restore-form" method="POST">
                 <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
                     style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
             </form>
         </div>
         </div>';
+             }
+           
     
         $output4 = "";
         $output5 = "";
@@ -9234,9 +9482,22 @@ if($this->dbcon->affected_rows > 0){
         $payeename = $data['payee'];
         }
         }
+
+        if($user == "agent2"){
+            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+            $result3 = $this->dbcon->query($sql3);
+            $row3 = $result3->fetch_assoc();
+            if($data['payee'] == $row3['agent_name']){
+            $payeename = "You";
+            } else {
+            $payeename = $data['payee'];
+            }
+            }
+
     
         $output3 = "";
-        $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+       
+            $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
             <span style="font-size: 12px;">(Failed)</span>
             <div class="payee">
                 <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
@@ -9244,17 +9505,26 @@ if($this->dbcon->affected_rows > 0){
                     '.$payeename.'
                 </p>
             </div> ';
+        
+      
     
     
     
             $name = $data['product_id'].$data['payment_id'];
     
-            $output5 = '<form action="" class="deletep-form" method="POST">
+            if($user == "agent2"){
+                $output5 = '
+                </div>
+        </div>';
+            } else {
+                $output5 = '<form action="" class="deletep-form" method="POST">
                 <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
                     style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
             </form>
         </div>
         </div>';
+            }
+
         if(isset($_POST["deletel".$name])){
         $insertupdate =
         $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
@@ -9294,13 +9564,25 @@ if($this->dbcon->affected_rows > 0){
             if($data['delete_status'] == "Deleted"){
     
             $name = $data['product_id'].$data['payment_id'];
-    
-            $output3 = '<form action="" class="restore-form" method="POST">
+            
+            if($user == "agent2"){
+                $output3 = ' <div class="detail-four">
+                <div class="detail"
+                    style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <p style="font-size: 14px; color: #fff;">Deleted</p>
+                </div>
+            </div>
+        </div>
+        </div>';
+               
+             } else {
+                $output3 = '<form action="" class="restore-form" method="POST">
                 <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
                     style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
             </form>
         </div>
-        <div>';
+        </div>';
+             }
     
             $output4 = "";
             $output5 = "";
@@ -9344,28 +9626,47 @@ if($this->dbcon->affected_rows > 0){
             $payeename = $data['payee'];
             }
             }
+
+            if($user == "agent2"){
+                $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+                $result3 = $this->dbcon->query($sql3);
+                $row3 = $result3->fetch_assoc();
+                if($data['payee'] == $row3['agent_name']){
+                $payeename = "You";
+                } else {
+                $payeename = $data['payee'];
+                }
+                }
+
     
             $output3 = "";
-    
-            $output4 = '<div class="price-detail">&#8358;'.$amount.'
+            
+             
+                $output4 = '<div class="price-detail">&#8358;'.$amount.'
                 <div class="payee">
                     <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
                     <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
                         '.$payeename.'
                     </p>
                 </div>';
-    
-    
-    
+               
+                
                 $name = $data['product_id'].$data['payment_id'];
     
+              
+            if($user == "agent2"){
+                $output5 = '
+              
+                </div>
+        </div>';
+            } else {
                 $output5 = '<form action="" class="deletep-form" method="POST">
-                    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                </form>
-            </div>
+                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+            </form>
         </div>
-        ';
+        </div>';
+            }
     
         if(isset($_POST["deletel".$name])){
         $insertupdate =
@@ -9658,31 +9959,86 @@ if($this->dbcon->affected_rows > 0){
     $row2 = $result->fetch_assoc();
     $output = "";
     if($result->num_rows > 0){
-    $output1 = '<div class="account-detail2">
-        <div class="radius"> ';
-            if(!empty($row2['photo'])){
-            $output2 = '<img src="profileimage/'.$row2['photo'].'" alt="profile image" /></div>';
-        }
-        if(empty($row2['photo'])){
-        $output2 = '<div class="empty-img">
-            <i class="ri-user-fill"></i>
-        </div>
-    </div> ';
-    }
-    $output3 ='
-    <div class="flex">
-        <p style="text-transform: capitalize;">
-            <span>'.$row2['first_name'].'&nbsp;'.$row2['last_name'].'</span>
-        </p>
-        <span class="email-span">'.$row2['email'].'</span>
-    </div>
+     $output1 = '
+                                <div class="transaction-details2">
+                                    <div class="details" style="text-transform: capitalize;">
+                                        <p class="pname email-span">
+                                            <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+                                        </p>
+                                    </div>
 
-    <a href="customerprofileinfo.php?unique='.$row2['unique_id'].'&real=91838JDFOJOEI939" style="color: #808080;"><i
-            class="ri-arrow-right-s-line"></i></a>
-    </div> ';
-    $output .= ''.$output1.''.$output2.''.$output3.'';
+                                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                                        <p class="pname email-span"> '.$row2['email'].'</p>
+                                    </div> ';
+
+                                    $unique = $row2['unique_id'];
+                                    $date = $row2['user_date'];
+                                    $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}'";
+                                    $result1 = $this->dbcon->query($sql1);
+                                    $row1 = $result1->fetch_assoc();
+                                    foreach ($row1 as $key => $value1) {
+                                    if(is_null($value1)){
+                                    $data1 = "0";
+                                    } else{
+                                    $data1 = $value1;
+                                    }
+                                    }
+
+                                    $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
+                                    $result2 = $this->dbcon->query($sql2);
+                                    $row2 = $result2->fetch_assoc();
+                                    foreach ($row2 as $key => $value) {
+                                    $data2 = $value;
+                                    }
+
+                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}'";
+                                    $result3 = $this->dbcon->query($sql3);
+                                    $row3 = $result3->fetch_assoc();
+                                   
+
+                                    foreach ($row3 as $key => $value3) {
+                                    if(is_null($value3)){
+                                    $data3 = "0";
+                                    } else{
+
+                                    if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
+                                    $data3 = number_format($value3);
+                                    } else {
+                                    $data3 = $value3;
+                                    }
+                                    }
+                                    }
 
 
+                                    $output2 = '
+                                    <div class="details" style="text-transform: capitalize;">
+                                        <p class="pname">'.$data1.'</p>
+                                    </div>
+
+                                    <div class="details" style="text-transform: capitalize;">
+                                        <p class="pname">&#8358;'.$data3.'</p>
+                                    </div>
+
+                                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                                        <p class="pname">'.$data2.'</p>
+                                    </div>
+
+                                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                                        <p class="pname">'.$date.'</p>
+                                    </div>
+
+                                    <div class="details" style="text-transform: capitalize;">
+                                        <div class="detail" style="">
+                                            <a
+                                                href="customerprofileinfo.php?unique='.$unique.'&real=91838JDFOJOEI939">
+                                                <p style="font-size: 14px; color: #fff;">View</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    ';
+
+
+                                    $output .= ''.$output1.''.$output2.'';
     }else {
     $output .= "
     <div class='success'>
@@ -10230,49 +10586,142 @@ $output1 = '
         // }
 
         $output1 = '
-        <a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
-            <div class="account-detail2">
-                <div class="radius"> ';
-                    if(!empty($data['agent_img'])){
-                    $output2 = '<img src="profileimage/'.$data['agent_img'].'" alt="profile image" /></div>';
-                }
-                if(empty($data['agent_img'])){
-                $output2 = '<div class="empty-img">
-                    <i class="ri-user-fill"></i>
-                </div>
-            </div> ';
-            }
-
-
-
-
-
-            $earnedprice = $sumearn;
-            $unitprice = $earnedprice;
-
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-            $price = number_format(round($unitprice));
-            } else {
-            $price = round($unitprice);
-            }
-
-            $output3 ='
-            <div class="flex">
-                <p style="text-transform: capitalize;">
+        <div class="transaction-details2">
+            <div class="details" style="text-transform: capitalize;">
+                <p class="pname email-span">
                     <span>'.$data['agent_name'].'</span>
                 </p>
-                <span class="email-span">Total Earnings: &#8358;'.$price.'';
-
-
-
-
-
-
-                    $output4 = '</span>
             </div>
-    </div>
-    </a>';
-    $output .= ''.$output1.''.$output2.''.$output3.''.$output4.'';
+
+            <div class="details hide flexdetail" style="text-transform: lowercase;">
+                <p class="pname email-span"> '.$data['agent_email'].'</p>
+            </div> ';
+
+            $output5 = '<div class="details" style="text-transform: capitalize;">
+                <p class="pname">&#8358;';
+                    $agentid = $data['uniqueagent_id'];
+                    $refid = $data['referral_id'];
+                    $percentage = $data['earning_percentage'];
+                    $agentdate = $data['agent_date'];
+                    $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+                    '{$agentid}' ORDER BY earning_id DESC";
+                    $result = $this->dbcon->query($sql);
+                    $row = $result->fetch_assoc();
+                    if($result->num_rows == 1){
+                    foreach ($row as $key => $value) {
+                    $unitprice2 = $value;
+                    }
+                    }else{
+                    $unitprice2 = $row;
+                    }
+
+                    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 ||
+                    $unitprice2 > 999999){
+                    $data3 = number_format(round($unitprice2));
+                    } else {
+                    $data3 = round($unitprice2);
+                    }
+
+                    $output6 = $data3.'</p>
+            </div> ';
+
+
+            $output7 = '<div class="details" style="text-transform: capitalize;">
+                <p class="pname">&#8358;';
+                    $agentid = $data['uniqueagent_id'];
+                    $refid = $data['referral_id'];
+                    $agentdate = $data['agent_date'];
+                    $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
+                    = '{$agentid}' ORDER BY earning_id DESC";
+                    $result2 = $this->dbcon->query($sql2);
+                    $row2 = $result2->fetch_assoc();
+                    if($result2->num_rows == 1){
+                    foreach ($row2 as $key => $value) {
+                    $unitprice3 = $value;
+                    }
+                    }else{
+                    $unitprice3 = $row2;
+                    }
+
+                    if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 ||
+                    $unitprice3 > 999999){
+                    $data3 = number_format(round($unitprice3));
+                    } else {
+                    $data3 = round($unitprice3);
+                    }
+
+                    $output8 = $data3.'</p>
+            </div> ';
+
+
+            $sql5 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
+            DESC";
+            $result5 = $this->dbcon->query($sql5);
+            $row5 = array();
+            while($row = $result5->fetch_assoc()){
+            $row5[] = $row;
+            }
+
+            $customer = $row5;
+
+            $output3 = '<div class="details hide flexdetail"
+                style="text-transform: capitalize;">
+                <p class="pname">';
+
+                    if(!empty($customer)){
+                    $percent = $percentage / 100;
+                    $agenttotalunits = [];
+                    foreach($customer as $key => $value2){
+                    $unique = $value2['unique_id'];
+                    $sql1 = "SELECT SUM(product_unit) FROM payment WHERE
+                    customer_id='{$unique}'";
+                    $result1 = $this->dbcon->query($sql1);
+                    $total1 = $result1->fetch_assoc();
+                    foreach($total1 as $key => $value3){
+                    if(is_null($value3)){
+                    //echo "0";
+                    } else {
+                    array_push($agenttotalunits,$value3);
+                    } }
+
+                    }
+                    $sumunits = array_sum($agenttotalunits);
+                    $data1 = $sumunits;
+                    } else {
+                    $data1 = "0";
+                    }
+                    $output4 = $data1.'</p>
+            </div> ';
+
+            $referral = $data['referral_id'];
+            $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
+            $result4 = $this->dbcon->query($sql4);
+            $row4 = $result4->fetch_assoc();
+
+            foreach ($row4 as $key => $value4) {
+            $data4 = $value4;
+            };
+
+            $output2 = '
+            <div class="details" style="text-transform: capitalize;">
+                <p class="pname">'.$data4.'</p>
+            </div>
+
+            ';
+
+
+
+            $output9 = ' <div class="details" style="text-transform: capitalize;">
+                <div class="detail" style="">
+                    <a href="agentinfo.php?unique='.$agentid.'&real=91838JDFOJOEI939">
+                        <p style="font-size: 14px; color: #fff;">View</p>
+                    </a>
+                </div>
+            </div>';
+
+
+            $output .=
+            ''.$output1.''.$output5.''.$output6.''.$output7.''.$output8.''.$output3.''.$output4.''.$output2.''.$output9.'';
     }
     } else {
     $output .= "
@@ -10315,45 +10764,63 @@ $output1 = '
     // }
 
     $output1 = '
-    <a href="executivehistory.php?unique='.$data['unique_id'].'" style="color: #808080;">
-        <div class="account-detail2">
-            <div class="radius"> ';
-                if(!empty($data['executive_img'])){
-                $output2 = '<img src="profileimage/'.$data['executive_img'].'" alt="profile image" /></div>';
-            }
-            if(empty($data['executive_img'])){
-            $output2 = '<div class="empty-img">
-                <i class="ri-user-fill"></i>
-            </div>
-        </div> ';
-        }
-
-        $earnedprice = $sumearn;
-        $unitprice = $earnedprice;
-
-        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-        $price = number_format(round($unitprice));
-        } else {
-        $price = round($unitprice);
-        }
-
-        $output3 ='
-        <div class="flex">
-            <p style="text-transform: capitalize;">
+    <div class="transaction-details2">
+        <div class="details" style="text-transform: capitalize;">
+            <p class="pname email-span">
                 <span>'.$data['full_name'].'</span>
             </p>
-            <span class="email-span">Total Earnings: &#8358;'.$price.'';
-
-
-
-
-
-
-                $output4 = '</span>
         </div>
-</div>
-</a>';
-$output .= ''.$output1.''.$output2.''.$output3.''.$output4.'';
+
+        <div class="details hide flexdetail" style="text-transform: lowercase;">
+            <p class="pname email-span"> '.$data['executive_email'].'</p>
+        </div>
+        <div class="details hide flexdetail" style="text-transform: lowercase;">
+            <p class="pname email-span"> '.$data['earning'].'%</p>
+        </div>
+        ';
+
+        $execid = $data['unique_id'];
+        $execdate = $data['executive_date'];
+        $execearn = $data['earning'];
+
+        $output5 = '<div class="details" style="text-transform: capitalize;">
+            <p class="pname">&#8358;';
+                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' ORDER BY
+                earning_id DESC";
+                $result3 = $this->dbcon->query($sql3);
+
+                $row3 = $result3->fetch_assoc();
+                if($result3->num_rows == 1){
+                foreach ($row3 as $key => $value) {
+                $unitprice3 = $value;
+                }
+                }else{
+                $unitprice3 = $row3;
+                }
+
+                if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 || $unitprice3 > 999999){
+                $data3 = number_format(round($unitprice3));
+                } else {
+                $data3 = round($unitprice3);
+                }
+
+
+
+                $output6 = $data3.'</p>
+        </div> ';
+
+
+        $output9 = ' <div class="details" style="text-transform: capitalize;">
+            <div class="detail" style="">
+                <a href="execinfo.php?unique='.$execid.'&real=91838JDFOJOEI939">
+                    <p style="font-size: 14px; color: #fff;">View</p>
+                </a>
+            </div>
+        </div>';
+
+
+        $output .= ''.$output1.''.$output5.''.$output6.''.$output9.'';
+
 }
 } else {
 $output .= "
@@ -10412,48 +10879,142 @@ $row2 = $result3->fetch_assoc();
 
 
 $output1 = '
-<a href="agenthistory.php?unique='.$row4['uniqueagent_id'].'">
-    <div class="account-detail2">
-        <div class="radius"> ';
-            if(!empty($row4['agent_img'])){
-            $output2 = '<img src="profileimage/'.$row4['agent_img'].'" alt="profile image" /></div>';
-        }
-        if(empty($row4['agent_img'])){
-        $output2 = '<div class="empty-img">
-            <i class="ri-user-fill" style="color: #000;"></i>
-        </div>
-    </div> ';
-    }
+                                    <div class="transaction-details2">
+                                        <div class="details" style="text-transform: capitalize;">
+                                            <p class="pname email-span">
+                                                <span>'.$row4['agent_name'].'</span>
+                                            </p>
+                                        </div>
 
-    if($result3->num_rows == 1){
-    foreach ($row2 as $key => $value) {
-    $unitprice = $value;
+                                        <div class="details hide flexdetail" style="text-transform: lowercase;">
+                                            <p class="pname email-span"> '.$row4['agent_email'].'</p>
+                                        </div> ';
 
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $price = number_format(round($unitprice));
-    } else {
-    $price = round($unitprice);
-    }
+                                        $output5 = '<div class="details" style="text-transform: capitalize;">
+                                            <p class="pname">&#8358;';
+                                                $agentid = $row4['uniqueagent_id'];
+                                                $refid = $row4['referral_id'];
+                                                $percentage = $row4['earning_percentage'];
+                                                $agentdate = $row4['agent_date'];
+                                                $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+                                                '{$agentid}' AND payment_month = '{$month}'  AND payment_year = '{$year}' ORDER BY earning_id DESC";
+                                                $result = $this->dbcon->query($sql);
+                                                $row = $result->fetch_assoc();
+                                                if($result->num_rows == 1){
+                                                foreach ($row as $key => $value) {
+                                                $unitprice2 = $value;
+                                                }
+                                                }else{
+                                                $unitprice2 = $row;
+                                                }
 
-    $output3 ='
-    <div class="flex">
-        <p style="text-transform: capitalize;">
-            <span>'.$row4['agent_name'].'</span>
-        </p>
-        <span class="email-span">Total Earnings: &#8358;'.$price.'';
-            }
-            }else{
-            $sumearn = $row2;
-            }
+                                                if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 ||
+                                                $unitprice2 > 999999){
+                                                $data3 = number_format(round($unitprice2));
+                                                } else {
+                                                $data3 = round($unitprice2);
+                                                }
+
+                                                $output6 = $data3.'</p>
+                                        </div> ';
+
+
+                                        $output7 = '<div class="details" style="text-transform: capitalize;">
+                                            <p class="pname">&#8358;';
+                                                $agentid = $row4['uniqueagent_id'];
+                                                $refid = $row4['referral_id'];
+                                                $agentdate = $row4['agent_date'];
+                                                $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
+                                                = '{$agentid}' AND payment_month = '{$month}'  AND payment_year = '{$year}' ORDER BY earning_id DESC";
+                                                $result2 = $this->dbcon->query($sql2);
+                                                $row2 = $result2->fetch_assoc();
+                                                if($result2->num_rows == 1){
+                                                foreach ($row2 as $key => $value) {
+                                                $unitprice3 = $value;
+                                                }
+                                                }else{
+                                                $unitprice3 = $row2;
+                                                }
+
+                                                if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 ||
+                                                $unitprice3 > 999999){
+                                                $data3 = number_format(round($unitprice3));
+                                                } else {
+                                                $data3 = round($unitprice3);
+                                                }
+
+                                                $output8 = $data3.'</p>
+                                        </div> ';
+
+
+                                        $sql5 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
+                                        DESC";
+                                        $result5 = $this->dbcon->query($sql5);
+                                        $row5 = array();
+                                        while($row = $result5->fetch_assoc()){
+                                        $row5[] = $row;
+                                        }
+
+                                        $customer = $row5;
+
+                                        $output3 = '<div class="details hide flexdetail"
+                                            style="text-transform: capitalize;">
+                                            <p class="pname">';
+
+                                                if(!empty($customer)){
+                                                $percent = $percentage / 100;
+                                                $agenttotalunits = [];
+                                                foreach($customer as $key => $value2){
+                                                $unique = $value2['unique_id'];
+                                                $sql1 = "SELECT SUM(product_unit) FROM payment WHERE
+                                                customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
+                                                $result1 = $this->dbcon->query($sql1);
+                                                $total1 = $result1->fetch_assoc();
+                                                foreach($total1 as $key => $value3){
+                                                if(is_null($value3)){
+                                                //echo "0";
+                                                } else {
+                                                array_push($agenttotalunits,$value3);
+                                                } }
+
+                                                }
+                                                $sumunits = array_sum($agenttotalunits);
+                                                $data1 = $sumunits;
+                                                } else {
+                                                $data1 = "0";
+                                                }
+                                                $output4 = $data1.'</p>
+                                        </div> ';
+
+                                        $referral = $row4['referral_id'];
+                                        $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
+                                        $result4 = $this->dbcon->query($sql4);
+                                        $row4 = $result4->fetch_assoc();
+
+                                        foreach ($row4 as $key => $value4) {
+                                        $data4 = $value4;
+                                        };
+
+                                        $output2 = '
+                                        <div class="details" style="text-transform: capitalize;">
+                                            <p class="pname">'.$data4.'</p>
+                                        </div>
+
+                                        ';
 
 
 
-            $output4 = '</span>
-    </div>
-    </div>
-</a>';
+                                        $output9 = ' <div class="details" style="text-transform: capitalize;">
+                                            <div class="detail" style="">
+                                                <a href="agentinfo.php?unique='.$agentid.'&real=91838JDFOJOEI939">
+                                                    <p style="font-size: 14px; color: #fff;">View</p>
+                                                </a>
+                                            </div>
+                                        </div>';
 
-$output .= ''.$output1.''.$output2.''.$output3.''.$output4.'';
+
+                                        $output .=
+                                        ''.$output1.''.$output5.''.$output6.''.$output7.''.$output8.''.$output3.''.$output4.''.$output2.''.$output9.'';
 }
 
 } else {
@@ -10513,50 +11074,64 @@ $sumearn = $row;
 }
 
 $output1 = '
-<a href="executivehistory.php?unique='.$row4['unique_id'].'">
-    <div class="account-detail2">
-        <div class="radius"> ';
-            if(!empty($row4['executive_img'])){
-            $output2 = '<img src="profileimage/'.$row4['executive_img'].'" alt="profile image" /></div>';
-        }
-        if(empty($row4['executive_img'])){
-        $output2 = '<div class="empty-img">
-            <i class="ri-user-fill" style="color: #000;"></i>
+    <div class="transaction-details2">
+        <div class="details" style="text-transform: capitalize;">
+            <p class="pname email-span">
+                <span>'.$row4['full_name'].'</span>
+            </p>
         </div>
-    </div> ';
-    }
+
+        <div class="details hide flexdetail" style="text-transform: lowercase;">
+            <p class="pname email-span"> '.$row4['executive_email'].'</p>
+        </div>
+        <div class="details hide flexdetail" style="text-transform: lowercase;">
+            <p class="pname email-span"> '.$row4['earning'].'%</p>
+        </div>
+        ';
+
+        $execid = $row4['unique_id'];
+        $execdate = $row4['executive_date'];
+        $execearn = $row4['earning'];
+
+        $output5 = '<div class="details" style="text-transform: capitalize;">
+            <p class="pname">&#8358;';
+                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND payment_month = '{$month}' AND payment_year = '{$year}'ORDER BY
+                earning_id DESC";
+                $result3 = $this->dbcon->query($sql3);
+
+                $row3 = $result3->fetch_assoc();
+                if($result3->num_rows == 1){
+                foreach ($row3 as $key => $value) {
+                $unitprice3 = $value;
+                }
+                }else{
+                $unitprice3 = $row3;
+                }
+
+                if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 || $unitprice3 > 999999){
+                $data3 = number_format(round($unitprice3));
+                } else {
+                $data3 = round($unitprice3);
+                }
 
 
-    if($result3->num_rows == 1){
-    foreach ($row2 as $key => $value) {
-    $earnedprice = $value;
-    $unitprice = $earnedprice;
 
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $price = number_format(round($unitprice));
-    } else {
-    $price = round($unitprice);
-    }
-
-    $output3 ='
-    <div class="flex">
-        <p style="text-transform: capitalize;">
-            <span>'.$row4['full_name'].'</span>
-        </p>
-        <span class="email-span">Total Earnings: &#8358;'.$price.'';
-
-            }
-            }else{
-            $sumearn = $row;
-            }
+                $output6 = $data3.'</p>
+        </div> ';
 
 
-            $output4 = '</span>
-    </div>
-    </div>
-</a>';
+        $output9 = ' <div class="details" style="text-transform: capitalize;">
+            <div class="detail" style="">
+                <a href="execinfo.php?unique='.$execid.'&real=91838JDFOJOEI939">
+                    <p style="font-size: 14px; color: #fff;">View</p>
+                </a>
+            </div>
+        </div>
+        </div>';
 
-$output .= ''.$output1.''.$output2.''.$output3.''.$output4.'';
+
+        $output .= ''.$output1.''.$output5.''.$output6.''.$output9.'';
+
 }
 
 } else {
@@ -10608,6 +11183,62 @@ payment_month='{$month}' AND payment_year = '{$year}' ORDER BY earning_id
 DESC"; $result3=$this->dbcon->query($totalearning);
 $row2 = $result3->fetch_assoc();
 
+$sql6 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
+= '{$value}' AND payment_month = '{$month}'  AND payment_year = '{$year}' ORDER BY earning_id DESC";
+$result6 = $this->dbcon->query($sql6);
+$row6 = $result6->fetch_assoc();
+if($result6->num_rows == 1){
+foreach ($row6 as $key => $value) {
+$unitprice6 = $value;
+}
+}else{
+$unitprice6 = $row2;
+}
+
+if($unitprice6 > 999 || $unitprice6 > 9999 || $unitprice6 > 99999 ||
+$unitprice6 > 999999){
+$paymentprocessed = number_format(round($unitprice6));
+} else {
+    $paymentprocessed = round($unitprice6);
+}
+
+$refid = $row4['referral_id'];
+
+
+$sql7 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
+DESC";
+$result7 = $this->dbcon->query($sql7);
+$row7 = array();
+while($row = $result7->fetch_assoc()){
+$row7[] = $row;
+}
+
+$customer = $row7;
+
+        if(!empty($customer)){
+        $percent = $percentage / 100;
+        $agenttotalunits = [];
+        foreach($customer as $key => $value2){
+        $unique = $value2['unique_id'];
+        
+$sql8 = "SELECT SUM(product_unit) FROM payment WHERE
+customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
+$result8 = $this->dbcon->query($sql8);
+$total8 = $result8->fetch_assoc();
+foreach($total8 as $key => $value3){
+if(is_null($value3)){
+//echo "0";
+} else {
+array_push($agenttotalunits,$value3);
+} }
+
+}
+$sumunits = array_sum($agenttotalunits);
+$noofunits = $sumunits;
+} else {
+$noofunits = "0";
+}
+
 
 if(!empty($row4['group_id'])){
 $group = "SELECT * FROM group_table WHERE uniquegroup_id = '{$row4['group_id']}'";
@@ -10648,6 +11279,8 @@ $output2 = '
     <td>'.$row4['account_number'].'</td>
     <td>'.$row4['reg_account_name'].'</td>
     <td>&#8358;'.$price.'</td>
+    <td>&#8358;'.$paymentprocessed.'</td>
+    <td>'.$noofunits.'</td>
 </tr>
 ';
 
@@ -10854,7 +11487,7 @@ $output1 = '
 
     
     if($data['balance_earning'] != ""){
-    if($data['balance_earning'] > 0){ 
+    if($data['earning_status'] == "unpaid"){ 
                         $output2 = '<div class="detail-four">
                         <div class="detail"
                             style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -10863,7 +11496,7 @@ $output1 = '
                     </div>';
                         }
         
-    if($data['balance_earning'] == 0){
+    if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
         $output2 = '  <div class="detail-four">
         <div class="detail"
             style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -10943,7 +11576,7 @@ $output1 = '
     }
 
     if($data['balance_earning'] != ""){
-        if($data['balance_earning'] > 0){ 
+        if($data['earning_status'] == "unpaid"){ 
                             $output2 = '<div class="detail-four">
                             <div class="detail"
                                 style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -10952,7 +11585,7 @@ $output1 = '
                         </div>';
                             }
             
-        if($data['balance_earning'] == 0){
+        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
             $output2 = '  <div class="detail-four">
             <div class="detail"
                 style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11017,7 +11650,7 @@ $output1 = '
 
     if($mode == "downloadpending"){
         $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-        AND earning_history.balance_earning > 0 ORDER BY earning_id DESC";
+        AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
     }
 
         if($mode == "downloadpaid"){
@@ -11047,7 +11680,7 @@ $output1 = '
 
     if($mode == "downloadpending"){
         $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-        earning_history.earner_id AND earning_history.balance_earning > 0 ORDER BY earning_id DESC";
+        earning_history.earner_id AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
         }
 
         if($mode == "downloadpaid"){
@@ -11065,7 +11698,7 @@ $output1 = '
     if($user == "executive"){
       
         if($mode == "downloadpending"){
-            $sql = "SELECT * FROM earning_history WHERE earner_id = '{$name}' AND balance_earning > 0 ORDER BY earning_id DESC";
+            $sql = "SELECT * FROM earning_history WHERE earner_id = '{$name}' AND earning_status='unpaid' ORDER BY earning_id DESC";
             }
     
             if($mode == "downloadpaid"){
@@ -11127,26 +11760,40 @@ $output1 = '
 
     if($user == "customer"){
     $usertype = "User";
-    }
-
-    if($user == "agent"){
-    $usertype = "Agent";
-    }
     $output.= '
     <tr>
-        <td><span>'.$data['earning_id'].'</span></td>
-        <td><span>'.$data['earnee'].'</span></td>
-        <td><span>'.$data['customer_id'].'</span></td>
+        <td><span>'.$row2['user_id'].'</span></td>
+        <td><span>'.$row2['first_name'].'</span><span>'.$row2['last_name'].'</span></td>
         <td><span>'.$data['earner_id'].'</span></td>
         <td>'.$usertype.'</td>
         <td>'.$row2['bank_name'].'</td>
         <td>'.$row2['account_number'].'</td>
         <td>'.$unit.'</td>
-        <td>'.$data['amount_paid'].'</td>
-        <td>'.$data['balance_earning'].'</td>
-        <td>'.$data['payment_date'].'</td>
+        <td></td>
+        <td></td>
     </tr>
     ';
+    }
+
+    if($user == "agent"){
+    $usertype = "Agent";
+
+    $output.= '
+    <tr>
+        <td><span>'.$row2['agent_id'].'</span></td>
+        <td><span>'.$row2['agent_name'].'</span></td>
+        <td><span>'.$data['earner_id'].'</span></td>
+        <td>'.$usertype.'</td>
+        <td>'.$row2['bank_name'].'</td>
+        <td>'.$row2['account_number'].'</td>
+        <td>'.$unit.'</td>
+        <td></td>
+        <td></td>
+    </tr>
+    ';
+    }
+
+    
 
     }
     } else {
@@ -11189,7 +11836,7 @@ $output1 = '
     }
 
     if($data['balance_earning'] != ""){
-        if($data['balance_earning'] > 0){ 
+        if($data['earning_status'] == "unpaid"){ 
                             $output2 = '<div class="detail-four">
                             <div class="detail"
                                 style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11198,7 +11845,7 @@ $output1 = '
                         </div>';
                             }
             
-        if($data['balance_earning'] == 0){
+        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
             $output2 = '  <div class="detail-four">
             <div class="detail"
                 style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11250,7 +11897,7 @@ $output1 = '
     function selectUserEarningStatus($name){
         if($name == "Pending"){
             $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-            AND earning_history.balance_earning > 0 ORDER BY earning_id DESC";
+            AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
         }
 
         if($name == "Paid"){
@@ -11258,10 +11905,6 @@ $output1 = '
             AND earning_history.balance_earning = 0 AND earning_history.earning_status = 'paid' ORDER BY earning_id DESC";
         }
 
-        if($name == "Unpaid"){
-            $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-            AND earning_history.earning_status = 'unpaid' ORDER BY earning_id DESC";
-        }
         $result = $this->dbcon->query($sql);
         $output = "";
     
@@ -11291,7 +11934,7 @@ $output1 = '
         }
     
         if($data['balance_earning'] != ""){
-            if($data['balance_earning'] > 0){ 
+            if($data['earning_status'] == "unpaid"){ 
                                 $output2 = '<div class="detail-four">
                                 <div class="detail"
                                     style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11300,7 +11943,7 @@ $output1 = '
                             </div>';
                                 }
                 
-            if($data['balance_earning'] == 0){
+            if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
                 $output2 = '  <div class="detail-four">
                 <div class="detail"
                     style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11354,15 +11997,6 @@ $output1 = '
                 </div>
                 ";
             }
-
-            if($name == "Unpaid"){
-                $output .= "
-                <div class='success'>
-                    <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                    <p>There are no unpaid earnings</p>
-                </div>
-                ";
-            }
         }
     
         echo $output;
@@ -11372,7 +12006,7 @@ $output1 = '
         function selectUserEarningStatus2($name){
             if($name == "Pending"){
                 $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-     earning_history.earner_id AND earning_history.balance_earning > 0 ORDER BY earning_id DESC";
+     earning_history.earner_id AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
             }
     
             if($name == "Paid"){
@@ -11413,7 +12047,7 @@ $output1 = '
             }
         
             if($data['balance_earning'] != ""){
-                if($data['balance_earning'] > 0){ 
+                if($data['earning_status'] == "unpaid"){ 
                                     $output2 = '<div class="detail-four">
                                     <div class="detail"
                                         style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11422,7 +12056,7 @@ $output1 = '
                                 </div>';
                                     }
                     
-                if($data['balance_earning'] == 0){
+                if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
                     $output2 = '  <div class="detail-four">
                     <div class="detail"
                         style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11494,7 +12128,7 @@ $output1 = '
 
             function selectUserEarningStatus3($name,$user){
                 if($name == "Pending"){
-                    $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND balance_earning > 0 ORDER BY earning_id DESC";
+                    $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND earning_status = 'unpaid' ORDER BY earning_id DESC";
                 }
         
                 if($name == "Paid"){
@@ -11533,7 +12167,7 @@ $output1 = '
                 }
             
                 if($data['balance_earning'] != ""){
-                    if($data['balance_earning'] > 0){ 
+                    if($data['earning_status'] == "unpaid"){ 
                                         $output2 = '<div class="detail-four">
                                         <div class="detail"
                                             style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11542,7 +12176,7 @@ $output1 = '
                                     </div>';
                                         }
                         
-                    if($data['balance_earning'] == 0){
+                    if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
                         $output2 = '  <div class="detail-four">
                         <div class="detail"
                             style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11653,7 +12287,7 @@ $output1 = '
     }
 
     if($data['balance_earning'] != ""){
-        if($data['balance_earning'] > 0){ 
+        if($data['earning_status'] == "unpaid"){ 
                             $output2 = '<div class="detail-four">
                             <div class="detail"
                                 style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11662,7 +12296,7 @@ $output1 = '
                         </div>';
                             }
             
-        if($data['balance_earning'] == 0){
+        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
             $output2 = '  <div class="detail-four">
             <div class="detail"
                 style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
@@ -11710,10 +12344,10 @@ $output1 = '
     echo $output;
     }
 
-    function uploadExcel($customerid,$earnerid,$paidearnings,$balanceearnings,$earningid){
+    function uploadExcel($earnerid,$paidearnings,$balanceearnings,$amountearned){
              
             $paid = "paid";
-            $sql = "UPDATE earning_history SET amount_paid='{$paidearnings}', balance_earning='{$balanceearnings}',earning_status='{$paid}' WHERE customer_id='{$customerid}' AND earner_id='{$earnerid}' AND earning_id='{$earningid}'";
+            $sql = "UPDATE earning_history SET amount_paid='{$paidearnings}', balance_earning='{$balanceearnings}',earning_status='{$paid}' WHERE earner_id='{$earnerid}' AND earning_status = 'unpaid'";
 
             $result = $this->dbcon->query($sql);
             if($this->dbcon->affected_rows == 1){

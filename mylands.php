@@ -749,7 +749,7 @@ if(!isset($_SESSION['unique_id'])){
                                 <input type="hidden" value="<?php echo $value['product_id'];?>" name="product">
                                 <input type="hidden" value="<?php echo $value['newpay_id'];?>" name="newpayid">
                             </form>
-                            <script>
+                            <!-- <script>
                             let dateInput = document.querySelector('#date');
                             let checkBal = document.querySelector('#check');
                             var countDownDate = new Date(dateInput.value).getTime();
@@ -786,7 +786,7 @@ if(!isset($_SESSION['unique_id'])){
                                     increasePrice();
                                 }, 2592000);
                             }
-                            </script>
+                            </script> -->
                             <?php    } else {
              ?>
 
@@ -937,7 +937,7 @@ if(!isset($_SESSION['unique_id'])){
 
 
                             if (checkBalValuetwo<?php echo $value['newpay_id'];?> > 2 &&
-                                currentDatetwo<?php echo $value['newpay_id'];?> >=
+                                currentDatetwo<?php echo $value['newpay_id'];?> ==
                                 increaseDatetwo<?php echo $value['newpay_id'];?>
                             ) {
                                 let priceformtwo<?php echo $value['newpay_id'];?> = document.querySelector(
@@ -1072,7 +1072,7 @@ if(!isset($_SESSION['unique_id'])){
                                 let shortdate<?php echo $value['newpay_id'];?> =
                                     `${Monthname<?php echo $value['newpay_id'];?>}-${day<?php echo $value['newpay_id'];?>}-${year<?php echo $value['newpay_id'];?>}`;
                                 // let shortdate = "Apr-8-2023";
-                                // console.log(shortdate);
+
                                 //let month = date.getMonth();
 
 
@@ -1083,13 +1083,13 @@ if(!isset($_SESSION['unique_id'])){
                                     dateInput<?php echo $value['newpay_id'];?>;
                                 let checkBalValue<?php echo $value['newpay_id'];?> =
                                     checkBal<?php echo $value['newpay_id'];?>;
+
                                 //console.log(currentDate);
 
 
-                                if (currentDate<?php echo $value['newpay_id'];?> >
-                                    completionDate<?php echo $value['newpay_id'];?> &&
+                                if (
                                     checkBalValue<?php echo $value['newpay_id'];?> > 2 &&
-                                    currentDate<?php echo $value['newpay_id'];?> >=
+                                    currentDate<?php echo $value['newpay_id'];?> ==
                                     increaseDate<?php echo $value['newpay_id'];?>) {
                                     let priceform<?php echo $value['newpay_id'];?> = document.querySelector(
                                         '#priceform');
