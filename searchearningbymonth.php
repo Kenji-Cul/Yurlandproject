@@ -9,3 +9,12 @@ if($_GET['user'] == "monthearn"){
     }
     
     }
+
+    if($_GET['user'] == "monthearnuser"){
+        if($_POST['searchyear'] == "" || $_GET['data'] == ""){
+            echo "Please Fill Details";
+        } else {
+            $earning = $user->searchUserEarningByMonth($_GET['data'],$_POST['searchyear']);
+        }
+        
+        }

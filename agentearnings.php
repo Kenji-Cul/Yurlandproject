@@ -524,7 +524,7 @@ include_once "projectlog.php";
 
         ?><?php if(isset($_SESSION['uniquesupadmin_id'])) {
             ?>.close {
-                padding-top: 38em;
+                padding-top: 44em;
             }
 
             <?php
@@ -675,8 +675,18 @@ include_once "projectlog.php";
                 </li>
 
                 <li class="links">
+                    <a href="alluserearnings.php"><img src="images/referral.svg" /></a>
+                    <a href="alluserearnings.php" class="link">User Earnings</a>
+                </li>
+
+                <li class="links">
                     <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
-                    <a href="allagentearnings.php" class="link">View Earnings</a>
+                    <a href="allagentearnings.php" class="link">Agent Earnings</a>
+                </li>
+
+                <li class="links">
+                    <a href="allexecutiveearnings.php"><img src="images/referral.svg" /></a>
+                    <a href="allexecutiveearnings.php" class="link">Executive Earnings</a>
                 </li>
 
                 <li class="links">
@@ -733,8 +743,8 @@ include_once "projectlog.php";
                 </li>
 
                 <li class="links">
-                    <a href="#"><img src="images/updown.svg" /></a>
-                    <a href="#" class="link">Pay Earnings</a>
+                    <a href="alluserearnings.php"><img src="images/updown.svg" /></a>
+                    <a href="alluserearnings.php" class="link">Pay Earnings</a>
                 </li>
 
                 <li class="links">

@@ -16,3 +16,20 @@ if($_GET['user'] == "download"){
     }
  
     }
+
+
+    if($_GET['user'] == "downloaduser"){
+ 
+        if($_GET['dataone'] == "" || $_GET['datatwo'] == ""){
+            echo "Please Fill Details";
+        } else {
+            $earning = $user->downloadUserEarning($_GET['dataone'],$_GET['datatwo']);
+             
+        }
+    
+        if(isset($_POST['export'])){
+           
+        
+        }
+     
+        }

@@ -849,8 +849,20 @@ if(!isset($_GET['unique'])){
                     <div class="options-container">
                         <div class="option">
                             <li class="links">
+                                <a href="totalearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="totalearnings.php" class="link">Earnings History</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="alluserearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="alluserearnings.php" class="link">User Earnings</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
                                 <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
-                                <a href="allagentearnings.php" class="link">View Earnings</a>
+                                <a href="allagentearnings.php" class="link">Agent Earnings</a>
                             </li>
                         </div>
 
@@ -944,8 +956,8 @@ if(!isset($_GET['unique'])){
                 </li>
 
                 <li class="links">
-                    <a href="totalearnings.php"><img src="images/updown.svg" /></a>
-                    <a href="totalearnings.php" class="link">Pay Earnings</a>
+                    <a href="alluserearnings.php"><img src="images/updown.svg" /></a>
+                    <a href="alluserearnings.php" class="link">Pay Earnings</a>
                 </li>
 
                 <li class="links">
@@ -1006,7 +1018,6 @@ if(!isset($_GET['unique'])){
                         <th>Account Number</th>
                         <th>Amount Paid</th>
                         <th>Amount Earned</th>
-                        <th>Balance Earning</th>
                     </tr>
                 </thead>
                 <tbody class="table-data">
@@ -1045,14 +1056,6 @@ if(!isset($_GET['unique'])){
                       }
                   
                                 
-                    ?></td>
-                        <td>&#8358;<?php 
-                 $earnedprice = $value['earned_amount'];
-                    $unitprice = $value['product_price'] - $earnedprice;
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                      echo number_format(round($unitprice));
-                                    } else {
-                                        echo round($unitprice); }   
                     ?></td>
                     </tr>
                     <?php }}?>
@@ -1285,7 +1288,7 @@ if(!isset($_GET['unique'])){
             type: 'base64'
         });
 
-        XLSX.writeFile(file, 'Agentearningdata.' + type);
+        XLSX.writeFile(file, 'Earningsdata.' + type);
     }
 
     downloadbtn.onclick = () => {

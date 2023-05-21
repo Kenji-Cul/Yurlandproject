@@ -210,6 +210,25 @@ include_once "projectlog.php";
     }
 
     @media only screen and (min-width: 1300px) {
+
+        .error2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Space Grotesk";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 31px;
+            text-align: center;
+            color: #e11900;
+            border: 1px solid #e11900;
+            width: 30%;
+            padding: 10px 10px;
+            background-color: #e1dede;
+            visibility: hidden;
+        }
+
         .dropdown-links .select-box {
             width: 100%;
             border-radius: 0px !important;
@@ -469,6 +488,24 @@ include_once "projectlog.php";
 
     @media only screen and (max-width: 1300px) {
 
+        .error2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Space Grotesk";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 31px;
+            text-align: center;
+            color: #e11900;
+            border: 1px solid #e11900;
+            width: 70%;
+            padding: 4px 4px;
+            background-color: #e1dede;
+            visibility: hidden;
+        }
+
         .details .detail {
             width: 60px;
             height: 20px;
@@ -526,7 +563,7 @@ include_once "projectlog.php";
 
         .success {
             position: absolute;
-            top: 38em;
+            top: 22em;
         }
 
 
@@ -835,8 +872,20 @@ include_once "projectlog.php";
                     <div class="options-container">
                         <div class="option">
                             <li class="links">
+                                <a href="totalearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="totalearnings.php" class="link">Earnings History</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="alluserearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="alluserearnings.php" class="link">User Earnings</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
                                 <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
-                                <a href="allagentearnings.php" class="link">View Earnings</a>
+                                <a href="allagentearnings.php" class="link">Agent Earnings</a>
                             </li>
                         </div>
 
@@ -931,8 +980,8 @@ include_once "projectlog.php";
                 </li>
 
                 <li class="links">
-                    <a href="totalearnings.php"><img src="images/updown.svg" /></a>
-                    <a href="totalearnings.php" class="link">Pay Earnings</a>
+                    <a href="alluserearnings.php"><img src="images/updown.svg" /></a>
+                    <a href="alluserearnings.php" class="link">Pay Earnings</a>
                 </li>
 
                 <li class="links">

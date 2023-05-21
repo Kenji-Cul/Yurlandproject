@@ -1671,6 +1671,8 @@ function checkGroupName($name){
         }
     }
 
+  
+
     function selectReferredCustomer($referral){
         $sql = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
         $result = $this->dbcon->query($sql);
@@ -10626,7 +10628,7 @@ $output1 = '
             </div> ';
 
 
-            $output7 = '<div class="details" style="text-transform: capitalize;">
+            $output7 = '<div class="details hide flexdetail" style="text-transform: capitalize;">
                 <p class="pname">&#8358;';
                     $agentid = $data['uniqueagent_id'];
                     $refid = $data['referral_id'];
@@ -10728,6 +10730,156 @@ $output1 = '
     <div class='success'>
         <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
         <p>This agent does not exist </p>
+    </div>
+    ";
+    }
+
+    echo $output;
+    }
+
+
+    function searchCustomerEarning($name){
+        $sql = "SELECT * FROM user WHERE email = '{$name}'";
+        $result = $this->dbcon->query($sql);
+        $output = "";
+
+        if($result->num_rows > 0){
+        while($data = $result->fetch_assoc()){
+        $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+        '{$data['unique_id']}'
+        ORDER BY
+        earning_id DESC";
+        $result2 = $this->dbcon->query($totalpayment);
+        $row = $result2->fetch_assoc();
+        if($result2->num_rows == 1){
+        foreach ($row as $key => $value) {
+        $sumearn = $value;
+        }
+        }else{
+        $sumearn = $row;
+        }
+        // if($result->num_rows == 1){
+        // return $row;
+        // }else{
+        // return $row;
+        // }
+
+        $output1 = '
+        <div class="transaction-details2">
+                                    <div class="details" style="text-transform: capitalize;">
+                                        <p class="pname email-span">
+                                            <span>'.$data['first_name'].'</span>&nbsp;<span>'.$data['last_name'].'</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                                        <p class="pname email-span"> '.$data['email'].'</p>
+                                    </div> ';
+
+                                    $unique = $data['unique_id'];
+                                    $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}'";
+                                    $result1 = $this->dbcon->query($sql1);
+                                    $row1 = $result1->fetch_assoc();
+                                    foreach ($row1 as $key => $value1) {
+                                    if(is_null($value1)){
+                                    $data1 = "0";
+                                    } else{
+                                    $data1 = $value1;
+                                    }
+                                    }
+
+                                    $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
+                                    $result2 = $this->dbcon->query($sql2);
+                                    $row2 = $result2->fetch_assoc();
+                                    foreach ($row2 as $key => $value) {
+                                    $data2 = $value;
+                                    }
+
+                                    $sql5 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+                                    '{$unique}' ORDER BY earning_id DESC";
+                                    $result5 = $this->dbcon->query($sql5);
+                                    $row5 = $result5->fetch_assoc();
+                                    if($result5->num_rows == 1){
+                                    foreach ($row5 as $key => $value) {
+                                    $unitprice5 = $value;
+                                    }
+                                    }else{
+                                    $unitprice5 = $row5;
+                                    }
+                
+                                    if($unitprice5 > 999 || $unitprice5 > 9999 || $unitprice5 > 99999 ||
+                                    $unitprice5 > 999999){
+                                    $data5 = number_format(round($unitprice5));
+                                    } else {
+                                    $data5 = round($unitprice5);
+                                    }
+
+                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}'";
+                                    $result3 = $this->dbcon->query($sql3);
+                                    $row3 = $result3->fetch_assoc();
+                                    $date = $data['user_date'];
+
+                                    foreach ($row3 as $key => $value3) {
+                                    if(is_null($value3)){
+                                    $data3 = "0";
+                                    } else{
+
+                                    if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
+                                    $data3 = number_format($value3);
+                                    } else {
+                                    $data3 = $value3;
+                                    }
+                                    }
+                                    }
+
+                                    $referral = $data['personal_ref'];
+    $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
+    $result4 = $this->dbcon->query($sql4);
+    $row4 = $result4->fetch_assoc();
+
+    foreach ($row4 as $key => $value4) {
+    $data4 = $value4;
+    };
+
+
+                                    $output2 = '
+                                    <div class="details" style="text-transform: capitalize;">
+                                        <p class="pname">&#8358;'.$data5.'</p>
+                                    </div>
+
+                                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                                        <p class="pname">'.$data1.'</p>
+                                    </div>
+
+                                    <div class="details hide flexdetail" style="text-transform: capitalize;">
+                                        <p class="pname">&#8358;'.$data3.'</p>
+                                    </div>
+
+                                    
+                                    <div class="details" style="text-transform: capitalize;">
+                                        <p class="pname">'.$data4.'</p>
+                                    </div>
+
+            
+                                    <div class="details" style="text-transform: capitalize;">
+                                        <div class="detail" style="">
+                                            <a
+                                                href="customerprofileinfo.php?unique='.$data['unique_id'].'&real=91838JDFOJOEI939">
+                                                <p style="font-size: 14px; color: #fff;">View</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    ';
+
+
+                                   
+    }
+    $output .= ''.$output1.''.$output2.'';
+    } else {
+    $output .= "
+    <div class='success'>
+        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+        <p>This customer does not exist </p>
     </div>
     ";
     }
@@ -11010,7 +11162,7 @@ $output1 = '
                                                     <p style="font-size: 14px; color: #fff;">View</p>
                                                 </a>
                                             </div>
-                                        </div>';
+                                        </div></div>';
 
 
                                         $output .=
@@ -11028,6 +11180,174 @@ $output .= "
 
 echo $output;
 }
+
+function searchUserEarningByMonth($month,$year){
+    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}' ORDER BY
+    earning_id
+    DESC";
+    $result = $this->dbcon->query($sql);
+    $output = "";
+    $agentid = [];
+    if($result->num_rows > 0){
+    while($data = $result->fetch_assoc()){
+    array_push($agentid,$data['earner_id']);
+    }
+    
+    $agentid2 = array_unique($agentid);
+    $agentdata = [];
+    foreach($agentid2 as $key => $value) {
+    
+    $totalpayment = "SELECT * FROM user WHERE unique_id = '{$value}'";
+    $result2 = $this->dbcon->query($totalpayment);
+    $row = $result2->fetch_assoc();
+    if($result2->num_rows > 0){
+    array_push($agentdata,$row['unique_id']);
+    }
+    // else{
+    // return $row;
+    // }
+    
+    }
+    
+    
+    
+    foreach($agentdata as $key => $value){
+    
+    $totalagent = "SELECT * FROM user WHERE unique_id = '{$value}'";
+    $results = $this->dbcon->query($totalagent);
+    $row4 = $results->fetch_assoc();
+    $agentdate = $row4['user_date'];
+    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND payment_month =
+    '{$month}' AND payment_year = '{$year}' ORDER BY earning_id DESC";
+    
+    $result3=$this->dbcon->query($totalearning);
+    $row2 = $result3->fetch_assoc();
+    
+    
+    $output1 = '
+    <div class="transaction-details2">
+    <div class="details" style="text-transform: capitalize;">
+        <p class="pname email-span">
+            <span>'.$row4['first_name'].'</span>&nbsp;<span>'.$row4['last_name'].'</span>
+        </p>
+    </div>
+
+    <div class="details hide flexdetail" style="text-transform: lowercase;">
+        <p class="pname email-span"> '.$row4['email'].'</p>
+    </div> ';
+
+    $unique = $row4['unique_id'];
+    $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
+    $result1 = $this->dbcon->query($sql1);
+    $row1 = $result1->fetch_assoc();
+    foreach ($row1 as $key => $value1) {
+    if(is_null($value1)){
+    $data1 = "0";
+    } else{
+    $data1 = $value1;
+    }
+    }
+
+    $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
+    $result2 = $this->dbcon->query($sql2);
+    $row2 = $result2->fetch_assoc();
+    foreach ($row2 as $key => $value) {
+    $data2 = $value;
+    }
+
+    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
+    $result3 = $this->dbcon->query($sql3);
+    $row3 = $result3->fetch_assoc();
+    foreach ($row3 as $key => $value3) {
+        if(is_null($value3)){
+        $data3 = "0";
+        } else{
+    
+        if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
+        $data3 = number_format($value3);
+        } else {
+        $data3 = $value3;
+        }
+        }
+        }
+    
+    $sql5 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+    '{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}' ORDER BY earning_id DESC";
+    $result5 = $this->dbcon->query($sql5);
+    $row5 = $result5->fetch_assoc();
+    if($result5->num_rows == 1){
+    foreach ($row5 as $key => $value5) {
+    $unitprice5 = $value5;
+    }
+    }else{
+    $unitprice5 = $row5;
+    }
+
+    if($unitprice5 > 999 || $unitprice5 > 9999 || $unitprice5 > 99999 ||
+    $unitprice5 > 999999){
+    $data5 = number_format(round($unitprice5));
+    } else {
+    $data5 = round($unitprice5);
+    }
+
+    $referral = $row4['personal_ref'];
+    $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
+    $result4 = $this->dbcon->query($sql4);
+    $row4 = $result4->fetch_assoc();
+
+    foreach ($row4 as $key => $value4) {
+    $data4 = $value4;
+    };
+
+    
+
+
+    $output2 = '
+    <div class="details" style="text-transform: capitalize;">
+    <p class="pname">&#8358;'.$data5.'</p>
+      </div>
+
+    <div class="details hide flexdetail" style="text-transform: capitalize;">
+        <p class="pname">'.$data1.'</p>
+    </div>
+
+    <div class="details hide flexdetail" style="text-transform: capitalize;">
+        <p class="pname">&#8358;'.$data3.'</p>
+    </div>
+
+
+    <div class="details" style="text-transform: capitalize;">
+        <p class="pname">'.$data4.'</p>
+    </div>
+
+    
+    <div class="details" style="text-transform: capitalize;">
+        <div class="detail" style="">
+            <a
+                href="customerprofileinfo.php?unique='.$unique.'&real=91838JDFOJOEI939">
+                <p style="font-size: 14px; color: #fff;">View</p>
+            </a>
+        </div>
+    </div>
+    </div>
+    ';
+
+
+    $output .= ''.$output1.''.$output2.'';
+    }
+    
+    } else {
+    $output .= "
+    <div class='success'>
+        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+        <p>No user has earned on this month</p>
+    </div>
+    ";
+    }
+    
+    echo $output;
+    }
+    
 
 
 function searchExecutiveEarningByMonth($month,$year){
@@ -11298,6 +11618,122 @@ $alldata .= "No Data";
 
 echo $alldata;
 }
+
+function downloadUserEarning($month,$year){
+    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}' ORDER BY
+    earning_id
+    DESC";
+    $result = $this->dbcon->query($sql);
+    $alldata = "";
+    $agentid = [];
+    
+    if($result->num_rows > 0){
+    while($data = $result->fetch_assoc()){
+    array_push($agentid,$data['earner_id']);
+    }
+    
+    $agentid2 = array_unique($agentid);
+    $agentdata = [];
+    foreach($agentid2 as $key => $value) {
+    $totalpayment = "SELECT * FROM user WHERE unique_id = '{$value}'";
+    $result2 = $this->dbcon->query($totalpayment);
+    $row = $result2->fetch_assoc();
+    if($result2->num_rows > 0){
+    array_push($agentdata,$row['unique_id']);
+    }
+    // else{
+    // return $row;
+    // }
+    }
+    foreach($agentdata as $key => $value){
+    
+    $totalagent = "SELECT * FROM user WHERE unique_id = '{$value}'";
+    $results = $this->dbcon->query($totalagent);
+    $row4 = $results->fetch_assoc();
+    $agentdate = $row4['user_date'];
+    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
+    payment_month='{$month}' AND payment_year = '{$year}' ORDER BY earning_id
+    DESC"; $result3=$this->dbcon->query($totalearning);
+    $row2 = $result3->fetch_assoc();
+    
+    $sql6 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$value}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
+    $result6 = $this->dbcon->query($sql6);
+    $row6 = $result6->fetch_assoc();
+    if($result6->num_rows == 1){
+    foreach ($row6 as $key => $value) {
+    $unitprice6 = $value;
+    }
+    }else{
+    $unitprice6 = $row2;
+    }
+    
+    if($unitprice6 > 999 || $unitprice6 > 9999 || $unitprice6 > 99999 ||
+    $unitprice6 > 999999){
+    $paymentprocessed = number_format(round($unitprice6));
+    } else {
+        $paymentprocessed = round($unitprice6);
+    }
+    
+    $refid = $row4['personal_ref'];
+    
+    
+    $sql7 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
+    DESC";
+    $result7 = $this->dbcon->query($sql7);
+    $row7 = array();
+    while($row = $result7->fetch_assoc()){
+    $row7[] = $row;
+    }
+    
+    $customer = $row7;
+    
+           
+    
+    if($result3->num_rows == 1){
+    foreach ($row2 as $key => $value) {
+    $earnedprice = $value;
+    $unitprice = $earnedprice;
+    
+    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+    $price = number_format(round($unitprice));
+    } else {
+    $price = round($unitprice);
+    }
+    
+    }
+    } else {
+    $sumearn = $row2;
+    }
+    
+    
+    $output2 = '
+    <tr>
+        <td>'.$row4['user_id'].'</td>
+        <td>'.$month.'</td>
+        <td>'.$year.'</td>
+        <td>'.$row4['first_name'].' '.$row4['last_name'].'</td>
+        <td>User</td>
+        <td>'.$row4['bank_name'].'</td>
+        <td>'.$row4['account_number'].'</td>
+        <td>&#8358;'.$price.'</td>
+        <td>&#8358;'.$paymentprocessed.'</td>
+    </tr>
+    ';
+    
+    
+    
+    $alldata .= ''.$output2.'';
+    }
+    
+    
+    
+    } else {
+    $alldata .= "No Data";
+    
+    }
+    
+    echo $alldata;
+    }
 
 
 function downloadExecutiveEarning($month,$year){

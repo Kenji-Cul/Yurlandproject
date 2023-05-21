@@ -647,8 +647,20 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                     <div class="options-container">
                         <div class="option">
                             <li class="links">
+                                <a href="totalearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="totalearnings.php" class="link">Earnings History</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="alluserearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="alluserearnings.php" class="link">User Earnings</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
                                 <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
-                                <a href="allagentearnings.php" class="link">View Earnings</a>
+                                <a href="allagentearnings.php" class="link">Agent Earnings</a>
                             </li>
                         </div>
 
@@ -742,8 +754,8 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 </li>
 
                 <li class="links">
-                    <a href="totalearnings.php"><img src="images/updown.svg" /></a>
-                    <a href="totalearnings.php" class="link">Pay Earnings</a>
+                    <a href="alluserearnings.php"><img src="images/updown.svg" /></a>
+                    <a href="alluserearnings.php" class="link">Pay Earnings</a>
                 </li>
 
                 <li class="links">
