@@ -337,7 +337,7 @@ if(!isset($_SESSION['unique_id'])){
         .success {
             position: absolute;
             left: 50%;
-            top: 65em;
+            top: 75em;
             transform: translate(-50%, -50%);
             height: 10em;
         }
@@ -556,7 +556,8 @@ if(!isset($_SESSION['unique_id'])){
                     <div class="payment-desc3">
                         <p style="font-size: 15px;">Referral Withdrawal</p>
                         <div class="payment-count">
-                            <img class="desc-img" src="images/roundleft.svg" alt="" />
+                            <a href="referralearnings.php"><img class="desc-img" src="images/roundleft.svg"
+                                    alt="" /></a>
                         </div>
                     </div>
                 </div>
@@ -588,256 +589,128 @@ if(!isset($_SESSION['unique_id'])){
                 </div>
             </div>
 
-            <div style="display: flex; align-items: center; justify-content: left;">
-                <div class="payment-image-div2">
-                    <div>
-                        <img src="images/image1.svg" alt="payment image" />
-                        <div class="payment-desc">
-                            <p style="width: 80%;">Total Paid Earnings</p>
-                            <div class="payment-count">
-                                &#8358;<span><?php 
-                        $user = new User;
-                        $unitprice2 = $user->selectAgentTotalPaidEarnings($newuser['unique_id']);
-                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-                            echo number_format(round($unitprice2));
-                          } else {
-                              echo round($unitprice2);
-                          }
-                        
-                       
-                        ?>
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="payment-image-div2">
-                    <div>
-                        <img src="images/image1.svg" alt="payment image" />
-                        <div class="payment-desc">
-                            <p style="width: 80%;">Total Pending Earnings</p>
-                            <div class="payment-count">
-                                &#8358;<span><?php 
-                        $user = new User;
-                        $unitprice2 = $user->selectAgentTotalPendingEarnings($newuser['unique_id']);
-                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-                            echo number_format(round($unitprice2));
-                          } else {
-                              echo round($unitprice2);
-                          }
-                        
-                       
-                        ?>
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="details-container">
-
-
-                <?php 
-   
-   $earning = $user->selectAgentHistory2($newuser['unique_id']);
-            if(!empty($earning)){
-                foreach($earning as $key => $value){
-                    
-    ?>
-
-                <div class="account-detail2"
-                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                    <div class="flex">
-                        <p style="text-transform: capitalize;"><span>Hello <?php echo $value['earnee'];?></span>
-                        </p>
-                        <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;">You have earned &#8358;<?php 
-                        $earnedprice = $value['earned_amount'];
-                    $unitprice = $earnedprice;
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                              echo number_format(round($unitprice));
-                            } else {
-                                echo round($unitprice);
-                            } 
-                            
-                        
-                    ?>
-                            </span>
-                        </p>
-                        <div class="payee">
-                            <p class="payee-tag" style="color: #808080;">Customer Paid:</p>&nbsp;
-                            <p class="payee-name"
-                                style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                &#8358;<?php $unitprice = $value['product_price']; 
-                                  if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                    echo number_format(round($unitprice));
-                                  } else {
-                                      echo round($unitprice);
-                                  }
-                                ?> for <?php echo $value['product_name'];?>
-                            </p>
-                        </div>
-                        <div class="inner-detail">
-                            <div class="date">
-                                <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
-                            </div>
-                        </div>
-                        <?php 
-                        if($value['balance_earning'] != ""){
-                        if($value['earning_status'] == "unpaid"){?>
-                        <div class="detail-four">
-                            <div class="detail"
-                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
-                            </div>
-                        </div>
-                        <?php }?>
-
-                        <?php if($value['balance_earning'] == 0 && $value['earning_status'] == "paid"){?>
-                        <div class="detail-four">
-                            <div class="detail"
-                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-                            </div>
-                        </div>
-                        <?php }}?>
-                    </div>
-                </div>
-
-                <?php }}?>
-
-                <?php if(empty($earning)){?>
-                <div class="success">
-                    <img src="images/asset_success.svg" alt="" />
-                    <p>You have no earnings yet!</p>
-                </div>
-            </div>
-        </div>
-        <?php }?>
-
-
-        <script src="js/cart.js"></script>
-        <script>
-        let landuser = document.getElementsByName("landuser");
-
-        let landvalues = [];
-        landuser.forEach(element => {
-
-            landvalues.push(parseInt(element.innerHTML));
-        });
-        document.querySelector('.landusercount').innerHTML = landvalues.length;
-
-        let copybtn = document.querySelector('.copy-div');
-
-        copybtn.onclick = () => {
-            copyFunction();
-        }
 
 
 
-        function copyFunction() {
-            // Get the text field
-            var copyText = document.querySelector('.copy-text');
 
-            // Select the text field
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
+            <script src="js/cart.js"></script>
+            <script>
+            let landuser = document.getElementsByName("landuser");
 
-            // Copy the text inside the text field
-            let referralLink =
-                `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
-            navigator.clipboard.writeText(referralLink);
+            let landvalues = [];
+            landuser.forEach(element => {
 
-            if (navigator.clipboard.writeText(referralLink)) {
-                setTimeout(() => {
-                    document.querySelector("section .error").style.visibility = "visible";
-                }, 400);
-                setTimeout(() => {
-                    document.querySelector("section .error").style.visibility = "hidden";
-                }, 4000);
+                landvalues.push(parseInt(element.innerHTML));
+            });
+            document.querySelector('.landusercount').innerHTML = landvalues.length;
 
+            let copybtn = document.querySelector('.copy-div');
 
+            copybtn.onclick = () => {
+                copyFunction();
             }
-        }
 
-        if (window.innerWidth > 1200) {
-            let dropdownnav = document.querySelector(".dropdown-links");
-            let open = document.querySelector('#openicon');
-            let closeicon = document.querySelector('#closeicon');
-            open.onclick = () => {
-                dropdownnav.style = `
+
+
+            function copyFunction() {
+                // Get the text field
+                var copyText = document.querySelector('.copy-text');
+
+                // Select the text field
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); // For mobile devices
+
+                // Copy the text inside the text field
+                let referralLink =
+                    `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
+                navigator.clipboard.writeText(referralLink);
+
+                if (navigator.clipboard.writeText(referralLink)) {
+                    setTimeout(() => {
+                        document.querySelector("section .error").style.visibility = "visible";
+                    }, 400);
+                    setTimeout(() => {
+                        document.querySelector("section .error").style.visibility = "hidden";
+                    }, 4000);
+
+
+                }
+            }
+
+            if (window.innerWidth > 1200) {
+                let dropdownnav = document.querySelector(".dropdown-links");
+                let open = document.querySelector('#openicon');
+                let closeicon = document.querySelector('#closeicon');
+                open.onclick = () => {
+                    dropdownnav.style = `
         width: 14%;
         `;
-                open.style.display = "none";
-                closeicon.style.display = "block";
-                document.querySelector(".ref-container").style = `
+                    open.style.display = "none";
+                    closeicon.style.display = "block";
+                    document.querySelector(".ref-container").style = `
          padding-left: 13em;
         `;
-                let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+                    let allLinks = document.querySelectorAll(".dropdown-links .links .link");
 
-                let allLink = document.querySelectorAll(".dropdown-links .links");
-                allLink.forEach((element) => {
-                    element.style = `
+                    let allLink = document.querySelectorAll(".dropdown-links .links");
+                    allLink.forEach((element) => {
+                        element.style = `
         gap: 10px;
         `;
 
-                });
-                allLinks.forEach((element) => {
-                    element.style = `
+                    });
+                    allLinks.forEach((element) => {
+                        element.style = `
          visibility: visible;
          display: block;
         `;
-                });
-            }
+                    });
+                }
 
-            closeicon.onclick = () => {
-                dropdownnav.style = `
+                closeicon.onclick = () => {
+                    dropdownnav.style = `
         width: 6%;
         `;
-                open.style.display = "block";
-                closeicon.style.display = "none";
-                document.querySelector(".ref-container").style = `
+                    open.style.display = "block";
+                    closeicon.style.display = "none";
+                    document.querySelector(".ref-container").style = `
          padding-left: 5em;
         `;
 
-                let allLink = document.querySelectorAll(".dropdown-links .links");
-                allLink.forEach((element) => {
-                    element.style = `
+                    let allLink = document.querySelectorAll(".dropdown-links .links");
+                    allLink.forEach((element) => {
+                        element.style = `
         justify-content: center
         `;
-                });
+                    });
 
-                let allLinks = document.querySelectorAll(".dropdown-links .links .link");
-                allLinks.forEach((element) => {
-                    element.style = `
+                    let allLinks = document.querySelectorAll(".dropdown-links .links .link");
+                    allLinks.forEach((element) => {
+                        element.style = `
          visibility: hidden;
          display:none;
         `;
-                });
+                    });
+                }
             }
-        }
 
-        if (window.innerWidth < 1300) {
-            let dropdownnav = document.querySelector(".dropdown-links");
-            let menu = document.querySelector(".menu");
-            menu.onclick = () => {
-                dropdownnav.style = `
+            if (window.innerWidth < 1300) {
+                let dropdownnav = document.querySelector(".dropdown-links");
+                let menu = document.querySelector(".menu");
+                menu.onclick = () => {
+                    dropdownnav.style = `
             transform: translateX(0);
             `;
-            };
+                };
 
-            let close = document.querySelector(".close");
-            close.onclick = () => {
-                dropdownnav.style = `
+                let close = document.querySelector(".close");
+                close.onclick = () => {
+                    dropdownnav.style = `
             transform: translateX(100%);
             `;
-            };
-        }
-        </script>
+                };
+            }
+            </script>
 </body>
 
 </html>

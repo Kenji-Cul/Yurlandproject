@@ -119,13 +119,29 @@ $txt = '
         number. Also, as stated in our product description, you are to pay in the sum of <span
             class="naira">&#x20A6;'.$_GET['allocationfee'].'</span> either by cash or direct bank transfer to the
         account number provided
-        below and send proof of payment to our support staff via Whatsapp. You can also walk into our office, having
+        below and send proof of payment to our support staff via Whatsapp(09124259139). You can also walk into our
+        office, having
         this document as a proof to make your allocation fee payment.
         We expect that you respond to this document within 14days of receipt, to allow us properly plan for your
         allocation, ensuring that all your documents attached are prepared and ready to be handed over to you on the day
         of allocation. Thank
         you for trusting us, we are glad we could be part of making your dream to own a LAND come true.
     </p>
+    <div style="
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    ">
+        <p>Acct Number: 1017004706</p>
+        <p>Bank Name: Zenith Bank</p>
+        <p>Account Name: Ilu-Oba International Limited</p>
+        <p>
+            Office Address: 1 Abiola Adeyemi Street, Off Ologunfe B/Stop, NNPC
+            Filling Station Plaza, Ikotun-Igando Road, Ikotun, Lagos.
+        </p>
+    </div>
 </div>
 
 <div class="heading">

@@ -15,6 +15,7 @@ if(!isset($_SESSION['unique_id'])){
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
@@ -579,6 +580,54 @@ if(!isset($_SESSION['unique_id'])){
                 <p>Transactions</p>
             </div>
 
+            <form action="" class="download-form">
+                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
+                        id="export"></i></button>
+            </form>
+
+            <table id="user-data" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Customer's Name</th>
+                        <th>Amount Paid</th>
+                        <th>Location Paid For</th>
+                        <th>Paid By</th>
+                        <th>Date</th>
+                        <th>Time of Payment</th>
+                    </tr>
+                </thead>
+                <tbody class="table-data">
+
+                    <?php 
+    $user = new User;
+   
+    $customer = $user ->selectPayHistory($_SESSION['unique_id']);
+    if(!empty($customer)){
+        foreach($customer as $key => $value){
+            $newuser = $user->selectUser($value['customer_id']);
+    ?>
+                    <tr>
+                        <td><?php echo $value['payment_id'];?></td>
+                        <td> <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
+                        </td>
+                        <td>&#8358;<?php 
+             $unitprice = $value['product_price'];
+             if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                               echo number_format($unitprice);
+                             } else {
+                                echo round($unitprice);
+                             }
+            ?></td>
+                        <td><?php echo $value['product_name'];?></td>
+                        <td><?php echo $value['payee'];?></td>
+                        <td><?php echo $value['payment_date'];?></td>
+                        <td><?php echo $value['payment_time'];?></td>
+                    </tr>
+                    <?php }}?>
+                </tbody>
+            </table>
+
 
             <div class="search-container">
 
@@ -896,6 +945,32 @@ for ($i = 0; $i < 31; $i++) {
             }
 
         });
+
+        let downloadbtn = document.querySelector('.download-form .land-btn');
+        let downloadform = document.querySelector('.download-form');
+        downloadform.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+        function htmlTableToExcel(type) {
+            var userdata = document.getElementById('user-data');
+            var file = XLSX.utils.table_to_book(userdata, {
+                sheet: "sheet1"
+            });
+            XLSX.write(file, {
+                bookType: type,
+                bookSST: true,
+                type: 'base64'
+            });
+
+            XLSX.writeFile(file, 'Transactiondata.' + type);
+        }
+
+        downloadbtn.onclick = () => {
+            htmlTableToExcel('xlsx');
+
+        }
+
 
         if (window.innerWidth > 1200) {
             let dropdownnav = document.querySelector(".dropdown-links");

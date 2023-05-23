@@ -3516,6 +3516,17 @@ if($this->dbcon->affected_rows > 0){
 }
     }
 
+    function selectAllocatedCustomers2($id){
+        $sql = "SELECT customer_id FROM payment WHERE balance < 1 AND customer_id='{$id}'"; 
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+        return $row;
+        }else{
+        return $row;
+        }
+            }
+
     function selectLastPayedCustomers($id){
     $sql = "SELECT * FROM payment WHERE customer_id = '{$id}'";
     $result = $this->dbcon->query($sql);
@@ -12562,7 +12573,7 @@ $output1 = '
 
 
 
-            function selectUserEarningStatus3($name,$user){
+            function selectUserEarningStatus3($name,$user,$type){
                 if($name == "Pending"){
                     $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND earning_status = 'unpaid' ORDER BY earning_id DESC";
                 }
@@ -12623,12 +12634,19 @@ $output1 = '
                                     } else {
                                         $output2 = "";
                                     }
+                if($type == "executive"){
+                    $username = $data['earnee'];
+                }
+
+                if($type == "customer"){
+                    $username = "You";
+                }
                 $output.= '
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
                         <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                            <span style="color: #000000!important; font-size: 16px;">'.$username.'
                                 earned &#8358;'.$unit.'</span>
                         </p>
                         <div class="payee">
@@ -12650,30 +12668,66 @@ $output1 = '
                 }
                 } else {
                     if($name == "Pending"){
-                        $output .= "
-                        <div class='success'>
-                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                            <p>There are no pending earnings for this user</p>
-                        </div>
-                        ";
+                        if($type == "executive"){
+                            $output .= "
+                            <div class='success'>
+                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                                <p>There are no pending earnings for this user</p>
+                            </div>
+                            ";
+                        }
+
+                        if($type == "customer"){
+                            $output .= "
+                            <div class='success'>
+                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                                <p>You have no pending earnings</p>
+                            </div>
+                            ";
+                        }
+                        
                     }
         
                     if($name == "Paid"){
-                        $output .= "
-                        <div class='success'>
-                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                            <p>There are no paid earnings for this user</p>
-                        </div>
-                        ";
+                        if($type == "executive"){
+                            $output .= "
+                            <div class='success'>
+                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                                <p>There are no paid earnings for this user</p>
+                            </div>
+                            ";
+                        }
+
+                        if($type == "customer"){
+                            $output .= "
+                            <div class='success'>
+                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                                <p>You have no paid earnings</p>
+                            </div>
+                            ";
+                        }
+                       
                     }
     
                     if($name == "Unpaid"){
+
+                    if($type == "executive"){
                         $output .= "
                         <div class='success'>
                             <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
                             <p>There are no unpaid earnings for this user</p>
                         </div>
                         ";
+                        }
+
+                        if($type == "customer"){
+                            $output .= "
+                            <div class='success'>
+                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                                <p>You have no unpaid earnings</p>
+                            </div>
+                            ";
+                        }
                     }
                 }
             

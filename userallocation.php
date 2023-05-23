@@ -1,8 +1,9 @@
 <?php 
 session_start();
-include_once "projectlog.php";
-
-
+include "projectlog.php";
+if(!isset($_GET['unique'])){
+    header("Location: teamspace.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,8 +18,9 @@ include_once "projectlog.php";
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
-    body {
-        min-height: 100vh;
+    .profile-body {
+        height: 120vh;
+        overflow-x: hidden;
     }
 
     .dropdown-links {
@@ -40,94 +42,184 @@ include_once "projectlog.php";
         background-color: #aaa;
     }
 
-
-
     header {
         background: #fee1e3;
     }
 
-    .colored-div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 280px;
-        border-radius: 8px;
-        gap: 0;
-        height: 50px;
-        background-color: #fee1e3;
+    .success {
+        position: absolute;
+        top: 28em;
+        width: 90%;
+    }
+
+    .success img {
+        width: 25em;
+        height: 20em;
+    }
+
+
+    .radius {
         position: relative;
     }
 
-    .refdiv {
-        display: inline-block;
-        text-transform: capitalize;
-        width: 130px !important;
+    .radius img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .detail3 {
+        width: 140px !important;
+        position: relative;
+    }
+
+    .detail3 {
+        width: 100px !important;
         text-overflow: ellipsis !important;
         overflow: hidden;
         white-space: nowrap;
     }
 
-    .detail-3 {
-        box-shadow: none !important;
+    .search-form,
+    .search-form2,
+    .search-form3,
+    .dropdown-form {
+        display: none;
     }
 
-    .colored-div p {
-        font-size: 16px;
-        text-transform: capitalize;
-        color: #ff6600;
+    .search-container {
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-top: 2em;
+        position: unset;
+        gap: 2em;
     }
 
-    section {
+    .search-container .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
+        width: 240px;
+    }
+
+    .search-input2 input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+        border-radius: 8px;
+        border: 2px solid #ff6600;
+        margin-bottom: 1em;
+    }
+
+
+
+    .transaction-details2 {
+        border-radius: 8px;
+        /* border: 2px solid black; */
+        padding: 1em 2em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 90%;
+    }
+
+    .no-lands {
         width: 100%;
+        height: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: top;
+        flex-direction: column;
     }
 
-    .navig {
-        width: 20em;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 0.8em;
-    }
-
-    .navigation-div .profile {
+    .navigation-div .allocation {
         background: #ffffff;
         box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
         border-radius: 8px;
         text-align: center;
         color: var(--secondary-color);
         width: 150px;
-        padding: 0.8em 0.3em;
+        padding: 0.3em 0.3em;
     }
 
-
-    section .error {
-        color: #ff6600;
-        border: 1px solid #ff6600;
-        height: 1em;
-        border-radius: 8px;
-        margin-bottom: 1.5em;
-        width: 80px;
+    a {
+        text-decoration: none;
+        color: #1a0709;
     }
 
-    .copy-div {
-        cursor: pointer;
+    .no-lands p {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        color: #1a0709;
+    }
+
+    .no-lands img {
+        margin-top: 8em;
+        width: 30em;
+        height: 30em;
     }
 
     @media only screen and (max-width: 1300px) {
 
-        .colored-div {
-            min-width: 80%;
+        .transaction-details2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
         }
 
-        .colored-div span {
-            font-size: 14px;
-            text-transform: capitalize;
+        .transaction-details2 .date {
+            font-size: 11px !important;
         }
 
-        .details-container .land-btn {
+
+        .transaction-details2 {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
             width: 80%;
+        }
+
+        .navigation-div .allocation {
+            background: #ffffff;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--secondary-color);
+            width: 100px;
+            padding: 0.3em 0.3em;
+        }
+
+        .details-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .navig .offer,
+        .navig .payment,
+        .navig .allocation {
+            font-size: 12px;
+        }
+
+        .success {
+            position: absolute;
+            top: 32em;
+            height: 10em;
+            width: 100%;
+        }
+
+        .success img {
+            width: 20em;
+            height: 20em;
+        }
+
+        .success p {
+            text-align: center;
         }
 
         .user,
@@ -230,35 +322,7 @@ include_once "projectlog.php";
             <?php
         }
 
-        ?>.flexbtn-container .btn {
-            width: 18em;
-            font-size: 14px;
-        }
-
-        .flexbtn-container {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            gap: 0.3em;
-            position: relative;
-            margin-top: 5em;
-        }
-
-        .flexbtn-container .line {
-            width: 0.2px;
-            height: 20px;
-            background: #000;
-        }
-
-        .flexbtn-container a {
-            font-size: 11px;
-            color: #7e252b;
-
-        }
-
-
+        ?>
     }
 
     @media only screen and (min-width: 1300px) {
@@ -298,43 +362,6 @@ include_once "projectlog.php";
 
         .dropdown-links .option {
             padding: 1em 0;
-        }
-
-        .flexbtn-container {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1em;
-
-        }
-
-        .flexbtn-container .line {
-            width: 2px;
-            height: 30px;
-            background: #000;
-        }
-
-        .flexbtn-container a {
-            color: #7e252b;
-        }
-
-        .flexbtn-container .btn {
-            width: 100%;
-        }
-
-        .account-detail {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            padding-left: 2em;
-            gap: 0.5em;
-        }
-
-        .account-detail .account-img {
-            width: 90px;
-            height: 90px;
         }
 
         .page-title2 a {
@@ -444,7 +471,7 @@ include_once "projectlog.php";
 
         .dropdown-links {
             width: 6%;
-            height: 84vh;
+            height: 90vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -477,13 +504,12 @@ include_once "projectlog.php";
             padding-top: 0;
         }
 
-
-        /* .dropdown-links li {
+        .dropdown-links li {
             height: 1em;
             width: 95%;
             text-transform: capitalize;
             font-size: 14px;
-        } */
+        }
 
         .dropdown-links .select-link {
             background-color: #1a0709;
@@ -533,7 +559,7 @@ include_once "projectlog.php";
             padding-top: 2em;
         }
 
-        .prof-container {
+        .doc-container {
             width: 90%;
             padding-left: 5em;
         }
@@ -542,8 +568,6 @@ include_once "projectlog.php";
         .close {
             display: none;
         }
-
-
 
 
     }
@@ -629,6 +653,7 @@ include_once "projectlog.php";
 
 
     </header>
+
 
 
     <div class="flex-container">
@@ -979,280 +1004,326 @@ include_once "projectlog.php";
 
 
 
-        <div class="prof-container">
+        <div class="doc-container">
             <div class="page-title2">
-                <a href="allcustomers.php">
+                <a href="customerprofileinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
-                <p>User Profile</p>
+                <p>Documents</p>
             </div>
 
+            <!-- <div class="no-lands">
+            <img src="images/asset_success.svg" alt="success image" />
+           <p>You have not uploaded any document yet!!</p>
+              </div> -->
 
-            <?php 
-             $user = new User;
-             $newuser = $user->selectUser($_GET['unique']);
-            ?>
-            <div class="account-detail">
-
-                <?php if(!empty($newuser['photo'])){?>
-                <img class="account-img" src="profileimage/<?php echo $newuser['photo'];?>" alt="" />
-                <?php }  ?>
-                <?php if(empty($newuser['photo'])){?>
-                <div class="empty-img">
-                    <i class="ri-user-fill"></i>
-                </div>
-                <?php }?>
-
-
-
-                <p><?php if(isset($newuser['first_name'])){  ?>
-                    <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
-                    <?php }?>
-                </p>
-                <?php 
-        if($newuser['referral_id'] !== "Yurland"){ ?>
-                <div class="referral colored-div">
-
-                    <?php   $seconduser = $user->selectReferralUser($newuser['referral_id']);
-                  $thirduser = $user->selectReferralAgent($newuser['referral_id']);
-            
-                 ?>
-                    <?php if(isset($seconduser['first_name'])){?>
-                    <a href="referraldetails.php?ref=<?php if(isset($seconduser['unique_id'])){
-                 echo $seconduser['unique_id'];
-                      }?>"
-                        style=" display: flex!important; flex-direction: row; align-items: center!important; justify-content: center!important; padding-left: 10%;">
-
-                        <p style="display:inline;">Referral:</p>&nbsp;<p class="refdiv"><?php if(isset($seconduser['first_name'])){
-                  echo $seconduser['first_name'];
-                  }?>&nbsp;<?php if(isset($seconduser['last_name'])){
-                    echo $seconduser['last_name'];
-                   }?> </p>
-
+            <div class="navigation-div">
+                <div class="navig">
+                    <a href="userdocumentation.php?unique=<?php echo $_GET['unique'];?>">
+                        <div class="offer">Offer letter</div>
                     </a>
-                    <?php }?>
-                    <?php if(isset($thirduser['agent_name'])){?>
-                    <a href="agentdetails.php?ref=<?php if(isset($thirduser['uniqueagent_id'])){
-                 echo $thirduser['uniqueagent_id'];
-                 }?>"
-                        style=" display: flex!important; flex-direction: row; align-items: center!important; justify-content: center!important; padding-left: 10%;">
-                        <p style="display:inline;">Referral:</p>&nbsp;<p class="refdiv"><?php if(isset($thirduser['agent_name'])){
-                  echo $thirduser['agent_name'];
-                    }?></p>
-                    </a>
-                    <?php }?>
+                    <div class="allocation">Allocation letter</div>
                 </div>
-                <?php } else { ?>
-                <div class="referral colored-div">
-                    <div
-                        style=" display: flex!important; flex-direction: row; align-items: center!important; justify-content: center!important;">
-                        <p style="display:inline;">Referral:</p>&nbsp;<p class="refdiv">
-                            <?php echo "Yurland Support";?></p>
-                        </p>
+            </div>
+
+            <div class="search-container">
+
+                <div class="select-box">
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode1" name="searchmode" value="Land" />
+                            <label for="searchmode1">By Land</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode2" name="searchmode" value="Date" />
+                            <label for="searchmode2">By Date</label>
+                        </div>
+
                     </div>
-                </div>
-                <?php }?>
-                <div class="referral">
 
-                    <div class="copy-div" style="font-weight: 800;"><span>REFERRAL CODE:</span></div>
-                    <div class="referral_code"><?php if(isset($newuser['personal_ref'])){
-                echo $newuser['personal_ref'];
-            }?> <input type="text" name="" class="copy-text" value="<?php if(isset($newuser['personal_ref'])){
-                echo $newuser['personal_ref'];
-            }?>" style="display: none;"></div>
+                    <div class="selected">Choose Search Mode</div>
+
+
                 </div>
+
+
+                <div class="search-input2">
+                    <form action="" class="search-form3">
+                        <input type="text" class="search2" type="search" name="searchproduct2"
+                            placeholder="Search By Land">
+                    </form>
+                </div>
+
+
+                <form action="" class="search-form2">
+                    <div class="select-box">
+                        <div class="options-container">
+                            <?php 
+$lastsevendays = date('M-d-Y', strtotime('today - 7 days'));
+$today = date('M-d-Y', strtotime('today'));
+$dates = [];
+for ($i = 0; $i < 31; $i++) { 
+
+?>
+                            <div class="option">
+                                <input type="radio" class="radio" id="date<?php echo $i;?>" name="searchproduct3"
+                                    value="<?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?>" />
+                                <label
+                                    for="date<?php echo $i;?>"><?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?></label>
+                            </div>
+                            <?php }?>
+                        </div>
+
+                        <div class="selected">Choose Date</div>
+
+                    </div>
+                    <div class="valuediv" style="display: none;"></div>
+                </form>
+
+
+
+
             </div>
+
+
 
             <div class="details-container">
 
+                <?php 
+             $land = new User;
+             $landview = $land->selectAllocationLetter($_GET['unique']);
+             if(!empty($landview)){
+                foreach($landview as $key => $value){
+                    
+            ?>
+                <div class="transaction-details2">
+                    <div class="radius">
+                        <img src="landimage/<?php echo $value['product_image'];?>" alt="">
+                    </div>
+                    <div class="details">
+                        <p class="pname"><?php echo $value['product_name'];?></p>
+                        <div class="inner-detail">
+                            <div class="date" style="font-size: 12px;">
+                                <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="price-detail detail3"><?php 
+            if($value['product_unit'] == "1"){
+                echo $value['product_unit']." Unit";
+            } else {
+                echo $value['product_unit']." Units";
+            }
+         ?>
+                    </div>
+                    <div class="price-detail detail3"><?php 
+            echo $value['allocation_letter'];
+            ?></div>
+                    <div class="price-detail">
 
+                        <a href="userdocuments/<?php echo $value['allocation_letter'];?>">
+                            <button class="btn land-btn" style="width: 70px; margin-top: 0;"><i class="ri-download-line"
+                                    id="export"></i></button>
+                        </a>
 
-
-                <div class="account-detail2">
-                    <div>
-                        <p><?php if(isset($newuser['first_name'])){  ?>
-                            <?php echo $newuser['first_name']; ?><span>&nbsp;</span><?php echo $newuser['last_name']; ?>
-                            <?php }?>
                         </p>
-                        <span>Account name</span>
                     </div>
                 </div>
 
+                <?php }}?>
 
-
-                <div class="account-detail2">
-                    <div>
-                        <p><?php if(isset($newuser['home_address']) && !empty($newuser['home_address'])){  
-                    echo $newuser['home_address'];
-                } else {
-                    echo "Home Address";
-                 }?>
-                        </p>
-                        <span>Address</span>
-                    </div>
+                <?php if(empty($landview)){?>
+                <div class="success">
+                    <img src="images/whoops.svg" alt="" />
+                    <p>Whoops, You don't have allocation letters yet</p>
                 </div>
-
-
-
-                <div class="account-detail2">
-                    <div>
-                        <p><?php if(isset($newuser['phone_number']) && !empty($newuser['phone_number'])){  
-                    echo $newuser['phone_number'];
-                } else {
-                    echo "Phone Number";
-                 }?>
-                        </p>
-                        <span>Phone number</span>
-                    </div>
-                </div>
-
-
-
-                <div class="account-detail2">
-                    <div>
-                        <?php if(empty($newuser['home_address']) || empty($newuser['phone_number'])){
-    ?>
-                        <p>Unverified</p>
-                        <?php } else {?>
-                        <p>Verified</p>
-                        <?php }?>
-                        <span>Identification</span>
-                    </div>
-                </div>
-
-
-                <div class="account-detail2">
-                    <div>
-                        <p><?php if(isset($newuser['nextofkin_firstname'])  && !empty($newuser['nextofkin_firstname'])){  ?>
-                            <?php echo $newuser['nextofkin_firstname']; ?><span>&nbsp;</span><?php echo $newuser['nextofkin_lastname']; ?>
-                        </p>
-                        <?php } else {?>
-                        <p>Next Of Kin</p>
-                        <?php }?>
-                        <span>Next of Kin</span>
-                    </div>
-                </div>
-
-                <div class="flexbtn-container">
-                    <a href="customerinfo.php?unique=<?php echo $newuser['unique_id'];?>">
-                        Customer's Land
-                    </a>
-                    <div class="line"></div>
-                    <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
-                    <a href="editcustomer.php?unique=<?php echo $newuser['unique_id'];?>">
-                        Edit
-                    </a>
-                    <div class="line"></div>
-                    <a href="customerhistory.php?unique=<?php echo $newuser['unique_id'];?>">
-                        Earning History
-                    </a>
-                    <div class="line"></div>
-                    <a href="userdocumentation.php?unique=<?php echo $newuser['unique_id'];?>">
-                        Documentation
-                    </a>
-                    <?php }?>
-                </div>
-
+                <?php }?>
             </div>
-        </div>
-    </div>
 
-    <script src="js/main.js"></script>
-    <script>
-    if (window.innerWidth > 1200) {
-        let dropdownnav = document.querySelector(".dropdown-links");
-        let open = document.querySelector('#openicon');
-        let closeicon = document.querySelector('#closeicon');
-        open.onclick = () => {
-            dropdownnav.style = `
+        </div>
+
+
+
+
+
+        <script src="js/main.js"></script>
+        <script>
+        let purpose4 = document.getElementsByName("searchmode");
+
+        purpose4.forEach((element) => {
+            element.onclick = () => {
+                if (element.value == "Land") {
+                    document.querySelector('.search-form3').style.display = "block";
+                    document.querySelector('.search-form2').style.display = "none";
+
+                }
+                if (element.value == "Date") {
+                    document.querySelector('.search-form2').style.display = "block";
+                    document.querySelector('.search-form3').style.display = "none";
+
+                }
+
+            }
+        });
+        //let searchIcon = document.querySelector('.search-icon');
+
+        //let searchinput = document.querySelector('.search-input2');
+        let searchinput3 = document.querySelector('.search2');
+
+        //searchinput.style.display = "flex";
+        //document.querySelector('#searchimg').style.display = "none";
+        let searchform2 = document.querySelector('.search-form3');
+        let searchform3 = document.querySelector('.search-form2');
+
+
+        searchform2.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+        searchform3.onsubmit = (e) => {
+            e.preventDefault();
+        }
+
+
+        searchinput3.onkeyup = () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchbyland.php?user=allocationuser&unique=<?php echo $_GET['unique'];?>`);
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+                    }
+                }
+            };
+            let formData = new FormData(searchform2);
+            xhr.send(formData);
+        }
+
+
+        let valuediv = document.querySelector('.valuediv');
+
+        let purpose = document.getElementsByName("searchproduct3");
+        purpose.forEach((element) => {
+            element.onclick = () => {
+                valuediv.innerHTML = element.value;
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST",
+                    `searchbydate.php?data=${valuediv.innerHTML}&user=allocationuser&unique=<?php echo $_GET['unique'];?>`
+                );
+
+                xhr.onload = () => {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            let data = xhr.response;
+                            document.querySelector('.details-container').innerHTML = data;
+
+                        }
+                    }
+                };
+                let formData = new FormData(searchform3);
+                xhr.send(formData);
+            }
+
+        });
+
+        if (window.innerWidth > 1200) {
+            let dropdownnav = document.querySelector(".dropdown-links");
+            let open = document.querySelector('#openicon');
+            let closeicon = document.querySelector('#closeicon');
+            open.onclick = () => {
+                dropdownnav.style = `
         width: 14%;
         `;
 
+                <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+                document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
+                document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
+                document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
+                document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
+                <?php }?>
+                open.style.display = "none";
+                closeicon.style.display = "block";
+                //         document.querySelector(".prof-container").style = `
+                //  padding-left: 13em;
+                // `;
+                let allLinks = document.querySelectorAll(".links-container .links .link");
+
+                let allLink = document.querySelectorAll(".links-container .links");
+                allLink.forEach((element) => {
+                    element.style = `
+        gap: 10px;
+        `;
+
+                });
+                allLinks.forEach((element) => {
+                    element.style = `
+         visibility: visible;
+         display: block;
+        `;
+                });
+            }
+
+            closeicon.onclick = () => {
+                dropdownnav.style = `
+        width: 6%;
+        `;
+                <?php  if(isset($_SESSION['uniquesupadmin_id'])){?>
+                document.querySelector('.s-box1 .selected').innerHTML = '<img src="images/referral.svg" />';
+                document.querySelector('.s-box2 .selected').innerHTML = '<img src="images/referral.svg" />';
+                document.querySelector('.s-box3 .selected').innerHTML = '<img src="images/referral.svg" />';
+                document.querySelector('.s-box4 .selected').innerHTML = '<img src="images/referral.svg" />';
+                <?php }?>
+                open.style.display = "block";
+                closeicon.style.display = "none";
+                //         document.querySelector(".prof-container").style = `
+                //  padding-left: 5em;
+                // `;
+
+                let allLink = document.querySelectorAll(".links-container .links");
+                allLink.forEach((element) => {
+                    element.style = `
+        justify-content: center
+        `;
+                });
+
+                let allLinks = document.querySelectorAll(".links-container .links .link");
+                allLinks.forEach((element) => {
+                    element.style = `
+         visibility: hidden;
+         display:none;
+        `;
+                });
+            }
+        }
+
+        if (window.innerWidth < 1300) {
             <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
             document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
             document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
             document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
             document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
             <?php }?>
-            open.style.display = "none";
-            closeicon.style.display = "block";
-            document.querySelector(".prof-container").style = `
-         padding-left: 13em;
-        `;
-            let allLinks = document.querySelectorAll(".links-container .links .link");
-
-            let allLink = document.querySelectorAll(".links-container .links");
-            allLink.forEach((element) => {
-                element.style = `
-        gap: 10px;
-        `;
-
-            });
-            allLinks.forEach((element) => {
-                element.style = `
-         visibility: visible;
-         display: block;
-        `;
-            });
-        }
-
-        closeicon.onclick = () => {
-            dropdownnav.style = `
-        width: 6%;
-        `;
-            <?php  if(isset($_SESSION['uniquesupadmin_id'])){?>
-            document.querySelector('.s-box1 .selected').innerHTML = '<img src="images/referral.svg" />';
-            document.querySelector('.s-box2 .selected').innerHTML = '<img src="images/referral.svg" />';
-            document.querySelector('.s-box3 .selected').innerHTML = '<img src="images/referral.svg" />';
-            document.querySelector('.s-box4 .selected').innerHTML = '<img src="images/referral.svg" />';
-            <?php }?>
-            open.style.display = "block";
-            closeicon.style.display = "none";
-            document.querySelector(".prof-container").style = `
-         padding-left: 5em;
-        `;
-
-            let allLink = document.querySelectorAll(".links-container .links");
-            allLink.forEach((element) => {
-                element.style = `
-        justify-content: center
-        `;
-            });
-
-            let allLinks = document.querySelectorAll(".links-container .links .link");
-            allLinks.forEach((element) => {
-                element.style = `
-         visibility: hidden;
-         display:none;
-        `;
-            });
-        }
-    }
-
-    if (window.innerWidth < 1300) {
-        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
-        document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
-        document.querySelector('.s-box2 .selected').innerHTML = '<span>List Pages</span>';
-        document.querySelector('.s-box3 .selected').innerHTML = '<span>View</span>';
-        document.querySelector('.s-box4 .selected').innerHTML = '<span>Create</span>';
-        <?php }?>
-        let dropdownnav = document.querySelector(".dropdown-links");
-        let menu = document.querySelector(".menu");
-        menu.onclick = () => {
-            dropdownnav.style = `
+            let dropdownnav = document.querySelector(".dropdown-links");
+            let menu = document.querySelector(".menu");
+            menu.onclick = () => {
+                dropdownnav.style = `
             transform: translateX(0);
             `;
-        };
+            };
 
-        let close = document.querySelector(".close");
-        close.onclick = () => {
-            dropdownnav.style = `
+            let close = document.querySelector(".close");
+            close.onclick = () => {
+                dropdownnav.style = `
             transform: translateX(100%);
             `;
-        };
-    }
-    </script>
-
+            };
+        }
+        </script>
 </body>
 
 </html>

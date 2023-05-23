@@ -376,6 +376,14 @@ if(!isset($_GET['unique'])){
     }
 
     @media only screen and (max-width: 1300px) {
+        .payment-image-div2 {
+            display: grid;
+            width: 100%;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+        }
+
         .email-span {
             text-overflow: ellipsis !important;
             overflow: hidden;
@@ -1061,6 +1069,59 @@ if(!isset($_GET['unique'])){
                     <?php }}?>
                 </tbody>
             </table>
+
+            <div style="display: flex; align-items: center; justify-content: left; margin-top:2em;">
+                <div class="payment-image-div2">
+                    <div>
+                        <img src="images/image1.svg" alt="payment image" />
+                        <div class="payment-desc">
+                            <p style="width: 80%;">Total Paid Earnings</p>
+                            <div class="payment-count">
+                                &#8358;<span><?php 
+                        $user = new User;
+                        $unitprice2 = $user->selectAgentTotalPaidEarnings($_GET['unique']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                        
+                       
+                        ?>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-image-div2">
+                    <div>
+                        <img src="images/image1.svg" alt="payment image" />
+                        <div class="payment-desc">
+                            <p style="width: 80%;">Total Pending Earnings</p>
+                            <div class="payment-count">
+                                &#8358;<span><?php 
+                        $user = new User;
+                        $unitprice2 = $user->selectAgentTotalPendingEarnings($_GET['unique']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                        
+                       
+                        ?>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
 
             <div class="details-container">
 

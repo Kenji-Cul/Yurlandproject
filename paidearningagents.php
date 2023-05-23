@@ -1301,7 +1301,7 @@ include_once "projectlog.php";
 
                 <?php }}}?>
 
-                <?php if(empty($customer2)){?>
+                <?php if(empty($customer)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
                     <p>There are no pending agents yet!</p>

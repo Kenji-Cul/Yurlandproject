@@ -760,26 +760,47 @@ if(!isset($_SESSION['uniquesubadmin_id'])){
 
 
                 <div class="profile-div">
-                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Total Paid Earnings</p>
+                        <p class="amountdiv">&#8358;
 
-                    <a href="#">
-                        <div class="navigate">
-                            <p>Total Paid Earnings</p>
-                            <img src="images/right_arrow.svg" alt="" />
-                        </div>
-                    </a>
+                            <?php 
+                               
+                               $paidearnings = $user->selectAllPaidEarnings();
+                                if($paidearnings > 999 ||   $paidearnings > 9999 ||   $paidearnings > 99999 ||   $paidearnings > 999999){
+                                    echo number_format($paidearnings);
+                                    
+                                  } else {
+                                     echo round($paidearnings);
+                                  }
+                           
+                                ?>
+                        </p>
+                    </div>
                 </div>
 
                 <div class="profile-div">
-                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+                    <div class="navigate"
+                        style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
+                        <p style="font-size: 14px;">Total Pending Earnings</p>
+                        <p class="amountdiv">&#8358;
 
-                    <a href="#">
-                        <div class="navigate">
-                            <p>Total Pending Earnings</p>
-                            <img src="images/right_arrow.svg" alt="" />
-                        </div>
-                    </a>
+                            <?php 
+                               
+                               $pendingearnings = $user->selectAllPendingEarnings();
+                                if($pendingearnings > 999 ||  $pendingearnings > 9999 ||  $pendingearnings > 99999 ||  $pendingearnings > 999999){
+                                    echo number_format($pendingearnings);
+                                    
+                                  } else {
+                                     echo round($pendingearnings);
+                                  }
+                           
+                                ?>
+                        </p>
+                    </div>
                 </div>
+
 
                 <div class="profile-div">
                     <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />

@@ -1,8 +1,8 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_SESSION['uniqueagent_id'])){
-    header("Location: portallogin.php");
+if(!isset($_SESSION['unique_id'])){
+    header("Location:index.php");
 }
 
 ?>
@@ -19,10 +19,39 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
-    body {
-        min-height: 200vh;
+    .profile-body {
+        height: 110vh;
         position: relative;
         overflow-x: hidden;
+    }
+
+    .search-input2 input {
+        position: unset;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        padding-left: 5%;
+        padding-top: 2em;
+        position: unset;
+        gap: 2em;
+    }
+
+    .search-container .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
+        width: 240px;
+    }
+
+    .search-input2 input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+        border-radius: 8px;
+        border: 2px solid #ff6600;
     }
 
     .account-detail2 {
@@ -45,38 +74,67 @@ if(!isset($_SESSION['uniqueagent_id'])){
         text-transform: capitalize !important;
     }
 
-
-    section {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    section .error {
-        color: #ff6600;
-        border: 1px solid #ff6600;
-        height: 1em;
-        border-radius: 8px;
-        margin-bottom: 1.5em;
-        width: 80px;
-    }
-
     .footerdiv {
         position: absolute;
         bottom: 0;
     }
 
+    .radius {
+        position: relative;
+    }
 
+    .radius img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .empty-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+    }
+
+
+    .success {
+        position: absolute;
+        left: 50%;
+        top: 45em;
+        transform: translate(-50%, -50%);
+        height: 20%;
+    }
 
     .success img {
         width: 15em;
         height: 15em;
     }
 
-    .price-button {
-        width: 300px;
-        font-size: 15px;
+
+    .account-detail2 {
+        position: relative;
+    }
+
+    .account-detail2 .flex {
+        position: absolute;
+        left: 90px;
+    }
+
+    .account-detail3 {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 3em;
+    }
+
+    .account-detail3 p {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 22px;
+        text-align: center;
+        color: #eb5757;
     }
 
     @media only screen and (min-width: 1300px) {
@@ -256,6 +314,19 @@ if(!isset($_SESSION['uniqueagent_id'])){
 
     @media only screen and (max-width: 1300px) {
 
+        .payment-image-div2 {
+            display: grid;
+            width: 100%;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success {
+            position: absolute;
+            top: 40em;
+        }
+
         .payee {
             display: flex;
             align-items: center;
@@ -275,14 +346,17 @@ if(!isset($_SESSION['uniqueagent_id'])){
             font-size: 11px;
         }
 
-        .code-container .flex0 {
-            flex-direction: column;
+        body {
+            height: 90vh;
         }
 
-        .price-button {
-            width: 200px;
-            font-size: 12px;
+        .account-detail2 .flex {
+            position: absolute;
+            left: 10px;
         }
+
+
+
 
         .user,
         #openicon {
@@ -348,26 +422,6 @@ if(!isset($_SESSION['uniqueagent_id'])){
             top: -3em;
         }
     }
-
-    @media only screen and (max-width: 800px) {
-        .success {
-            position: absolute;
-            left: 50%;
-            top: 65em;
-            transform: translate(-50%, -50%);
-            height: 10em;
-        }
-
-        .success p {
-            text-align: center;
-        }
-
-
-        .success img {
-            width: 15em;
-            height: 15em;
-        }
-    }
     </style>
 </head>
 
@@ -375,32 +429,36 @@ if(!isset($_SESSION['uniqueagent_id'])){
     <!-- Header -->
     <header class="signup">
         <div class="logo">
-            <?php if(isset($_SESSION['uniqueagent_id'])){?>
-            <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php if(isset($_SESSION['unique_id'])){?>
+            <a href="profile.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
-            <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <a href="index.php"><img src="images/yurland_logo.jpg" alt="Logo" /></a>
             <?php }?>
         </div>
-
         <?php 
              $user = new User;
-             $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
+             $newuser = $user->selectUser($_SESSION['unique_id']);
             ?>
-
         <div class="nav">
+            <a href="cartreview.php">
+                <div class="cart">
+                    <div class="cart-notify"></div>
+                    <img src="images/cart.svg" alt="cart icon" />
+                </div>
+            </a>
             <img src="images/menu.svg" alt="menu icon" class="menu" />
             <div class="user">
-                <p><?php if(isset($newuser['agent_name'])){  ?>
-                    <span><?php echo $newuser['agent_name']; ?></span>&nbsp;
+                <p><?php if(isset($newuser['first_name'])){  ?>
+                    <span><?php echo $newuser['first_name']; ?></span>&nbsp;<span><?php echo $newuser['last_name']; ?></span>
                     <?php }?>
                 </p>
                 <div class="profile-image">
-                    <?php if(!empty($newuser['agent_img'])){?>
-                    <a href="agentprofileinfo.php" style="color: #808080;"><img
-                            src="profileimage/<?php echo $newuser['agent_img'];?>" alt="profile image" /></a>
+                    <?php if(!empty($newuser['photo'])){?>
+                    <a href="updatedetails.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['photo'];?>" alt="profile image" /></a>
                     <?php }?>
-                    <?php if(empty($newuser['agent_img'])){?>
-                    <a href="agentprofileinfo.php" style="color: #808080;">
+                    <?php if(empty($newuser['photo'])){?>
+                    <a href="updatedetails.php" style="color: #808080;">
                         <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>
@@ -409,9 +467,7 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 </div>
             </div>
         </div>
-
     </header>
-
 
     <div class="flex-container">
         <ul class="dropdown-links">
@@ -428,191 +484,148 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
             <li class="links">
-                <a href="agentprofile.php"><img src="images/home3.svg" /></a>
-                <a href="agentprofile.php" class="link">Home</a>
+                <a href="profile.php"><img src="images/home3.svg" /></a>
+                <a href="profile.php" class="link">Home</a>
             </li>
             <li class="links">
-                <a href="usertype.php"><img src="images/land2.svg" /></a>
-                <a href="usertype.php" class="link">New Land</a>
-            </li>
-
-            <li class="links">
-                <a href="allestates3.php"><img src="images/land2.svg" /></a>
-                <a href="allestates3.php" class="link">All Estates</a>
+                <a href="allestates.php"><img src="images/land2.svg" /></a>
+                <a href="allestates.php" class="link">New Land</a>
             </li>
             <li class="links">
-                <a href="mycustomers.php"><img src="images/referral.svg" /></a>
-                <a href="mycustomers.php" class="link">Customers</a>
+                <a href="transactions.php"><img src="images/updown.svg" /> </a>
+                <a href="transactions.php" class="link">Transaction History</a>
             </li>
             <li class="links">
-                <a href="newcustomer.php"><img src="images/referral.svg" /> </a>
-                <a href="newcustomer.php" class="link">New Customer</a>
+                <a href="mylands.php"><img src="images/land2.svg" /></a>
+                <a href="mylands.php" class="link">My Land</a>
+            </li>
+            <li class="links">
+                <a href="mylands.php"><img src="images/chart2.svg" /> </a>
+                <a href="mylands.php" class="link">New Payment</a>
             </li>
             <li class="links select-link">
-                <a href="referral.php"><img src="images/chart2.svg" /></a>
-                <a href="referral.php" class="link">Referrals</a>
-            </li>
-
-            <li class="links">
-                <a href="alltransactions.php"><img src="images/updown.svg" /></a>
-                <a href="alltransactions.php" class="link">View Transactions</a>
-            </li>
-
-            <li class="links">
-                <a href="agentprofileinfo.php"><img src="images/settings.svg" /></a>
-                <a href="agentprofileinfo.php" class="link">Profile</a>
+                <a href="userreferral.php"><img src="images/referral.svg" /></a>
+                <a href="userreferral.php" class="link">Referral</a>
             </li>
             <li class="links">
-                <a href="agentlogout.php"><img src="images/exit.svg" /></a>
-                <a href="agentlogout.php" class="link">Logout</a>
+                <a href="documents.php"><img src="images/folder.svg" /></a>
+                <a href="documents.php" class="link">Documentation</a>
+            </li>
+            <li class="links">
+                <a href="profiledetails.php"><img src="images/settings.svg" /></a>
+                <div>
+                    <a href="profiledetails.php" class="link">Profile&nbsp;<span style="color: #808080;">and</span></a>
+                    <a href="settings.php" class="link">Settings</a>
+                </div>
+            </li>
+            <li class="links">
+                <a href="logout.php"><img src="images/exit.svg" /></a>
+                <a href="logout.php" class="link">Logout</a>
             </li>
         </ul>
 
 
 
-
-
         <div class="profile-container">
             <div class="page-title2">
-                <a href="agentprofile.php">
+                <a href="userreferral.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
-                <p>Referrals</p>
+                <p>Referral Earnings</p>
             </div>
 
-            <?php 
-             $user = new User;
-             $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
-            ?>
+            <div style="display: flex; align-items: center; justify-content: left;">
+                <div class="payment-image-div2">
+                    <div>
+                        <img src="images/image1.svg" alt="payment image" />
+                        <div class="payment-desc">
+                            <p style="width: 80%;">Total Paid Earnings</p>
+                            <div class="payment-count">
+                                &#8358;<span><?php 
+                        $user = new User;
+                        $unitprice2 = $user->selectAgentTotalPaidEarnings($newuser['unique_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                        
+                       
+                        ?>
 
-            <div class="payment-image-div2">
-                <div>
-                    <img src="images/image1.svg" alt="payment image" />
-                    <div class="payment-desc">
-                        <p>Users Referred</p>
-                        <div class="price-div"><?php $newuser2 = $user->selectReferredUsers($newuser['referral_id']);
-               foreach ($newuser2 as $key => $value) {
-                echo $value;
-               };
-                ?></div>
-                    </div>
-                </div>
-
-                <div>
-                    <img src="images/image2.svg" alt="payment image" />
-                    <div class="payment-desc">
-                        <p>Paid Referral</p>
-                        <div class="payment-count"> <span class="landusercount"></span><?php 
-                         $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
-                         $customer = $user ->selectAgentCustomer($agent['referral_id']);
-                        if(!empty($customer)){
-                            $customers = [];
-                           foreach($customer as $key => $value){
-               array_push($customers,$value['unique_id']);
-                           }
-
-                           //var_dump($customers);
-
-                    
-
-                           for ($i = 0; $i <= count($customers) - 1; $i++) {
-                            $total = $user->selectTotalCustomers($customers[$i]);
-                            
-                           if(!empty($total)){
-                            $landusers = [];
-                            foreach($total as $key => $value){
-                                array_push($landusers,$value); 
-                                 ?>
-                            <span name="landuser" style="display: none;"><?php echo $value?></span>
-                            <?php          }
-                        }
-                           } }?>
-
-                        </div>
-                    </div>
-                </div>
-                <?php 
-     $user = new User;
-     $agent = $user->selectAgent($_SESSION['uniqueagent_id']);
-     $customer = $user ->selectAgentCustomer($agent['referral_id']);
-
-      
-            ?>
-                <div>
-                    <img src="images/image2.svg" alt="payment image" />
-                    <div class="payment-desc2">
-                        <p>Referral Earnings</p>
-                        <div class="payment-count">&#8358;<?php  
-                           
-              $total = $user->selectTotal($_SESSION['uniqueagent_id']);
-
-              foreach ($total as $key => $value) {
-                if(is_null($value)){
-                    echo "0";
-                  } else{
-                    $unitprice = $value;
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                        echo number_format($unitprice);
-                      } else {
-                         echo $unitprice;
-                      }
-                  }
-               
-              
-            
-         }?>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    <img src="images/image1.svg" alt="payment image" />
-                    <div class="payment-desc3">
-                        <p>Referral Withdrawal</p>
-                        <div class="payment-count">
-                            <a href="earnings.php">
-                                <img class="desc-img" src="images/roundleft.svg" alt="" />
-                            </a>
+                <div class="payment-image-div2">
+                    <div>
+                        <img src="images/image1.svg" alt="payment image" />
+                        <div class="payment-desc">
+                            <p style="width: 80%;">Total Pending Earnings</p>
+                            <div class="payment-count">
+                                &#8358;<span><?php 
+                        $user = new User;
+                        $unitprice2 = $user->selectAgentTotalPendingEarnings($newuser['unique_id']);
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                            echo number_format(round($unitprice2));
+                          } else {
+                              echo round($unitprice2);
+                          }
+                        
+                       
+                        ?>
+
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="contain">
-                <div class="line">
-                    <hr />
-                </div>
-            </div>
+            <div class="search-container">
+                <div class="select-box">
+                    <div class="options-container">
 
-            <section>
-                <p class="error">Copied</p>
-            </section>
-
-            <div class="code-container">
-                <span>Referral code</span>
-                <div class="flex0">
-                    <div class="colored-div">
-                        <p><?php if(isset($newuser['referral_id'])){
-                echo $newuser['referral_id'];
-            }?> </p>
-                        <input type="text" name="" class="copy-text" value="<?php if(isset($newuser['referral_id'])){
-                echo $newuser['referral_id'];
-             }?>" style="display: none;">
-                        <img src="images/copy.svg" alt="" />
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode4" name="searchmode" value="Pending" />
+                            <label for="searchmode4">Pending</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode5" name="searchmode" value="Paid" />
+                            <label for="searchmode5">Paid</label>
+                        </div>
                     </div>
-                    <div class="price-button copy-div">Share For New Customer</div>
+
+                    <div class="selected">Choose Search Mode</div>
+
                 </div>
+
+
+                <div class="search-input2">
+                    <form action="" class="dropdown-form">
+                        <div class="valuediv2" style="display: none;"></div>
+                    </form>
+                </div>
+
+
+
+
             </div>
+
+
+
 
             <div class="details-container">
 
 
                 <?php 
-     
-            $earning = $user->selectAgentHistory2($newuser['uniqueagent_id']);
+  
+            $earning = $user->selectAgentHistory($newuser['unique_id']);
             if(!empty($earning)){
                 foreach($earning as $key => $value){
-     ?>
+    ?>
 
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
@@ -675,7 +688,9 @@ if(!isset($_SESSION['uniqueagent_id'])){
                         <?php }}?>
                     </div>
                 </div>
-                <?php }}?>
+                <?php } }?>
+
+
 
                 <?php if(empty($earning)){?>
                 <div class="success">
@@ -683,61 +698,56 @@ if(!isset($_SESSION['uniqueagent_id'])){
                     <p>You have no earnings yet!</p>
                 </div>
                 <?php }?>
+
+                <div class="account-detail3">
+                    <a href="logout.php">
+                        <p>Sign Out</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
 
 
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
     <script>
-    let landuser = document.getElementsByName("landuser");
+    //searchinput.style.display = "flex";
+    //document.querySelector('#searchimg').style.display = "none";
+    let valuediv2 = document.querySelector('.valuediv2');
 
-    let landvalues = [];
-    landuser.forEach(element => {
+    let searchform4 = document.querySelector('.dropdown-form');
+    let purpose1 = document.querySelector("#searchmode4");
+    let purpose3 = document.querySelector("#searchmode5");
+    let purposearray = [purpose1, purpose3];
+    document.querySelector('.dropdown-form').style.display = "block";
+    purposearray.forEach((element) => {
+        element.onclick = () => {
+            valuediv2.innerHTML = element.value;
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchstatus.php?data=${valuediv2.innerHTML}&user=customeruser&customeruser=<?php echo $_SESSION['unique_id'];?>`
+            );
 
-        landvalues.push(parseInt(element.innerHTML));
-    });
-    document.querySelector('.landusercount').innerHTML = landvalues.length;
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+
+                    }
+                }
+            };
+            let formData = new FormData(searchform4);
+            xhr.send(formData);
 
 
-
-
-
-
-    let copybtn = document.querySelector('.copy-div');
-
-
-    copybtn.onclick = () => {
-        copyFunction();
-    }
-
-
-
-    function copyFunction() {
-        // Get the text field
-        var copyText = document.querySelector('.copy-text');
-
-        // Select the text field
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); // For mobile devices
-
-        // Copy the text inside the text field
-        let referralLink =
-            `http://localhost/Yurland/signup.php?ref=${copyText.value}&key=a&refkey=785e7&rex=l73`;
-        navigator.clipboard.writeText(referralLink);
-
-        if (navigator.clipboard.writeText(referralLink)) {
-            setTimeout(() => {
-                document.querySelector("section .error").style.visibility = "visible";
-            }, 400);
-            setTimeout(() => {
-                document.querySelector("section .error").style.visibility = "hidden";
-            }, 4000);
 
 
         }
-    }
 
+    });
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');

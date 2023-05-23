@@ -1085,7 +1085,7 @@ include_once "projectlog.php";
                     
 
                            for ($i = 0; $i <= count($customers) - 1; $i++) {
-                            $total = $user->selectAllocatedCustomers($customers[$i]);
+                            $total = $user->selectAllocatedCustomers2($customers[$i]);
                             
                            if(!empty($total)){
                             $landusers = [];

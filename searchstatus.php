@@ -66,6 +66,12 @@ if($_GET['data'] == "Pending" || $_GET['data'] == "Paid"){
     }
 
     if($_GET['user'] == "executive"){
-        $land = $user->selectUserEarningStatus3($_GET['data'],$_GET['execuser']);
+        $type = "executive";
+        $land = $user->selectUserEarningStatus3($_GET['data'],$_GET['execuser'],$type);
+    }
+
+    if($_GET['user'] == "customeruser"){
+        $type = "customer";
+        $land = $user->selectUserEarningStatus3($_GET['data'],$_GET['customeruser'],$type);
     }
 }

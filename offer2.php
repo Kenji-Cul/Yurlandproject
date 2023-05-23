@@ -292,7 +292,7 @@ $txt = '
         Our physical office address: 1 Abiola Adeyemi Street, Jidsam Filling Station Plaza, Igando-Ikotun Road, LAGOS
         State.
     </h2>
-    <h2 style="text-transform: capitalize">Important Websites;</h2>
+    <h2><span style="text-transform: capitalize">Portal:</span> https://yurland.com.ng</h2>
     <h2>
         <span style="text-transform: capitalize">Ilu-Oba International Limited:</span>
         https://Iluobainternationallimited.com

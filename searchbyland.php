@@ -25,6 +25,7 @@ if($_GET['user'] == "documentuser"){
     $land = $user->searchLandDocument($_POST['searchproduct2'],$_GET['user'],$_GET['unique'],$type);
 }
 
+
 if($_GET['user'] == "allocationuser"){
     $type = "allocation";
     $land = $user->searchLandDocument($_POST['searchproduct2'],$_GET['user'],$_GET['unique'],$type);

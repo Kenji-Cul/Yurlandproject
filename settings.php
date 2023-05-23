@@ -448,14 +448,16 @@ if(!isset($_SESSION['unique_id'])){
                     </div>
                 </a>
 
-                <div class="account-detail2">
-                    <div class="radius"></div>
-                    <div class="flex">
-                        <p style="text-transform: capitalize">Statements & Reports</p>
-                        <span>Download monthly statements</span>
+                <a href="transactions.php">
+                    <div class="account-detail2">
+                        <div class="radius"></div>
+                        <div class="flex">
+                            <p style="text-transform: capitalize">Statements & Reports</p>
+                            <span>Download monthly statements</span>
+                        </div>
+                        <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
                     </div>
-                    <i class="ri-arrow-right-s-line" style="color: #808080;"></i>
-                </div>
+                </a>
 
                 <a href="https://wa.link/bt0i7e">
                     <div class="account-detail2">

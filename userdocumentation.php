@@ -1,10 +1,9 @@
 <?php 
 session_start();
-include_once "projectlog.php";
+include "projectlog.php";
 if(!isset($_GET['unique'])){
-    header("Location: agentinfo.php");
+    header("Location: teamspace.php");
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,12 +15,11 @@ if(!isset($_GET['unique'])){
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="images/logo.svg" />
 
-    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <title><?php echo MY_APP_NAME;?></title>
     <style>
-    body {
-        min-height: 100vh;
+    .profile-body {
+        height: 120vh;
         overflow-x: hidden;
     }
 
@@ -44,43 +42,101 @@ if(!isset($_GET['unique'])){
         background-color: #aaa;
     }
 
-    .account-detail2 {
-        padding-bottom: 2em;
+    .detail3 {
+        width: 140px !important;
+        position: relative;
+    }
+
+    .search-form,
+    .search-form2,
+    .search-form3,
+    .dropdown-form {
+        display: none;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        padding-left: 5%;
         padding-top: 2em;
+        position: unset;
+        gap: 2em;
     }
 
-    .successmodal {
-        /* display: flex; */
-        align-items: center;
-        justify-content: center;
+    .search-container .select-box {
+        border: 1px solid #808080;
+        border-radius: 8px;
+        width: 240px;
+    }
+
+    .search-input2 input {
+        padding: 0.8em 4em;
+        outline: none;
+        background-color: #cac6c6;
+        border: 1px solid #808080;
+        border-radius: 8px;
+        border: 2px solid #ff6600;
+        margin-bottom: 1em;
+    }
+
+
+
+
+    .detail3 {
+        width: 100px !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .transaction-details2 {
+        border-radius: 8px;
+        /* border: 2px solid black; */
+        padding: 1em 2em;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        width: 90%;
+    }
+
+    header {
+        background: #fee1e3;
+    }
+
+    .success {
         position: absolute;
-        top: 2em;
+        top: 28em;
+        width: 90%;
     }
 
-    .successmodal .closemodal {
-        width: 30px;
-        height: 30px;
+    .success img {
+        width: 25em;
+        height: 20em;
     }
 
 
-    .flexdiv-1 {
+    .no-lands {
         width: 100%;
-    }
-
-    .payee {
-        width: 350px;
-    }
-
-    .payee {
+        height: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 0;
+        justify-content: top;
+        flex-direction: column;
     }
 
-    .payee-tag {
-        text-transform: capitalize !important;
+    .navigation-div .offer {
+        background: #ffffff;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
+        border-radius: 8px;
+        text-align: center;
+        color: var(--secondary-color);
+        width: 150px;
+        padding: 0.3em 0.3em;
     }
+
+    /* a {
+        text-decoration: none;
+        color: #1a0709;
+    } */
 
     .radius {
         position: relative;
@@ -93,347 +149,79 @@ if(!isset($_GET['unique'])){
         border-radius: 8px;
     }
 
-    .empty-img {
-        width: 100%;
-        height: 100%;
-        border-radius: 8px;
-    }
-
-
-    .success {
-        position: absolute;
-        left: 50%;
-        top: 48em;
-        transform: translate(-50%, -50%);
-        height: 10em;
-    }
-
-    .success img {
-        width: 15em;
-        height: 15em;
-    }
-
-
-    .account-detail2 {
-        position: relative;
-    }
-
-    .account-detail2 .flex {
-        position: absolute;
-        left: 90px;
-    }
-
-    .account-detail3 {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: 3em;
-    }
-
-    .account-detail3 p {
+    .no-lands p {
         font-style: normal;
         font-weight: 600;
-        font-size: 20px;
-        line-height: 22px;
-        text-align: center;
-        color: #eb5757;
+        font-size: 24px;
+        color: #1a0709;
     }
 
-    @media only screen and (min-width: 1300px) {
-        .dropdown-links .select-box {
-            width: 100%;
-            border-radius: 0px !important;
-            background: #7e252b;
-        }
-
-        .dropdown-links .selected {
-            border-radius: 0px !important;
-            background: #7e252b;
-            color: #fff;
-        }
-
-        .dropdown-links .select-box .options-container {
-            border-radius: 0px !important;
-            background: #7e252b;
-            z-index: 200;
-        }
-
-        .dropdown-links .select-box .option:hover {
-            background: var(--primary-black);
-            color: #ffffff;
-        }
-
-        .dropdown-links .select-box .options-container::-webkit-scrollbar {
-            width: 6px;
-            background: #0d141f;
-            border-radius: 0;
-        }
-
-        .dropdown-links .select-box .options-container::-webkit-scrollbar-thumb {
-            background: #525861;
-            border-radius: 0;
-        }
-
-        .dropdown-links .option {
-            padding: 1em 0;
-        }
-
-        .signup .nav {
-            position: absolute;
-            right: 40px;
-            top: 30px;
-        }
-
-        .page-title2 {
-            justify-content: left;
-            gap: 1em;
-        }
-
-        .page-title2 a {
-            position: unset;
-        }
-
-        .page-title2 p {
-            font-style: normal;
-            font-weight: 600;
-            font-size: 40px;
-            color: #1A0709;
-        }
-
-        .estatetext {
-            gap: 0.5em;
-        }
-
-
-
-        .user {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1em;
-        }
-
-        .user p {
-            font-weight: 600;
-            font-size: 20px;
-            color: #1A0709;
-        }
-
-        .user .profile-image {
-            width: 45px;
-            height: 45px;
-        }
-
-
-
-
-
-        .center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .menu {
-            display: none;
-        }
-
-        .land-estate {
-            border: 1px solid #d4d1d1;
-            width: 320px;
-            height: 290px;
-            padding-top: 8px;
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: top;
-            align-items: center;
-            gap: 1em;
-            flex-direction: column;
-            border-radius: 8px;
-            margin-bottom: 1.6em;
-        }
-
-        .dropdown-links {
-            width: 6%;
-            height: 84vh;
-            border-radius: 0px !important;
-            padding: 1em 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: top;
-            align-items: top;
-            gap: 1.3em;
-            background: #7e252b;
-            filter: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999999 !important;
-            transition: all 0.7s;
-        }
-
-        .links-container li {
-            height: 1em;
-            width: 95%;
-            text-transform: capitalize;
-            font-size: 14px;
-        }
-
-        .links-container {
-            display: flex;
-            flex-direction: column;
-            align-items: left;
-            justify-content: center;
-            gap: 1.5em;
-            padding-top: 0;
-        }
-
-        /* .dropdown-links li {
-            height: 1em;
-            width: 95%;
-            text-transform: capitalize;
-            font-size: 14px;
-        } */
-
-        .dropdown-links .select-link {
-            background-color: #1a0709;
-        }
-
-        .dropdown-links .links {
-            width: 100%;
-        }
-
-        .dropdown-links .links img {
-            width: 20px;
-            height: 20px;
-            margin-right: 6px;
-            cursor: pointer;
-        }
-
-        .dropdown-links .links {
-            width: 100%;
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            padding: 1em 0;
-            transition: 1s;
-        }
-
-        .dropdown-links .links:hover {
-            background-color: #1a0709;
-        }
-
-        .dropdown-links .links .link {
-            visibility: hidden;
-            display: none;
-        }
-
-
-        .dropdown-links li a {
-            color: #fff;
-
-        }
-
-        .transaction-details {
-            width: 80%;
-        }
-
-
-        .flex-container {
-            display: flex;
-            flex-direction: row;
-            position: relative;
-            padding-top: 2em;
-            height: 70vh;
-        }
-
-        .estates {
-            padding-top: 6em;
-            position: absolute;
-            left: 3em;
-            padding: 0;
-            width: 93%;
-            transition: all 0.5s;
-            margin-top: 6em;
-        }
-
-        .profile-container {
-            position: absolute;
-            left: 5em;
-            padding: 0;
-            width: 93%;
-            transition: all 0.5s;
-        }
-
-        .close {
-            display: none;
-        }
-
-
-
+    .no-lands img {
+        margin-top: 8em;
+        width: 30em;
+        height: 30em;
     }
 
     @media only screen and (max-width: 1300px) {
-        .payment-image-div2 {
-            display: grid;
-            width: 100%;
-            margin: 0 auto;
-            align-items: center;
-            justify-content: center;
-        }
 
-        .email-span {
-            text-overflow: ellipsis !important;
-            overflow: hidden;
-            white-space: nowrap;
-            display: inline-block;
-            width: 140px;
-        }
-
-
-        .success {
-            position: absolute;
-            top: 48em;
-        }
-
-        .payee {
+        .transaction-details2 {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 0 !important;
-            width: 280px;
-            position: relative;
+            flex-direction: row;
         }
 
-        .page-title2 {
-            display: flex;
-            gap: 2em;
+
+        .transaction-details2 {
+            border-radius: 8px;
+            /* border: 2px solid black; */
+            padding: 1em 2em;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
             width: 80%;
         }
 
-        .payee .payee-tag {
-            width: 35%;
-            font-size: 11px;
+        .transaction-details2 .date {
+            font-size: 11px !important;
         }
 
-        .payee .payee-name {
-            width: 65%;
-            font-size: 11px;
+        .navigation-div .offer {
+            background: #ffffff;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--secondary-color);
+            width: 100px;
+            padding: 0.3em 0.3em;
         }
 
-        body {
-            height: 90vh;
+        .navig .offer,
+        .navig .payment,
+        .navig .allocation {
+            font-size: 12px;
         }
 
-        .account-detail2 .flex {
+        .details-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .success {
             position: absolute;
-            left: 10px;
+            top: 35em;
+            height: 10em;
+            width: 100%;
         }
 
+        .success img {
+            width: 20em;
+            height: 20em;
+        }
 
-
+        .success p {
+            text-align: center;
+        }
 
         .user,
         #openicon {
@@ -444,21 +232,9 @@ if(!isset($_GET['unique'])){
             display: none;
         }
 
-
-
-        .land_estate_container {
-            display: flex;
-            flex-direction: row;
-            gap: 1em;
+        .detail3 {
+            display: none;
         }
-
-
-        .profile-div-container {
-            margin: auto;
-            width: 100%;
-        }
-
-
 
         .dropdown-links {
             height: 100vh;
@@ -467,7 +243,6 @@ if(!isset($_GET['unique'])){
             align-items: left;
             justify-content: center;
             gap: 2em;
-            background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
             width: 40%;
@@ -487,10 +262,6 @@ if(!isset($_GET['unique'])){
             align-items: left;
             justify-content: center;
             gap: 1em;
-        }
-
-        .land-estate {
-            width: 290px;
         }
 
         .dropdown-links .select-box {
@@ -552,10 +323,254 @@ if(!isset($_GET['unique'])){
             <?php
         }
 
-        ?>.update-data {
-            position: absolute;
-            top: -3em;
+        ?>
+    }
+
+    @media only screen and (min-width: 1300px) {
+        .dropdown-links .select-box {
+            width: 100%;
+            border-radius: 0px !important;
+            background: #7e252b;
         }
+
+        .dropdown-links .selected {
+            border-radius: 0px !important;
+            background: #7e252b;
+            color: #fff;
+        }
+
+        .dropdown-links .select-box .options-container {
+            border-radius: 0px !important;
+            background: #7e252b;
+            z-index: 200;
+        }
+
+        .dropdown-links .select-box .option:hover {
+            background: var(--primary-black);
+            color: #ffffff;
+        }
+
+        .dropdown-links .select-box .options-container::-webkit-scrollbar {
+            width: 6px;
+            background: #0d141f;
+            border-radius: 0;
+        }
+
+        .dropdown-links .select-box .options-container::-webkit-scrollbar-thumb {
+            background: #525861;
+            border-radius: 0;
+        }
+
+        .dropdown-links .option {
+            padding: 1em 0;
+        }
+
+        .page-title2 a {
+            display: none;
+        }
+
+        .page-title2 {
+            justify-content: left;
+        }
+
+        .page-title2 p {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 40px;
+            color: #1A0709;
+        }
+
+        .center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .profile-image2 {
+            display: none !important;
+        }
+
+        .user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
+
+        .user p {
+            font-weight: 600;
+            font-size: 20px;
+            color: #1A0709;
+        }
+
+        .user .profile-image {
+            width: 45px;
+            height: 45px;
+        }
+
+
+
+        .signup .nav {
+            position: absolute;
+            right: 40px;
+            top: 30px;
+        }
+
+        .details2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6em;
+        }
+
+        .details2 p {
+            color: #808080;
+        }
+
+        .details2 p,
+        .details2 h3 {
+            font-size: 22px;
+        }
+
+        .land-btn-container {
+            padding-left: 1em;
+        }
+
+        .land-btn-container .btn {
+            width: 500px;
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .estate2 {
+            display: block !important;
+        }
+
+        .land-estate {
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            width: 290px;
+            height: 270px;
+            padding-top: 0;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: top;
+            align-items: center;
+            gap: 1em;
+            flex-direction: column;
+            border-radius: 8px;
+            margin-bottom: 1.6em;
+        }
+
+        .dropdown-links {
+            width: 6%;
+            height: 90vh;
+            border-radius: 0px !important;
+            padding: 1em 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: top;
+            align-items: top;
+            gap: 1.3em;
+            background: #7e252b;
+            filter: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999999 !important;
+            transition: all 0.7s;
+        }
+
+        .links-container li {
+            height: 1em;
+            width: 95%;
+            text-transform: capitalize;
+            font-size: 14px;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            gap: 1.5em;
+            padding-top: 0;
+        }
+
+        .dropdown-links li {
+            height: 1em;
+            width: 95%;
+            text-transform: capitalize;
+            font-size: 14px;
+        }
+
+        .dropdown-links .select-link {
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links {
+            width: 100%;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 1em 0;
+            transition: 1s;
+        }
+
+        .dropdown-links .links:hover {
+            background-color: #1a0709;
+        }
+
+        .dropdown-links .links img {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .dropdown-links .links .link {
+            visibility: hidden;
+            display: none;
+        }
+
+
+        .dropdown-links li a {
+            color: #fff;
+
+        }
+
+        .transaction-details {
+            width: 80%;
+            transition: all 1.5s;
+        }
+
+
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            padding-top: 2em;
+        }
+
+        .doc-container {
+            width: 90%;
+            padding-left: 5em;
+        }
+
+
+        .close {
+            display: none;
+        }
+
+
     }
     </style>
 </head>
@@ -571,19 +586,21 @@ if(!isset($_GET['unique'])){
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
+
+
         </div>
 
         <?php 
              $user = new User;
              if(isset($_SESSION['uniquesubadmin_id'])){
-                $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
-                } 
-            
-                if(isset($_SESSION['uniquesupadmin_id'])){
-                    $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
-                    } 
-            
+             $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
+             } 
+
+             if(isset($_SESSION['uniquesupadmin_id'])){
+                $newuser = $user->selectSupadmin($_SESSION['uniquesupadmin_id']);
+             }
             ?>
+
         <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
         <div class="nav">
             <img src="images/menu.svg" alt="menu icon" class="menu" />
@@ -606,35 +623,39 @@ if(!isset($_GET['unique'])){
                     <?php }?>
                 </div>
             </div>
-        </div>
-        <?php }?>
+            <?php }?>
 
-        <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
-        <div class="nav">
-            <img src="images/menu.svg" alt="menu icon" class="menu" />
-            <div class="user">
-                <p><?php if(isset($newuser['super_adminname'])){  ?>
-                    <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
-                    <?php }?>
-                </p>
-                <div class="profile-image">
-                    <?php if(!empty($newuser['admin_image'])){?>
-                    <a href="supadmininfo.php" style="color: #808080;"><img
-                            src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
-                    <?php }?>
-                    <?php if(empty($newuser['admin_image'])){?>
-                    <a href="supadmininfo.php" style="color: #808080;">
-                        <div class="empty-img" style="border-radius: 50%;">
-                            <i class="ri-user-fill"></i>
-                        </div>
-                    </a>
+            <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+            <div class="nav">
+                <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+                <img src="images/menu.svg" alt="menu icon" class="menu" />
+                <div class="user">
+                    <p><?php if(isset($newuser['super_adminname'])){  ?>
+                        <span><?php echo $newuser['super_adminname']; ?></span>&nbsp;
+                        <?php }?>
+                    </p>
+                    <div class="profile-image">
+                        <?php if(!empty($newuser['admin_image'])){?>
+                        <a href="superadmininfo.php" style="color: #808080;"><img
+                                src="profileimage/<?php echo $newuser['admin_image'];?>" alt="profile image" /></a>
+                        <?php }?>
+                        <?php if(empty($newuser['admin_image'])){?>
+                        <a href="superadmininfo.php" style="color: #808080;">
+                            <div class="empty-img" style="border-radius: 50%;">
+                                <i class="ri-user-fill"></i>
+                            </div>
+                        </a>
+                        <?php }?>
+                    </div>
                     <?php }?>
                 </div>
             </div>
-        </div>
-        <?php }?>
+            <?php }?>
+
 
     </header>
+
+
 
     <div class="flex-container">
         <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
@@ -656,11 +677,11 @@ if(!isset($_GET['unique'])){
                     <a href="subadmin.php"><img src="images/home3.svg" /></a>
                     <a href="subadmin.php" class="link">Home</a>
                 </li>
-                <li class="links">
+                <li class="links select-link">
                     <a href="allcustomers.php"><img src="images/referral.svg" /></a>
                     <a href="allcustomers.php" class="link">All Customers</a>
                 </li>
-                <li class="links select-link">
+                <li class="links">
                     <a href="allagents.php"><img src="images/referral.svg" /></a>
                     <a href="allagents.php" class="link">All Agents</a>
                 </li>
@@ -716,6 +737,7 @@ if(!isset($_GET['unique'])){
                     <a href="totalref.php" class="link">View Referrals</a>
                 </li>
 
+
                 <li class="links">
                     <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
                     <a href="subadmininfo.php" class="link">Profile</a>
@@ -724,7 +746,6 @@ if(!isset($_GET['unique'])){
                     <a href="logout.php?user=subadmin"><img src="images/exit.svg" /></a>
                     <a href="logout.php?user=subadmin" class="link">Logout</a>
                 </li>
-
             </div>
         </ul>
         <?php }?>
@@ -981,262 +1002,237 @@ if(!isset($_GET['unique'])){
         <?php }?>
 
 
-        <?php 
-    $user = new User;
-    $agent = $user->selectUser($_GET['unique']);
-    
-   
-    ?>
 
-        <div class="profile-container">
 
+
+        <div class="doc-container">
             <div class="page-title2">
-                <a href="customerprofileinfo.php?unique=<?php echo $agent['unique_id'];?>&real=91838JDFOJOEI939">
+                <a href="customerprofileinfo.php?unique=<?php echo $_GET['unique'];?>&real=91838JDFOJOEI939">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
-                <div style="display: flex !important; flex-direction: row !important;" class="estatetext">
-                    <p class="email-span"><?php echo $agent['first_name']?> <?php echo $agent['last_name']?></p>
-                    <p>Earnings</p>
-                </div>
-
-            </div>
-            <div class="profile-image" style="margin-left: 3em;">
-                <?php if(!empty($agent['photo'])){?>
-                <img src="profileimage/<?php echo $agent['photo'];?>" alt="profile image" />
-                <?php }?>
-                <?php if(empty($agent['photo'])){?>
-                <div class="empty-img" style="border-radius: 50%;">
-                    <i class="ri-user-fill"></i>
-                </div>
-                <?php }?>
+                <p>Documents</p>
             </div>
 
+            <!-- <div class="no-lands">
+        <img src="images/asset_success.svg" alt="success image" />
+        <p>You have not uploaded any document yet!!</p>
+    </div> -->
 
-            <form action="" class="download-form">
-                <button class="btn land-btn" style="width: 70px; margin-left: 2em;"><i class="ri-download-line"
-                        id="export"></i></button>
-            </form>
-
-            <table id="user-data" style="display: none;">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Bank Name</th>
-                        <th>Account Number</th>
-                        <th>Amount Paid</th>
-                        <th>Amount Earned</th>
-                    </tr>
-                </thead>
-                <tbody class="table-data">
-
-                    <?php 
-    $user = new User;
-   
-    $earn = $user->selectAgentHistory($_GET['unique']);
-    if(!empty($earn)){
-        foreach($earn as $key => $value){
-            $newuser = $user->selectUser($value['earner_id']);
-        
-    ?>
-                    <tr>
-                        <td><span><?php echo $value['earnee']; ?></span>
-                        </td>
-                        <td>User</td>
-                        <td><?php echo $newuser['bank_name'];?></td>
-                        <td><?php echo $newuser['account_number'];?></td>
-                        <td>&#8358;<?php 
-                    $unitprice = $value['product_price'];
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                      echo number_format(round($unitprice));
-                                    } else {
-                                        echo round($unitprice);
-                                    }
-                                
-                    ?></td>
-                        <td>&#8358;<?php
-                    $earnedprice = $value['earned_amount'];
-                    $unitprice2 = $earnedprice;
-                    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-                        echo number_format(round($unitprice2));
-                      } else {
-                          echo round($unitprice2);
-                      }
-                  
-                                
-                    ?></td>
-                    </tr>
-                    <?php }}?>
-                </tbody>
-            </table>
-
-            <div style="display: flex; align-items: center; justify-content: left; margin-top: 2em;">
-                <div class="payment-image-div2">
-                    <div>
-                        <img src="images/image1.svg" alt="payment image" />
-                        <div class="payment-desc">
-                            <p style="width: 80%;">Total Paid Earnings</p>
-                            <div class="payment-count">
-                                &#8358;<span><?php 
-                        $user = new User;
-                        $unitprice2 = $user->selectAgentTotalPaidEarnings($_GET['unique']);
-                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-                            echo number_format(round($unitprice2));
-                          } else {
-                              echo round($unitprice2);
-                          }
-                        
-                       
-                        ?>
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="payment-image-div2">
-                    <div>
-                        <img src="images/image1.svg" alt="payment image" />
-                        <div class="payment-desc">
-                            <p style="width: 80%;">Total Pending Earnings</p>
-                            <div class="payment-count">
-                                &#8358;<span><?php 
-                        $user = new User;
-                        $unitprice2 = $user->selectAgentTotalPendingEarnings($_GET['unique']);
-                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-                            echo number_format(round($unitprice2));
-                          } else {
-                              echo round($unitprice2);
-                          }
-                        
-                       
-                        ?>
-
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="details-container">
-
-                <?php   $earning = $user->selectAgentHistory($_GET['unique']);
-            if(!empty($earning)){
-                foreach($earning as $key => $value){
-                    $earnedprice = $value['earned_amount'];
-    ?>
-
-                <div class="account-detail2"
-                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                    <div class="flex">
-                        <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;"><?php echo $value['earnee'];?>
-                                has
-                                earned &#8358;<?php 
-                    $unitprice = $earnedprice;
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                      echo number_format(round($unitprice));
-                                    } else {
-                                        echo round($unitprice);
-                                    }
-                    ?>
-                            </span>
-                        </p>
-                        <div class="payee">
-                            <p class="payee-tag" style="color: #808080;">
-                                <?php 
-                              
-                               if($value['payee'] == $value['earnee']){
-                                echo $value['earnee']." Paid:";
-                            } 
-                            
-                            else {
-                                echo "Customer Paid:";   
-                            }
-
-                            
-                                 ?></p>&nbsp;
-                            <p class="payee-name"
-                                style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                &#8358;<?php $unitprice = $value['product_price']; 
-                                  if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                    echo number_format(round($unitprice));
-                                  } else {
-                                      echo round($unitprice);
-                                  }
-                                ?> for <?php echo $value['product_name'];?>
-                            </p>
-                        </div>
-                        <div class="inner-detail">
-                            <div class="date">
-                                <span style="font-size: 13px;"><?php echo $value['payment_date'];?></span>
-                            </div>
-                        </div>
-                        <?php 
-                        if($value['balance_earning'] != ""){
-                        if($value['earning_status'] == "unpaid"){?>
-                        <div class="detail-four">
-                            <div class="detail"
-                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
-                            </div>
-                        </div>
-                        <?php }?>
-
-                        <?php if($value['balance_earning'] == 0 && $value['earning_status'] == "paid"){?>
-                        <div class="detail-four">
-                            <div class="detail"
-                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-                            </div>
-                        </div>
-                        <?php }}?>
-                    </div>
-                </div>
-                <?php } }?>
-
-
-
-                <?php if(empty($earning)){?>
-                <div class="success">
-                    <img src="images/asset_success.svg" alt="" />
-                    <p><?php echo $agent['first_name'];?> <?php echo $agent['last_name'];?></p>
-                    <p> has no earnings yet!</p>
-                </div>
-                <?php }?>
-
-                <div class="account-detail3">
-                    <a href="logout.php">
-                        <p>Sign Out</p>
+            <div class="navigation-div">
+                <div class="navig">
+                    <div class="offer">Offer letter</div>
+                    <a href="userallocation.php?unique=<?php echo $_GET['unique'];?>">
+                        <div class="allocation" style="color: #808080;">Allocation letter</div>
                     </a>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="successmodal">
-        <div class="modalcon">
-            <div class="modaldiv">
-                <img src="images/close2.svg" alt="" class="closemodal">
-                <div>
-                    <img src="images/asset_success.svg" alt="" />
-                    <?php if($agent['agent_status'] == "Disabled"){?>
-                    <p>Agent Enabled</p>
-                    <p>Successfully</p>
-                    <?php } else {?>
-                    <p>Agent Disabled</p>
-                    <p>Successfully</p>
+            <div class="search-container">
 
-                    <?php }?>
+                <div class="select-box">
+                    <div class="options-container">
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode1" name="searchmode" value="Land" />
+                            <label for="searchmode1">By Land</label>
+                        </div>
+
+                        <div class="option">
+                            <input type="radio" class="radio" id="searchmode2" name="searchmode" value="Date" />
+                            <label for="searchmode2">By Date</label>
+                        </div>
+
+                    </div>
+
+                    <div class="selected">Choose Search Mode</div>
+
+
                 </div>
+
+
+                <div class="search-input2">
+                    <form action="" class="search-form3">
+                        <input type="text" class="search2" type="search" name="searchproduct2"
+                            placeholder="Search By Land">
+                    </form>
+                </div>
+
+
+                <form action="" class="search-form2">
+                    <div class="select-box">
+                        <div class="options-container">
+                            <?php 
+$lastsevendays = date('M-d-Y', strtotime('today - 7 days'));
+$today = date('M-d-Y', strtotime('today'));
+$dates = [];
+for ($i = 0; $i < 31; $i++) { 
+
+?>
+                            <div class="option">
+                                <input type="radio" class="radio" id="date<?php echo $i;?>" name="searchproduct3"
+                                    value="<?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?>" />
+                                <label
+                                    for="date<?php echo $i;?>"><?php echo date('M-d-Y', strtotime('today - '.$i.'days'));?></label>
+                            </div>
+                            <?php }?>
+                        </div>
+
+                        <div class="selected">Choose Date</div>
+
+                    </div>
+                    <div class="valuediv" style="display: none;"></div>
+                </form>
+
+
+
+
             </div>
+
+
+            <div class="details-container">
+                <?php 
+             $land = new User;
+             $landview = $land->selectOfferLetter($_GET['unique']);
+             if(!empty($landview)){
+                foreach($landview as $key => $value){
+                    
+            ?>
+                <div class="transaction-details2">
+                    <div class="radius">
+                        <img src="landimage/<?php echo $value['product_image'];?>" alt="">
+                    </div>
+                    <div class="details">
+                        <p class="pname"><?php echo $value['product_name'];?></p>
+                        <div class="inner-detail">
+                            <div class="date" style="font-size: 12px;">
+                                <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="price-detail detail3"><?php 
+            if($value['product_unit'] == "1"){
+                echo $value['product_unit']." Unit";
+            } else {
+                echo $value['product_unit']." Units";
+            }
+        ?>
+                    </div>
+                    <div class="price-detail detail3"><?php 
+            echo $value['offer_letter'];
+            ?></div>
+                    <div class="price-detail">
+
+                        <a href="userdocuments/<?php echo $value['offer_letter'];?>">
+                            <button class="btn land-btn" style="width: 70px; margin-top: 0;"><i class="ri-download-line"
+                                    id="export"></i></button>
+                        </a>
+
+                        </p>
+                    </div>
+                </div>
+
+
+
+
+                <?php }}?>
+
+                <?php if(empty($landview)){?>
+                <div class="success">
+                    <img src="images/whoops.svg" alt="" />
+                    <p>Whoops You don't have offer letters yet</p>
+                </div>
+                <?php }?>
+            </div>
+
         </div>
     </div>
 
     <script src="js/main.js"></script>
+
     <script>
+    let purpose4 = document.getElementsByName("searchmode");
+
+    purpose4.forEach((element) => {
+        element.onclick = () => {
+            if (element.value == "Land") {
+                document.querySelector('.search-form3').style.display = "block";
+                document.querySelector('.search-form2').style.display = "none";
+
+            }
+            if (element.value == "Date") {
+                document.querySelector('.search-form2').style.display = "block";
+                document.querySelector('.search-form3').style.display = "none";
+
+            }
+
+        }
+    });
+    //let searchIcon = document.querySelector('.search-icon');
+
+    //let searchinput = document.querySelector('.search-input2');
+    let searchinput3 = document.querySelector('.search2');
+
+    //searchinput.style.display = "flex";
+    //document.querySelector('#searchimg').style.display = "none";
+    let searchform2 = document.querySelector('.search-form3');
+    let searchform3 = document.querySelector('.search-form2');
+
+
+    searchform2.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+    searchform3.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
+
+
+
+
+    searchinput3.onkeyup = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST",
+            `searchbyland.php?user=documentuser&unique=<?php echo $_GET['unique'];?>`);
+
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    document.querySelector('.details-container').innerHTML = data;
+                }
+            }
+        };
+        let formData = new FormData(searchform2);
+        xhr.send(formData);
+    }
+
+
+    let valuediv = document.querySelector('.valuediv');
+
+    let purpose = document.getElementsByName("searchproduct3");
+    purpose.forEach((element) => {
+        element.onclick = () => {
+            valuediv.innerHTML = element.value;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST",
+                `searchbydate.php?data=${valuediv.innerHTML}&user=documentuser&unique=<?php echo $_GET['unique'];?>`
+            );
+
+            xhr.onload = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let data = xhr.response;
+                        document.querySelector('.details-container').innerHTML = data;
+
+                    }
+                }
+            };
+            let formData = new FormData(searchform3);
+            xhr.send(formData);
+        }
+
+    });
     if (window.innerWidth > 1200) {
         let dropdownnav = document.querySelector(".dropdown-links");
         let open = document.querySelector('#openicon');
@@ -1254,9 +1250,9 @@ if(!isset($_GET['unique'])){
             <?php }?>
             open.style.display = "none";
             closeicon.style.display = "block";
-            document.querySelector(".profile-container").style = `
-         padding-left: 7em;
-        `;
+            //     document.querySelector(".prof-container").style = `
+            //  padding-left: 13em;
+            // `;
             let allLinks = document.querySelectorAll(".links-container .links .link");
 
             let allLink = document.querySelectorAll(".links-container .links");
@@ -1286,9 +1282,9 @@ if(!isset($_GET['unique'])){
             <?php }?>
             open.style.display = "block";
             closeicon.style.display = "none";
-            document.querySelector(".profile-container").style = `
-         padding-left: 1em;
-        `;
+            //     document.querySelector(".doc-container").style = `
+            //  padding-left: 5em;
+            // `;
 
             let allLink = document.querySelectorAll(".links-container .links");
             allLink.forEach((element) => {
@@ -1306,6 +1302,7 @@ if(!isset($_GET['unique'])){
             });
         }
     }
+
     if (window.innerWidth < 1300) {
         <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
         document.querySelector('.s-box1 .selected').innerHTML = '<span>Customers</span>';
@@ -1327,31 +1324,6 @@ if(!isset($_GET['unique'])){
             transform: translateX(100%);
             `;
         };
-    }
-
-    let downloadbtn = document.querySelector('.download-form .land-btn');
-    let downloadform = document.querySelector('.download-form');
-    downloadform.onsubmit = (e) => {
-        e.preventDefault();
-    }
-
-    function htmlTableToExcel(type) {
-        var userdata = document.getElementById('user-data');
-        var file = XLSX.utils.table_to_book(userdata, {
-            sheet: "sheet1"
-        });
-        XLSX.write(file, {
-            bookType: type,
-            bookSST: true,
-            type: 'base64'
-        });
-
-        XLSX.writeFile(file, 'Earningsdata.' + type);
-    }
-
-    downloadbtn.onclick = () => {
-        htmlTableToExcel('xlsx');
-
     }
     </script>
 </body>

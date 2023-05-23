@@ -177,6 +177,21 @@ include "projectlog.php";
         of allocation. Thank
         you for trusting us, we are glad we could be part of making your dream to own a LAND come true.
     </p>
+    <div style="
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    ">
+        <p>Acct Number: 1017004706</p>
+        <p>Bank Name: Zenith Bank</p>
+        <p>Account Name: Ilu-Oba International Limited</p>
+        <p>
+            Office Address: 1 Abiola Adeyemi Street, Off Ologunfe B/Stop, NNPC
+            Filling Station Plaza, Ikotun-Igando Road, Ikotun, Lagos.
+        </p>
+    </div>
 </div>
 
 <div class="heading">
