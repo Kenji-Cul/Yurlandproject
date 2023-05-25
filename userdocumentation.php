@@ -1138,7 +1138,7 @@ for ($i = 0; $i < 31; $i++) {
                 <?php if(empty($landview)){?>
                 <div class="success">
                     <img src="images/whoops.svg" alt="" />
-                    <p>Whoops You don't have offer letters yet</p>
+                    <p>This user doesn't have offer letters yet</p>
                 </div>
                 <?php }?>
             </div>

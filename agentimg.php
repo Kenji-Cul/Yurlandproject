@@ -326,7 +326,7 @@ header("Location: portallogin.php");
 
         .close {
             position: absolute;
-            top: 1em;
+            top: 7em;
             right: 1em;
         }
 

@@ -1215,6 +1215,12 @@ if(!isset($_GET['unique'])){
                     <div class="options-container">
                         <div class="option">
                             <li class="links">
+                                <a href="totalearnings.php"><img src="images/referral.svg" /></a>
+                                <a href="totalearnings.php" class="link">Earnings History</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
                                 <a href="alluserearnings.php"><img src="images/referral.svg" /></a>
                                 <a href="alluserearnings.php" class="link">User Earnings</a>
                             </li>

@@ -24,6 +24,25 @@ header("Location: teamspace.php");
         overflow-x: hidden;
     }
 
+    .dropdown-links {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: #8d8989;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+    }
+
     .successmodal {
         /* display: flex; */
         align-items: center;
@@ -189,7 +208,7 @@ header("Location: teamspace.php");
 
         .dropdown-links {
             width: 6%;
-            height: 90vh;
+            height: 84vh;
             border-radius: 0px !important;
             padding: 1em 0;
             display: flex;
@@ -320,7 +339,7 @@ header("Location: teamspace.php");
 
 
         .dropdown-links {
-            height: 90vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: left;
@@ -329,7 +348,7 @@ header("Location: teamspace.php");
             background: #7e252b;
             transform: translateX(100%);
             transition: all 1s;
-            width: 40%;
+            width: 50%;
             position: fixed;
             bottom: 0;
             border-radius: 8px 0px 0px 8px;
@@ -344,13 +363,10 @@ header("Location: teamspace.php");
             width: 290px;
         }
 
-
-
         .close {
-            position: absolute;
-            top: 4em;
-            right: 1em;
+            padding-top: 26em;
         }
+
 
     }
     </style>
@@ -413,7 +429,7 @@ header("Location: teamspace.php");
             <li class="close">
                 <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
             </li>
-            <li class="links select-link">
+            <li class="links">
                 <a href="subadmin.php"><img src="images/home3.svg" /></a>
                 <a href="subadmin.php" class="link">Home</a>
             </li>
@@ -422,12 +438,49 @@ header("Location: teamspace.php");
                 <a href="allcustomers.php" class="link">All Customers</a>
             </li>
             <li class="links">
+                <a href="allagents.php"><img src="images/referral.svg" /></a>
+                <a href="allagents.php" class="link">All Agents</a>
+            </li>
+
+            <li class="links">
+                <a href="allgroups.php"><img src="images/referral.svg" /></a>
+                <a href="allgroups.php" class="link">All Groups</a>
+            </li>
+            <li class="links">
+                <a href="allagentearnings.php"><img src="images/referral.svg" /></a>
+                <a href="allagentearnings.php" class="link">View Earnings</a>
+            </li>
+            <li class="links">
                 <a href="newuser.php"><img src="images/referral.svg" /></a>
                 <a href="newuser.php" class="link">New Customer</a>
             </li>
             <li class="links">
                 <a href="createagent.php"><img src="images/referral.svg" /> </a>
                 <a href="createagent.php" class="link">Create Agent</a>
+            </li>
+
+            <li class="links">
+                <a href="creategroup.php"><img src="images/referral.svg" /> </a>
+                <a href="creategroup.php" class="link">Create Group</a>
+            </li>
+
+            <li class="links">
+                <a href="usertype.php"><img src="images/land2.svg" /></a>
+                <a href="usertype.php" class="link">New Land</a>
+            </li>
+
+
+            <li class="links">
+                <a href="defaultcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="defaultcustomers.php" class="link">Default Customers</a>
+            </li>
+            <li class="links">
+                <a href="allocationcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="allocationcustomers.php" class="link">Due Allocation</a>
+            </li>
+            <li class="links">
+                <a href="payingcustomers.php"><img src="images/referral.svg" /></a>
+                <a href="payingcustomers.php" class="link">Paying Customers</a>
             </li>
 
             <li class="links">
@@ -440,12 +493,7 @@ header("Location: teamspace.php");
                 <a href="totalref.php" class="link">View Referrals</a>
             </li>
 
-            <li class="links">
-                <a href="allagents.php"><img src="images/referral.svg" /> </a>
-                <a href="allagents.php" class="link">All Agents</a>
-            </li>
-
-            <li class="links">
+            <li class="links select-link">
                 <a href="subadmininfo.php"><img src="images/settings.svg" /></a>
                 <a href="subadmininfo.php" class="link">Profile</a>
             </li>
@@ -454,6 +502,7 @@ header("Location: teamspace.php");
                 <a href="logout.php?user=subadmin" class="link">Logout</a>
             </li>
         </ul>
+
 
 
         <div class="profile-container">

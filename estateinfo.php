@@ -492,7 +492,7 @@ include "projectlog.php";
                     }
             ?>
         <div class="nav">
-            <?php if(!isset($_SESSION['uniqueagent_id']) || !isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){?>
+            <?php if(isset($_SESSION['unique_id'])){?>
             <a href="cartreview.php">
                 <div class="cart">
                     <div class="cart-notify"></div>
@@ -686,18 +686,21 @@ include "projectlog.php";
                 <p>Add To Cart</p>
             </div>
 
+            <?php if(isset($_SESSION['unique_id'])){?>
             <div id="otherbtn<?php echo $value['unique_id'];?>" class="cartbutton" style="visibility:hidden;"> <a
                     href="cartreview.php" style="color: #7e252b;">View In Cart </a>
             </div>
+            <?php }?>
             <?php } else {?>
             <div class="cartbutton" id="cart-btn<?php echo $value['unique_id'];?>" style="visibility:hidden;">
                 <img src="images/cart.svg" alt="">
                 <p>Add To Cart</p>
             </div>
+            <?php if(isset($_SESSION['unique_id'])){?>
             <div id="otherbtn<?php echo $value['unique_id'];?>" class="cartbutton"> <a href="cartreview.php"
                     style="color: #7e252b;">View In Cart </a>
             </div>
-            <?php }?>
+            <?php }}?>
 
 
             <input type="hidden" name="productid" value="<?php echo $value['unique_id']?>">
@@ -2393,7 +2396,7 @@ include "projectlog.php";
 
 
 
-
+    <?php if(isset($_SESSION['unique_id'])){?>
 
     setInterval(() => {
         let xls = new XMLHttpRequest();
@@ -2414,6 +2417,7 @@ include "projectlog.php";
         }
         xls.send();
     }, 100);
+    <?php }?>
     </script>
 </body>
 
