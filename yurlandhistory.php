@@ -1,9 +1,7 @@
 <?php 
 session_start();
 include_once "projectlog.php";
-if(!isset($_GET['unique'])){
-    header("Location: agentinfo.php");
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -943,35 +941,21 @@ if(!isset($_GET['unique'])){
         <?php }?>
 
 
-        <?php 
-    $user = new User;
-    $agent = $user->selectExecutive($_GET['unique']);
-    
-   
-    ?>
+
 
         <div class="profile-container">
 
             <div class="page-title2">
-                <a href="execinfo.php?unique=<?php echo $agent['unique_id'];?>&real=91838JDFOJOEI939">
+                <a href="superadmin.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <div style="display: flex !important; flex-direction: row; !important" class="estatetext">
-                    <p class="email-span"><?php echo $agent['full_name']?></p>
+                    <p class="email-span">Yurland</p>
                     <p>Earnings</p>
                 </div>
 
             </div>
-            <div class="profile-image" style="margin-left: 3em;">
-                <?php if(!empty($agent['executive_img'])){?>
-                <img src="profileimage/<?php echo $agent['executive_img'];?>" alt="profile image" />
-                <?php }?>
-                <?php if(empty($agent['executive_img'])){?>
-                <div class="empty-img" style="border-radius: 50%;">
-                    <i class="ri-user-fill"></i>
-                </div>
-                <?php }?>
-            </div>
+
 
             <form action="" class="download-form">
                 <button class="btn land-btn" style="width: 170px; margin-left: 2em;"><span
@@ -1020,28 +1004,25 @@ if(!isset($_GET['unique'])){
                     <?php 
     $user = new User;
    
-    $earn = $user->selectAgentHistory($_GET['unique']);
+    $earn = $user->selectYurlandHistory();
     if(!empty($earn)){
         $earnerid = [];
         foreach($earn as $key => $value){
-            array_push($earnerid,$value['earner_id']);
-
-        }
-        $earnerid2 = array_unique($earnerid);
-        foreach ($earnerid2 as $key => $value) {
-            $newuser = $user->selectExecutive($value);
-        
+                array_push($earnerid,$value['earner_id']);
+            }
+            $earnerid2 = array_unique($earnerid);
+            foreach ($earnerid2 as $key => $value) {
+ 
     ?>
                     <tr>
-                        <td><span><?php echo $newuser['executive_id']; ?></span>
-                        <td><span><?php echo $newuser['full_name']; ?></span>
-                        </td>
+                        <td><span><?php echo "1"; ?></span></td>
+                        <td><span><?php echo "Yurland"; ?></span></td>
                         <td><span><?php echo $value; ?></span></td>
-                        <td>Executive</td>
-                        <td><?php echo $newuser['bank_name'];?></td>
-                        <td><?php echo $newuser['account_number'];?></td>
+                        <td>Yurland</td>
+                        <td></td>
+                        <td></td>
                         <td><?php
-                          $unitprice2 = $user->selectAgentTotalEarnings($value);
+                          $unitprice2 = $user->selectYurlandEarnings();
                           echo round($unitprice2);
                 
                     ?></td>
@@ -1087,7 +1068,7 @@ if(!isset($_GET['unique'])){
                             <div class="payment-count">
                                 &#8358;<span><?php 
                         $user = new User;
-                        $unitprice2 = $user->selectAgentTotalPaidEarnings($_GET['unique']);
+                        $unitprice2 = $user->selectYurlandTotalPaidEarnings();
                         if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
                             echo number_format(round($unitprice2));
                           } else {
@@ -1110,7 +1091,7 @@ if(!isset($_GET['unique'])){
                             <div class="payment-count">
                                 &#8358;<span><?php 
                         $user = new User;
-                        $unitprice2 = $user->selectAgentTotalPendingEarnings($_GET['unique']);
+                        $unitprice2 = $user->selectYurlandTotalPendingEarnings();
                         if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
                             echo number_format(round($unitprice2));
                           } else {
@@ -1131,7 +1112,10 @@ if(!isset($_GET['unique'])){
 
             <div class="details-container">
 
-                <?php   $earning = $user->selectAgentHistory($_GET['unique']);
+
+
+
+                <?php   $earning = $user->selectYurlandHistory();
             if(!empty($earning)){
                 foreach($earning as $key => $value){
     ?>
@@ -1142,7 +1126,7 @@ if(!isset($_GET['unique'])){
                         <p style="text-transform: uppercase;">
                             <span style="color: #000000!important; font-size: 16px;"><?php echo $value['earnee'];?>
                                 has
-                                earned &#8358;<?php $percent = $agent['earning'];
+                                earned &#8358;<?php 
                     $earnedprice = $value['earned_amount'];
                     $unitprice = $earnedprice;
                     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
@@ -1203,7 +1187,7 @@ if(!isset($_GET['unique'])){
                 <?php if(empty($earning)){?>
                 <div class="success">
                     <img src="images/asset_success.svg" alt="" />
-                    <p><?php echo $agent['full_name'];?> has no earnings yet!</p>
+                    <p>Yurland has no earnings yet!</p>
                 </div>
                 <?php }?>
 
@@ -1216,33 +1200,13 @@ if(!isset($_GET['unique'])){
         </div>
     </div>
 
-    <div class="successmodal">
-        <div class="modalcon">
-            <div class="modaldiv">
-                <img src="images/close2.svg" alt="" class="closemodal">
-                <div>
-                    <img src="images/asset_success.svg" alt="" />
-                    <?php if($agent['agent_status'] == "Disabled"){?>
-                    <p>Agent Enabled</p>
-                    <p>Successfully</p>
-                    <?php } else {?>
-                    <p>Agent Disabled</p>
-                    <p>Successfully</p>
 
-                    <?php }?>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="js/main.js"></script>
     <script>
-    let searchinput2 = document.querySelector('.search');
-
     //searchinput.style.display = "flex";
     //document.querySelector('#searchimg').style.display = "none";
     let valuediv2 = document.querySelector('.valuediv2');
-    let searchform = document.querySelector('.search-form');
     let searchform4 = document.querySelector('.dropdown-form');
     let purpose1 = document.querySelector("#searchmode1");
     let purpose3 = document.querySelector("#searchmode2");
@@ -1254,7 +1218,7 @@ if(!isset($_GET['unique'])){
 
             let xhr = new XMLHttpRequest();
             xhr.open("POST",
-                `searchstatus.php?data=${valuediv2.innerHTML}&user=executive&execuser=<?php echo $_GET['unique'];?>`
+                `searchstatus.php?data=${valuediv2.innerHTML}&user=yurland&yurlanduser=Yurland`
             );
 
             xhr.onload = () => {
@@ -1276,7 +1240,7 @@ if(!isset($_GET['unique'])){
                 downloadbtn.onclick = () => {
                     let xhr = new XMLHttpRequest();
                     xhr.open("POST",
-                        `downloadbyland.php?mode=downloadpending&user=executive&execuser=<?php echo $_GET['unique'];?>`
+                        `downloadbyland.php?mode=downloadpending&user=yurland&yurlanduser=Yurland`
                     );
 
                     xhr.onload = () => {
@@ -1302,7 +1266,7 @@ if(!isset($_GET['unique'])){
                 downloadbtn.onclick = () => {
                     let xhr = new XMLHttpRequest();
                     xhr.open("POST",
-                        `downloadbyland.php?mode=downloadpaid&user=executive&execuser=<?php echo $_GET['unique'];?>`
+                        `downloadbyland.php?mode=downloadpaid&user=yurland&yurlanduser=Yurland`
                     );
 
                     xhr.onload = () => {
@@ -1529,7 +1493,7 @@ if(!isset($_GET['unique'])){
                 let splitName = fileName.split(".");
                 fileName = splitName[0].substring(0, 12) + "..." + splitName[1];
             }
-            if (fileName.includes("Executive")) {
+            if (fileName.includes("Yurland")) {
                 uploadFile(fileName);
             } else {
                 error2.style.visibility = "visible";
@@ -1634,7 +1598,7 @@ if(!isset($_GET['unique'])){
             type: 'base64'
         });
 
-        XLSX.writeFile(file, 'Executiveearningdata.' + type);
+        XLSX.writeFile(file, 'Yurlandearningdata.' + type);
     }
 
     function htmlTableToExcel2(type) {

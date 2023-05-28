@@ -1107,6 +1107,17 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                 </div>
 
                 <div class="profile-div">
+                    <img class="profile-icon" src="images/union.svg" alt="land-icon-image" />
+
+                    <a href="yurlandhistory.php">
+                        <div class="navigate">
+                            <p>Yurland Earning History</p>
+                            <img src="images/right_arrow.svg" alt="" />
+                        </div>
+                    </a>
+                </div>
+
+                <div class="profile-div">
                     <div class="navigate"
                         style="display: flex; position: absolute; top: 0.4em; flex-direction:column; padding-left: 0.8em;">
                         <p style="font-size: 14px;">Total Paid Earnings</p>

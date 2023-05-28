@@ -2139,8 +2139,34 @@ function checkGroupName($name){
         }
     }
 
+    function selectYurlandTotalPaidEarnings(){
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = 'Yurland' AND balance_earning = 0 AND earning_status = 'paid' ORDER BY earning_id DESC";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            foreach ($row as $key => $value) {
+                return $value;
+               }
+        }else{
+            return $row;
+        }
+    }
+
     function selectAgentTotalPendingEarnings($unique){
         $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND earning_status='unpaid' ORDER BY earning_id DESC";
+        $result = $this->dbcon->query($sql);
+        $row = $result->fetch_assoc();
+        if($result->num_rows == 1){
+            foreach ($row as $key => $value) {
+                return $value;
+               }
+        }else{
+            return $row;
+        }
+    }
+
+    function selectYurlandTotalPendingEarnings(){
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = 'Yurland' AND earning_status='unpaid' ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -3191,6 +3217,20 @@ return $rows;
 return $rows;
 }
 }
+
+function selectYurlandHistory(){
+    $sql = "SELECT * FROM earning_history WHERE earner_id='Yurland' ORDER BY earning_id DESC";
+    $result = $this->dbcon->query($sql);
+    $rows = array();
+    if($this->dbcon->affected_rows > 0){
+    while($row = $result->fetch_assoc()){
+    $rows[] = $row;
+    }
+    return $rows;
+    }else{
+    return $rows;
+    }
+    }
 
 function selectAgentPaidHistory($id){
     $sql = "SELECT * FROM earning_history WHERE earner_id='{$id}' AND balance_earning = 0 AND earning_status = 'paid' ORDER BY earning_id DESC";
@@ -12641,6 +12681,10 @@ $output1 = '
                 if($type == "customer"){
                     $username = "You";
                 }
+
+                if($type == "Yurland"){
+                    $username = "Yurland";
+                }
                 $output.= '
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
@@ -12685,6 +12729,15 @@ $output1 = '
                             </div>
                             ";
                         }
+
+                        if($type == "Yurland"){
+                            $output .= "
+                            <div class='success'>
+                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                                <p>Yurland has no pending earnings</p>
+                            </div>
+                            ";
+                        }
                         
                     }
         
@@ -12703,6 +12756,16 @@ $output1 = '
                             <div class='success'>
                                 <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
                                 <p>You have no paid earnings</p>
+                            </div>
+                            ";
+                        }
+
+                        
+                        if($type == "Yurland"){
+                            $output .= "
+                            <div class='success'>
+                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                                <p>Yurland has no paid earnings</p>
                             </div>
                             ";
                         }
@@ -12725,6 +12788,16 @@ $output1 = '
                             <div class='success'>
                                 <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
                                 <p>You have no unpaid earnings</p>
+                            </div>
+                            ";
+                        }
+
+                        
+                        if($type == "Yurland"){
+                            $output .= "
+                            <div class='success'>
+                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                                <p>Yurland has no unpaid earnings</p>
                             </div>
                             ";
                         }
