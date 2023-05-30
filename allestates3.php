@@ -956,7 +956,7 @@ include "projectlog.php";
                     
             ?>
                 <div class="updated-land" <?php if($value['product_unit'] == 0){?>style="order: 1;" <?php }?> <?php 
-                    if(isset($_SESSION['uniqueagent_id'])){
+                    if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniqueexec_id'])){
                     if($value['land_status'] == "Closed"){?>style="display: none;" <?php }?>
                     <?php if($value['land_status'] == "Opened"){?>style="display: flex;" <?php }}?>>
                     <div class="updated-img">
