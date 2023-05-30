@@ -539,6 +539,14 @@ include "projectlog.php";
             <?php
         }
 
+        ?><?php if(isset($_SESSION['uniqueexec_id'])) {
+            ?>.close {
+                padding-top: 3em;
+            }
+
+            <?php
+        }
+
         ?>
     }
 
@@ -585,6 +593,8 @@ include "projectlog.php";
             <a href="subadmin.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else if(isset($_SESSION['uniqueagent_id'])){?>
             <a href="agentprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
+            <?php } else if(isset($_SESSION['uniqueexec_id'])){?>
+            <a href="executiveprofile.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php } else {?>
             <a href="index.php"><img src="images/logo.svg" alt="Logo" /></a>
             <?php }?>
@@ -595,6 +605,9 @@ include "projectlog.php";
              if(isset($_SESSION['uniqueagent_id'])){
                 $newuser = $user->selectAgent($_SESSION['uniqueagent_id']);
                 } 
+                if(isset($_SESSION['uniqueexec_id'])){
+                    $newuser = $user->selectExecutive($_SESSION['uniqueexec_id']);
+                    } 
 
              if(isset($_SESSION['uniquesubadmin_id'])){
                 $newuser = $user->selectSubadmin($_SESSION['uniquesubadmin_id']);
@@ -621,6 +634,31 @@ include "projectlog.php";
                     <?php }?>
                     <?php if(empty($newuser['agent_img'])){?>
                     <a href="agentprofileinfo.php" style="color: #808080;">
+                        <div class="empty-img" style="border-radius: 50%;">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                    </a>
+                    <?php }?>
+                </div>
+            </div>
+        </div>
+        <?php }?>
+
+        <?php if(isset($_SESSION['uniqueexec_id'])){?>
+        <div class="nav">
+            <img src="images/menu.svg" alt="menu icon" class="menu" />
+            <div class="user">
+                <p><?php if(isset($newuser['full_name'])){  ?>
+                    <span><?php echo $newuser['full_name']; ?></span>&nbsp;
+                    <?php }?>
+                </p>
+                <div class="profile-image">
+                    <?php if(!empty($newuser['executive_img'])){?>
+                    <a href="executiveprofileinfo.php" style="color: #808080;"><img
+                            src="profileimage/<?php echo $newuser['executive_img'];?>" alt="profile image" /></a>
+                    <?php }?>
+                    <?php if(empty($newuser['executive_img'])){?>
+                    <a href="executiveprofileinfo.php" style="color: #808080;">
                         <div class="empty-img" style="border-radius: 50%;">
                             <i class="ri-user-fill"></i>
                         </div>
@@ -835,6 +873,38 @@ include "projectlog.php";
 
         <?php }?>
 
+        <?php if(isset($_SESSION['uniqueexec_id'])){?>
+
+        <ul class="dropdown-links">
+            <div class="center">
+                <li id="openicon" style="cursor: pointer;">
+                    <img src="images/openmenu.svg" />
+                </li>
+
+                <li id="closeicon" style="display: none; cursor: pointer; font-size:14px;">
+                    <img src="images/openmenu.svg" />
+                </li>
+            </div>
+            <li class="close">
+                <img src="images/close2.svg" style="width: 30px; height: 30px; position: absolute; right: 2em;" />
+            </li>
+            <div class="links-container">
+                <li class="links">
+                    <a href="executiveprofile.php"><img src="images/home3.svg" /></a>
+                    <a href="executiveprofile.php" class="link">Profile</a>
+                </li>
+                <li class="links select-link">
+                    <a href="allestates3.php"><img src="images/land2.svg" /></a>
+                    <a href="allestates3.php" class="link">All Estates</a>
+                </li>
+                <li class="links">
+                    <a href="logout.php?user=executive"><img src="images/exit.svg" /></a>
+                    <a href="logout.php?user=executive" class="link">Logout</a>
+                </li>
+            </div>
+        </ul>
+        <?php }?>
+
 
 
         <div class="profile-container">
@@ -842,6 +912,11 @@ include "projectlog.php";
 
                 <?php if(isset($_SESSION['uniqueagent_id'])){?>
                 <a href="agentprofile.php">
+                    <img src="images/arrowleft.svg" alt="" />
+                </a>
+                <?php }?>
+                <?php if(isset($_SESSION['uniqueexec_id'])){?>
+                <a href="executiveprofile.php">
                     <img src="images/arrowleft.svg" alt="" />
                 </a>
                 <?php }?>
@@ -917,6 +992,14 @@ include "projectlog.php";
                             </div>
                         </div>
 
+                        <div class="detail-four">
+                            <p>Address</p>
+                            <div class="detail">
+                                <img src="images/ellipse.svg" alt="">
+                                <p><?php echo $value['estate_address'];?></p>
+                            </div>
+                        </div>
+
 
                         <div class="detail-four">
                             <?php if($value['product_unit'] != 0){?>
@@ -973,7 +1056,7 @@ include "projectlog.php";
                             <p>Features</p>
                             <div class="detail">
                                 <img src="images/ellipse.svg" alt="">
-                                <p><?php echo $value['product_description'];?></p>
+                                <p><?php echo $value['estate_feature'];?></p>
                             </div>
                         </div>
 

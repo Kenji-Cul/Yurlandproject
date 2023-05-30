@@ -648,6 +648,8 @@ if(!isset($_SESSION['unique_id'])){
                         </div>
 
 
+
+
                         <div class="detail-four">
                             <?php if($value['product_unit'] != 0){?>
                             <?php if($value['outright_price'] != 0){

@@ -683,6 +683,14 @@ if(!isset($_SESSION['unique_id'])){
                             </div>
                         </div>
 
+                        <div class="detail-four">
+                            <p>Address</p>
+                            <div class="detail">
+                                <img src="images/ellipse.svg" alt="">
+                                <p><?php echo $value['estate_address'];?></p>
+                            </div>
+                        </div>
+
 
                         <div class="detail-four">
                             <?php if($value['product_unit'] != 0){?>
@@ -743,7 +751,7 @@ if(!isset($_SESSION['unique_id'])){
                             <p>Features</p>
                             <div class="detail">
                                 <img src="images/ellipse.svg" alt="">
-                                <p><?php echo $value['product_description'];?></p>
+                                <p><?php echo $value['estate_feature'];?></p>
                             </div>
                         </div>
 

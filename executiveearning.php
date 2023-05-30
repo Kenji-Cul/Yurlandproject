@@ -460,6 +460,10 @@ if(!isset($_SESSION['uniqueexec_id'])){
                 <a href="executiveprofile.php" class="link">Profile</a>
             </li>
             <li class="links">
+                <a href="allestates3.php"><img src="images/land2.svg" /></a>
+                <a href="allestates3.php" class="link">All Estates</a>
+            </li>
+            <li class="links">
                 <a href="logout.php?user=executive"><img src="images/exit.svg" /></a>
                 <a href="logout.php?user=executive" class="link">Logout</a>
             </li>

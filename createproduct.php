@@ -914,6 +914,11 @@ if(!isset($_GET['pose'])){
                     </div>
 
                     <div class="input-div name">
+                        <label for="estateaddress">Estate Address</label>
+                        <input type="text" id="estateaddress" placeholder="Input estate address" name="estateaddress" />
+                    </div>
+
+                    <div class="input-div name">
                         <label for="allocationfee">Allocation Fee</label>
                         <input type="number" id="allocationfee" placeholder="Input allocation fee"
                             name="allocationfee" />

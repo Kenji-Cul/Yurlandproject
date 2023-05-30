@@ -553,7 +553,7 @@ function checkGroupName($name){
 
 
 
-     function updateLandInfo1($landname,$description,$budget,$state,$size,$feature,$allocationfee,$subscriptionprice,$purpose,$unitnum,$uniqueland){
+     function updateLandInfo1($landname,$description,$budget,$state,$size,$feature,$address,$allocationfee,$subscriptionprice,$purpose,$unitnum,$uniqueland){
         if(isset($_FILES['image'])){
             $filename = $_FILES['image']['name'];
             $filesize = $_FILES['image']['size'];
@@ -581,7 +581,7 @@ function checkGroupName($name){
             $target_path = $destination_path . '../landimage/'. basename($newfilename);
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
-                $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',onemonth_price='{$subscriptionprice}',product_unit='{$unitnum}', estate_feature='{$feature}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
+                $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',onemonth_price='{$subscriptionprice}',product_unit='{$unitnum}', estate_feature='{$feature}', estate_address='{$address}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
              $result = $this->dbcon->query($sql);
           
                   //check if the connection runs successfully
@@ -599,7 +599,7 @@ function checkGroupName($name){
             $target_path = $destination_path . '../landimage/'. basename($newfilename);
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
-            $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',onemonth_price='{$subscriptionprice}',product_unit='{$unitnum}', estate_feature='{$feature}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
+            $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',onemonth_price='{$subscriptionprice}',product_unit='{$unitnum}', estate_feature='{$feature}', estate_address='{$address}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
              $result = $this->dbcon->query($sql);
           
                   //check if the connection runs successfully
@@ -614,7 +614,7 @@ function checkGroupName($name){
         }
      }
 
-     function updateLandInfo2($landname,$description,$budget,$state,$size,$feature,$allocationfee,$outrightprice,$purpose,$unitnum,$uniqueland){
+     function updateLandInfo2($landname,$description,$budget,$state,$size,$feature,$address,$allocationfee,$outrightprice,$purpose,$unitnum,$uniqueland){
         if(isset($_FILES['image'])){
             $filename = $_FILES['image']['name'];
             $filesize = $_FILES['image']['size'];
@@ -642,7 +642,7 @@ function checkGroupName($name){
             $target_path = $destination_path . '../landimage/'. basename($newfilename);
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
-                $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',outright_price='{$outrightprice}',product_unit='{$unitnum}', estate_feature='{$feature}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
+                $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',outright_price='{$outrightprice}',product_unit='{$unitnum}', estate_feature='{$feature}', estate_address='{$address}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
              $result = $this->dbcon->query($sql);
           
                   //check if the connection runs successfully
@@ -660,7 +660,7 @@ function checkGroupName($name){
             $target_path = $destination_path . '../landimage/'. basename($newfilename);
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
-            $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',outright_price='{$outrightprice}',product_unit='{$unitnum}', estate_feature='{$feature}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
+            $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',outright_price='{$outrightprice}',product_unit='{$unitnum}', estate_feature='{$feature}', estate_address='{$address}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
              $result = $this->dbcon->query($sql);
           
                   //check if the connection runs successfully
@@ -675,7 +675,7 @@ function checkGroupName($name){
         }
      }
 
-     function updateLandInfo3($landname,$description,$budget,$state,$size,$feature,$allocationfee,$outrightprice,$subscriptionprice,$purpose,$unitnum,$uniqueland){
+     function updateLandInfo3($landname,$description,$budget,$state,$size,$feature,$address,$allocationfee,$outrightprice,$subscriptionprice,$purpose,$unitnum,$uniqueland){
         if(isset($_FILES['image'])){
             $filename = $_FILES['image']['name'];
             $filesize = $_FILES['image']['size'];
@@ -703,7 +703,7 @@ function checkGroupName($name){
             $target_path = $destination_path . '../landimage/'. basename($newfilename);
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
-                $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',outright_price='{$outrightprice}',onemonth_price='{$subscriptionprice}',product_unit='{$unitnum}', estate_feature='{$feature}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
+                $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',outright_price='{$outrightprice}',onemonth_price='{$subscriptionprice}',product_unit='{$unitnum}', estate_feature='{$feature}', estate_address='{$address}', allocation_fee='{$allocationfee}',product_image='{$newfilename}'WHERE unique_id='{$uniqueland}'";
              $result = $this->dbcon->query($sql);
           
                   //check if the connection runs successfully
@@ -711,7 +711,7 @@ function checkGroupName($name){
                     //   echo "<h3 align='center'>Photo added successfully</h3>";
                     echo "success";
                   }else{
-                echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+                //echo  $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
                   }
             } else {
                  //upload document
@@ -721,7 +721,7 @@ function checkGroupName($name){
             $target_path = $destination_path . '../landimage/'. basename($newfilename);
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
-            $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',outright_price='{$outrightprice}',onemonth_price='{$subscriptionprice}',product_unit='{$unitnum}', estate_feature='{$feature}', allocation_fee='{$allocationfee}',product_image='{$newfilename}' WHERE unique_id='{$uniqueland}'";
+            $sql = "UPDATE land_product SET product_name='{$landname}',purpose='{$purpose}',product_description='{$description}',product_budget='{$budget}',product_location='{$state}',outright_price='{$outrightprice}',onemonth_price='{$subscriptionprice}',product_unit='{$unitnum}', estate_feature='{$feature}',estate_address='{$address}', allocation_fee='{$allocationfee}',product_image='{$newfilename}' WHERE unique_id='{$uniqueland}'";
              $result = $this->dbcon->query($sql);
           
                   //check if the connection runs successfully
@@ -1701,7 +1701,7 @@ function checkGroupName($name){
 
 
   
-    function uploadProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$uniqueid,$purpose,$unitnumber,$budget,$allocationfee){
+    function uploadProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$uniqueid,$purpose,$unitnumber,$budget,$allocationfee,$address){
         $onemonthperiod = 30;
         $onepercentage = 0;
         $threemonthperiod = 90;
@@ -1745,7 +1745,7 @@ function checkGroupName($name){
         $target_path = $destination_path . '../landimage/'. basename($newfilename);
         //$destination = $folder.$newfilename;
         if(move_uploaded_file($filetmp, $target_path)){
-         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,purpose,product_unit,product_budget,onemonth_period,threemonth_period,sixmonth_period,twelvemonth_period,eighteen_period,allocation_fee,onemonth_percent,threemonth_percent,sixmonth_percent,twelvemonth_percent,eighteen_percent) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$purpose}','{$unitnumber}','{$budget}','{$onemonthperiod}','{$threemonthperiod}','{$sixmonthperiod}','{$twelvemonthperiod}','{$eighteenmonthperiod}','{$allocationfee}','{$onepercentage}','{$threepercentage}','{$sixpercentage}','{$twelvepercentage}','{$eighteenpercentage}')";
+         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,purpose,product_unit,product_budget,onemonth_period,threemonth_period,sixmonth_period,twelvemonth_period,eighteen_period,allocation_fee,onemonth_percent,threemonth_percent,sixmonth_percent,twelvemonth_percent,eighteen_percent,estate_address) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$purpose}','{$unitnumber}','{$budget}','{$onemonthperiod}','{$threemonthperiod}','{$sixmonthperiod}','{$twelvemonthperiod}','{$eighteenmonthperiod}','{$allocationfee}','{$onepercentage}','{$threepercentage}','{$sixpercentage}','{$twelvepercentage}','{$eighteenpercentage}','{$address}')";
          $result = $this->dbcon->query($sql);
       
               //check if the connection runs successfully
@@ -1760,7 +1760,7 @@ function checkGroupName($name){
     }
 
 
-    function uploadOutrightProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$uniqueid,$purpose,$unitnumber,$budget,$allocationfee){
+    function uploadOutrightProduct($productname,$outrightprice,$productdesc,$estatefeature,$productsize,$productlocation,$uniqueid,$purpose,$unitnumber,$budget,$allocationfee,$address){
         if(isset($_FILES['image'])){
         $filename = $_FILES['image']['name'];
         $filesize = $_FILES['image']['size'];
@@ -1794,7 +1794,7 @@ function checkGroupName($name){
         $target_path = $destination_path . '../landimage/'. basename($newfilename);
         //$destination = $folder.$newfilename;
         if(move_uploaded_file($filetmp, $target_path)){
-         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,purpose,product_unit,product_budget,allocation_fee) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$purpose}','{$unitnumber}','{$budget}','{$allocationfee}')";
+         $sql = "INSERT INTO land_product(unique_id,product_name,outright_price,product_image,product_description,estate_feature,product_size,product_location,purpose,product_unit,product_budget,allocation_fee,estate_address) VALUES('{$uniqueid}','{$productname}','{$outrightprice}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$purpose}','{$unitnumber}','{$budget}','{$allocationfee}','{$address}')";
          $result = $this->dbcon->query($sql);
       
               //check if the connection runs successfully
@@ -1809,7 +1809,7 @@ function checkGroupName($name){
     }
 
 
-    function uploadSubProduct($productname,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$uniqueid,$purpose,$unitnumber,$budget,$allocationfee){
+    function uploadSubProduct($productname,$productdesc,$estatefeature,$productsize,$productlocation,$onemonth,$uniqueid,$purpose,$unitnumber,$budget,$allocationfee,$address){
         $onemonthperiod = 30;
         $onepercentage = 0;
         $threemonthperiod = 90;
@@ -1853,7 +1853,7 @@ function checkGroupName($name){
         $target_path = $destination_path . '../landimage/'. basename($newfilename);
         //$destination = $folder.$newfilename;
         if(move_uploaded_file($filetmp, $target_path)){
-         $sql = "INSERT INTO land_product(unique_id,product_name,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,purpose,product_unit,product_budget,onemonth_period,threemonth_period,sixmonth_period,twelvemonth_period,eighteen_period,allocation_fee,onemonth_percent,threemonth_percent,sixmonth_percent,twelvemonth_percent,eighteen_percent) VALUES('{$uniqueid}','{$productname}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$purpose}','{$unitnumber}','{$budget}','{$onemonthperiod}','{$threemonthperiod}','{$sixmonthperiod}','{$twelvemonthperiod}','{$eighteenmonthperiod}','{$allocationfee}','{$onepercentage}','{$threepercentage}','{$sixpercentage}','{$twelvepercentage}','{$eighteenpercentage}')";
+         $sql = "INSERT INTO land_product(unique_id,product_name,product_image,product_description,estate_feature,product_size,product_location,onemonth_price,purpose,product_unit,product_budget,onemonth_period,threemonth_period,sixmonth_period,twelvemonth_period,eighteen_period,allocation_fee,onemonth_percent,threemonth_percent,sixmonth_percent,twelvemonth_percent,eighteen_percent,estate_address) VALUES('{$uniqueid}','{$productname}','{$newfilename}','{$productdesc}','{$estatefeature}','{$productsize}','{$productlocation}','{$onemonth}','{$purpose}','{$unitnumber}','{$budget}','{$onemonthperiod}','{$threemonthperiod}','{$sixmonthperiod}','{$twelvemonthperiod}','{$eighteenmonthperiod}','{$allocationfee}','{$onepercentage}','{$threepercentage}','{$sixpercentage}','{$twelvepercentage}','{$eighteenpercentage}','{$address}')";
          $result = $this->dbcon->query($sql);
       
               //check if the connection runs successfully
@@ -4174,6 +4174,13 @@ if($this->dbcon->affected_rows > 0){
                 </div>
             </div>
         </div>
+        <div class="detail-four">
+        <p>Address</p>
+        <div class="detail">
+            <img src="images/ellipse.svg" alt="">
+            <p>'.$data['estate_address'].'</p>
+        </div>
+        </div>
         ';
 
         $output5 = '<p>Sold Out</p>';
@@ -4232,6 +4239,13 @@ if($this->dbcon->affected_rows > 0){
                     </div>
                 </div>
             </div>
+            <div class="detail-four">
+            <p>Address</p>
+            <div class="detail">
+                <img src="images/ellipse.svg" alt="">
+                <p>'.$data['estate_address'].'</p>
+            </div>
+            </div>
             ';
 
             } else {
@@ -4258,6 +4272,13 @@ if($this->dbcon->affected_rows > 0){
                                     here to view</a></p>
                         </div>
                     </div>
+                </div>
+                <div class="detail-four">
+                <p>Address</p>
+                <div class="detail">
+                    <img src="images/ellipse.svg" alt="">
+                    <p>'.$data['estate_address'].'</p>
+                </div>
                 </div>
                 ';
                 }
@@ -4420,6 +4441,13 @@ if($this->dbcon->affected_rows > 0){
                             </div>
                         </div>
                     </div>
+                    <div class="detail-four">
+                    <p>Address</p>
+                    <div class="detail">
+                        <img src="images/ellipse.svg" alt="">
+                        <p>'.$data['estate_address'].'</p>
+                    </div>
+                    </div>
                     ';
                     $output5 = '<p>Sold Out</p>';
 
@@ -4461,6 +4489,13 @@ if($this->dbcon->affected_rows > 0){
                         <p>'.$data['product_name'].'</p>
                     </div>
                 </div>
+            </div>
+            <div class="detail-four">
+            <p>Address</p>
+            <div class="detail">
+                <img src="images/ellipse.svg" alt="">
+                <p>'.$data['estate_address'].'</p>
+            </div>
             </div>
             ';
 
@@ -4601,6 +4636,13 @@ if($this->dbcon->affected_rows > 0){
                             </div>
                         </div>
                     </div>
+                    <div class="detail-four">
+                    <p>Address</p>
+                    <div class="detail">
+                        <img src="images/ellipse.svg" alt="">
+                        <p>'.$data['estate_address'].'</p>
+                    </div>
+                    </div>
                     ';
                     $output5 = '<p>Sold Out</p>';
 
@@ -4644,6 +4686,13 @@ if($this->dbcon->affected_rows > 0){
                         <p>'.$data['product_name'].'</p>
                     </div>
                 </div>
+            </div>
+            <div class="detail-four">
+            <p>Address</p>
+            <div class="detail">
+                <img src="images/ellipse.svg" alt="">
+                <p>'.$data['estate_address'].'</p>
+            </div>
             </div>
             ';
 

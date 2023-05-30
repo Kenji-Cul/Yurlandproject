@@ -914,6 +914,12 @@ if(!isset($_GET['id'])){
                     </div>
 
                     <div class="input-div email">
+                        <label for="address">Estate Address</label>
+                        <input type="text" id="address" placeholder="Edit land address" name="address"
+                            value="<?php if(isset($value['estate_address'])){echo $value['estate_address'];}?>" />
+                    </div>
+
+                    <div class="input-div email">
                         <label for="allocationfee">Allocation Fee</label>
                         <input type="number" id="allocationfee" placeholder="Edit allocation fee" name="allocationfee"
                             value="<?php if(isset($value['allocation_fee'])){echo $value['allocation_fee'];}?>" />
