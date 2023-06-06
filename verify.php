@@ -164,6 +164,79 @@ header("Location: successemail.php?name=".$customername."&date=".$paymentdate."&
    }
 
    if($paymenttype == "outrightpayment"){
+    $newpayid2 = $trans->data->metadata->custom_fields[20]->value;
+    $paymode = $trans->data->metadata->custom_fields[21]->value;
+    if($paymode == "Offline"){
+      
+      $selectland = $user->selectPayment2($unique,$newpayid2,$uniqueperson,$paymentmethod);
+      foreach($selectland as $key => $value2){
+      $balanceprice = $value2['balance'] - $price;
+      $prodprice = $value2['product_price'] + $price;
+        $inserthistory = $user->updatePayment3($unique,$newpayid2,$uniqueperson,$paymentmethod,$balanceprice,$prodprice);
+
+        $filename = "";
+        $offlinestatus = "";
+        $paymentmode = "";
+          
+        $inserthistory = $user->insertOutPayHistory2($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$value2['product_unit'],$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode);
+      }
+
+      $selectuser = $user->selectUser($uniqueperson);
+      $name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $email = $selectuser['email'];
+
+      $executives = $user->selectAllExecutive();
+    if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee = $value['full_name'];
+$earnedamount = $value['earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+    }
+  }
+
+$agentearnee = $user->selectAgent($agentid);
+$userearnee = $user->selectUser($agentid);
+
+if(!empty($agentearnee)){
+$earnerid = $agentearnee['uniqueagent_id'];
+$earnee = $agentearnee['agent_name'];
+$earnedamount = $agentearnee['earning_percentage'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+$insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+}
+
+if(!empty($userearnee)){
+  $earnerid = $userearnee['unique_id'];
+  $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
+  $earnedamount = $userearnee['earning_percentage'] / 100 * $price;
+  $selectuser = $user->selectUser($uniqueperson);
+  $name = $selectuser['first_name'].' '.$selectuser['last_name'];
+  $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+  }
+
+  if($agentid == "noagent"){
+    $earnerid = "Yurland";
+    $earnee = "Yurland";
+    $userearnee = $user->selectUser($uniqueperson);
+    $earnedamount = $userearnee['yurland_percentage'] / 100 * $price;
+    $selectuser = $user->selectUser($uniqueperson);
+    $name = $selectuser['first_name'].' '.$selectuser['last_name'];
+    $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+    }
+
+   
+
+    header("Location:successemail.php?name=".$name."&date=".$paymentdate."&amount=".$price."&estate=".$product_name."&balance='0'&payer=".$payee."&email=".$email."");
+
+    } 
+    
+    if($paymode == "Online"){
+
+    
    if($unit % 4 == 0){
     $unit_added = $unit / 4;
     $added_unit = $unit + $unit_added;
@@ -303,6 +376,8 @@ if(!empty($userearnee)){
 
    
 }
+
+    }
    }
 
    if($paymenttype == "newpayment"){
@@ -726,7 +801,7 @@ $amount4 = round($unitprice2);
 }
    }
 
-if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id'])){
+if(isset($_SESSION['uniqueagent_id']) || isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
     $delete = $user->DeleteCartId($unique,$uniqueperson);
     if (isset($unique) && is_numeric($unique) && isset($unique) && isset($_SESSION['cart'][$unique])) {
      // Remove the product from the shopping cart

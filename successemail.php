@@ -56,6 +56,11 @@ echo "success";
 echo "Mailer Error: " . $mail->ErrorInfo;
 }
 
-header("Location: verify5.php");
+if(isset($_GET['mode'])){
+    header("Location: verify5.php?mode='offline'");
+} else {
+    header("Location: verify5.php");
+}
+
 ob_end_flush();
 ?>

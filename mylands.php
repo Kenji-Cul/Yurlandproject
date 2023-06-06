@@ -716,7 +716,7 @@ if(!isset($_SESSION['unique_id'])){
                              }
                       ?> &nbsp;<span>daily</span></div>
 
-                        <?php } else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
+                        <?php } else if($value['balance'] < "5" && $value['payment_method'] == "NewPayment" || $value['period_num'] == "0"){ ?>
                         <div class="cartbutton">&#8358;<?php 
                    $unitprice = $value['sub_payment'];
                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
@@ -727,6 +727,7 @@ if(!isset($_SESSION['unique_id'])){
                     ?> &nbsp;<span>daily</span></div>
 
                         <?php    }
+                        
                   else {?>
                         <div class="cartbutton"><?php 
                   if($value['balance'] != "0" && $value['payment_method'] == "NewPayment"){ ?>
@@ -821,7 +822,7 @@ if(!isset($_SESSION['unique_id'])){
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
                                           echo number_format($unprice);
                                         } else {
-                                            if($unprice < "2"){
+                                            if($unprice < "5"){
                                                 echo "0";
                                             }else {
                                                 echo number_format($unprice);
@@ -872,8 +873,8 @@ if(!isset($_SESSION['unique_id'])){
                             </div>
                         </div>
                         <div class="detail-five">
-                            <?php if($value['balance'] > "2" && $value['payment_method'] == "Subscription"){?>
-                            <?php if($value['failed_charges'] > "2"){?>
+                            <?php if($value['balance'] > "5" && $value['payment_method'] == "Subscription"){?>
+                            <?php if($value['failed_charges'] > "5"){?>
                             <div class="cartbutton">
                                 <a href="estateinfo.php?id=<?php echo $value['product_id'];?>&idtwo=<?php echo $value['newpay_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=failedpayment&keyref=09123454954848kdksuuejwej&remprice=<?php echo $value['failed_charges'];?>"
                                     style="color: #7e252b;">Pay Up</a>
@@ -936,7 +937,7 @@ if(!isset($_SESSION['unique_id'])){
 
 
 
-                            if (checkBalValuetwo<?php echo $value['newpay_id'];?> > 2 &&
+                            if (checkBalValuetwo<?php echo $value['newpay_id'];?> > 5 &&
                                 currentDatetwo<?php echo $value['newpay_id'];?> ==
                                 increaseDatetwo<?php echo $value['newpay_id'];?>
                             ) {
@@ -983,19 +984,25 @@ if(!isset($_SESSION['unique_id'])){
                       ?> &nbsp;<span><?php echo $value['sub_period']?></span></div>
                             <?php }?>
 
-                            <?php } else if($value['balance'] < "2" && $value['payment_method'] == "Subscription" && $value['failed_charges'] < "2"){ ?>
+                            <?php } else if($value['balance'] < "5" && $value['payment_method'] == "Subscription" && $value['failed_charges'] < "5"){ ?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
              ?> &nbsp;</div>
-                            <?php } else if($value['allocation_status'] == "unapproved" && $value['balance'] < "2"){?>
+                            <?php }  else if($value['payment_method'] == "Outright" && $value['balance'] > "5"){ ?>
+                            <div class="cartbutton">
+                                <a href="outrightpayment.php?id=<?php echo $value['product_id'];?>&idtwo=<?php echo $value['newpay_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&payment=outrightpayment&keyref=09123454954848kdksuuejwej&unique=<?php echo $_SESSION['unique_id'];?>&remprice=<?php echo $value['balance'];?>"
+                                    style="color: #7e252b;">Pay Up</a>
+                            </div>
+                            <?php } else if($value['allocation_status'] == "unapproved" && $value['balance'] < "5"){?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Pending Allocation";
              ?> &nbsp;</div>
                             <?php  }
-                            else if($value['balance'] < "2" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
+                            else if($value['balance'] < "5" && $value['payment_method'] == "NewPayment" && $value['period_num'] == "0"){ ?>
                             <div class="cartbutton" style="font-size: 12px;"><?php 
                       echo "Payment Completed";
              ?> &nbsp;</div>
+
 
                             <?php    }
                 else {?>
@@ -1088,7 +1095,7 @@ if(!isset($_SESSION['unique_id'])){
 
 
                                 if (
-                                    checkBalValue<?php echo $value['newpay_id'];?> > 2 &&
+                                    checkBalValue<?php echo $value['newpay_id'];?> > 5 &&
                                     currentDate<?php echo $value['newpay_id'];?> ==
                                     increaseDate<?php echo $value['newpay_id'];?>) {
                                     let priceform<?php echo $value['newpay_id'];?> = document.querySelector(
@@ -1150,7 +1157,7 @@ if(!isset($_SESSION['unique_id'])){
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){
                                           echo number_format($unprice);
                                         }  else {
-                                            if($unprice < "2"){
+                                            if($unprice < "5"){
                                                 echo "0";
                                             }else {
                                                 echo number_format($unprice);
@@ -1173,7 +1180,7 @@ if(!isset($_SESSION['unique_id'])){
                         echo $value['product_plan'];         
                     ?></span></p>
                             <?php }?>
-                            <?php if($value['payment_method'] == "Subscription" && $value['failed_charges'] > "2"){  ?>
+                            <?php if($value['payment_method'] == "Subscription" && $value['failed_charges'] > "5"){  ?>
                             <p><span>Failed Charges:</span>&nbsp;&#8358;<span><?php 
                         $unprice = $value['failed_charges'];
                         if($unprice > 999 || $unprice > 9999 || $unprice > 99999 || $unprice > 999999){

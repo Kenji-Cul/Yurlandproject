@@ -857,6 +857,25 @@ if(!isset($_GET['unique'])){
                     <div class="options-container">
                         <div class="option">
                             <li class="links">
+                                <a href="offlinehistory.php"><img src="images/referral.svg" /></a>
+                                <a href="offlinehistory.php" class="link">Offline Transactions</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="rejectedpayments.php"><img src="images/referral.svg" /></a>
+                                <a href="rejectedpayments.php" class="link">Rejected Offline Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="approvedpayments.php"><img src="images/referral.svg" /></a>
+                                <a href="approvedpayments.php" class="link">Approved Offline Transactions</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
                                 <a href="totalearnings.php"><img src="images/referral.svg" /></a>
                                 <a href="totalearnings.php" class="link">Earnings History</a>
                             </li>
@@ -1134,6 +1153,15 @@ if(!isset($_GET['unique'])){
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
+                        <?php if($value['payment_mode'] == "Offline"){?>
+                        <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            <?php if($value['payment_mode'] == "Offline" && $value['offline_status'] == ""){
+                            echo "Approved";
+                        } else {
+                            echo $value['offline_status'];
+                        }?></p>
+                        <?php }?>
                         <p style="text-transform: uppercase;">
                             <span style="color: #000000!important; font-size: 16px;"><?php echo $value['earnee'];?>
                                 has

@@ -611,7 +611,25 @@ include "projectlog.php";
 
                 <div class="select-box s-box3">
                     <div class="options-container">
+                        <div class="option">
+                            <li class="links">
+                                <a href="offlinehistory.php"><img src="images/referral.svg" /></a>
+                                <a href="offlinehistory.php" class="link">Offline Transactions</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="rejectedpayments.php"><img src="images/referral.svg" /></a>
+                                <a href="rejectedpayments.php" class="link">Rejected Offline Transactions</a>
+                            </li>
+                        </div>
 
+                        <div class="option">
+                            <li class="links">
+                                <a href="approvedpayments.php"><img src="images/referral.svg" /></a>
+                                <a href="approvedpayments.php" class="link">Approved Offline Transactions</a>
+                            </li>
+                        </div>
                         <div class="option">
                             <li class="links">
                                 <a href="totalearnings.php"><img src="images/referral.svg" /></a>

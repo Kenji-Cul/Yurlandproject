@@ -532,12 +532,12 @@ if(!isset($_SESSION['uniqueexec_id'])){
 
                 <div class="profile-image profile-image2">
                     <?php if(!empty($newuser['executive_img'])){?>
-                    <a href="subadminimg.php" style="color: #808080;">
+                    <a href="executiveprofileinfo.php" style="color: #808080;">
                         <img src="profileimage/<?php echo $newuser['executive_img'];?>" alt="profile image" />
                     </a>
                     <?php }?>
                     <?php if(empty($newuser['executive_img'])){?>
-                    <a href="agentimg.php" style="color: #808080;">
+                    <a href="executiveprofileinfo.php" style="color: #808080;">
                         <div class="empty-img">
                             <i class="ri-user-fill"></i>
                         </div>

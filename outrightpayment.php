@@ -4,17 +4,28 @@ if(!isset($_SESSION['unique_id'])){
     header("Location: signup.php");
 }
 include "projectlog.php";
+if(!isset($_GET['remprice'])){
 if(!isset($_GET['tot']) || !isset($_GET['uniqueid'])){
     header('Location: index.php');
+}
 }
 ?>
 <?php
 
 $user = new User;
+
+if(isset($_GET['remprice'])){
+    $selectuser = $user-> selectUser($_GET['unique']);
+} else {
 $selectuser = $user-> selectUser($_SESSION['unique_id']);
+}
 
    
+if(isset($_GET['remprice'])){
+    $landview = $user->selectLandImage($_GET['id']);
+} else {
     $landview = $user->selectLandImage($_GET['uniqueid']);
+}
     if(!empty($landview)){
         foreach($landview as $key => $value){ 
 
@@ -23,15 +34,34 @@ $selectuser = $user-> selectUser($_SESSION['unique_id']);
 // Integrate Paystack
 if(isset($_POST["submit"])){
     $email = htmlspecialchars($selectuser['email']);
+    if(isset($_GET['remprice'])){
+        $price = $_GET['remprice'];
+    $realprice = round($price * 100);
+    $uniqueperson = $_GET['unique'];
+    $uniqueproduct = $_GET['id'];
+    } else {
     $price = $_GET['tot'];
     $realprice = round($price * 100);
     $uniqueperson = $_SESSION['unique_id'];
     $uniqueproduct = $_GET['uniqueid'];
+    }
     $product_name = $value['product_name'];
     $product_desc = $value['product_description'];
     $allocationfee = $value['allocation_fee'];
+    if(isset($_GET['remprice'])){
+        $deducted_unit = $value['product_unit'];
+        $boughtunit = $value['bought_units'];
+        $selectland = $user->selectPayment2($_GET['id'],$_GET['idtwo'],$uniqueperson,$paymentmethod);
+        foreach($selectland as $key => $value2){
+        $getunit = $value2['product_unit'];
+        }
+        $paymode = "Offline";
+    } else {
     $deducted_unit = $value['product_unit'] - $_GET['unit'];
     $boughtunit = $_GET['unit']  + $value['bought_units'];
+    $getunit = $_GET['unit'];
+    $paymode = "Online";
+    }
     $productlocation = $value['product_location'];
     $image = $value['product_image'];
     $paymentmonth = date("M");
@@ -40,6 +70,11 @@ if(isset($_POST["submit"])){
     $paymenttime = date("h:i a");
     $paymentdate = date("M-d-Y");
     $paymentmethod = "Outright";
+    if(isset($_GET['remprice'])){
+        $newpayid2 = $_GET['idtwo'];
+    } else {
+        $newpayid2 = "remprice";
+    }
     $newpayid = rand();
     $payee = $selectuser['first_name']." ".$selectuser['last_name'];
     if($selectuser['referral_id'] != "Yurland"){
@@ -151,7 +186,7 @@ if(isset($_POST["submit"])){
             [
                 "display_name" => "Payment Unit",
                 "variable_name" => "payunit",
-                "value" => $_GET['unit']
+                "value" => $getunit
             ],
 
             [
@@ -188,6 +223,18 @@ if(isset($_POST["submit"])){
                 "display_name" => "NewPay Id",
                 "variable_name" => "NewPay Id",
                 "value" =>  $newpayid
+            ],
+
+            [
+                "display_name" => "NewPay Id2",
+                "variable_name" => "NewPay Id2",
+                "value" =>  $newpayid2
+            ],
+
+            [
+                "display_name" => "Pay Mode",
+                "variable_name" => "Pay Mode",
+                "value" =>  $paymode
             ],
 
           ]
@@ -638,16 +685,23 @@ header("Location: ".$transaction->data->authorization_url);
             <div class="land-location">
                 <p><span>Estate Location:&nbsp;</span><?php echo $value['product_location'];?></p>
             </div>
+            <?php if(!isset($_GET['remprice'])){?>
             <div class="land-location">
                 <p style="text-transform: capitalize;"><span>Unit:&nbsp;</span><?php echo $_GET['unit'];?></p>
             </div>
+            <?php }?>
         </div>
 
 
         <form action="" method="POST">
             <div class="cost">
                 <p>Total Cost:&nbsp;&nbsp;&nbsp;<span>&#8358;<?php 
-             $unitprice = $_GET['tot'];
+              if(isset($_GET['remprice'])){
+                $unitprice = $_GET['remprice'];
+            } else {
+                $unitprice = $_GET['tot'];
+            }
+         
              if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                echo number_format($unitprice);
                              }

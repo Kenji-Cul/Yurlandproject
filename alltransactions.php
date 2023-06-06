@@ -705,6 +705,15 @@ if(!isset($_SESSION['uniqueagent_id'])){
                                 <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
                             </div>
                         </div>
+                        <?php if($value['payment_mode'] == "Offline"){?>
+                        <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                            Offline: <?php if($value['payment_mode'] == "Offline" && $value['offline_status'] == ""){
+                            echo "Approved";
+                        } else {
+                            echo $value['offline_status'];
+                        }?></p>
+                        <?php }?>
                     </div>
                     <div class="price-detail detail3"><?php 
             if($value['product_unit'] == "1"){

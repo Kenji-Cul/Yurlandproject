@@ -18,6 +18,12 @@ include "projectlog.php";
     body {
         height: 80vh !important;
     }
+
+    @media only screen and (max-width: 1300px) {
+        #unitprice {
+            font-size: 15px;
+        }
+    }
     </style>
 </head>
 
@@ -43,7 +49,11 @@ include "projectlog.php";
 
     <div class="success">
         <img src="images/asset_success.svg" alt="" />
+        <?php if(isset($_GET['mode'])){?>
+        <p id="unitprice">You have payed Yurland offline successfully!</p>
+        <?php }else {?>
         <p>Payment Successful!</p>
+        <?php }?>
         <?php if(isset($_SESSION['unique_id'])){?>
         <a href="profile.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>

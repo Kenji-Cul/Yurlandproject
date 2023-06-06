@@ -1399,7 +1399,10 @@ if(empty($checklastpayment)){
                             <div class="input-div">
                                 <input type="number" style="margin-bottom: 2em;"
                                     placeholder="Input number of days you want to pay for" value="1" id="period"
-                                    name="period" />
+                                    name="period" pattern="[0-9]"
+                                    onkeydown="if(event.key==='.'){event.preventDefault();}"
+                                    onpaste="let pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} "
+                                    oninput="this.value=(parseInt(this.value)||'')" />
 
                             </div>
                             <?php }?>

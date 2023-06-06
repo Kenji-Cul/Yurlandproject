@@ -1080,6 +1080,11 @@ include_once "projectlog.php";
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
+                        <?php if($value['offline_status'] != ""){?>
+                        <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            <?php echo $value['offline_status'];?></p>
+                        <?php }?>
                         <p style="text-transform: uppercase;">
                             <span style="color: #000000!important; font-size: 16px;"><?php echo $value['earnee'];?>
                                 earned &#8358;<?php

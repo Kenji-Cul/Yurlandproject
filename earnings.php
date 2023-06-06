@@ -511,6 +511,15 @@ if(!isset($_SESSION['uniqueagent_id'])){
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
+                        <?php if($value['payment_mode'] == "Offline"){?>
+                        <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            <?php if($value['payment_mode'] == "Offline" && $value['offline_status'] == ""){
+                            echo "Approved";
+                        } else {
+                            echo $value['offline_status'];
+                        }?></p>
+                        <?php }?>
                         <p style="text-transform: capitalize;"><span>Hello <?php echo $value['earnee'];?></span>
                         </p>
                         <p style="text-transform: uppercase;">

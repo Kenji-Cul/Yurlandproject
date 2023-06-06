@@ -196,5 +196,10 @@ $amount4 = number_format($unitprice2);
 } else {
 $amount4 = round($unitprice2);
 }
+if(isset($_GET['mode'])){
+header("Location:successemail.php?name=".$_GET['customer']."&date=".$paymentdate."&amount=".$amount3."&estate=".$_GET['estatename']."&balance=".$amount4."&payer=".$_GET['payer']."&email=".$_GET['email']."&mode=".$_GET['mode']."");
+} else {
 header("Location:successemail.php?name=".$_GET['customer']."&date=".$paymentdate."&amount=".$amount3."&estate=".$_GET['estatename']."&balance=".$amount4."&payer=".$_GET['payer']."&email=".$_GET['email']."");
+}
+
 ob_end_flush();

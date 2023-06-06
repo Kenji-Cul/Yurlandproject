@@ -1332,14 +1332,6 @@ include "projectlog.php";
     let unitInput = document.querySelector("#unit")
 
 
-
-
-
-
-
-
-
-
     form.onsubmit = (e) => {
         e.preventDefault();
     };

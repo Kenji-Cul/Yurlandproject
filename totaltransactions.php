@@ -85,6 +85,7 @@ include "projectlog.php";
     .search-form,
     .search-form2,
     .search-form3,
+    .search-form4,
     .dropdown-form {
         display: none;
     }
@@ -915,6 +916,25 @@ include "projectlog.php";
                     <div class="options-container">
                         <div class="option">
                             <li class="links">
+                                <a href="offlinehistory.php"><img src="images/referral.svg" /></a>
+                                <a href="offlinehistory.php" class="link">Offline Transactions</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
+                                <a href="rejectedpayments.php"><img src="images/referral.svg" /></a>
+                                <a href="rejectedpayments.php" class="link">Rejected Offline Transactions</a>
+                            </li>
+                        </div>
+
+                        <div class="option">
+                            <li class="links">
+                                <a href="approvedpayments.php"><img src="images/referral.svg" /></a>
+                                <a href="approvedpayments.php" class="link">Approved Offline Transactions</a>
+                            </li>
+                        </div>
+                        <div class="option">
+                            <li class="links">
                                 <a href="totalearnings.php"><img src="images/referral.svg" /></a>
                                 <a href="totalearnings.php" class="link">Earnings History</a>
                             </li>
@@ -1129,6 +1149,11 @@ include "projectlog.php";
                         </div>
 
                         <div class="option">
+                            <input type="radio" class="radio" id="searchmode7" name="searchmode" value="Number" />
+                            <label for="searchmode7">By Number</label>
+                        </div>
+
+                        <div class="option">
                             <input type="radio" class="radio" id="searchmode4" name="searchmode" value="Failed" />
                             <label for="searchmode4">Failed Transactions</label>
 
@@ -1154,6 +1179,17 @@ include "projectlog.php";
                     <form action="" class="search-form">
                         <input type="text" class="search" type="search" name="searchproduct"
                             placeholder="Search By Payer">
+                    </form>
+                </div>
+
+                <div class="search-input2">
+                    <form action="" class="search-form4">
+                        <input type="number" class="search3" type="search" name="searchproduct3"
+                            placeholder="Search By Number" pattern="[0-9]"
+                            onkeydown="if(event.key==='.'){event.preventDefault();}"
+                            onpaste="let pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} "
+                            oninput="this.value=(parseInt(this.value)||'')">
+
                     </form>
                 </div>
 
@@ -1222,6 +1258,15 @@ include "projectlog.php";
                                 <span><?php echo $value['payment_month'];?></span>&nbsp;<span><?php echo $value['payment_day'];?></span>,<span><?php echo $value['payment_year'];?></span>,<span><?php echo $value['payment_time'];?></span>
                             </div>
                         </div>
+                        <?php if($value['payment_mode'] == "Offline"){?>
+                        <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                            Offline: <?php if($value['payment_mode'] == "Offline" && $value['offline_status'] == ""){
+                            echo "Approved";
+                        } else {
+                            echo $value['offline_status'];
+                        }?></p>
+                        <?php }?>
                     </div>
                     <div class="price-detail detail3"><?php 
             if($value['product_unit'] == "1"){
@@ -1348,6 +1393,7 @@ include "projectlog.php";
                 document.querySelector('.search-form3').style.display = "block";
                 document.querySelector('.search-form').style.display = "none";
                 document.querySelector('.search-form2').style.display = "none";
+                document.querySelector('.search-form4').style.display = "none";
 
                 let downloadbtn = document.querySelector('.download-form .land-btn');
                 let searchform2 = document.querySelector('.search-form3');
@@ -1377,6 +1423,8 @@ include "projectlog.php";
                 document.querySelector('.search-form2').style.display = "block";
                 document.querySelector('.search-form3').style.display = "none";
                 document.querySelector('.search-form').style.display = "none";
+                document.querySelector('.search-form4').style.display = "none";
+
 
                 let downloadbtn = document.querySelector('.download-form .land-btn');
                 let searchform2 = document.querySelector('.search-form3');
@@ -1406,6 +1454,7 @@ include "projectlog.php";
                 document.querySelector('.search-form').style.display = "block";
                 document.querySelector('.search-form3').style.display = "none";
                 document.querySelector('.search-form2').style.display = "none";
+                document.querySelector('.search-form4').style.display = "none";
 
                 let downloadbtn = document.querySelector('.download-form .land-btn');
                 let searchform2 = document.querySelector('.search-form3');
@@ -1432,6 +1481,38 @@ include "projectlog.php";
                 }
             }
 
+            if (element.value == "Number") {
+                document.querySelector('.search-form4').style.display = "block";
+                document.querySelector('.search-form').style.display = "none";
+                document.querySelector('.search-form3').style.display = "none";
+                document.querySelector('.search-form2').style.display = "none";
+
+                // let downloadbtn = document.querySelector('.download-form .land-btn');
+                // let searchform2 = document.querySelector('.search-form3');
+
+                // downloadbtn.onclick = () => {
+                //     let xhr = new XMLHttpRequest();
+                //     xhr.open("POST",
+                //         `downloadbyland.php?mode=downloadpayer`
+                //     );
+
+                //     xhr.onload = () => {
+                //         if (xhr.readyState === XMLHttpRequest.DONE) {
+                //             if (xhr.status === 200) {
+                //                 let data = xhr.response;
+                //                 //console.log(data);
+                //                 document.querySelector('.table-data').innerHTML = data;
+                //                 htmlTableToExcel('xlsx');
+                //             }
+                //         }
+                //     };
+                //     let formData = new FormData(searchform);
+                //     xhr.send(formData);
+
+                // }
+            }
+
+
 
         }
     });
@@ -1440,11 +1521,13 @@ include "projectlog.php";
     //let searchinput = document.querySelector('.search-input2');
     let searchinput2 = document.querySelector('.search');
     let searchinput3 = document.querySelector('.search2');
+    let searchinput4 = document.querySelector('.search3');
 
     //searchinput.style.display = "flex";
     //document.querySelector('#searchimg').style.display = "none";
     let searchform = document.querySelector('.search-form');
     let searchform2 = document.querySelector('.search-form3');
+    let searchform5 = document.querySelector('.search-form4');
     let searchform3 = document.querySelector('.search-form2');
     let searchform4 = document.querySelector('.dropdown-form');
 
@@ -1465,6 +1548,10 @@ include "projectlog.php";
         e.preventDefault();
     }
 
+    searchform5.onsubmit = (e) => {
+        e.preventDefault();
+    }
+
 
 
     <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
@@ -1482,6 +1569,46 @@ include "projectlog.php";
             }
         };
         let formData = new FormData(searchform);
+        xhr.send(formData);
+    }
+
+    <?php }?>
+
+    <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+    searchinput4.onkeyup = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST",
+            `searchbynumber.php?user=superadmin&unique=<?php echo $_SESSION['uniquesupadmin_id'];?>`);
+
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    document.querySelector('.details-container').innerHTML = data;
+                }
+            }
+        };
+        let formData = new FormData(searchform5);
+        xhr.send(formData);
+    }
+
+    <?php }?>
+
+    <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
+    searchinput4.onkeyup = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST",
+            `searchbynumber.php?user=subadmin&unique=<?php echo $_SESSION['uniquesubadmin_id'];?>`);
+
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    let data = xhr.response;
+                    document.querySelector('.details-container').innerHTML = data;
+                }
+            }
+        };
+        let formData = new FormData(searchform5);
         xhr.send(formData);
     }
 
@@ -1567,6 +1694,7 @@ include "projectlog.php";
             document.querySelector('.search-form3').style.display = "none";
             document.querySelector('.search-form').style.display = "none";
             document.querySelector('.search-form2').style.display = "none";
+            document.querySelector('.search-form4').style.display = "none";
             valuediv2.innerHTML = element.value;
 
             let xhr = new XMLHttpRequest();

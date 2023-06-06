@@ -854,7 +854,7 @@ function checkGroupName($name){
     }
 
     function selectLandInfo(){
-        $sql = "SELECT * FROM payment JOIN user ON payment.customer_id = user.unique_id WHERE balance < 2 ORDER BY payment_id DESC";
+        $sql = "SELECT * FROM payment JOIN user ON payment.customer_id = user.unique_id WHERE balance < 2 ORDER BY payment_id DESC LIMIT 50";
         $result = $this->dbcon->query($sql);
         $rows = array();
         if($this->dbcon->affected_rows > 0){
@@ -868,7 +868,49 @@ function checkGroupName($name){
     }
 
     function selectLandInfo2(){
-        $sql = "SELECT * FROM land_history JOIN user ON land_history.customer_id = user.unique_id  ORDER BY payment_id DESC";
+        $sql = "SELECT * FROM land_history JOIN user ON land_history.customer_id = user.unique_id  ORDER BY payment_id DESC LIMIT 50";
+        $result = $this->dbcon->query($sql);
+        $rows = array();
+        if($this->dbcon->affected_rows > 0){
+            while($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }else{
+            return $rows;
+        }
+    }
+
+    function selectLandInfo3(){
+        $sql = "SELECT * FROM land_history JOIN user ON land_history.customer_id = user.unique_id  WHERE land_history.offline_status !='' ORDER BY payment_id DESC";
+        $result = $this->dbcon->query($sql);
+        $rows = array();
+        if($this->dbcon->affected_rows > 0){
+            while($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }else{
+            return $rows;
+        }
+    }
+
+    function selectLandInfo4(){
+        $sql = "SELECT * FROM land_history JOIN user ON land_history.customer_id = user.unique_id  WHERE land_history.offline_status ='' AND land_history.payment_mode='Offline' ORDER BY payment_id DESC";
+        $result = $this->dbcon->query($sql);
+        $rows = array();
+        if($this->dbcon->affected_rows > 0){
+            while($row = $result->fetch_assoc()){
+                $rows[] = $row;
+            }
+            return $rows;
+        }else{
+            return $rows;
+        }
+    }
+
+    function selectLandInfo5(){
+        $sql = "SELECT * FROM land_history JOIN user ON land_history.customer_id = user.unique_id  WHERE land_history.offline_status ='Rejected' AND land_history.payment_mode='Offline' ORDER BY payment_id DESC";
         $result = $this->dbcon->query($sql);
         $rows = array();
         if($this->dbcon->affected_rows > 0){
@@ -2075,7 +2117,7 @@ function checkGroupName($name){
     }
 
     function selectAgentTotalEarnings($unique){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND earning_status = 'unpaid' ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND earning_status = 'unpaid' AND offline_status = ''ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2088,7 +2130,7 @@ function checkGroupName($name){
     }
 
     function selectAgentTotalEarnings2($unique){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}'  ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}'  AND offline_status = ''ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2101,7 +2143,7 @@ function checkGroupName($name){
     }
 
     function selectAgentTotalPayment($unique){
-        $sql = "SELECT SUM(product_price) FROM earning_history WHERE earner_id = '{$unique}' ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(product_price) FROM earning_history WHERE earner_id = '{$unique}' AND offline_status = ''ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2114,7 +2156,7 @@ function checkGroupName($name){
     }
 
     function selectExecutiveTotalEarnings($unique){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND offline_status = ''ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2127,7 +2169,7 @@ function checkGroupName($name){
     }
 
     function selectAgentTotalPaidEarnings($unique){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND balance_earning = 0 AND earning_status = 'paid' ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND balance_earning = 0 AND earning_status = 'paid' AND offline_status = '' ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2140,7 +2182,7 @@ function checkGroupName($name){
     }
 
     function selectYurlandTotalPaidEarnings(){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = 'Yurland' AND balance_earning = 0 AND earning_status = 'paid' ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = 'Yurland' AND balance_earning = 0 AND earning_status = 'paid' AND offline_status = '' ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2153,7 +2195,7 @@ function checkGroupName($name){
     }
 
     function selectAgentTotalPendingEarnings($unique){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND earning_status='unpaid' ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$unique}' AND earning_status='unpaid' AND offline_status = '' ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2166,7 +2208,7 @@ function checkGroupName($name){
     }
 
     function selectYurlandTotalPendingEarnings(){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = 'Yurland' AND earning_status='unpaid' ORDER BY earning_id DESC";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = 'Yurland' AND earning_status='unpaid' AND offline_status='' ORDER BY earning_id DESC";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -2497,6 +2539,20 @@ function checkGroupName($name){
     }
 
 
+    function insertOutPayHistory2($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode){
+        $balance = 0;
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,balance,allocation_fee,allocation_letter,total_price,newpay_id,offline_status,payment_mode) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}','{$agentid}','{$balance}','{$allocationfee}','{$filename}','{$price}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
+
+
     function insertFailedHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$productname,$payee,$agentid,$allocationfee,$newpayid,$price,$filename,$balance){
         $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,allocation_fee,allocation_letter,total_price,newpay_id,balance) VALUES('{$uniqueperson}','{$unique}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$boughtunit}','{$paymentmethod}','{$paymentdate}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$price}','{$newpayid}','{$balance}')";
         $result = $this->dbcon->query($sql);
@@ -2520,6 +2576,18 @@ function checkGroupName($name){
 
     function insertEarningHistory($customerid,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$productprice,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid){
         $sql = "INSERT INTO earning_history(customer_id,agent_id,earner_id,payment_date,payment_month,payment_year,payment_time,payment_day,product_price,payee,earned_amount,earnee,customer_name,product_name,newpay_id) VALUES('{$customerid}','{$agentid}','{$earnerid}','{$paymentdate}','{$paymentmonth}','{$paymentyear}','{$paymenttime}','{$paymentday}','{$productprice}','{$payee}','{$earnedamount}','{$earnee}','{$name}','{$product_name}','{$newpayid}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
+
+    function insertEarningHistory2($customerid,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$productprice,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid,$offlinestatus,$paymentmode){
+        $sql = "INSERT INTO earning_history(customer_id,agent_id,earner_id,payment_date,payment_month,payment_year,payment_time,payment_day,product_price,payee,earned_amount,earnee,customer_name,product_name,newpay_id,offline_status,payment_mode) VALUES('{$customerid}','{$agentid}','{$earnerid}','{$paymentdate}','{$paymentmonth}','{$paymentyear}','{$paymenttime}','{$paymentday}','{$productprice}','{$payee}','{$earnedamount}','{$earnee}','{$name}','{$product_name}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2556,6 +2624,18 @@ function checkGroupName($name){
 
     function insertNewPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid){
         $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee,agent_id,allocation_fee,offer_letter,newpay_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$newpayid}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
+
+    function insertNewPayHistory2($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee,agent_id,allocation_fee,offer_letter,newpay_id,offline_status,payment_mode) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2603,9 +2683,33 @@ function checkGroupName($name){
 
     }
 
+
+    function insertUpdateHistory3($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$newpayid,$offlinestatus,$paymentmode){
+        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,newpay_id,offline_status,payment_mode) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
     
     function insertUpdateHistory2($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$filename,$newpayid){
         $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,allocation_letter,newpay_id) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$filename}','{$newpayid}')";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows == 1){
+           //echo "success";
+        } else {
+           echo $this->dbcon->error;
+        }
+
+    }
+
+
+    function insertUpdateHistory4($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode){
+        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,allocation_letter,newpay_id,offline_status,payment_mode) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$filename}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2681,6 +2785,20 @@ function checkGroupName($name){
 
     function selectPayment($id){
         $sql = "SELECT * FROM payment WHERE customer_id='{$id}' ORDER BY payment_id DESC";
+        $result = $this->dbcon->query($sql);
+	$rows = array();
+		if($this->dbcon->affected_rows > 0){
+			while($row = $result->fetch_assoc()){
+				$rows[] = $row;
+			}
+			return $rows;
+		}else{
+			return $rows;
+		}
+    }
+
+    function selectPayment2($prodid,$newpayid,$customerid,$paymethod){
+        $sql = "SELECT * FROM payment WHERE product_id='{$prodid}' AND newpay_id='{$newpayid}' AND customer_id='{$customerid}' AND payment_method='{$paymethod}' ORDER BY payment_id DESC";
         $result = $this->dbcon->query($sql);
 	$rows = array();
 		if($this->dbcon->affected_rows > 0){
@@ -3290,7 +3408,8 @@ return $rows;
 
 
 function selectAllHistory(){
-$sql = "SELECT * FROM land_history ORDER BY payment_id DESC";
+$limit = 35;
+$sql = "SELECT * FROM land_history ORDER BY payment_id DESC LIMIT $limit ";
 $result = $this->dbcon->query($sql);
 $rows = array();
 if($this->dbcon->affected_rows > 0){
@@ -3302,6 +3421,22 @@ return $rows;
 return $rows;
 }
 }
+
+
+function selectAllHistory2($limit2){
+    $limit = 35;
+    $sql = "SELECT * FROM land_history WHERE payment_id > $limit2 ORDER BY payment_id DESC LIMIT $limit ";
+    $result = $this->dbcon->query($sql);
+    $rows = array();
+    if($this->dbcon->affected_rows > 0){
+    while($row = $result->fetch_assoc()){
+    $rows[] = $row;
+    }
+    return $rows;
+    }else{
+    return $rows;
+    }
+    }
 
 
 
@@ -3356,7 +3491,7 @@ return $row;
 }
 
 function selectTotal($id2){
-$sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$id2}'";
+$sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$id2}' AND offline_status=''";
 $result = $this->dbcon->query($sql);
 $row = $result->fetch_assoc();
 if($result->num_rows == 1){
@@ -3367,7 +3502,7 @@ return $row;
 }
 
 function selectTotal2($id){
-$sql = "SELECT SUM(product_price) FROM land_history WHERE agent_id='{$id}'";
+$sql = "SELECT SUM(product_price) FROM land_history WHERE agent_id='{$id}' AND offline_status=''";
 $result = $this->dbcon->query($sql);
 $row = $result->fetch_assoc();
 if($result->num_rows == 1){
@@ -3378,7 +3513,7 @@ return $row;
 }
 
 function selectTotal3($id){
-$sql = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$id}'";
+$sql = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$id}' AND offline_status = '' ";
 $result = $this->dbcon->query($sql);
 $row = $result->fetch_assoc();
 if($result->num_rows == 1){
@@ -3404,7 +3539,7 @@ return $row;
 }
 
 function selectNums($user){
-$sql = "SELECT COUNT(product_price) FROM land_history WHERE customer_id='{$user}'";
+$sql = "SELECT COUNT(product_price) FROM land_history WHERE customer_id='{$user}' AND offline_status = ''";
 $result = $this->dbcon->query($sql);
 $row = $result->fetch_assoc();
 if($result->num_rows == 1){
@@ -3444,7 +3579,7 @@ function selectAllPaidAgents($id){
 
 
     function selectAllPaidEarnings(){
-        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE balance_earning = 0 AND earning_status = 'paid'";
+        $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE balance_earning = 0 AND earning_status = 'paid' AND offline_status=''";
         $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -3458,7 +3593,7 @@ function selectAllPaidAgents($id){
 
 
         function selectAllPendingEarnings(){
-            $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earning_status = 'unpaid'";
+            $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earning_status = 'unpaid' AND offline_status=''";
             $result = $this->dbcon->query($sql);
         $row = $result->fetch_assoc();
         if($result->num_rows == 1){
@@ -3519,7 +3654,7 @@ function selectAllPaidAgents($id){
     
 
 function selectNumsCount(){
-$sql = "SELECT COUNT(product_price) FROM land_history";
+$sql = "SELECT COUNT(product_price) FROM land_history WHERE offline_status=''";
 $result = $this->dbcon->query($sql);
 $row = $result->fetch_assoc();
 if($result->num_rows == 1){
@@ -3698,7 +3833,7 @@ if($this->dbcon->affected_rows > 0){
 
 
     function selectTotalUsersPayment(){
-    $sql = "SELECT SUM(product_price) FROM land_history";
+    $sql = "SELECT SUM(product_price) FROM land_history WHERE offline_status = ''";
     $result = $this->dbcon->query($sql);
     $row = $result->fetch_assoc();
     if($result->num_rows == 1){
@@ -3711,7 +3846,7 @@ if($this->dbcon->affected_rows > 0){
     }
 
     function selectTotalEarnings(){
-    $sql = "SELECT SUM(earned_amount) FROM earning_history";
+    $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE offline_status =''";
     $result = $this->dbcon->query($sql);
     $row = $result->fetch_assoc();
     if($result->num_rows == 1){
@@ -3724,7 +3859,7 @@ if($this->dbcon->affected_rows > 0){
     }
 
     function selectYurlandEarnings(){
-    $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = 'Yurland'";
+    $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = 'Yurland' AND offline_status=''";
     $result = $this->dbcon->query($sql);
     $row = $result->fetch_assoc();
     if($result->num_rows == 1){
@@ -3870,6 +4005,30 @@ if($this->dbcon->affected_rows > 0){
     }
     }
 
+    function updatePayment2($productid,$newpayid,$customerid,$paymethod,$periodnum,$prodprice,$priceproduct){
+        $sql = "UPDATE payment SET balance = '{$prodprice}', period_num = '{$periodnum}',product_price = '{$priceproduct}' WHERE product_id='{$productid}' AND customer_id='{$customerid}' AND
+        newpay_id = '{$newpayid}' AND payment_method='{$paymethod}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+        // echo "<h3 align='center'>Photo added successfully</h3>";
+        //echo "success";
+        }else{
+        //echo $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+        }
+        }
+
+        function updatePayment3($productid,$newpayid,$customerid,$paymethod,$prodprice,$priceproduct){
+            $sql = "UPDATE payment SET balance = '{$prodprice}',product_price = '{$priceproduct}' WHERE product_id='{$productid}' AND customer_id='{$customerid}' AND
+            newpay_id = '{$newpayid}' AND payment_method='{$paymethod}'";
+            $result = $this->dbcon->query($sql);
+            if($this->dbcon->affected_rows==1){
+            // echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+            }else{
+            //echo $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+            }
+            }
+
     function updateLandUnit($prodid,$soldunit,$boughtunits){
     $sql = "UPDATE land_product SET product_unit='{$soldunit}', bought_units='{$boughtunits}' WHERE
     unique_id='{$prodid}'";
@@ -3918,6 +4077,17 @@ if($this->dbcon->affected_rows > 0){
     }
     }
 
+    function updateEarningHistory2($payid,$mode,$updatedate){
+        $sql = "UPDATE earning_history SET offline_status = '{$mode}',update_date='{$updatedate}' WHERE newpay_id='{$payid}' ";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+        // echo "<h3 align='center'>Photo added successfully</h3>";
+        //echo "success";
+        }else{
+        //echo $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+        }
+        }
+
     function DeleteProductP2($userid,$user,$pay,$payid,$newpayid){
     $sql = "DELETE FROM payment WHERE product_id='{$userid}' AND customer_id='{$user}' AND payment_method='{$pay}' AND
     payment_id='{$payid}' AND newpay_id='{$newpayid}'";
@@ -3965,6 +4135,30 @@ if($this->dbcon->affected_rows > 0){
     //echo $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
     }
     }
+
+    function updateLandHistory5($paymentid,$userid,$user,$pay,$newpayid,$approve,$updatedate){
+        $sql = "UPDATE land_history SET delete_status = 'Restored' ,offline_status='{$approve}',update_date='{$updatedate}' WHERE product_id='{$userid}' AND payment_id='{$user}' AND
+        payment_method='{$pay}' AND newpay_id='{$newpayid}' AND payment_id='{$paymentid}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+        // echo "<h3 align='center'>Photo added successfully</h3>";
+        //echo "success";
+        }else{
+        //echo $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+        }
+        }
+
+        function updateLandHistory6($paymentid,$userid,$user,$pay,$newpayid,$reject,$updatedate){
+            $sql = "UPDATE land_history SET delete_status = 'Restored' ,offline_status='{$reject}',update_date='{$updatedate}' WHERE product_id='{$userid}' AND payment_id='{$user}' AND
+            payment_method='{$pay}' AND newpay_id='{$newpayid}' AND payment_id='{$paymentid}'";
+            $result = $this->dbcon->query($sql);
+            if($this->dbcon->affected_rows==1){
+            // echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+            }else{
+            //echo $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+            }
+            }
 
     function updateProductStat($userid,$user,$pay,$payid){
     $sql = "UPDATE payment SET delete_status='Restored' WHERE product_id='{$userid}' AND customer_id='{$user}' AND
@@ -4902,7 +5096,7 @@ if($this->dbcon->affected_rows > 0){
                                     $data2 = $value;
                                     }
 
-                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}'";
+                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status = ''";
                                     $result3 = $this->dbcon->query($sql3);
                                     $row3 = $result3->fetch_assoc();
                                     $date = $data['user_date'];
@@ -4990,7 +5184,7 @@ if($this->dbcon->affected_rows > 0){
                                                 $percentage = $data['earning_percentage'];
                                                 $agentdate = $data['agent_date'];
                                                 $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-                                                '{$agentid}' ORDER BY earning_id DESC";
+                                                '{$agentid}' AND offline_status = '' ORDER BY earning_id DESC";
                                                 $result = $this->dbcon->query($sql);
                                                 $row = $result->fetch_assoc();
                                                 if($result->num_rows == 1){
@@ -5018,7 +5212,7 @@ if($this->dbcon->affected_rows > 0){
                                                 $refid = $data['referral_id'];
                                                 $agentdate = $data['agent_date'];
                                                 $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
-                                                = '{$agentid}' ORDER BY earning_id DESC";
+                                                = '{$agentid}' AND offline_status = '' ORDER BY earning_id DESC";
                                                 $result2 = $this->dbcon->query($sql2);
                                                 $row2 = $result2->fetch_assoc();
                                                 if($result2->num_rows == 1){
@@ -5151,7 +5345,7 @@ if($this->dbcon->affected_rows > 0){
                                                         $percentage = $data['earning_percentage'];
                                                         $agentdate = $data['agent_date'];
                                                         $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-                                                        '{$agentid}' ORDER BY earning_id DESC";
+                                                        '{$agentid}' AND offline_status = ''ORDER BY earning_id DESC";
                                                         $result = $this->dbcon->query($sql);
                                                         $row = $result->fetch_assoc();
                                                         if($result->num_rows == 1){
@@ -5179,7 +5373,7 @@ if($this->dbcon->affected_rows > 0){
                                                         $refid = $data['referral_id'];
                                                         $agentdate = $data['agent_date'];
                                                         $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
-                                                        = '{$agentid}' ORDER BY earning_id DESC";
+                                                        = '{$agentid}' AND offline_status = ''ORDER BY earning_id DESC";
                                                         $result2 = $this->dbcon->query($sql2);
                                                         $row2 = $result2->fetch_assoc();
                                                         if($result2->num_rows == 1){
@@ -5313,7 +5507,7 @@ if($this->dbcon->affected_rows > 0){
                                                         $percentage = $data['earning_percentage'];
                                                         $agentdate = $data['agent_date'];
                                                         $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-                                                        '{$agentid}' ORDER BY earning_id DESC";
+                                                        '{$agentid}' AND offline_status = ''ORDER BY earning_id DESC";
                                                         $result = $this->dbcon->query($sql);
                                                         $row = $result->fetch_assoc();
                                                         if($result->num_rows == 1){
@@ -5341,7 +5535,7 @@ if($this->dbcon->affected_rows > 0){
                                                         $refid = $data['referral_id'];
                                                         $agentdate = $data['agent_date'];
                                                         $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
-                                                        = '{$agentid}' ORDER BY earning_id DESC";
+                                                        = '{$agentid}' AND offline_status = ''ORDER BY earning_id DESC";
                                                         $result2 = $this->dbcon->query($sql2);
                                                         $row2 = $result2->fetch_assoc();
                                                         if($result2->num_rows == 1){
@@ -5467,19 +5661,38 @@ if($this->dbcon->affected_rows > 0){
                                         if(!empty($rows)){
                                         foreach ($rows as $key => $value) {
                                         if($value['sub_status'] == "Failed"){
-                                        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                                            <div class="radius">
-                                                <img src="landimage/'.$value['product_image'].'" alt="">
-                                            </div>
-                                            <div class="details">
-                                                <p class="pname">'.$value['product_name'].'</p>
-                                                <div class="inner-detail">
-                                                    <div class="date" style="font-size: 14px;">
-                                                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                                                    </div>
+                                            if($value['offline_status'] != ""){
+                                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                                                <div class="radius">
+                                                    <img src="landimage/'.$value['product_image'].'" alt="">
                                                 </div>
-                                            </div> ';
-
+                                                <div class="details">
+                                                    <p class="pname">'.$value['product_name'].'</p>
+                                                    <div class="inner-detail">
+                                                        <div class="date" style="font-size: 14px;">
+                                                            <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                                                        </div>
+                                                    </div>
+                                                    <p
+                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                        Offline: '.$value['offline_status'].'</p>
+                                                </div> ';    
+                                            } else {
+                                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                                                <div class="radius">
+                                                    <img src="landimage/'.$value['product_image'].'" alt="">
+                                                </div>
+                                                <div class="details">
+                                                    <p class="pname">'.$value['product_name'].'</p>
+                                                    <div class="inner-detail">
+                                                        <div class="date" style="font-size: 14px;">
+                                                            <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                                                        </div>
+                                                    </div>
+                                                </div> ';
+    
+                                            }
+                                      
                                             if($value['product_unit'] == "1"){
                                             $unit = $value['product_unit']." Unit";
                                             } else {
@@ -5580,7 +5793,25 @@ if($this->dbcon->affected_rows > 0){
                                 }
                                 $output .= "$output1$output2$output3$output4$output5";
                                 } else {
-                                $output1 = ' <div class="transaction-details">
+                                    
+                                    if($value['offline_status'] != ""){
+                                        $output1 = ' <div class="transaction-details">
+                                        <div class="radius">
+                                            <img src="landimage/'.$value['product_image'].'" alt="">
+                                        </div>
+                                        <div class="details">
+                                            <p class="pname">'.$value['product_name'].'</p>
+                                            <div class="inner-detail">
+                                                <div class="date" style="font-size: 14px;">
+                                                    <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                                                </div>
+                                            </div>
+                                            <p
+                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                        Offline: '.$value['offline_status'].'</p>
+                                        </div> ';
+                                    } else {
+                                        $output1 = ' <div class="transaction-details">
                                     <div class="radius">
                                         <img src="landimage/'.$value['product_image'].'" alt="">
                                     </div>
@@ -5592,6 +5823,8 @@ if($this->dbcon->affected_rows > 0){
                                             </div>
                                         </div>
                                     </div> ';
+                                    }
+                                
 
                                     if($value['product_unit'] == "1"){
                                     $unit = $value['product_unit']." Unit";
@@ -5730,7 +5963,24 @@ if($this->dbcon->affected_rows > 0){
                                     if(!empty($rows)){
                                     foreach ($rows as $key => $value) {
                                     if($value['sub_status'] == "Failed"){
-                                    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                                        if($value['offline_status'] != ""){
+                                            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                                            <div class="radius">
+                                                <img src="landimage/'.$value['product_image'].'" alt="">
+                                            </div>
+                                            <div class="details">
+                                                <p class="pname">'.$value['product_name'].'</p>
+                                                <div class="inner-detail">
+                                                    <div class="date" style="font-size: 14px;">
+                                                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                                                    </div>
+                                                </div>
+                                                <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                            Offline: '.$value['offline_status'].'</p>
+                                            </div> ';
+                                        } else {
+                                            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
                                         <div class="radius">
                                             <img src="landimage/'.$value['product_image'].'" alt="">
                                         </div>
@@ -5742,6 +5992,8 @@ if($this->dbcon->affected_rows > 0){
                                                 </div>
                                             </div>
                                         </div> ';
+                                        }
+                                    
 
                                         if($value['product_unit'] == "1"){
                                         $unit = $value['product_unit']." Unit";
@@ -5877,7 +6129,8 @@ if($this->dbcon->affected_rows > 0){
                             }
                             $output .= "$output1$output2$output3$output4$output5";
                             } else {
-                            $output1 = ' <div class="transaction-details">
+                                if($value['offline_status'] != ""){
+                                    $output1 = ' <div class="transaction-details">
                                 <div class="radius">
                                     <img src="landimage/'.$value['product_image'].'" alt="">
                                 </div>
@@ -5888,7 +6141,25 @@ if($this->dbcon->affected_rows > 0){
                                             <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
                                         </div>
                                     </div>
+                                    <p
+                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                    Offline: '.$value['offline_status'].'</p>
                                 </div> ';
+                                } else {
+                                    $output1 = ' <div class="transaction-details">
+                                    <div class="radius">
+                                        <img src="landimage/'.$value['product_image'].'" alt="">
+                                    </div>
+                                    <div class="details">
+                                        <p class="pname">'.$value['product_name'].'</p>
+                                        <div class="inner-detail">
+                                            <div class="date" style="font-size: 14px;">
+                                                <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                                            </div>
+                                        </div>
+                                    </div> ';
+                                }
+                          
 
                                 if($value['product_unit'] == "1"){
                                 $unit = $value['product_unit']." Unit";
@@ -6211,18 +6482,45 @@ if($this->dbcon->affected_rows > 0){
                                 if($result->num_rows > 0){
                                 while($data = $result->fetch_assoc()){
                                 if($data['sub_status'] == "Failed"){
-                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                                    <div class="radius">
-                                        <img src="landimage/'.$data['product_image'].'" alt="">
-                                    </div>
-                                    <div class="details">
-                                        <p class="pname">'.$data['product_name'].'</p>
-                                        <div class="inner-detail">
-                                            <div class="date" style="font-size: 14px;">
-                                                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                            </div>
+                                    if($data['payment_mode'] == "Offline"){
+                                    if($data['offline_status'] == ""){
+                                        $outputmode = '<p
+                                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                        Offline: Approved</p>';
+                                    } else {
+                                        $outputmode = ' <p
+                                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                        Offline: '.$data['offline_status'].'</p>';
+                                    }
+                                        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                                        <div class="radius">
+                                            <img src="landimage/'.$data['product_image'].'" alt="">
                                         </div>
-                                    </div> ';
+                                        <div class="details">
+                                            <p class="pname">'.$data['product_name'].'</p>
+                                            <div class="inner-detail">
+                                                <div class="date" style="font-size: 14px;">
+                                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                                </div>
+                                                '.$outputmode.'
+                                            </div>
+                                           
+                                        </div> ';
+                                    } else {
+                                        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                                        <div class="radius">
+                                            <img src="landimage/'.$data['product_image'].'" alt="">
+                                        </div>
+                                        <div class="details">
+                                            <p class="pname">'.$data['product_name'].'</p>
+                                            <div class="inner-detail">
+                                                <div class="date" style="font-size: 14px;">
+                                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                                </div>
+                                            </div>
+                                        </div> ';
+                                    }
+                               
 
                                     if($data['product_unit'] == "1"){
                                     $unit = $data['product_unit']." Unit";
@@ -6322,18 +6620,44 @@ if($this->dbcon->affected_rows > 0){
                         }
                         $output .= "$output1$output2$output3$output4$output5";
                         } else {
-                        $output1 = ' <div class="transaction-details">
-                            <div class="radius">
-                                <img src="landimage/'.$data['product_image'].'" alt="">
-                            </div>
-                            <div class="details">
-                                <p class="pname">'.$data['product_name'].'</p>
-                                <div class="inner-detail">
-                                    <div class="date" style="font-size: 14px;">
-                                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                    </div>
+                            if($data['payment_mode'] == "Offline"){
+                                if($data['offline_status'] == ""){
+                                    $outputmode = '<p
+                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                    Offline: Approved</p>';
+                                } else {
+                                    $outputmode = ' <p
+                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                    Offline: '.$data['offline_status'].'</p>';
+                                }
+                                $output1 = ' <div class="transaction-details">
+                                <div class="radius">
+                                    <img src="landimage/'.$data['product_image'].'" alt="">
                                 </div>
-                            </div> ';
+                                <div class="details">
+                                    <p class="pname">'.$data['product_name'].'</p>
+                                    <div class="inner-detail">
+                                        <div class="date" style="font-size: 14px;">
+                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$outputmode.'
+                                </div> ';
+                            } else {
+                                $output1 = ' <div class="transaction-details">
+                                <div class="radius">
+                                    <img src="landimage/'.$data['product_image'].'" alt="">
+                                </div>
+                                <div class="details">
+                                    <p class="pname">'.$data['product_name'].'</p>
+                                    <div class="inner-detail">
+                                        <div class="date" style="font-size: 14px;">
+                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                        </div>
+                                    </div>
+                                </div> ';
+                            }
+                       
 
                             if($data['product_unit'] == "1"){
                             $unit = $data['product_unit']." Unit";
@@ -6455,7 +6779,31 @@ if($this->dbcon->affected_rows > 0){
                             if($result->num_rows > 0){
                             while($data = $result->fetch_assoc()){
                             if($data['sub_status'] == "Failed"){
-                            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                            if($data['payment_mode'] == "Offline"){
+                                if($data['offline_status'] == ""){
+                                    $outputmode = '<p
+                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                    Offline: Approved</p>';
+                                } else {
+                                    $outputmode = ' <p
+                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                    Offline: '.$data['offline_status'].'</p>';
+                                }
+                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                                <div class="radius">
+                                    <img src="landimage/'.$data['product_image'].'" alt="">
+                                </div>
+                                <div class="details">
+                                    <p class="pname">'.$data['product_name'].'</p>
+                                    <div class="inner-detail">
+                                        <div class="date" style="font-size: 14px;">
+                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$outputmode.'
+                                </div> ';
+                            } else {
+                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
                                 <div class="radius">
                                     <img src="landimage/'.$data['product_image'].'" alt="">
                                 </div>
@@ -6467,6 +6815,8 @@ if($this->dbcon->affected_rows > 0){
                                         </div>
                                     </div>
                                 </div> ';
+                            }
+                            
 
                                 if($data['product_unit'] == "1"){
                                 $unit = $data['product_unit']." Unit";
@@ -6593,18 +6943,44 @@ if($this->dbcon->affected_rows > 0){
                     }
                     $output .= "$output1$output2$output3$output4$output5";
                     } else {
-                    $output1 = ' <div class="transaction-details">
-                        <div class="radius">
-                            <img src="landimage/'.$data['product_image'].'" alt="">
-                        </div>
-                        <div class="details">
-                            <p class="pname">'.$data['product_name'].'</p>
-                            <div class="inner-detail">
-                                <div class="date" style="font-size: 14px;">
-                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                </div>
+                        if($data['payment_mode'] == "Offline"){
+                            if($data['offline_status'] == ""){
+                                $outputmode = '<p
+                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                Offline: Approved</p>';
+                            } else {
+                                $outputmode = ' <p
+                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                Offline: '.$data['offline_status'].'</p>';
+                            }
+                            $output1 = ' <div class="transaction-details">
+                            <div class="radius">
+                                <img src="landimage/'.$data['product_image'].'" alt="">
                             </div>
-                        </div> ';
+                            <div class="details">
+                                <p class="pname">'.$data['product_name'].'</p>
+                                <div class="inner-detail">
+                                    <div class="date" style="font-size: 14px;">
+                                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                    </div>
+                                </div>
+                             '.$outputmode.'
+                            </div> ';
+                        } else {
+                            $output1 = ' <div class="transaction-details">
+                            <div class="radius">
+                                <img src="landimage/'.$data['product_image'].'" alt="">
+                            </div>
+                            <div class="details">
+                                <p class="pname">'.$data['product_name'].'</p>
+                                <div class="inner-detail">
+                                    <div class="date" style="font-size: 14px;">
+                                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                    </div>
+                                </div>
+                            </div> ';
+                        }
+                  
 
                         if($data['product_unit'] == "1"){
                         $unit = $data['product_unit']." Unit";
@@ -6759,7 +7135,17 @@ if($this->dbcon->affected_rows > 0){
                         if($result->num_rows > 0){
                         while($data = $result->fetch_assoc()){
                         if($data['sub_status'] == "Failed"){
-                        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                            if($data['payment_mode'] == "Offline"){
+                                if($data['offline_status'] == ""){
+                                    $outputmode = '<p
+                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                    Offline: Approved</p>';
+                                } else {
+                                    $outputmode = ' <p
+                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                    Offline: '.$data['offline_status'].'</p>';
+                                }
+                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
                             <div class="radius">
                                 <img src="landimage/'.$data['product_image'].'" alt="">
                             </div>
@@ -6770,7 +7156,23 @@ if($this->dbcon->affected_rows > 0){
                                         <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                                     </div>
                                 </div>
+                               '.$outputmode.'
                             </div> ';
+                            } else {
+                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                                <div class="radius">
+                                    <img src="landimage/'.$data['product_image'].'" alt="">
+                                </div>
+                                <div class="details">
+                                    <p class="pname">'.$data['product_name'].'</p>
+                                    <div class="inner-detail">
+                                        <div class="date" style="font-size: 14px;">
+                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                        </div>
+                                    </div>
+                                </div> ';
+                            }
+                      
 
                             if($data['product_unit'] == "1"){
                             $unit = $data['product_unit']." Unit";
@@ -6849,18 +7251,44 @@ if($this->dbcon->affected_rows > 0){
                 }
                 $output .= "$output1$output2$output3$output4";
                 } else {
-                $output1 = ' <div class="transaction-details">
-                    <div class="radius">
-                        <img src="landimage/'.$data['product_image'].'" alt="">
-                    </div>
-                    <div class="details">
-                        <p class="pname">'.$data['product_name'].'</p>
-                        <div class="inner-detail">
-                            <div class="date" style="font-size: 14px;">
-                                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                            </div>
+                    if($data['payment_mode'] == "Offline"){
+                        if($data['offline_status'] == ""){
+                            $outputmode = '<p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                            Offline: Approved</p>';
+                        } else {
+                            $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                            Offline: '.$data['offline_status'].'</p>';
+                        }
+                        $output1 = ' <div class="transaction-details">
+                        <div class="radius">
+                            <img src="landimage/'.$data['product_image'].'" alt="">
                         </div>
-                    </div> ';
+                        <div class="details">
+                            <p class="pname">'.$data['product_name'].'</p>
+                            <div class="inner-detail">
+                                <div class="date" style="font-size: 14px;">
+                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                </div>
+                            </div>
+                            '.$outputmode.'
+                        </div> ';
+                    } else {
+                        $output1 = ' <div class="transaction-details">
+                        <div class="radius">
+                            <img src="landimage/'.$data['product_image'].'" alt="">
+                        </div>
+                        <div class="details">
+                            <p class="pname">'.$data['product_name'].'</p>
+                            <div class="inner-detail">
+                                <div class="date" style="font-size: 14px;">
+                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                                </div>
+                            </div>
+                        </div> ';
+                    }
+              
 
                     if($data['product_unit'] == "1"){
                     $unit = $data['product_unit']." Unit";
@@ -7113,18 +7541,44 @@ if($this->dbcon->affected_rows > 0){
         if($result->num_rows > 0){
         while($data = $result->fetch_assoc()){
         if($data['sub_status'] == "Failed"){
-        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
+            if($data['payment_mode'] == "Offline"){
+                if($data['offline_status'] == ""){
+                    $outputmode = '<p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: Approved</p>';
+                } else {
+                    $outputmode = ' <p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: '.$data['offline_status'].'</p>';
+                }
+                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                <div class="radius">
+                    <img src="landimage/'.$data['product_image'].'" alt="">
                 </div>
-            </div> ';
+                <div class="details">
+                    <p class="pname">'.$data['product_name'].'</p>
+                    <div class="inner-detail">
+                        <div class="date" style="font-size: 14px;">
+                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                        </div>
+                    </div>
+                  '.$outputmode.'
+                </div> ';
+            } else {
+                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                <div class="radius">
+                    <img src="landimage/'.$data['product_image'].'" alt="">
+                </div>
+                <div class="details">
+                    <p class="pname">'.$data['product_name'].'</p>
+                    <div class="inner-detail">
+                        <div class="date" style="font-size: 14px;">
+                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                        </div>
+                    </div>
+                </div> ';
+            }
+      
 
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
@@ -7223,18 +7677,44 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4$output5";
     } else {
-    $output1 = ' <div class="transaction-details">
-        <div class="radius">
-            <img src="landimage/'.$data['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$data['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                </div>
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
-        </div> ';
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+                '.$outputmode.'
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+   
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -7370,18 +7850,37 @@ if($this->dbcon->affected_rows > 0){
     if(!empty($rows)){
     foreach ($rows as $key => $value) {
     if($value['sub_status'] == "Failed"){
-    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-        <div class="radius">
-            <img src="landimage/'.$value['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$value['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                </div>
+        if($value['offline_status'] != ""){
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$value['product_image'].'" alt="">
             </div>
-        </div> ';
+            <div class="details">
+                <p class="pname">'.$value['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                    </div>
+                </div>
+                <p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: '.$value['offline_status'].'</p>
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$value['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$value['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+   
 
         if($value['product_unit'] == "1"){
         $unit = $value['product_unit']." Unit";
@@ -7448,7 +7947,24 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4";
     } else {
-    $output1 = ' <div class="transaction-details">
+        if($value['offline_status'] != ""){
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$value['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$value['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                    </div>
+                </div>
+                <p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: '.$value['offline_status'].'</p>
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$value['product_image'].'" alt="">
         </div>
@@ -7460,6 +7976,8 @@ if($this->dbcon->affected_rows > 0){
                 </div>
             </div>
         </div> ';
+        }
+    
 
         if($value['product_unit'] == "1"){
         $unit = $value['product_unit']." Unit";
@@ -7570,18 +8088,37 @@ if($this->dbcon->affected_rows > 0){
     if(!empty($rows)){
     foreach ($rows as $key => $value) {
     if($value['sub_status'] == "Failed"){
-    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-        <div class="radius">
-            <img src="landimage/'.$value['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$value['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                </div>
+        if($value['offline_status'] != ""){
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$value['product_image'].'" alt="">
             </div>
-        </div> ';
+            <div class="details">
+                <p class="pname">'.$value['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                    </div>
+                </div>
+                <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                            Offline: '.$value['offline_status'].'</p>
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$value['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$value['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+   
 
         if($value['product_unit'] == "1"){
         $unit = $value['product_unit']." Unit";
@@ -7659,7 +8196,24 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4";
     } else {
-    $output1 = ' <div class="transaction-details">
+        if($value['offline_status'] != ""){
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$value['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$value['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                    </div>
+                </div>
+                <p
+                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                                Offline: '.$value['offline_status'].'</p>
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$value['product_image'].'" alt="">
         </div>
@@ -7671,6 +8225,8 @@ if($this->dbcon->affected_rows > 0){
                 </div>
             </div>
         </div> ';
+        }
+    
 
         if($value['product_unit'] == "1"){
         $unit = $value['product_unit']." Unit";
@@ -7772,18 +8328,21 @@ if($this->dbcon->affected_rows > 0){
     if($result->num_rows > 0){
     while($data = $result->fetch_assoc()){
     if($data['sub_status'] == "Failed"){
-    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-        <div class="radius">
-            <img src="landimage/'.$data['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$data['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                </div>
+       
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
-        </div> ';
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        
+  
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -7882,18 +8441,21 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4$output5";
     } else {
-    $output1 = ' <div class="transaction-details">
-        <div class="radius">
-            <img src="landimage/'.$data['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$data['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                </div>
+       
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
-        </div> ';
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        
+   
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -8013,7 +8575,8 @@ if($this->dbcon->affected_rows > 0){
         if($result->num_rows > 0){
         while($data = $result->fetch_assoc()){
         if($data['sub_status'] == "Failed"){
-        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+       
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
             <div class="radius">
                 <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
@@ -8024,7 +8587,10 @@ if($this->dbcon->affected_rows > 0){
                         <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                     </div>
                 </div>
+                
             </div> ';
+        
+       
     
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
@@ -8140,7 +8706,8 @@ if($this->dbcon->affected_rows > 0){
         }
         $output .= "$output1$output2$output3$output4$output5";
         } else {
-        $output1 = ' <div class="transaction-details">
+           
+                $output1 = ' <div class="transaction-details">
             <div class="radius">
                 <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
@@ -8152,6 +8719,8 @@ if($this->dbcon->affected_rows > 0){
                     </div>
                 </div>
             </div> ';
+            
+        
     
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
@@ -8297,7 +8866,8 @@ if($this->dbcon->affected_rows > 0){
     if($result->num_rows > 0){
     while($data = $result->fetch_assoc()){
     if($data['sub_status'] == "Failed"){
-    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+   
+        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -8309,6 +8879,8 @@ if($this->dbcon->affected_rows > 0){
                 </div>
             </div>
         </div> ';
+    
+    
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -8386,7 +8958,8 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4";
     } else {
-    $output1 = ' <div class="transaction-details">
+       
+            $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -8398,6 +8971,8 @@ if($this->dbcon->affected_rows > 0){
                 </div>
             </div>
         </div> ';
+        
+    
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -8494,18 +9069,44 @@ if($this->dbcon->affected_rows > 0){
     if($result->num_rows > 0){
     while($data = $result->fetch_assoc()){
     if($data['sub_status'] == "Failed"){
-    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-        <div class="radius">
-            <img src="landimage/'.$data['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$data['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                </div>
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
-        </div> ';
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+               '.$outputmode.'
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+   
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -8604,7 +9205,17 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4$output5";
     } else {
-    $output1 = ' <div class="transaction-details">
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -8615,7 +9226,23 @@ if($this->dbcon->affected_rows > 0){
                     <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
             </div>
+           '.$outputmode.'
         </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+   
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -8735,7 +9362,32 @@ if($this->dbcon->affected_rows > 0){
         if($result->num_rows > 0){
         while($data = $result->fetch_assoc()){
         if($data['sub_status'] == "Failed"){
-        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            if($data['payment_mode'] = "Offline"){
+                if($data['offline_status'] == ""){
+                    $outputmode = '<p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: Approved</p>';
+                } else {
+                    $outputmode = ' <p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: '.$data['offline_status'].'</p>';
+                }
+                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+                <div class="radius">
+                    <img src="landimage/'.$data['product_image'].'" alt="">
+                </div>
+                <div class="details">
+                    <p class="pname">'.$data['product_name'].'</p>
+                    <div class="inner-detail">
+                        <div class="date" style="font-size: 14px;">
+                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                        </div>
+                    </div>
+                    '.$outputmode.'
+                    
+                </div> ';
+            } else {
+                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
             <div class="radius">
                 <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
@@ -8747,6 +9399,8 @@ if($this->dbcon->affected_rows > 0){
                     </div>
                 </div>
             </div> ';
+            }
+        
     
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
@@ -8887,7 +9541,17 @@ if($this->dbcon->affected_rows > 0){
         }
         $output .= "$output1$output2$output3$output4$output5";
         } else {
-        $output1 = ' <div class="transaction-details">
+            if($data['payment_mode'] == "Offline"){
+                if($data['offline_status'] == ""){
+                    $outputmode = '<p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: Approved</p>';
+                } else {
+                    $outputmode = ' <p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: '.$data['offline_status'].'</p>';
+                }
+                $output1 = ' <div class="transaction-details">
             <div class="radius">
                 <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
@@ -8898,7 +9562,23 @@ if($this->dbcon->affected_rows > 0){
                         <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                     </div>
                 </div>
+               '.$outputmode.'
             </div> ';
+            } else {
+                $output1 = ' <div class="transaction-details">
+                <div class="radius">
+                    <img src="landimage/'.$data['product_image'].'" alt="">
+                </div>
+                <div class="details">
+                    <p class="pname">'.$data['product_name'].'</p>
+                    <div class="inner-detail">
+                        <div class="date" style="font-size: 14px;">
+                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                        </div>
+                    </div>
+                </div> ';
+            }
+      
     
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
@@ -9056,18 +9736,44 @@ if($this->dbcon->affected_rows > 0){
     if($result->num_rows > 0){
     while($data = $result->fetch_assoc()){
     if($data['sub_status'] == "Failed"){
-    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-        <div class="radius">
-            <img src="landimage/'.$data['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$data['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                </div>
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
-        </div> ';
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+                '.$outputmode.'
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+   
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -9145,18 +9851,44 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4";
     } else {
-    $output1 = ' <div class="transaction-details">
-        <div class="radius">
-            <img src="landimage/'.$data['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$data['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                </div>
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
-        </div> ';
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+               '.$outputmode.'
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+   
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -9252,7 +9984,17 @@ if($this->dbcon->affected_rows > 0){
     if($result->num_rows > 0){
     while($data = $result->fetch_assoc()){
     if($data['sub_status'] == "Failed"){
-    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -9263,7 +10005,23 @@ if($this->dbcon->affected_rows > 0){
                     <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
             </div>
+           '.$outputmode.'
         </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+   
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -9362,7 +10120,31 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4$output5";
     } else {
-    $output1 = ' <div class="transaction-details">
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+               '.$outputmode.'
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -9374,6 +10156,8 @@ if($this->dbcon->affected_rows > 0){
                 </div>
             </div>
         </div> ';
+        }
+    
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -9493,7 +10277,31 @@ if($this->dbcon->affected_rows > 0){
         if($result->num_rows > 0){
         while($data = $result->fetch_assoc()){
         if($data['sub_status'] == "Failed"){
-        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+              '.$outputmode.'
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
             <div class="radius">
                 <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
@@ -9505,6 +10313,8 @@ if($this->dbcon->affected_rows > 0){
                     </div>
                 </div>
             </div> ';
+        }
+       
     
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
@@ -9637,18 +10447,44 @@ if($this->dbcon->affected_rows > 0){
         }
         $output .= "$output1$output2$output3$output4$output5";
         } else {
-        $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
+            if($data['payment_mode'] == "Offline"){
+                if($data['offline_status'] == ""){
+                    $outputmode = '<p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: Approved</p>';
+                } else {
+                    $outputmode = ' <p
+                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                    Offline: '.$data['offline_status'].'</p>';
+                }
+                $output1 = ' <div class="transaction-details">
+                <div class="radius">
+                    <img src="landimage/'.$data['product_image'].'" alt="">
                 </div>
-            </div> ';
+                <div class="details">
+                    <p class="pname">'.$data['product_name'].'</p>
+                    <div class="inner-detail">
+                        <div class="date" style="font-size: 14px;">
+                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                        </div>
+                    </div>
+                    '.$outputmode.'
+                </div> ';
+            } else {
+                $output1 = ' <div class="transaction-details">
+                <div class="radius">
+                    <img src="landimage/'.$data['product_image'].'" alt="">
+                </div>
+                <div class="details">
+                    <p class="pname">'.$data['product_name'].'</p>
+                    <div class="inner-detail">
+                        <div class="date" style="font-size: 14px;">
+                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                        </div>
+                    </div>
+                </div> ';
+            }
+       
     
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
@@ -9807,7 +10643,31 @@ if($this->dbcon->affected_rows > 0){
     if($result->num_rows > 0){
     while($data = $result->fetch_assoc()){
     if($data['sub_status'] == "Failed"){
-    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+                '.$outputmode.'
+            </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -9819,6 +10679,8 @@ if($this->dbcon->affected_rows > 0){
                 </div>
             </div>
         </div> ';
+        }
+    
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -9896,7 +10758,17 @@ if($this->dbcon->affected_rows > 0){
     }
     $output .= "$output1$output2$output3$output4";
     } else {
-    $output1 = ' <div class="transaction-details">
+        if($data['payment_mode'] == "Offline"){
+            if($data['offline_status'] == ""){
+                $outputmode = '<p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: Approved</p>';
+            } else {
+                $outputmode = ' <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$data['offline_status'].'</p>';
+            }
+            $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -9907,7 +10779,23 @@ if($this->dbcon->affected_rows > 0){
                     <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
             </div>
+           '.$outputmode.'
         </div> ';
+        } else {
+            $output1 = ' <div class="transaction-details">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+        }
+  
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -10093,7 +10981,7 @@ if($this->dbcon->affected_rows > 0){
                                     $data2 = $value;
                                     }
 
-                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}'";
+                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status = ''";
                                     $result3 = $this->dbcon->query($sql3);
                                     $row3 = $result3->fetch_assoc();
                                    
@@ -10258,7 +11146,7 @@ function searchPaying($name){
                  if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
                                    $price2 = number_format($unitprice);
                                  } else {
-                                    if($unitprice < "2"){
+                                    if($unitprice < "5"){
                                         $price2 = "0";
                                     }else {
                                      $price2 = round($unitprice);
@@ -10386,7 +11274,7 @@ $output1 = '
     $output5 = '<div class="details" style="text-transform: capitalize;">
         <p class="pname">&#8358;';
             $unique3 = $data['unique_id'];
-            $sql3 = "SELECT SUM(product_price) FROM land_history WHERE agent_id='{$unique3}'";
+            $sql3 = "SELECT SUM(product_price) FROM land_history WHERE agent_id='{$unique3}' AND offline_status=''";
             $result3 = $this->dbcon->query($sql3);
             $row3 = $result3->fetch_assoc();
             foreach($row3 as $key => $value3){
@@ -10494,7 +11382,7 @@ $output1 = '
 
         $output5 = '<div class="details" style="text-transform: capitalize;">
             <p class="pname">&#8358;';
-                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' ORDER BY
+                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND offline_status = ''ORDER BY
                 earning_id DESC";
                 $result3 = $this->dbcon->query($sql3);
 
@@ -10669,7 +11557,7 @@ $output1 = '
         if($result->num_rows > 0){
         while($data = $result->fetch_assoc()){
         $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-        '{$data['uniqueagent_id']}'
+        '{$data['uniqueagent_id']}' AND offline_status = ''
         ORDER BY
         earning_id DESC";
         $result2 = $this->dbcon->query($totalpayment);
@@ -10706,7 +11594,7 @@ $output1 = '
                     $percentage = $data['earning_percentage'];
                     $agentdate = $data['agent_date'];
                     $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-                    '{$agentid}' ORDER BY earning_id DESC";
+                    '{$agentid}' AND offline_status = '' ORDER BY earning_id DESC";
                     $result = $this->dbcon->query($sql);
                     $row = $result->fetch_assoc();
                     if($result->num_rows == 1){
@@ -10734,7 +11622,7 @@ $output1 = '
                     $refid = $data['referral_id'];
                     $agentdate = $data['agent_date'];
                     $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
-                    = '{$agentid}' ORDER BY earning_id DESC";
+                    = '{$agentid}' AND offline_status = ''ORDER BY earning_id DESC";
                     $result2 = $this->dbcon->query($sql2);
                     $row2 = $result2->fetch_assoc();
                     if($result2->num_rows == 1){
@@ -10846,7 +11734,7 @@ $output1 = '
         if($result->num_rows > 0){
         while($data = $result->fetch_assoc()){
         $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-        '{$data['unique_id']}'
+        '{$data['unique_id']}' AND offline_status = ''
         ORDER BY
         earning_id DESC";
         $result2 = $this->dbcon->query($totalpayment);
@@ -10896,7 +11784,7 @@ $output1 = '
                                     }
 
                                     $sql5 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-                                    '{$unique}' ORDER BY earning_id DESC";
+                                    '{$unique}' AND offline_status = ''ORDER BY earning_id DESC";
                                     $result5 = $this->dbcon->query($sql5);
                                     $row5 = $result5->fetch_assoc();
                                     if($result5->num_rows == 1){
@@ -10914,7 +11802,7 @@ $output1 = '
                                     $data5 = round($unitprice5);
                                     }
 
-                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}'";
+                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status = ''";
                                     $result3 = $this->dbcon->query($sql3);
                                     $row3 = $result3->fetch_assoc();
                                     $date = $data['user_date'];
@@ -10997,7 +11885,7 @@ $output1 = '
     while($data = $result->fetch_assoc()){
     $date = $data['executive_date'];
     $execid = $data['unique_id'];
-    $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' ORDER BY
+    $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND offline_status =''ORDER BY
     earning_id
     DESC";
     $result2=$this->dbcon->query($totalpayment);
@@ -11037,7 +11925,7 @@ $output1 = '
 
         $output5 = '<div class="details" style="text-transform: capitalize;">
             <p class="pname">&#8358;';
-                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' ORDER BY
+                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND offline_status = ''ORDER BY
                 earning_id DESC";
                 $result3 = $this->dbcon->query($sql3);
 
@@ -11124,7 +12012,7 @@ $results = $this->dbcon->query($totalagent);
 $row4 = $results->fetch_assoc();
 $agentdate = $row4['agent_date'];
 $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND payment_month =
-'{$month}' AND payment_year = '{$year}' ORDER BY earning_id DESC";
+'{$month}' AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
 
 $result3=$this->dbcon->query($totalearning);
 $row2 = $result3->fetch_assoc();
@@ -11149,7 +12037,7 @@ $output1 = '
                                                 $percentage = $row4['earning_percentage'];
                                                 $agentdate = $row4['agent_date'];
                                                 $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-                                                '{$agentid}' AND payment_month = '{$month}'  AND payment_year = '{$year}' ORDER BY earning_id DESC";
+                                                '{$agentid}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
                                                 $result = $this->dbcon->query($sql);
                                                 $row = $result->fetch_assoc();
                                                 if($result->num_rows == 1){
@@ -11177,7 +12065,7 @@ $output1 = '
                                                 $refid = $row4['referral_id'];
                                                 $agentdate = $row4['agent_date'];
                                                 $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
-                                                = '{$agentid}' AND payment_month = '{$month}'  AND payment_year = '{$year}' ORDER BY earning_id DESC";
+                                                = '{$agentid}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
                                                 $result2 = $this->dbcon->query($sql2);
                                                 $row2 = $result2->fetch_assoc();
                                                 if($result2->num_rows == 1){
@@ -11318,7 +12206,7 @@ function searchUserEarningByMonth($month,$year){
     $row4 = $results->fetch_assoc();
     $agentdate = $row4['user_date'];
     $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND payment_month =
-    '{$month}' AND payment_year = '{$year}' ORDER BY earning_id DESC";
+    '{$month}' AND payment_year = '{$year}'  AND offline_status = ''ORDER BY earning_id DESC";
     
     $result3=$this->dbcon->query($totalearning);
     $row2 = $result3->fetch_assoc();
@@ -11355,7 +12243,7 @@ function searchUserEarningByMonth($month,$year){
     $data2 = $value;
     }
 
-    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
+    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = ''";
     $result3 = $this->dbcon->query($sql3);
     $row3 = $result3->fetch_assoc();
     foreach ($row3 as $key => $value3) {
@@ -11372,7 +12260,7 @@ function searchUserEarningByMonth($month,$year){
         }
     
     $sql5 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-    '{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}' ORDER BY earning_id DESC";
+    '{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
     $result5 = $this->dbcon->query($sql5);
     $row5 = $result5->fetch_assoc();
     if($result5->num_rows == 1){
@@ -11482,7 +12370,7 @@ $execdate = $row4['executive_date'];
 $execid = $row4['unique_id'];
 $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND
 payment_month='{$month}' AND payment_year =
-'{$year}' ORDER BY earning_id DESC"; $result3=$this->
+'{$year}' AND offline_status = ''ORDER BY earning_id DESC"; $result3=$this->
 dbcon->query($totalearning);
 $row2 = $result3->fetch_assoc();
 if($result3->num_rows == 1){
@@ -11515,7 +12403,7 @@ $output1 = '
 
         $output5 = '<div class="details" style="text-transform: capitalize;">
             <p class="pname">&#8358;';
-                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND payment_month = '{$month}' AND payment_year = '{$year}'ORDER BY
+                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND payment_month = '{$month}' AND payment_year = '{$year}' AND offline_status = '' ORDER BY
                 earning_id DESC";
                 $result3 = $this->dbcon->query($sql3);
 
@@ -11599,12 +12487,12 @@ $results = $this->dbcon->query($totalagent);
 $row4 = $results->fetch_assoc();
 $agentdate = $row4['agent_date'];
 $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
-payment_month='{$month}' AND payment_year = '{$year}' ORDER BY earning_id
+payment_month='{$month}' AND payment_year = '{$year}' AND offline_status = ''ORDER BY earning_id
 DESC"; $result3=$this->dbcon->query($totalearning);
 $row2 = $result3->fetch_assoc();
 
 $sql6 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
-= '{$value}' AND payment_month = '{$month}'  AND payment_year = '{$year}' ORDER BY earning_id DESC";
+= '{$value}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = ''ORDER BY earning_id DESC";
 $result6 = $this->dbcon->query($sql6);
 $row6 = $result6->fetch_assoc();
 if($result6->num_rows == 1){
@@ -11752,11 +12640,11 @@ function downloadUserEarning($month,$year){
     $row4 = $results->fetch_assoc();
     $agentdate = $row4['user_date'];
     $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
-    payment_month='{$month}' AND payment_year = '{$year}' ORDER BY earning_id
+    payment_month='{$month}' AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id
     DESC"; $result3=$this->dbcon->query($totalearning);
     $row2 = $result3->fetch_assoc();
     
-    $sql6 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$value}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
+    $sql6 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$value}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status=''";
     $result6 = $this->dbcon->query($sql6);
     $row6 = $result6->fetch_assoc();
     if($result6->num_rows == 1){
@@ -11868,7 +12756,7 @@ $execdate = $row4['executive_date'];
 $execid = $row4['unique_id'];
 $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND
 payment_month='{$month}' AND
-payment_year = '{$year}' ORDER BY earning_id DESC";
+payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
 $result3=$this->dbcon->query($totalearning);
 $row2 = $result3->fetch_assoc();
 
@@ -12005,12 +12893,19 @@ $output1 = '
     $unit = round($unitprice);
     }
 
-    if($data['payee'] == $data['earnee']){
-    $customer = $data['earnee']." Paid:";
+    if($data['payee'] == $data['earnee'] ){
+        if($data['offline_status'] != ""){
+            $customer = "Paid Offline:";
+        } else {
+            $customer = "".$data['earnee']." Paid:";
+        }
     }
-
     else {
-    $customer = "Customer Paid:";
+        if($data['offline_status'] != ""){
+            $customer = "Paid Offline:";
+        } else {
+            $customer = "Customer Paid:";
+        }
     }
 
     $unitprice2 = $data['product_price'];
@@ -12043,30 +12938,68 @@ $output1 = '
                     } else {
                         $output2 = "";
                     }
-    $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
-        <div class="account-detail2"
-            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-            <div class="flex">
-                <p style="text-transform: uppercase;">
-                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                        earned &#8358;'.$unit.'</span>
-                </p>
-                <div class="payee">
-                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                </div>
-                <div class="inner-detail">
-                    <div class="date">
-                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                    </div>
-                </div>
-                '.$output2.'
-            </div>
-        </div>
-
-    </a> ';
-
+                    if($data['payment_mode'] == "Offline"){
+                        if($data['offline_status'] == ""){
+                          $outputmode=' <p
+                          style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                          Approved</p>';
+                        } else {
+                            $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            '.$data['offline_status'].'</p>';
+                        }
+                        $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                               '.$outputmode.'
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+                
+                    </a> ';
+                
+                    } else {
+                        $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+                
+                    </a> ';
+                
+                    }
+   
     }
     } else {
     $output .= "
@@ -12098,10 +13031,19 @@ $output1 = '
     }
 
     if($data['payee'] == $data['earnee'] ){
-    $customer = "".$data['earnee']." Paid:";
+        if($data['offline_status'] != ""){
+            $customer = "Paid Offline:";
+        } else {
+            $customer = "".$data['earnee']." Paid:";
+        }
     }
     else {
-    $customer = "Customer Paid:"; }
+        if($data['offline_status'] != ""){
+            $customer = "Paid Offline:";
+        } else {
+            $customer = "Customer Paid:";
+        }
+    }
 
     $unitprice2 = $data['product_price'];
 
@@ -12132,7 +13074,43 @@ $output1 = '
                         } else {
                             $output2 = "";
                         }
-    $output.= '
+                        if($data['payment_mode'] == "Offline"){
+                            if($data['offline_status'] == ""){
+                                $outputmode=' <p
+                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                Approved</p>';
+                              } else {
+                                  $outputmode = ' <p
+                                  style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                  '.$data['offline_status'].'</p>';
+                              }
+                            $output.= '
+                            <div class="account-detail2"
+                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                <div class="flex">
+                               '.$outputmode.'
+                                    <p style="text-transform: uppercase;">
+                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                            earned &#8358;'.$unit.'</span>
+                                    </p>
+                                    <div class="payee">
+                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                    </div>
+                                    <div class="inner-detail">
+                                        <div class="date">
+                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$output2.'
+                                </div>
+                            </div>
+                        
+                            ';
+                        
+                        } else {
+                            $output.= '
     <div class="account-detail2"
         style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
         <div class="flex">
@@ -12156,6 +13134,8 @@ $output1 = '
 
     ';
 
+                        }
+    
     }
     } else {
     $output .= "
@@ -12357,10 +13337,19 @@ $output1 = '
     }
 
     if($data['payee'] == $data['earnee'] ){
-    $customer = "".$data['earnee']." Paid:";
+        if($data['offline_status'] != ""){
+            $customer = "Paid Offline:";
+        } else {
+            $customer = "".$data['earnee']." Paid:";
+        }
     }
     else {
-    $customer = "Customer Paid:"; }
+        if($data['offline_status'] != ""){
+            $customer = "Paid Offline:";
+        } else {
+            $customer = "Customer Paid:";
+        }
+    }
 
     $unitprice2 = $data['product_price'];
 
@@ -12392,30 +13381,68 @@ $output1 = '
                         } else {
                             $output2 = "";
                         }
-    $output.= '
-    <div class="account-detail2"
-        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-        <div class="flex">
-            <p style="text-transform: uppercase;">
-                <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                    earned &#8358;'.$unit.'</span>
-            </p>
-            <div class="payee">
-                <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                    &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-            </div>
-            <div class="inner-detail">
-                <div class="date">
-                    <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                </div>
-            </div>
-            '.$output2.'
-        </div>
-    </div>
-
-    ';
-
+                        if($data['payment_mode'] == "Offline"){
+                            if($data['offline_status'] == ""){
+                                $outputmode=' <p
+                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                Approved</p>';
+                              } else {
+                                  $outputmode = ' <p
+                                  style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                  '.$data['offline_status'].'</p>';
+                              }
+                            $output.= '
+                            <div class="account-detail2"
+                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                <div class="flex">
+                                '.$outputmode.'
+                                    <p style="text-transform: uppercase;">
+                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                            earned &#8358;'.$unit.'</span>
+                                    </p>
+                                    <div class="payee">
+                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                    </div>
+                                    <div class="inner-detail">
+                                        <div class="date">
+                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$output2.'
+                                </div>
+                            </div>
+                        
+                            ';
+                        
+                        } else {
+                            $output.= '
+                            <div class="account-detail2"
+                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                <div class="flex">
+                                    <p style="text-transform: uppercase;">
+                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                            earned &#8358;'.$unit.'</span>
+                                    </p>
+                                    <div class="payee">
+                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                    </div>
+                                    <div class="inner-detail">
+                                        <div class="date">
+                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$output2.'
+                                </div>
+                            </div>
+                        
+                            ';
+                        
+                        }
+  
     }
     } else {
     $output .= "
@@ -12455,10 +13482,19 @@ $output1 = '
         }
     
         if($data['payee'] == $data['earnee'] ){
-        $customer = "".$data['earnee']." Paid:";
+            if($data['offline_status'] != ""){
+                $customer = "Paid Offline:";
+            } else {
+                $customer = "".$data['earnee']." Paid:";
+            }
         }
         else {
-        $customer = "Customer Paid:"; }
+            if($data['offline_status'] != ""){
+                $customer = "Paid Offline:";
+            } else {
+                $customer = "Customer Paid:";
+            }
+        }
     
         $unitprice2 = $data['product_price'];
     
@@ -12490,30 +13526,68 @@ $output1 = '
                             } else {
                                 $output2 = "";
                             }
-        $output.= '
-        <div class="account-detail2"
-            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-            <div class="flex">
-                <p style="text-transform: uppercase;">
-                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                        earned &#8358;'.$unit.'</span>
-                </p>
-                <div class="payee">
-                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                </div>
-                <div class="inner-detail">
-                    <div class="date">
-                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                    </div>
-                </div>
-                '.$output2.'
-            </div>
-        </div>
-    
-        ';
-    
+                            if($data['payment_mode'] == "Offline"){
+                                if($data['offline_status'] == ""){
+                                    $outputmode=' <p
+                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                    Approved</p>';
+                                  } else {
+                                      $outputmode = ' <p
+                                      style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                      '.$data['offline_status'].'</p>';
+                                  }
+                                $output.= '
+                                <div class="account-detail2"
+                                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                    <div class="flex">
+                                   '.$outputmode.'
+                                        <p style="text-transform: uppercase;">
+                                            <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                                earned &#8358;'.$unit.'</span>
+                                        </p>
+                                        <div class="payee">
+                                            <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                                &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                        </div>
+                                        <div class="inner-detail">
+                                            <div class="date">
+                                                <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                            </div>
+                                        </div>
+                                        '.$output2.'
+                                    </div>
+                                </div>
+                            
+                                ';
+                            
+                            } else {
+                                $output.= '
+                                <div class="account-detail2"
+                                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                    <div class="flex">
+                                        <p style="text-transform: uppercase;">
+                                            <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                                earned &#8358;'.$unit.'</span>
+                                        </p>
+                                        <div class="payee">
+                                            <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                                &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                        </div>
+                                        <div class="inner-detail">
+                                            <div class="date">
+                                                <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                            </div>
+                                        </div>
+                                        '.$output2.'
+                                    </div>
+                                </div>
+                            
+                                ';
+                            
+                            }
+       
         }
         } else {
             if($name == "Pending"){
@@ -12568,10 +13642,19 @@ $output1 = '
             }
         
             if($data['payee'] == $data['earnee'] ){
-            $customer = "".$data['earnee']." Paid:";
+                if($data['offline_status'] != ""){
+                    $customer = "Paid Offline:";
+                } else {
+                    $customer = "".$data['earnee']." Paid:";
+                }
             }
             else {
-            $customer = "Customer Paid:"; }
+                if($data['offline_status'] != ""){
+                    $customer = "Paid Offline:";
+                } else {
+                    $customer = "Customer Paid:";
+                }
+            }
         
             $unitprice2 = $data['product_price'];
         
@@ -12603,29 +13686,66 @@ $output1 = '
                                 } else {
                                     $output2 = "";
                                 }
-            $output.= '
-            <div class="account-detail2"
-                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                <div class="flex">
-                    <p style="text-transform: uppercase;">
-                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                            earned &#8358;'.$unit.'</span>
-                    </p>
-                    <div class="payee">
-                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                    </div>
-                    <div class="inner-detail">
-                        <div class="date">
-                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                        </div>
-                    </div>
-                    '.$output2.'
-                </div>
-            </div>
-        
-            ';
+                                if($data['payment_mode'] == "Offline"){
+                                    if($data['offline_status'] == ""){
+                                        $outputmode=' <p
+                                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                        Approved</p>';
+                                      } else {
+                                          $outputmode = ' <p
+                                          style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                          '.$data['offline_status'].'</p>';
+                                      }
+                                    $output.= '
+                                    <div class="account-detail2"
+                                        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                        <div class="flex">
+                                        '.$outputmode.'
+                                            <p style="text-transform: uppercase;">
+                                                <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                                    earned &#8358;'.$unit.'</span>
+                                            </p>
+                                            <div class="payee">
+                                                <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                                    &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                            </div>
+                                            <div class="inner-detail">
+                                                <div class="date">
+                                                    <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                                </div>
+                                            </div>
+                                            '.$output2.'
+                                        </div>
+                                    </div>
+                                
+                                    ';
+                                } else {
+                                    $output.= '
+                                    <div class="account-detail2"
+                                        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                        <div class="flex">
+                                            <p style="text-transform: uppercase;">
+                                                <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                                    earned &#8358;'.$unit.'</span>
+                                            </p>
+                                            <div class="payee">
+                                                <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                                    &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                            </div>
+                                            <div class="inner-detail">
+                                                <div class="date">
+                                                    <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                                </div>
+                                            </div>
+                                            '.$output2.'
+                                        </div>
+                                    </div>
+                                
+                                    ';
+                                }
+           
         
             }
             } else {
@@ -12688,10 +13808,19 @@ $output1 = '
                 }
             
                 if($data['payee'] == $data['earnee'] ){
-                $customer = "".$data['earnee']." Paid:";
+                    if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                    } else {
+                        $customer = "".$data['earnee']." Paid:";
+                    }
                 }
                 else {
-                $customer = "Customer Paid:"; }
+                    if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                    } else {
+                        $customer = "Customer Paid:";
+                    }
+                }
             
                 $unitprice2 = $data['product_price'];
             
@@ -12734,7 +13863,43 @@ $output1 = '
                 if($type == "Yurland"){
                     $username = "Yurland";
                 }
-                $output.= '
+                if($data['payment_mode'] == "Offline"){
+                    if($data['offline_status'] == ""){
+                        $outputmode=' <p
+                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                        Approved</p>';
+                      } else {
+                          $outputmode = ' <p
+                          style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                          '.$data['offline_status'].'</p>';
+                      }
+                    $output.= '
+                    <div class="account-detail2"
+                        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                        <div class="flex">
+                       '.$outputmode.'
+                            <p style="text-transform: uppercase;">
+                                <span style="color: #000000!important; font-size: 16px;">'.$username.'
+                                    earned &#8358;'.$unit.'</span>
+                            </p>
+                            <div class="payee">
+                                <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                    &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                            </div>
+                            <div class="inner-detail">
+                                <div class="date">
+                                    <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                </div>
+                            </div>
+                            '.$output2.'
+                        </div>
+                    </div>
+                
+                    ';
+                
+                } else {
+                    $output.= '
                 <div class="account-detail2"
                     style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                     <div class="flex">
@@ -12758,6 +13923,8 @@ $output1 = '
             
                 ';
             
+                }
+                
                 }
                 } else {
                     if($name == "Pending"){
@@ -12881,12 +14048,19 @@ $output1 = '
     $unit = round($unitprice);
     }
 
-    if($data['payee'] == $data['earnee']){
-    $customer = $data['earnee']." Paid:";
+    if($data['payee'] == $data['earnee'] ){
+        if($data['offline_status'] != ""){
+            $customer = "Paid Offline:";
+        } else {
+            $customer = "".$data['earnee']." Paid:";
+        }
     }
-
     else {
-    $customer = "Customer Paid:";
+        if($data['offline_status'] != ""){
+            $customer = "Paid Offline:";
+        } else {
+            $customer = "Customer Paid:";
+        }
     }
 
     $unitprice2 = $data['product_price'];
@@ -12919,30 +14093,69 @@ $output1 = '
                         } else {
                             $output2 = "";
                         }
-    $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
-        <div class="account-detail2"
-            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-            <div class="flex">
-                <p style="text-transform: uppercase;">
-                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                        earned &#8358;'.$unit.'</span>
-                </p>
-                <div class="payee">
-                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                </div>
-                <div class="inner-detail">
-                    <div class="date">
-                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                    </div>
-                </div>
-                '.$output2.'
-            </div>
-        </div>
+                        if($data['payment_mode'] == "Offline"){
+                            if($data['offline_status'] == ""){
+                                $outputmode=' <p
+                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                Approved</p>';
+                              } else {
+                                  $outputmode = ' <p
+                                  style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                                  '.$data['offline_status'].'</p>';
+                              }
+                            $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
+                            <div class="account-detail2"
+                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                <div class="flex">
+                               '.$outputmode.'
+                                    <p style="text-transform: uppercase;">
+                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                            earned &#8358;'.$unit.'</span>
+                                    </p>
+                                    <div class="payee">
+                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                    </div>
+                                    <div class="inner-detail">
+                                        <div class="date">
+                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$output2.'
+                                </div>
+                            </div>
+                    
+                        </a> ';
+                    
+                        } else {
+                            $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
+                            <div class="account-detail2"
+                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                <div class="flex">
+                                    <p style="text-transform: uppercase;">
+                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                            earned &#8358;'.$unit.'</span>
+                                    </p>
+                                    <div class="payee">
+                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                    </div>
+                                    <div class="inner-detail">
+                                        <div class="date">
+                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$output2.'
+                                </div>
+                            </div>
+                    
+                        </a> ';
+                    
+                        }
 
-    </a> ';
-
+   
     }
     } else {
     $output .= "

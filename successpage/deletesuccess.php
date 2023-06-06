@@ -54,12 +54,21 @@ session_start();
         <?php if($_GET['detect'] == "opened"){?>
         <p>Product Opened Successfully!</p>
         <?php }?>
+        <?php if($_GET['detect'] == "approvedhistory"){?>
+        <p>Payment Approved Successfully!</p>
+        <?php }?>
+        <?php if($_GET['detect'] == "rejecthistory"){?>
+        <p>Payment Rejected Successfully!</p>
+        <?php }?>
         <?php if(isset($_SESSION['uniquesubadmin_id'])){?>
         <a href="../allestates3.php"><button class="landing_page_button2">Back to Dashboard</button></a>
         <?php }?>
         <?php if(isset($_SESSION['uniquesupadmin_id'])){?>
+        <?php if(($_GET['detect'] == "approvedhistory") || ($_GET['detect'] == "rejecthistory")){?>
+        <a href="../offlinehistory.php"><button class="landing_page_button2">Back to Dashboard</button></a>
+        <?php } else {?>
         <a href="../allproducts.php"><button class="landing_page_button2">Back to Dashboard</button></a>
-        <?php }?>
+        <?php }}?>
     </div>
 </body>
 
