@@ -7,6 +7,7 @@
  if($selectuser['referral_id'] != "Yurland"){
    $agent = $user->selectAgentRef($selectuser['referral_id']);
    $userperson = $user->selectUserRef($selectuser['referral_id']);
+   $adminid = "";
    if(!empty($agent)){
        $agentid= $agent['uniqueagent_id'];
    } else {
@@ -250,6 +251,12 @@ if($message == "Plan created"){
             "display_name" => "Increase Rate",
             "variable_name" => "Increase Rate",
             "value" => $increaserate
+        ],
+
+        [
+            "display_name" => "Adminid",
+            "variable_name" => "Adminid",
+            "value" => $adminid
         ],
 
       ]

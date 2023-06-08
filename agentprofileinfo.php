@@ -540,6 +540,14 @@ if(!isset($_SESSION['uniqueagent_id'])){
                                 <?php }?></span>
                             </p>
                         </span>
+                        <p style="text-transform: capitalize;">
+                            Downliner Percentage Commission
+                        </p>
+                        <span><?php if(isset($newuser['downliner_percentage'])){ ?>
+                            <?php echo $newuser['downliner_percentage']; ?><span>%
+                                <?php }?></span>
+                            </p>
+                        </span>
                         <p>
                             <a href="https://chat.whatsapp.com/KC9NaLdq9otGNcD7zkjeIL" style="color: #fff;">
                                 <div class="estate_page_button"

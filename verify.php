@@ -66,6 +66,7 @@ if('success' == $trans->data->status){
     $agentid = $trans->data->metadata->custom_fields[17]->value;
     $allocationfee = $trans->data->metadata->custom_fields[18]->value;
     $newpayid = $trans->data->metadata->custom_fields[19]->value;
+    
 
     
 
@@ -76,6 +77,7 @@ if('success' == $trans->data->status){
     $failedcharge = $trans->data->metadata->custom_fields[20]->value;
     $balance = $trans->data->metadata->custom_fields[21]->value;
     $prodprice = $trans->data->metadata->custom_fields[22]->value;
+    $adminid = $trans->data->metadata->custom_fields[23]->value;
     $updatepayment = $user->updateFailedPayment($newpayid,$uniqueperson,$unique,$failedcharge,$balance,$prodprice);
     $executives = $user->selectAllExecutive();
     if(!empty($executives)){
@@ -108,6 +110,29 @@ if(!empty($userearnee)){
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -137,9 +162,9 @@ if(!empty($userearnee)){
       header("Location: allocationletter.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&allocationfee=".$allocationfee2."&customer=".$name."&amount=".$price."&balance=".$balance."&payer=".$payee."&email=".$selectuser['email']."");
 
       
-      $inserthistory = $user->insertFailedHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$product_name,$payee,$agentid,$allocationfee,$newpayid,$price,$filename,$balance);
+      $inserthistory = $user->insertFailedHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$product_name,$payee,$agentid,$allocationfee,$newpayid,$price,$filename,$balance,$adminid);
     } else {
-      $inserthistory = $user->insertFailedHistory2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$product_name,$payee,$agentid,$allocationfee,$newpayid,$price,$balance);
+      $inserthistory = $user->insertFailedHistory2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$product_name,$payee,$agentid,$allocationfee,$newpayid,$price,$balance,$adminid);
 
       $username = $user->selectUser($uniqueperson);
 $customername = $username['first_name']." ".$username['last_name'];
@@ -166,6 +191,7 @@ header("Location: successemail.php?name=".$customername."&date=".$paymentdate."&
    if($paymenttype == "outrightpayment"){
     $newpayid2 = $trans->data->metadata->custom_fields[20]->value;
     $paymode = $trans->data->metadata->custom_fields[21]->value;
+    $adminid = $trans->data->metadata->custom_fields[22]->value;
     if($paymode == "Offline"){
       
       $selectland = $user->selectPayment2($unique,$newpayid2,$uniqueperson,$paymentmethod);
@@ -178,7 +204,7 @@ header("Location: successemail.php?name=".$customername."&date=".$paymentdate."&
         $offlinestatus = "";
         $paymentmode = "";
           
-        $inserthistory = $user->insertOutPayHistory2($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$value2['product_unit'],$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode);
+        $inserthistory = $user->insertOutPayHistory2($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$value2['product_unit'],$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode,$adminid);
       }
 
       $selectuser = $user->selectUser($uniqueperson);
@@ -211,11 +237,34 @@ $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$p
 
 if(!empty($userearnee)){
   $earnerid = $userearnee['unique_id'];
+  
   $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
   $earnedamount = $userearnee['earning_percentage'] / 100 * $price;
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -257,7 +306,7 @@ if(!empty($userearnee)){
       $selectuser = $user->selectUser($uniqueperson);
     header("Location: allocationletter.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&allocationfee=".$allocationfee2."&customer=".$name."&amount=".$price."&balance=".$balance."&payer=".$payee."&email=".$selectuser['email']."");
 
-$insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid);
+$insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid);
 
 $executives = $user->selectAllExecutive();
     if(!empty($executives)){
@@ -285,11 +334,34 @@ $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$p
 
 if(!empty($userearnee)){
   $earnerid = $userearnee['unique_id'];
+  
   $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
   $earnedamount = $userearnee['earning_percentage'] / 100 * $price;
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -305,7 +377,7 @@ if(!empty($userearnee)){
 
 
 
-$inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid);
+$inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$added_unit,$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid);
 
 
 
@@ -326,7 +398,7 @@ $inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,
      $balance = 0;
      $selectuser = $user->selectUser($uniqueperson);
     header("Location: allocationletter.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&allocationfee=".$allocationfee2."&customer=".$name."&amount=".$price."&balance=".$balance."&payer=".$payee."&email=".$selectuser['email']."");
-   $insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid);
+   $insertpayment = $user->insertOutPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid);
 
    $executives = $user->selectAllExecutive();
     if(!empty($executives)){
@@ -354,11 +426,34 @@ $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$p
 
 if(!empty($userearnee)){
   $earnerid = $userearnee['unique_id'];
+  
   $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
   $earnedamount = $userearnee['earning_percentage'] / 100 * $price;
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -372,7 +467,7 @@ if(!empty($userearnee)){
     }
 
 
-   $inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid);
+   $inserthistory = $user->insertOutPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$unit,$paymentmethod,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid);
 
    
 }
@@ -392,6 +487,7 @@ if(!empty($userearnee)){
     $newpayid = $trans->data->metadata->custom_fields[23]->value;
     $firstdate = $trans->data->metadata->custom_fields[26]->value;
     $increaserate = $trans->data->metadata->custom_fields[27]->value;
+    $adminid = $trans->data->metadata->custom_fields[28]->value;
     
    
     
@@ -406,6 +502,7 @@ if(empty($checklastpayment)){
     $subprice = $trans->data->metadata->custom_fields[25]->value;
     $firstdate = $trans->data->metadata->custom_fields[26]->value;
     $increaserate = $trans->data->metadata->custom_fields[27]->value;
+    $adminid = $trans->data->metadata->custom_fields[28]->value;
 
 
     $uniquename = rand();
@@ -430,7 +527,7 @@ if(empty($checklastpayment)){
         $subprice2 =  ceil($subprice);
       }
     header("Location: offer.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&totalcost=".$newbalance2."&allocationfee=".$allocationfee2."&units=".$added_unit."&subprice=".$subprice2."&paydate=".$paymentdate."&period=".$subperiod."&enddate=".$period."&customer=".$name."&amount=".$newpay."&balance=".$newprice."&payer=".$payee."&email=".$selectuser['email']."");
-    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newbalance,$newpayid,$firstdate,$increaserate);
+    $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newbalance,$newpayid,$firstdate,$increaserate,$adminid);
 
     $executives = $user->selectAllExecutive();
     if(!empty($executives)){
@@ -458,11 +555,34 @@ $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$p
 
 if(!empty($userearnee)){
   $earnerid = $userearnee['unique_id'];
+  
   $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
   $earnedamount = $userearnee['earning_percentage'] / 100 * $newpay;
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$newpay,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -477,7 +597,7 @@ if(!empty($userearnee)){
 
 
     
-    $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newpay,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid);
+    $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$paymentmethod,$newpay,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid);
 
   
 } else {
@@ -526,11 +646,34 @@ $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$p
 
 if(!empty($userearnee)){
   $earnerid = $userearnee['unique_id'];
+  
   $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
   $earnedamount = $userearnee['earning_percentage'] / 100 * $newpay;
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$newpay,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -544,7 +687,7 @@ if(!empty($userearnee)){
     }
 
 
-$inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$payment_method,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$newpayid);
+$inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$added_unit,$payment_method,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$newpayid,$adminid);
 
 $username = $user->selectUser($uniqueperson);
 $customername = $username['first_name']." ".$username['last_name'];
@@ -575,6 +718,7 @@ $updatenewpayment = $user->updatePayment($unique,$uniqueperson,$newpayid);
         $subprice = $trans->data->metadata->custom_fields[25]->value;
         $firstdate = $trans->data->metadata->custom_fields[26]->value;
         $increaserate = $trans->data->metadata->custom_fields[27]->value;
+        $adminid = $trans->data->metadata->custom_fields[28]->value;
 
         $uniquename = rand();
         $filename = "offerletter".$uniquename.".pdf";
@@ -598,7 +742,7 @@ $updatenewpayment = $user->updatePayment($unique,$uniqueperson,$newpayid);
             $subprice2 =  ceil($subprice);
           }
         header("Location: offer.php?filename=".$filename."&estatename=".$product_name."&estatelocal=".$productlocation."&totalcost=".$newbalance2."&allocationfee=".$allocationfee2."&units=".$unit."&subprice=".$subprice2."&paydate=".$paymentdate."&period=".$subperiod."&enddate=".$period."&customer=".$name."&amount=".$newpay."&balance=".$newprice."&payer=".$payee."&email=".$selectuser['email']."");
-   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newbalance,$newpayid,$firstdate,$increaserate);
+   $insertpayment = $user->insertNewPayment($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newbalance,$newpayid,$firstdate,$increaserate,$adminid);
 
    $executives = $user->selectAllExecutive();
     if(!empty($executives)){
@@ -626,11 +770,34 @@ $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$p
 
 if(!empty($userearnee)){
   $earnerid = $userearnee['unique_id'];
+  
   $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
   $earnedamount = $userearnee['earning_percentage'] / 100 * $newpay;
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$newpay,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -645,7 +812,7 @@ if(!empty($userearnee)){
 
 
 
-   $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid);
+   $inserthistory = $user->insertNewPayHistory($uniqueperson,$unique,$product_name,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$newprice,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid);
   
    
 
@@ -695,11 +862,34 @@ $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$p
 
 if(!empty($userearnee)){
   $earnerid = $userearnee['unique_id'];
+  
   $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
   $earnedamount = $userearnee['earning_percentage'] / 100 * $newpay;
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$newpay,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -713,7 +903,7 @@ if(!empty($userearnee)){
     }
 
 
-            $inserthistory = $user->insertUpdateHistory2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$filename,$newpayid);
+            $inserthistory = $user->insertUpdateHistory2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid);
         } else {
             $updatepay = $user->updateNewPayment($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$addedprice,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$payee,$agentid,$allocationfee,$newpayid,$firstdate,$increaserate);
 
@@ -743,11 +933,34 @@ $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$p
 
 if(!empty($userearnee)){
   $earnerid = $userearnee['unique_id'];
+  
   $earnee = $userearnee['first_name']." ".$userearnee['last_name'];
   $earnedamount = $userearnee['earning_percentage'] / 100 * $newpay;
   $selectuser = $user->selectUser($uniqueperson);
   $name = $selectuser['first_name'].' '.$selectuser['last_name'];
   $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$newpay,$payee,$earnedamount,$earnee,$name,$product_name,$newpayid);
+
+  $referredusers = $user->selectReferredCustomer($userearnee['personal_ref']);
+  if(!empty($referredusers) && $userearnee['referral_id'] != 'Yurland'){
+        $refagent = $user->selectReferralAgent($userearnee['referral_id']);
+        $earnerid2 = $refagent['uniqueagent_id'];
+        $earnee2 = $refagent['agent_name'];
+        $earnedamount2 = $refagent['downliner_percentage'] / 100 * $price;
+        $selectuser = $user->selectUser($uniqueperson);
+        $name2 = $selectuser['first_name'].' '.$selectuser['last_name'];
+        $insertagentearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid2,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount2,$earnee2,$name2,$product_name,$newpayid);
+  }
+
+  if(!empty($executives)){
+    foreach($executives as $key => $value){
+      $earnerid = $value['unique_id'];
+$earnee3 = $value['full_name'];
+$earnedamount = $value['downliner_earning'] / 100 * $price;
+$selectuser = $user->selectUser($uniqueperson);
+$name = $selectuser['first_name'].' '.$selectuser['last_name'];
+      $insertearning = $user->insertEarningHistory($uniqueperson,$agentid,$earnerid,$paymentdate,$paymentmonth,$paymentyear,$paymenttime,$paymentday,$price,$payee,$earnedamount,$earnee3,$name,$product_name,$newpayid);
+    }
+  }
   }
 
   if($agentid == "noagent"){
@@ -761,7 +974,7 @@ if(!empty($userearnee)){
     }
 
 
-            $inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$newpayid);
+            $inserthistory = $user->insertUpdateHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$newpay,$image,$unit,$paymentmethod,$paymentdate,$newprice,$period,$subperiod,$product_name,$payee,$agentid,$allocationfee,$newpayid,$adminid);
 
             $username = $user->selectUser($uniqueperson);
             $customername = $username['first_name']." ".$username['last_name'];

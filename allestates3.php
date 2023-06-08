@@ -1069,6 +1069,15 @@ include "projectlog.php";
                             </div>
                         </div>
 
+                        <?php  if($value['comingsoon_status'] == "On"){ ?>
+                        <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff;">Coming Soon</p>
+                            </div>
+                        </div>
+                        <?php }?>
+
                         <?php if(isset($_SESSION['uniquesubadmin_id']) || isset($_SESSION['uniquesupadmin_id'])){
                            ?>
                         <?php  if($value['land_status'] == "Closed"){ ?>

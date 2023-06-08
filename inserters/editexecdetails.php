@@ -9,6 +9,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $bankname = $_POST['bankname'];
     $accountnum = $_POST['accountnum'];
     $earning = $_POST['earning'];
+    $earningtwo = $_POST['earningtwo'];
     $filename = $_FILES['image']['name'];
     $unique = $_POST['uniqueuser'];
 
@@ -31,7 +32,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }else if($emailuser6['executive_email'] != $email && !empty($emailuser3)){
       $errormsg = "Email Address already exists";
     } else {
-     $insertuser = $user->updateExecInfo(check_input($agentname),check_input($email),check_input($unique),check_input($phonenum),check_input($earning),check_input($bankname),check_input($accountnum));
+     $insertuser = $user->updateExecInfo(check_input($agentname),check_input($email),check_input($unique),check_input($phonenum),check_input($earning),check_input($earningtwo),check_input($bankname),check_input($accountnum));
     }
     }
 

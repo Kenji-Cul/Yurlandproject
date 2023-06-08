@@ -53,6 +53,7 @@ if(isset($_POST["submit"])){
     $paymentdate = date("M-d-Y");
     $balance = $landpay['balance'] - $_GET['tot'];
     $payee = $selectuser['first_name']." ".$selectuser['last_name'];
+    $adminid = "";
     if($selectuser['referral_id'] != "Yurland"){
         $agent = $user->selectAgentRef($selectuser['referral_id']);
         $userperson = $user->selectUserRef($selectuser['referral_id']);
@@ -219,6 +220,12 @@ if(isset($_POST["submit"])){
                 "display_name" => "Prodprice",
                 "variable_name" => "prodprice",
                 "value" => $prodprice
+            ],
+
+            [
+                "display_name" => "Adminid",
+                "variable_name" => "Adminid",
+                "value" => $adminid
             ],
 
           ]

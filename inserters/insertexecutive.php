@@ -10,8 +10,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $password = $_POST['password'];
 $role = $_POST['rolediv'];
 $earningpercent = $_POST['percent'];
+$earningpercenttwo = $_POST['percenttwo'];
 
-if(empty($name) || empty($email) || empty($earningpercent) || empty($password) || empty($role) || empty($phonenum) || empty($bankname) || empty($accountnum)){
+if(empty($name) || empty($email) || empty($earningpercent) || empty($earningpercenttwo) || empty($password) || empty($role) || empty($phonenum) || empty($bankname) || empty($accountnum)){
     $errormsg = "Please input all fields";
 }
 
@@ -29,7 +30,7 @@ else {
      if(!empty( $checkagent) || !empty( $checkagent2) || !empty( $checkagent3) || !empty( $checkagent4) || !empty( $checkagent5)){
      $errormsg = "Email Address already exists";
      }else{
-     $insertagent = $agent->createExecutive(check_input($name),check_input($password),check_input($role),check_input($earningpercent), check_input($email),check_input($phonenum),check_input($bankname),check_input($accountnum));
+     $insertagent = $agent->createExecutive(check_input($name),check_input($password),check_input($role),check_input($earningpercent), check_input($earningpercenttwo), check_input($email),check_input($phonenum),check_input($bankname),check_input($accountnum));
         }
 
 }

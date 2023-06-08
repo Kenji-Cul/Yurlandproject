@@ -495,7 +495,9 @@ include "projectlog.php";
             <?php if(isset($_SESSION['unique_id'])){?>
             <a href="cartreview.php">
                 <div class="cart">
+                    <?php if(!isset($_GET['status'])){?>
                     <div class="cart-notify"></div>
+                    <?php }?>
                     <img src="images/cart.svg" alt="cart icon" />
                 </div>
             </a>
@@ -667,6 +669,7 @@ include "projectlog.php";
     <?php 
    
     if(!isset($_GET['remprice'])){
+        if($value['comingsoon_status'] != "On"){
         if($value['product_unit'] != 0){
         ?>
     <div class="cart-info">
@@ -765,7 +768,7 @@ include "projectlog.php";
     <div class="cart-info">
         <div class="cartbutton">Sold Out</div>
     </div>
-    <?php }}?>
+    <?php }}}?>
 
     <div class="land-desc">
         <?php echo $value['product_description'];?>
@@ -802,7 +805,7 @@ include "projectlog.php";
     <?php }}?>
 
 
-
+    <?php if($value['comingsoon_status'] != "On"){?>
     <?php if($value['product_unit'] != 0){?>
     <div class="first-section">
         <div class="units">
@@ -832,7 +835,7 @@ include "projectlog.php";
             </div>
         </form>
     </div>
-    <?php }?>
+    <?php }}?>
 
     <div class="thirdsection" style="display: none;">
 

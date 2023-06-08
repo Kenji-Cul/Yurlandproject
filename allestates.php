@@ -645,6 +645,7 @@ if(!isset($_SESSION['unique_id'])){
                     <?php if($value['land_status'] == "Closed"){?>style="display: none;" <?php }?>
                     <?php if($value['land_status'] == "Opened"){?>style="display: flex;" <?php }?>>
                     <div class="updated-img">
+                        <?php if($value['comingsoon_status'] != "On"){?>
                         <?php if($value['product_unit'] != 0){?>
                         <a
                             href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">
@@ -653,6 +654,10 @@ if(!isset($_SESSION['unique_id'])){
                     }?>" alt="<?php echo $value['product_name'];?>" />
                         </a>
                         <?php } else {?>
+                        <img src="landimage/<?php if(isset($value['product_image'])){
+                        echo $value['product_image'];
+                    }?>" alt="<?php echo $value['product_name'];?>" />
+                        <?php }}else {?>
                         <img src="landimage/<?php if(isset($value['product_image'])){
                         echo $value['product_image'];
                     }?>" alt="<?php echo $value['product_name'];?>" />
@@ -676,9 +681,15 @@ if(!isset($_SESSION['unique_id'])){
                                 </div>
                                 <div class="detail-location">
                                     <p style="color: #808080;"><?php echo $value['product_location'];?></p>
+                                    <?php if($value['comingsoon_status'] != "On"){?>
                                     <p><a
                                             href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej">click
                                             here to view</a></p>
+                                    <?php } else {?>
+                                    <p><a
+                                            href="estateinfo.php?id=<?php echo $value['unique_id'];?>&key=9298783623kfhdJKJhdh&REF=019299383838383837373611009178273535&keyref=09123454954848kdksuuejwej&status=comingsoon">click
+                                            here to view</a></p>
+                                    <?php }?>
                                 </div>
                             </div>
                         </div>
@@ -763,6 +774,15 @@ if(!isset($_SESSION['unique_id'])){
                             </div>
                         </div>
 
+                        <?php  if($value['comingsoon_status'] == "On"){ ?>
+                        <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff;">Coming Soon</p>
+                            </div>
+                        </div>
+
+                        <?php } else {?>
 
                         <?php if($value['product_unit'] != 0){?>
                         <div class="detail-five">
@@ -798,6 +818,8 @@ if(!isset($_SESSION['unique_id'])){
                                 <?php }?>
 
 
+
+
                                 <input type="hidden" name="productid" value="<?php echo $value['unique_id']?>">
                                 <input type="hidden" name="quantity" value="1">
                                 <input type="hidden" name="user" value="<?php echo $_SESSION['unique_id'];?>">
@@ -813,6 +835,7 @@ if(!isset($_SESSION['unique_id'])){
                                 <p>Sold Out</p>
                             </div>
                         </div>
+                        <?php }?>
                         <?php }?>
                     </div>
 

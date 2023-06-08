@@ -1098,6 +1098,19 @@ if(!isset($_GET['unique'])){
                     </div>
                 </div>
 
+                <div class="account-detail2">
+                    <div style="display: flex; flex-direction: column; gap: 0.4em;">
+                        <p style="text-transform: capitalize;">
+                            Downliner Percentage Commission
+                        </p>
+                        <span><?php if(isset($agent['downliner_percentage'])){ ?>
+                            <?php echo $agent['downliner_percentage']; ?><span>%
+                                <?php }?></span>
+                            </p>
+                        </span>
+                    </div>
+                </div>
+
 
 
 

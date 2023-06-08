@@ -970,6 +970,19 @@ if(!isset($_GET['unique'])){
                 <div class="account-detail2">
                     <div>
                         <p style="text-transform: capitalize;">
+                            Downliner Earning Percentage
+                        </p>
+                        <span><?php if(isset($agent['downliner_earning'])){ ?>
+                            <?php echo $agent['downliner_earning']; ?><span>%
+                                <?php }?></span>
+                            </p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="account-detail2">
+                    <div>
+                        <p style="text-transform: capitalize;">
                             Total Amount Earned
                         </p>
                         <span>&#8358;</span>

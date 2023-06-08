@@ -9,6 +9,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $address = $_POST['address'];
     $filename = $_FILES['image']['name'];
     $earning = $_POST['earning'];
+    $earningtwo = $_POST['earningtwo'];
     $bankname = $_POST['bankname'];
     $accountnum = $_POST['accountnum'];
     $accountname = $_POST['accountname'];
@@ -34,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }else if($emailuser6['agent_email'] != $email && !empty($emailuser2)){
       $errormsg = "Email Address already exists";
     } else {
-     $insertuser = $user->updateAgentInfo(check_input($agentname),check_input($agentnum),check_input($email),check_input($unique),check_input($address),check_input($earning),$groupid,check_input($bankname),check_input($accountnum),check_input($accountname));
+     $insertuser = $user->updateAgentInfo(check_input($agentname),check_input($agentnum),check_input($email),check_input($unique),check_input($address),check_input($earning),check_input($earningtwo),$groupid,check_input($bankname),check_input($accountnum),check_input($accountname));
     }
     }
 

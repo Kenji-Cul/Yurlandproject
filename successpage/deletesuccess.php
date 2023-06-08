@@ -54,6 +54,12 @@ session_start();
         <?php if($_GET['detect'] == "opened"){?>
         <p>Product Opened Successfully!</p>
         <?php }?>
+        <?php if($_GET['detect'] == "comingsoon"){?>
+        <p>Product Added For Coming Soon!</p>
+        <?php }?>
+        <?php if($_GET['detect'] == "removecomingsoon"){?>
+        <p>Product Removed From Coming Soon!</p>
+        <?php }?>
         <?php if($_GET['detect'] == "approvedhistory"){?>
         <p>Payment Approved Successfully!</p>
         <?php }?>

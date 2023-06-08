@@ -16,16 +16,19 @@ if(isset($_SESSION['uniquesupadmin_id'])){
 if(isset($_SESSION['uniqueagent_id'])){
   $payee = $selectagent['agent_name'];
   $agentid = $selectagent['uniqueagent_id'];
+  $adminid = "";
 } 
 
 if(isset($_SESSION['uniquesubadmin_id'])){
   $payee = $subadmin['subadmin_name'];
   $agentid = "noagent";
+  $adminid = $subadmin['unique_id'];
 }
 
 if(isset($_SESSION['uniquesupadmin_id'])){
   $payee = $subadmin['super_adminname'];
   $agentid = "noagent";
+  $adminid = $subadmin['unique_id'];
 }
 $email = $selectuser['email'];
 $realprice = round($intervalprice * 100);
@@ -262,6 +265,12 @@ if($message == "Plan created"){
             "display_name" => "Increase Rate",
             "variable_name" => "Increase Rate",
             "value" => $increaserate
+        ],
+
+        [
+            "display_name" => "Adminid",
+            "variable_name" => "Adminid",
+            "value" => $adminid
         ],
         
 

@@ -1096,6 +1096,9 @@ include "projectlog.php";
                         <th>Paid By</th>
                         <th>Date</th>
                         <th>Time of Payment</th>
+                        <th>Payment Status</th>
+                        <th>Payment Type</th>
+                        <th>Payment Delete Status</th>
                     </tr>
                 </thead>
                 <tbody class="table-data">
@@ -1103,7 +1106,7 @@ include "projectlog.php";
                     <?php 
     $user = new User;
    
-    $customer = $user ->selectAllHistory();
+    $customer = $user ->downloadAllHistory();
     if(!empty($customer)){
         foreach($customer as $key => $value){
             $newuser = $user->selectUser($value['customer_id']);
@@ -1124,6 +1127,24 @@ include "projectlog.php";
                         <td><?php echo $value['payee'];?></td>
                         <td><?php echo $value['payment_date'];?></td>
                         <td><?php echo $value['payment_time'];?></td>
+                        <td><?php if($value['sub_status'] != "Failed"){
+                            echo "Successful";
+                        } else {
+                            echo "Failed";
+                        }
+                        ?></td>
+                        <td><?php if($value['offline_status'] == ""){
+                            echo "Online";
+                        } else {
+                             echo "Offline";
+                        }
+                        ?></td>
+                        <td><?php if($value['delete_status'] == ""){
+                            echo "Undeleted";
+                        } else {
+                             echo $value['delete_status'];
+                        }
+                        ?></td>
                     </tr>
                     <?php }}?>
                 </tbody>

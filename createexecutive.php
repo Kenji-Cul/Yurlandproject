@@ -51,7 +51,7 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
     }
 
     .body {
-        height: 190vh;
+        height: 220vh;
     }
 
     @media only screen (max-width: 800px) {
@@ -881,6 +881,12 @@ if(!isset($_SESSION['uniquesupadmin_id'])){
                         <label for="percent">Earning Percentage</label>
                         <input type="number" id="percent" name="percent"
                             placeholder="Input executive's earning percentage" />
+                    </div>
+
+                    <div class="input-div email">
+                        <label for="percenttwo">Downliner Earning Percentage</label>
+                        <input type="number" id="percenttwo" name="percenttwo"
+                            placeholder="Input executive's downliner earning percentage" />
                     </div>
 
                     <p class="error">Please input all fields</p>

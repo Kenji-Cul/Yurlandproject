@@ -8,9 +8,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $agent_password = $_POST['password'];
 $referralid = $_POST['refid'];
 $earningpercent = $_POST['percent'];
+$earningpercenttwo = $_POST['percenttwo'];
 $groupid = $_GET['groupid'];
 
-if(empty($name) || empty($referralid) || empty($earningpercent) || empty($agent_password) || empty($agentemail)){
+if(empty($name) || empty($referralid) || empty($earningpercent) || empty($earningpercenttwo) || empty($agent_password) || empty($agentemail)){
     $errormsg = "Please input all fields";
 }
 
@@ -35,7 +36,7 @@ else {
             if(isset($_SESSION['uniquesupadmin_id'])){
             $creatorid = $_SESSION['uniquesupadmin_id'];
             }
-     $insertagent = $agent->createAgent(check_input($name),check_input($agent_password),check_input($referralid),check_input($earningpercent), check_input($agentemail),$groupid,$creatorid);
+     $insertagent = $agent->createAgent(check_input($name),check_input($agent_password),check_input($referralid),check_input($earningpercent),check_input($earningpercenttwo), check_input($agentemail),$groupid,$creatorid);
         }
 
 }

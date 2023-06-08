@@ -16,7 +16,7 @@ include "projectlog.php";
     <title><?php echo MY_APP_NAME;?></title>
     <style>
     body {
-        height: 150vh;
+        height: 170vh;
         position: relative;
         overflow-x: hidden;
     }
@@ -979,6 +979,12 @@ include "projectlog.php";
                         <label for="percent">Earning Percentage</label>
                         <input type="number" id="percent" name="percent"
                             placeholder="Input agent's earning percentage" />
+                    </div>
+
+                    <div class="input-div email">
+                        <label for="percenttwo">Downliners Earning Percentage</label>
+                        <input type="number" id="percenttwo" name="percenttwo"
+                            placeholder="Input agent's downliner earning percentage" />
                     </div>
 
                     <p class="error">Please input all fields</p>

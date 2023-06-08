@@ -22,11 +22,11 @@ include "signconstant.php";
         }
      }
 
-     function createAgent($agentname,$agent_password,$referralid,$earningpercent,$email,$groupid,$creatorid){
+     function createAgent($agentname,$agent_password,$referralid,$earningpercent,$earning2,$email,$groupid,$creatorid){
         $uniqueid = rand();
         $pwd = password_hash($agent_password,PASSWORD_DEFAULT);
         $agentdate = date("M-d-Y");
-          $sql = "INSERT INTO agent_table(uniqueagent_id,agent_name, agent_email,agent_password,referral_id,earning_percentage,agent_date,group_id,creator_id) VALUES('{$uniqueid}','{$agentname}','{$email}','{$pwd}','{$referralid}','{$earningpercent}','{$agentdate}','{$groupid}','{$creatorid}')";
+          $sql = "INSERT INTO agent_table(uniqueagent_id,agent_name, agent_email,agent_password,referral_id,earning_percentage,agent_date,group_id,creator_id,downliner_percentage) VALUES('{$uniqueid}','{$agentname}','{$email}','{$pwd}','{$referralid}','{$earningpercent}','{$agentdate}','{$groupid}','{$creatorid}','{$earning2}')";
           $result = $this->dbcon->query($sql);
           if($this->dbcon->affected_rows == 1){
              echo "success";
@@ -36,11 +36,11 @@ include "signconstant.php";
      }
      
 
-     function createExecutive($execname,$exec_password,$role,$earningpercent,$email,$phonenum,$bankname,$accountnum){
+     function createExecutive($execname,$exec_password,$role,$earningpercent,$earningpercenttwo,$email,$phonenum,$bankname,$accountnum){
         $uniqueid = rand();
         $execdate = date("M-d-Y");
         $pwd = password_hash($exec_password,PASSWORD_DEFAULT);
-          $sql = "INSERT INTO executive(unique_id,full_name,executive_email,executive_password,earning,exec_role,executive_num,executive_date,bank_name,account_number) VALUES('{$uniqueid}','{$execname}','{$email}','{$pwd}','{$earningpercent}','{$role}','{$phonenum}','{$execdate}','{$bankname}','{$accountnum}')";
+          $sql = "INSERT INTO executive(unique_id,full_name,executive_email,executive_password,earning,exec_role,executive_num,executive_date,bank_name,account_number,downliner_earning) VALUES('{$uniqueid}','{$execname}','{$email}','{$pwd}','{$earningpercent}','{$role}','{$phonenum}','{$execdate}','{$bankname}','{$accountnum}','{$earningpercenttwo}')";
           $result = $this->dbcon->query($sql);
           if($this->dbcon->affected_rows == 1){
              echo "success";
@@ -298,7 +298,7 @@ function checkGroupName($name){
      }
 
 
-     function updateAgentInfo($agentname,$agentnum,$email,$unique,$address,$earning,$groupid,$bankname,$accountnum,$accountname){
+     function updateAgentInfo($agentname,$agentnum,$email,$unique,$address,$earning,$earningtwo,$groupid,$bankname,$accountnum,$accountname){
         if(isset($_FILES['image'])){
             $filename = $_FILES['image']['name'];
             $filesize = $_FILES['image']['size'];
@@ -328,7 +328,7 @@ function checkGroupName($name){
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
 
-            $sql = "UPDATE agent_table SET agent_img='{$newfilename}',agent_name='{$agentname}', agent_num='{$agentnum}', agent_email='{$email}', home_address='{$address}',earning_percentage='{$earning}', group_id='{$groupid}',bank_name = '{$bankname}', account_number = '{$accountnum}', reg_account_name = '{$accountname}' WHERE uniqueagent_id='{$unique}'";
+            $sql = "UPDATE agent_table SET agent_img='{$newfilename}',agent_name='{$agentname}', agent_num='{$agentnum}', agent_email='{$email}', home_address='{$address}',earning_percentage='{$earning}', downliner_percentage='{$earningtwo}', group_id='{$groupid}',bank_name = '{$bankname}', account_number = '{$accountnum}', reg_account_name = '{$accountname}' WHERE uniqueagent_id='{$unique}'";
             $result = $this->dbcon->query($sql);
             if($this->dbcon->affected_rows == 1){
                echo "success";
@@ -345,7 +345,7 @@ function checkGroupName($name){
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
 
-            $sql = "UPDATE agent_table SET agent_img='{$newfilename}',agent_name='{$agentname}', agent_num='{$agentnum}', agent_email='{$email}', home_address='{$address}',earning_percentage='{$earning}', group_id='{$groupid}',bank_name = '{$bankname}', account_number = '{$accountnum}', reg_account_name = '{$accountname}' WHERE uniqueagent_id='{$unique}'";
+            $sql = "UPDATE agent_table SET agent_img='{$newfilename}',agent_name='{$agentname}', agent_num='{$agentnum}', agent_email='{$email}', home_address='{$address}',earning_percentage='{$earning}', downliner_percentage='{$earningtwo}', group_id='{$groupid}',bank_name = '{$bankname}', account_number = '{$accountnum}', reg_account_name = '{$accountname}' WHERE uniqueagent_id='{$unique}'";
             $result = $this->dbcon->query($sql);
             if($this->dbcon->affected_rows == 1){
                echo "success";
@@ -424,7 +424,7 @@ function checkGroupName($name){
      }
 
 
-     function updateExecInfo($agentname,$email,$unique,$num,$earning,$bankname,$accountnum){
+     function updateExecInfo($agentname,$email,$unique,$num,$earning,$earningtwo,$bankname,$accountnum){
         if(isset($_FILES['image'])){
             $filename = $_FILES['image']['name'];
             $filesize = $_FILES['image']['size'];
@@ -454,7 +454,7 @@ function checkGroupName($name){
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
 
-            $sql = "UPDATE executive SET executive_img='{$newfilename}',full_name='{$agentname}',executive_email='{$email}',executive_num = '{$num}',earning = '{$earning}',bank_name = '{$bankname}', account_number = '{$accountnum}' WHERE unique_id='{$unique}'";
+            $sql = "UPDATE executive SET executive_img='{$newfilename}',full_name='{$agentname}',executive_email='{$email}',executive_num = '{$num}',earning = '{$earning}', downliner_earning = '{$earningtwo}', bank_name = '{$bankname}', account_number = '{$accountnum}' WHERE unique_id='{$unique}'";
             $result = $this->dbcon->query($sql);
             if($this->dbcon->affected_rows == 1){
                echo "success";
@@ -471,7 +471,7 @@ function checkGroupName($name){
             //$destination = $folder.$newfilename;
             move_uploaded_file($filetmp, $target_path);
 
-            $sql = "UPDATE executive SET executive_img='{$newfilename}',full_name='{$agentname}',executive_email='{$email}',executive_num = '{$num}',earning = '{$earning}' ,bank_name = '{$bankname}', account_number = '{$accountnum}' WHERE unique_id='{$unique}'";
+            $sql = "UPDATE executive SET executive_img='{$newfilename}',full_name='{$agentname}',executive_email='{$email}',executive_num = '{$num}',earning = '{$earning}', downliner_earning = '{$earningtwo}',bank_name = '{$bankname}', account_number = '{$accountnum}' WHERE unique_id='{$unique}'";
             $result = $this->dbcon->query($sql);
             if($this->dbcon->affected_rows == 1){
                echo "success";
@@ -2455,8 +2455,8 @@ function checkGroupName($name){
         }
     }
 
-    function insertPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice,$payee,$agentid,$allocationfee,$subperiod,$totalprice,$filename,$totprice,$newpayid,$balance,$subpayment,$firstdate,$increaserate){
-        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price,payee,agent_id,allocation_fee,offer_letter,period_num,total_price,newpay_id,balance,sub_payment,increase_date,increase_rate) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$subperiod}','{$totprice}','{$newpayid}','{$balance}','{$subpayment}','{$firstdate}','{$increaserate}')";
+    function insertPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice,$payee,$agentid,$allocationfee,$subperiod,$totalprice,$filename,$totprice,$newpayid,$balance,$subpayment,$firstdate,$increaserate,$adminid){
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price,payee,agent_id,allocation_fee,offer_letter,period_num,total_price,newpay_id,balance,sub_payment,increase_date,increase_rate,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$subperiod}','{$totprice}','{$newpayid}','{$balance}','{$subpayment}','{$firstdate}','{$increaserate}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
             $userphoto = "SELECT * FROM user WHERE unique_id = '{$customerid}'";
@@ -2480,8 +2480,8 @@ function checkGroupName($name){
         }
     }
 
-    function insertPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice,$payee,$agentid,$allocationfee,$subperiod,$balance,$newpayid,$substatus){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price,payee,agent_id,allocation_fee,period_num,balance,newpay_id,sub_status) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$subperiod}','{$balance}','{$newpayid}','{$substatus}')";
+    function insertPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice,$payee,$agentid,$allocationfee,$subperiod,$balance,$newpayid,$substatus,$adminid){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price,payee,agent_id,allocation_fee,period_num,balance,newpay_id,sub_status,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$subperiod}','{$balance}','{$newpayid}','{$substatus}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2502,8 +2502,8 @@ function checkGroupName($name){
 
     }
 
-    function insertPayHistory2($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice,$payee,$agentid,$allocationfee,$subperiod,$filename,$newpayid,$balance,$subpayment){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price,payee,agent_id,allocation_fee,period_num,offer_letter,newpay_id,balance,sub_payment) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$subperiod}','{$filename}','{$newpayid}','{$balance}','{$subpayment}')";
+    function insertPayHistory2($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$chosenplan,$intervalinput,$subprice,$payee,$agentid,$allocationfee,$subperiod,$filename,$newpayid,$balance,$subpayment,$adminid){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,product_plan,sub_period,sub_price,payee,agent_id,allocation_fee,period_num,offer_letter,newpay_id,balance,sub_payment,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$chosenplan}','{$intervalinput}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$subperiod}','{$filename}','{$newpayid}','{$balance}','{$subpayment}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2514,9 +2514,9 @@ function checkGroupName($name){
     }
 
 
-    function insertOutPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid){
+    function insertOutPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid){
         
-        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,balance,allocation_fee,allocation_letter,total_price,newpay_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}','{$agentid}','{$balance}','{$allocationfee}','{$filename}','{$price}','{$newpayid}')";
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,balance,allocation_fee,allocation_letter,total_price,newpay_id,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}','{$agentid}','{$balance}','{$allocationfee}','{$filename}','{$price}','{$newpayid}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2526,9 +2526,9 @@ function checkGroupName($name){
 
     }
 
-    function insertOutPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid){
+    function insertOutPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid){
         $balance = 0;
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,balance,allocation_fee,allocation_letter,total_price,newpay_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}','{$agentid}','{$balance}','{$allocationfee}','{$filename}','{$price}','{$newpayid}')";
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,balance,allocation_fee,allocation_letter,total_price,newpay_id,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}','{$agentid}','{$balance}','{$allocationfee}','{$filename}','{$price}','{$newpayid}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2539,9 +2539,9 @@ function checkGroupName($name){
     }
 
 
-    function insertOutPayHistory2($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode){
+    function insertOutPayHistory2($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode,$adminid){
         $balance = 0;
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,balance,allocation_fee,allocation_letter,total_price,newpay_id,offline_status,payment_mode) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}','{$agentid}','{$balance}','{$allocationfee}','{$filename}','{$price}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,balance,allocation_fee,allocation_letter,total_price,newpay_id,offline_status,payment_mode,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$paymentdate}','{$payee}','{$agentid}','{$balance}','{$allocationfee}','{$filename}','{$price}','{$newpayid}','{$offlinestatus}','{$paymentmode}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2553,8 +2553,8 @@ function checkGroupName($name){
 
 
 
-    function insertFailedHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$productname,$payee,$agentid,$allocationfee,$newpayid,$price,$filename,$balance){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,allocation_fee,allocation_letter,total_price,newpay_id,balance) VALUES('{$uniqueperson}','{$unique}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$boughtunit}','{$paymentmethod}','{$paymentdate}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$price}','{$newpayid}','{$balance}')";
+    function insertFailedHistory($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$productname,$payee,$agentid,$allocationfee,$newpayid,$price,$filename,$balance,$adminid){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,allocation_fee,allocation_letter,total_price,newpay_id,balance,admin_id) VALUES('{$uniqueperson}','{$unique}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$boughtunit}','{$paymentmethod}','{$paymentdate}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$price}','{$newpayid}','{$balance}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2564,8 +2564,8 @@ function checkGroupName($name){
     }
 
 
-    function insertFailedHistory2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$productname,$payee,$agentid,$allocationfee,$newpayid,$price,$balance){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,allocation_fee,total_price,newpay_id,balance) VALUES('{$uniqueperson}','{$unique}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$boughtunit}','{$paymentmethod}','{$paymentdate}','{$payee}','{$agentid}','{$allocationfee}','{$price}','{$newpayid}','{$balance}')";
+    function insertFailedHistory2($uniqueperson,$unique,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$image,$boughtunit,$paymentmethod,$paymentdate,$productname,$payee,$agentid,$allocationfee,$newpayid,$price,$balance,$adminid){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,payment_date,payee,agent_id,allocation_fee,total_price,newpay_id,balance,admin_id) VALUES('{$uniqueperson}','{$unique}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$boughtunit}','{$paymentmethod}','{$paymentdate}','{$payee}','{$agentid}','{$allocationfee}','{$price}','{$newpayid}','{$balance}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2609,9 +2609,9 @@ function checkGroupName($name){
 
     }
 
-    function insertNewPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$totalprice,$newpayid,$firstdate,$increaserate){
+    function insertNewPayment($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$totalprice,$newpayid,$firstdate,$increaserate,$adminid){
        
-        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee,agent_id,allocation_fee,offer_letter,total_price,newpay_id,increase_date,increase_rate) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$totalprice}','{$newpayid}','{$firstdate}','{$increaserate}')";
+        $sql = "INSERT INTO payment(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee,agent_id,allocation_fee,offer_letter,total_price,newpay_id,increase_date,increase_rate,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$totalprice}','{$newpayid}','{$firstdate}','{$increaserate}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
 
@@ -2622,8 +2622,8 @@ function checkGroupName($name){
 
     }
 
-    function insertNewPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee,agent_id,allocation_fee,offer_letter,newpay_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$newpayid}')";
+    function insertNewPayHistory($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee,agent_id,allocation_fee,offer_letter,newpay_id,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$newpayid}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2634,8 +2634,8 @@ function checkGroupName($name){
     }
 
 
-    function insertNewPayHistory2($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode){
-        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee,agent_id,allocation_fee,offer_letter,newpay_id,offline_status,payment_mode) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
+    function insertNewPayHistory2($customerid,$productid,$productname,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$balance,$period,$subperiod,$newpay,$paymentdate,$chosenplan,$subprice,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode,$adminid){
+        $sql = "INSERT INTO land_history(customer_id,product_id,product_name,payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,payment_method,balance,sub_period,period_num,sub_payment,payment_date,product_plan,sub_price,payee,agent_id,allocation_fee,offer_letter,newpay_id,offline_status,payment_mode,admin_id) VALUES('{$customerid}','{$productid}','{$productname}','{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$method}','{$balance}','{$period}','{$subperiod}','{$newpay}','{$paymentdate}','{$chosenplan}','{$subprice}','{$payee}','{$agentid}','{$allocationfee}','{$filename}','{$newpayid}','{$offlinestatus}','{$paymentmode}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2672,8 +2672,8 @@ function checkGroupName($name){
 }
 
 
-    function insertUpdateHistory($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$newpayid){
-        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,newpay_id) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$newpayid}')";
+    function insertUpdateHistory($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$newpayid,$adminid){
+        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,newpay_id,admin_id) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$newpayid}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2684,8 +2684,8 @@ function checkGroupName($name){
     }
 
 
-    function insertUpdateHistory3($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$newpayid,$offlinestatus,$paymentmode){
-        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,newpay_id,offline_status,payment_mode) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
+    function insertUpdateHistory3($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$newpayid,$offlinestatus,$paymentmode,$adminid){
+        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,newpay_id,offline_status,payment_mode,admin_id) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$newpayid}','{$offlinestatus}','{$paymentmode}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2696,8 +2696,8 @@ function checkGroupName($name){
     }
 
     
-    function insertUpdateHistory2($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$filename,$newpayid){
-        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,allocation_letter,newpay_id) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$filename}','{$newpayid}')";
+    function insertUpdateHistory2($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$filename,$newpayid,$adminid){
+        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,allocation_letter,newpay_id,admin_id) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$filename}','{$newpayid}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -2708,8 +2708,8 @@ function checkGroupName($name){
     }
 
 
-    function insertUpdateHistory4($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode){
-        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,allocation_letter,newpay_id,offline_status,payment_mode) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$filename}','{$newpayid}','{$offlinestatus}','{$paymentmode}')";
+    function insertUpdateHistory4($customerid,$productid,$paymentmonth,$paymentday,$paymentyear,$paymenttime,$productlocation,$price,$image,$addedunit,$method,$paymentdate,$balance,$period,$subperiod,$productname,$payee,$agentid,$allocationfee,$filename,$newpayid,$offlinestatus,$paymentmode,$adminid){
+        $sql = "INSERT INTO land_history(payment_month,payment_day,payment_year,payment_time,product_location,product_price,product_image,product_unit,balance,sub_period,period_num,payment_method,product_id,payment_status,customer_id,product_name,payee,agent_id,payment_date,allocation_fee,allocation_letter,newpay_id,offline_status,payment_mode,admin_id) VALUES('{$paymentmonth}','{$paymentday}','{$paymentyear}','{$paymenttime}','{$productlocation}','{$price}','{$image}','{$addedunit}','{$balance}','{$period}','{$subperiod}','{$method}','{$productid}','Payed','{$customerid}','{$productname}','{$payee}','{$agentid}','{$paymentdate}','{$allocationfee}','{$filename}','{$newpayid}','{$offlinestatus}','{$paymentmode}','{$adminid}')";
         $result = $this->dbcon->query($sql);
         if($this->dbcon->affected_rows == 1){
            //echo "success";
@@ -3422,6 +3422,21 @@ return $rows;
 }
 }
 
+function downloadAllHistory(){
+    $limit = 35;
+    $sql = "SELECT * FROM land_history ORDER BY payment_id DESC LIMIT $limit ";
+    $result = $this->dbcon->query($sql);
+    $rows = array();
+    if($this->dbcon->affected_rows > 0){
+    while($row = $result->fetch_assoc()){
+    $rows[] = $row;
+    }
+    return $rows;
+    }else{
+    return $rows;
+    }
+    }
+
 
 function selectAllHistory2($limit2){
     $limit = 35;
@@ -3480,7 +3495,7 @@ return $row;
 }
 
 function selectSumUnits2($id){
-$sql = "SELECT SUM(product_unit) FROM payment WHERE agent_id='{$id}'";
+$sql = "SELECT SUM(product_unit) FROM payment WHERE admin_id='{$id}'";
 $result = $this->dbcon->query($sql);
 $row = $result->fetch_assoc();
 if($result->num_rows == 1){
@@ -3502,7 +3517,7 @@ return $row;
 }
 
 function selectTotal2($id){
-$sql = "SELECT SUM(product_price) FROM land_history WHERE agent_id='{$id}' AND offline_status=''";
+$sql = "SELECT SUM(product_price) FROM land_history WHERE admin_id='{$id}' AND offline_status='' AND delete_status != 'Deleted'";
 $result = $this->dbcon->query($sql);
 $row = $result->fetch_assoc();
 if($result->num_rows == 1){
@@ -3513,7 +3528,7 @@ return $row;
 }
 
 function selectTotal3($id){
-$sql = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$id}' AND offline_status = '' ";
+$sql = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$id}' AND offline_status = '' AND delete_status != 'Deleted'";
 $result = $this->dbcon->query($sql);
 $row = $result->fetch_assoc();
 if($result->num_rows == 1){
@@ -3833,7 +3848,7 @@ if($this->dbcon->affected_rows > 0){
 
 
     function selectTotalUsersPayment(){
-    $sql = "SELECT SUM(product_price) FROM land_history WHERE offline_status = ''";
+    $sql = "SELECT SUM(product_price) FROM land_history WHERE offline_status = '' AND delete_status != 'Deleted'";
     $result = $this->dbcon->query($sql);
     $row = $result->fetch_assoc();
     if($result->num_rows == 1){
@@ -4194,6 +4209,28 @@ if($this->dbcon->affected_rows > 0){
     }
     }
 
+    function comingsoonProduct($userid){
+        $sql = "UPDATE land_product SET comingsoon_status='On' WHERE unique_id='{$userid}'";
+        $result = $this->dbcon->query($sql);
+        if($this->dbcon->affected_rows==1){
+        // echo "<h3 align='center'>Photo added successfully</h3>";
+        //echo "success";
+        }else{
+        //echo $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+        }
+        }
+
+        function removeComingsoonProduct($userid){
+            $sql = "UPDATE land_product SET comingsoon_status='Off' WHERE unique_id='{$userid}'";
+            $result = $this->dbcon->query($sql);
+            if($this->dbcon->affected_rows==1){
+            // echo "<h3 align='center'>Photo added successfully</h3>";
+            //echo "success";
+            }else{
+            //echo $this->dbcon->error;//"<h3 align='center'>There is an error with your file</h3>";
+            }
+            }
+
 
     function DeleteAgentCartId($userid,$user){
     $sql = "DELETE FROM cart WHERE product_id='{$userid}' AND agent_id='{$user}'";
@@ -4337,6 +4374,7 @@ if($this->dbcon->affected_rows > 0){
     $output = "";
     if($result->num_rows > 0){
     while($data = $result->fetch_assoc()){
+        if($data['comingsoon_status'] == "Off"){
     if($data['land_status'] != "Closed"){
     if($data['product_unit'] == 0){
 
@@ -4571,14 +4609,28 @@ if($this->dbcon->affected_rows > 0){
 
 
 
-                    } } else {
+                    } }
+                    
+                    else {
 
-                    $output .= "<div class='success'>
-                        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-                        <p>This land has been closed</p>
-                    </div>";
-
+                        if($data['comingsoon_status'] == "On"){
+                            $output .= "<div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                            <p>This land is coming soon!</p>
+                        </div>";
+                        } else {
+                            $output .= "<div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                            <p>This land has been closed</p>
+                        </div>";
+                        }
                     }
+                } else {
+                    $output .= "<div class='success'>
+                    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                    <p>This land is coming soon!</p>
+                </div>";
+                }
 
 
                     }
@@ -5096,7 +5148,7 @@ if($this->dbcon->affected_rows > 0){
                                     $data2 = $value;
                                     }
 
-                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status = ''";
+                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status = '' AND delete_status != 'Deleted'";
                                     $result3 = $this->dbcon->query($sql3);
                                     $row3 = $result3->fetch_assoc();
                                     $date = $data['user_date'];
@@ -6340,6 +6392,24 @@ if($this->dbcon->affected_rows > 0){
                                 } else {
                                 $amount = round($unitprice);
                                 }
+
+                                if($value['sub_status'] != "Failed"){
+                                    $paystatus='Successful';
+                                } else {
+                                    $paystatus='Failed';
+                                }
+
+                                if($value['offline_status'] == ""){
+                                    $paystatus2='Online';
+                                } else {
+                                    $paystatus2='Offline';
+                                }
+
+                                if($value['delete_status'] == ""){
+                                    $paystatus3='Undeleted';
+                                } else {
+                                    $paystatus3= $value['delete_status'];
+                                }
                                 $uniqueid = $value['customer_id'];
                                 $sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
                                 $result2 = $this->dbcon->query($sql2);
@@ -6354,1231 +6424,534 @@ if($this->dbcon->affected_rows > 0){
                                     <td>'.$value['payee'].'</td>
                                     <td>'.$value['payment_date'].'</td>
                                     <td>'.$value['payment_time'].'</td>
-                                </tr>
-                                ';
-                                } else {
-                                $unitprice = $value['product_price'];
-                                if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                $amount = number_format($unitprice);
-                                } else {
-                                $amount = round($unitprice);
-                                }
-                                $uniqueid = $value['customer_id'];
-                                $sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
-                                $result2 = $this->dbcon->query($sql2);
-                                $row2 = $result2->fetch_assoc();
-                                $output.= '
-                                <tr>
-                                    <td>'.$value['payment_id'].'</td>
-                                    <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
-                                    </td>
-                                    <td>&#8358;'.$amount.'</td>
-                                    <td>'.$value['product_name'].'</td>
-                                    <td>'.$value['payee'].'</td>
-                                    <td>'.$value['payment_date'].'</td>
-                                    <td>'.$value['payment_time'].'</td>
-                                </tr>
-                                ';
-                                }
-                                }
-                                } else {
-                                $output .= "";
-                                }
-                                }
-                                } else {
-                                $output .= "";
-                                }
-
-                                echo $output;
-                                }
-
-
-                                function downloadByLand2($name,$mode,$userid){
-                                    if($mode == "downloadland"){
-                                    $sql = "SELECT * FROM land_product WHERE product_name = '{$name}'";
-                                    }
-                                    $result = $this->dbcon->query($sql);
-                                    $output = "";
-                                    if($result->num_rows > 0){
-                                    $data = $result->fetch_assoc();
-                                    $sql2 = "SELECT * FROM land_history WHERE product_id = '{$data['unique_id']}' AND customer_id = '{$userid}' ORDER BY
-                                    payment_id DESC";
-                                    $result2 = $this->dbcon->query($sql2);
-                                    $rows = array();
-                                    if($this->dbcon->affected_rows > 0){
-                                    while($row2 = $result2->fetch_assoc()){
-                                    $rows[] = $row2;
-                                    }
-                                    if(!empty($rows)){
-                                    foreach ($rows as $key => $value) {
-                                    if($value['sub_status'] == "Failed"){
-                                    $unitprice = $value['product_price'];
-                                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                    $amount = number_format($unitprice);
-                                    } else {
-                                    $amount = round($unitprice);
-                                    }
-                                    $uniqueid = $value['customer_id'];
-                                    $sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
-                                    $result2 = $this->dbcon->query($sql2);
-                                    $row2 = $result2->fetch_assoc();
-                                    $output.= '
-                                    <tr>
-                                        <td>'.$value['payment_id'].'</td>
-                                        <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
-                                        </td>
-                                        <td>&#8358;'.$amount.'</td>
-                                        <td>'.$value['product_name'].'</td>
-                                        <td>'.$value['payee'].'</td>
-                                        <td>'.$value['payment_date'].'</td>
-                                        <td>'.$value['payment_time'].'</td>
-                                    </tr>
-                                    ';
-                                    } else {
-                                    $unitprice = $value['product_price'];
-                                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                    $amount = number_format($unitprice);
-                                    } else {
-                                    $amount = round($unitprice);
-                                    }
-                                    $uniqueid = $value['customer_id'];
-                                    $sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
-                                    $result2 = $this->dbcon->query($sql2);
-                                    $row2 = $result2->fetch_assoc();
-                                    $output.= '
-                                    <tr>
-                                        <td>'.$value['payment_id'].'</td>
-                                        <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
-                                        </td>
-                                        <td>&#8358;'.$amount.'</td>
-                                        <td>'.$value['product_name'].'</td>
-                                        <td>'.$value['payee'].'</td>
-                                        <td>'.$value['payment_date'].'</td>
-                                        <td>'.$value['payment_time'].'</td>
-                                    </tr>
-                                    ';
-                                    }
-                                    }
-                                    } else {
-                                    $output .= "";
-                                    }
-                                    }
-                                    } else {
-                                    $output .= "";
-                                    }
-    
-                                    echo $output;
-                                    }
-    
-    
-
-
-
-                                function searchByDate($name,$user,$unique){
-                                $sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' ORDER BY payment_id
-                                DESC";
-                                $result = $this->dbcon->query($sql);
-                                $output = "";
-                                if($result->num_rows > 0){
-                                while($data = $result->fetch_assoc()){
-                                if($data['sub_status'] == "Failed"){
-                                    if($data['payment_mode'] == "Offline"){
-                                    if($data['offline_status'] == ""){
-                                        $outputmode = '<p
-                                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                        Offline: Approved</p>';
-                                    } else {
-                                        $outputmode = ' <p
-                                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                        Offline: '.$data['offline_status'].'</p>';
-                                    }
-                                        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                                        <div class="radius">
-                                            <img src="landimage/'.$data['product_image'].'" alt="">
-                                        </div>
-                                        <div class="details">
-                                            <p class="pname">'.$data['product_name'].'</p>
-                                            <div class="inner-detail">
-                                                <div class="date" style="font-size: 14px;">
-                                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                                </div>
-                                                '.$outputmode.'
-                                            </div>
-                                           
-                                        </div> ';
-                                    } else {
-                                        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                                        <div class="radius">
-                                            <img src="landimage/'.$data['product_image'].'" alt="">
-                                        </div>
-                                        <div class="details">
-                                            <p class="pname">'.$data['product_name'].'</p>
-                                            <div class="inner-detail">
-                                                <div class="date" style="font-size: 14px;">
-                                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                                </div>
-                                            </div>
-                                        </div> ';
-                                    }
-                               
-
-                                    if($data['product_unit'] == "1"){
-                                    $unit = $data['product_unit']." Unit";
-                                    } else {
-                                    $unit = $data['product_unit']." Units";
-                                    }
-                                    $output2 = '
-                                    <div class="price-detail detail3">
-                                        '.$unit.'
-                                    </div>
-                                    <div class="price-detail detail3">
-                                        '.$data['payment_method'].'</div> ';
-
-
-                                    if($data['delete_status'] == "Deleted"){
-
-                                    $name = $data['product_id'].$data['payment_id'];
-
-                                    $output3 = '<form action="" class="restore-form" method="POST">
-                                        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                                            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                                    </form>
-                                </div>
-                            </div>';
-
-                            $output4 = "";
-                            $output5 = "";
-                            if(isset($_POST["restorel".$name])){
-                            $insertupdate =
-                            $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-                            $deletedp = "restorel";
-                            header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-
-
-                            }
-                            } else {
-
-                            $unitprice = $data['product_price'];
-                            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                            $amount = number_format($unitprice);
-                            } else {
-                            $amount = round($unitprice);
-                            }
-
-
-                            if($user == "subadmin"){
-                            $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-                            $result3 = $this->dbcon->query($sql3);
-                            $row3 = $result3->fetch_assoc();
-                            if($data['payee'] == $row3['subadmin_name']){
-                            $payeename = "You";
-                            } else {
-                            $payeename = $data['payee'];
-                            }
-                            }
-
-                            if($user == "superadmin"){
-                            $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-                            $result3 = $this->dbcon->query($sql3);
-                            $row3 = $result3->fetch_assoc();
-                            if($data['payee'] == $row3['super_adminname']){
-                            $payeename = "You";
-                            } else {
-                            $payeename = $data['payee'];
-                            }
-                            }
-
-                            $output3 = "";
-                            $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-                                <span style="font-size: 12px;">(Failed)</span>
-                                <div class="payee">
-                                    <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                                    <p class="payee-name"
-                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                        '.$payeename.'
-                                    </p>
-                                </div> ';
-
-
-
-                                $name = $data['product_id'].$data['payment_id'];
-
-                                $output5 = '<form action="" class="deletep-form" method="POST">
-                                    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                                        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                                </form>
-                            </div>
-                        </div>';
-                        if(isset($_POST["deletel".$name])){
-                        $insertupdate =
-                        $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-                        $deletedp = "deletedl";
-                        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-                        }
-                        }
-                        $output .= "$output1$output2$output3$output4$output5";
-                        } else {
-                            if($data['payment_mode'] == "Offline"){
-                                if($data['offline_status'] == ""){
-                                    $outputmode = '<p
-                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                    Offline: Approved</p>';
-                                } else {
-                                    $outputmode = ' <p
-                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                    Offline: '.$data['offline_status'].'</p>';
-                                }
-                                $output1 = ' <div class="transaction-details">
-                                <div class="radius">
-                                    <img src="landimage/'.$data['product_image'].'" alt="">
-                                </div>
-                                <div class="details">
-                                    <p class="pname">'.$data['product_name'].'</p>
-                                    <div class="inner-detail">
-                                        <div class="date" style="font-size: 14px;">
-                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                        </div>
-                                    </div>
-                                    '.$outputmode.'
-                                </div> ';
-                            } else {
-                                $output1 = ' <div class="transaction-details">
-                                <div class="radius">
-                                    <img src="landimage/'.$data['product_image'].'" alt="">
-                                </div>
-                                <div class="details">
-                                    <p class="pname">'.$data['product_name'].'</p>
-                                    <div class="inner-detail">
-                                        <div class="date" style="font-size: 14px;">
-                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                        </div>
-                                    </div>
-                                </div> ';
-                            }
-                       
-
-                            if($data['product_unit'] == "1"){
-                            $unit = $data['product_unit']." Unit";
-                            } else {
-                            $unit = $data['product_unit']." Units";
-                            }
-
-                            $output2 = '
-                            <div class="price-detail detail3">
-                                '.$unit.'
-                            </div>
-                            <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
-
-
-                            if($data['delete_status'] == "Deleted"){
-
-                            $name = $data['product_id'].$data['payment_id'];
-
-                            $output3 = '<form action="" class="restore-form" method="POST">
-                                <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                            </form>
-                        </div>
-                        <div>';
-
-                            $output4 = "";
-                            $output5 = "";
-
-
-                            if(isset($_POST["restorel".$name])){
-                            $insertupdate =
-                            $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-                            $deletedp = "restorel";
-                            header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-                            }
-                            } else {
-
-                            $unitprice = $data['product_price'];
-                            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                            $amount = number_format($unitprice);
-                            } else {
-                            $amount = round($unitprice);
-                            }
-
-
-                            if($user == "subadmin"){
-                            $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-                            $result3 = $this->dbcon->query($sql3);
-                            $row3 = $result3->fetch_assoc();
-                            if($data['payee'] == $row3['subadmin_name']){
-                            $payeename = "You";
-                            } else {
-                            $payeename = $data['payee'];
-                            }
-                            }
-
-                            if($user == "superadmin"){
-                            $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-                            $result3 = $this->dbcon->query($sql3);
-                            $row3 = $result3->fetch_assoc();
-                            if($data['payee'] == $row3['super_adminname']){
-                            $payeename = "You";
-                            } else {
-                            $payeename = $data['payee'];
-                            }
-                            }
-
-                            $output3 = "";
-
-                            $output4 = '<div class="price-detail">&#8358;'.$amount.'
-                                <div class="payee">
-                                    <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                                    <p class="payee-name"
-                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                        '.$payeename.'
-                                    </p>
-                                </div>';
-
-
-
-                                $name = $data['product_id'].$data['payment_id'];
-
-                                $output5 = '<form action="" class="deletep-form" method="POST">
-                                    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                                        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                                </form>
-                            </div>
-                        </div>
-                        ';
-
-                        if(isset($_POST["deletel".$name])){
-                        $insertupdate =
-                        $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-                        $deletedp = "deletedl";
-                        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-                        }
-                        }
-                        $output .= "$output1$output2$output3$output4$output5";
-                        }
-                        }
-                        } else {
-                        $output .= "<div class='success'>
-                            <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-                            <p>We can't find this transaction</p>
-                        </div>";
-                        }
-
-                        echo $output;
-                        }
-
-
-                        function searchByDate2($name,$user,$unique,$userid){
-                            $sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id
-                            DESC";
-                            $result = $this->dbcon->query($sql);
-                            $output = "";
-                            if($result->num_rows > 0){
-                            while($data = $result->fetch_assoc()){
-                            if($data['sub_status'] == "Failed"){
-                            if($data['payment_mode'] == "Offline"){
-                                if($data['offline_status'] == ""){
-                                    $outputmode = '<p
-                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                    Offline: Approved</p>';
-                                } else {
-                                    $outputmode = ' <p
-                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                    Offline: '.$data['offline_status'].'</p>';
-                                }
-                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                                <div class="radius">
-                                    <img src="landimage/'.$data['product_image'].'" alt="">
-                                </div>
-                                <div class="details">
-                                    <p class="pname">'.$data['product_name'].'</p>
-                                    <div class="inner-detail">
-                                        <div class="date" style="font-size: 14px;">
-                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                        </div>
-                                    </div>
-                                    '.$outputmode.'
-                                </div> ';
-                            } else {
-                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                                <div class="radius">
-                                    <img src="landimage/'.$data['product_image'].'" alt="">
-                                </div>
-                                <div class="details">
-                                    <p class="pname">'.$data['product_name'].'</p>
-                                    <div class="inner-detail">
-                                        <div class="date" style="font-size: 14px;">
-                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                        </div>
-                                    </div>
-                                </div> ';
-                            }
-                            
-
-                                if($data['product_unit'] == "1"){
-                                $unit = $data['product_unit']." Unit";
-                                } else {
-                                $unit = $data['product_unit']." Units";
-                                }
-                                $output2 = '
-                                <div class="price-detail detail3">
-                                    '.$unit.'
-                                </div>
-                                <div class="price-detail detail3">
-                                    '.$data['payment_method'].'</div> ';
-
-
-                                if($data['delete_status'] == "Deleted"){
-
-                                $name = $data['product_id'].$data['payment_id'];
-
-                                if($user == "agent2"){
-                                    $output3 = ' <div class="detail-four">
-                                    <div class="detail"
-                                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                        <p style="font-size: 14px; color: #fff;">Deleted</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
-                                } else {
-                                    $output3 = '<form action="" class="restore-form" method="POST">
-                                    <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                                        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                                </form>
-                            </div>
-                        </div>';
-                                }
-                                
-
-                        $output4 = "";
-                        $output5 = "";
-                        if(isset($_POST["restorel".$name])){
-                        $insertupdate =
-                        $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-                        $deletedp = "restorel";
-                        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-
-
-                        }
-                        } else {
-
-                        $unitprice = $data['product_price'];
-                        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                        $amount = number_format($unitprice);
-                        } else {
-                        $amount = round($unitprice);
-                        }
-
-
-                        if($user == "subadmin2"){
-                        $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-                        $result3 = $this->dbcon->query($sql3);
-                        $row3 = $result3->fetch_assoc();
-                        if($data['payee'] == $row3['subadmin_name']){
-                        $payeename = "You";
-                        } else {
-                        $payeename = $data['payee'];
-                        }
-                        }
-
-                        if($user == "supadmin2"){
-                        $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-                        $result3 = $this->dbcon->query($sql3);
-                        $row3 = $result3->fetch_assoc();
-                        if($data['payee'] == $row3['super_adminname']){
-                        $payeename = "You";
-                        } else {
-                        $payeename = $data['payee'];
-                        }
-                        }
-
-                        if($user == "agent2"){
-                            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-                            $result3 = $this->dbcon->query($sql3);
-                            $row3 = $result3->fetch_assoc();
-                            if($data['payee'] == $row3['agent_name']){
-                            $payeename = "You";
-                            } else {
-                            $payeename = $data['payee'];
-                            }
-                            }
-
-                        $output3 = "";
-                        $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-                            <span style="font-size: 12px;">(Failed)</span>
-                            <div class="payee">
-                                <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                                <p class="payee-name"
-                                    style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                    '.$payeename.'
-                                </p>
-                            </div> ';
-
-
-
-                            $name = $data['product_id'].$data['payment_id'];
-                            if($user == "agent2"){
-                                $output5 = '</div>
-                        </div>';
-                            } else {
-                                $output5 = '<form action="" class="deletep-form" method="POST">
-                                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                            </form>
-                        </div>
-                        </div>';
-                            }
-                    if(isset($_POST["deletel".$name])){
-                    $insertupdate =
-                    $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-                    $deletedp = "deletedl";
-                    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-                    }
-                    }
-                    $output .= "$output1$output2$output3$output4$output5";
-                    } else {
-                        if($data['payment_mode'] == "Offline"){
-                            if($data['offline_status'] == ""){
-                                $outputmode = '<p
-                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                Offline: Approved</p>';
-                            } else {
-                                $outputmode = ' <p
-                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                Offline: '.$data['offline_status'].'</p>';
-                            }
-                            $output1 = ' <div class="transaction-details">
-                            <div class="radius">
-                                <img src="landimage/'.$data['product_image'].'" alt="">
-                            </div>
-                            <div class="details">
-                                <p class="pname">'.$data['product_name'].'</p>
-                                <div class="inner-detail">
-                                    <div class="date" style="font-size: 14px;">
-                                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                    </div>
-                                </div>
-                             '.$outputmode.'
-                            </div> ';
-                        } else {
-                            $output1 = ' <div class="transaction-details">
-                            <div class="radius">
-                                <img src="landimage/'.$data['product_image'].'" alt="">
-                            </div>
-                            <div class="details">
-                                <p class="pname">'.$data['product_name'].'</p>
-                                <div class="inner-detail">
-                                    <div class="date" style="font-size: 14px;">
-                                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                    </div>
-                                </div>
-                            </div> ';
-                        }
-                  
-
-                        if($data['product_unit'] == "1"){
-                        $unit = $data['product_unit']." Unit";
-                        } else {
-                        $unit = $data['product_unit']." Units";
-                        }
-
-                        $output2 = '
-                        <div class="price-detail detail3">
-                            '.$unit.'
-                        </div>
-                        <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
-
-
-                        if($data['delete_status'] == "Deleted"){
-
-                        $name = $data['product_id'].$data['payment_id'];
-                      if($user == "agent2"){
-                        $output3 = '  <div class="detail-four">
-                        <div class="detail"
-                            style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                            <p style="font-size: 14px; color: #fff;">Deleted</p>
-                        </div>
-                    </div>
-                </div>
-                <div>';
-                      } else {
-                        $output3 = '<form action="" class="restore-form" method="POST">
-                        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                    </form>
-                </div>
-                <div>';
-                      }
-                       
-
-                        $output4 = "";
-                        $output5 = "";
-
-
-                        if(isset($_POST["restorel".$name])){
-                        $insertupdate =
-                        $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-                        $deletedp = "restorel";
-                        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-                        }
-                        } else {
-
-                        $unitprice = $data['product_price'];
-                        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                        $amount = number_format($unitprice);
-                        } else {
-                        $amount = round($unitprice);
-                        }
-
-
-                        if($user == "subadmin2"){
-                        $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-                        $result3 = $this->dbcon->query($sql3);
-                        $row3 = $result3->fetch_assoc();
-                        if($data['payee'] == $row3['subadmin_name']){
-                        $payeename = "You";
-                        } else {
-                        $payeename = $data['payee'];
-                        }
-                        }
-
-                        if($user == "supadmin2"){
-                        $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-                        $result3 = $this->dbcon->query($sql3);
-                        $row3 = $result3->fetch_assoc();
-                        if($data['payee'] == $row3['super_adminname']){
-                        $payeename = "You";
-                        } else {
-                        $payeename = $data['payee'];
-                        }
-                        }
-
-                        if($user == "agent2"){
-                            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-                            $result3 = $this->dbcon->query($sql3);
-                            $row3 = $result3->fetch_assoc();
-                            if($data['payee'] == $row3['agent_name']){
-                            $payeename = "You";
-                            } else {
-                            $payeename = $data['payee'];
-                            }
-                        }
-
-                        $output3 = "";
-
-                        $output4 = '<div class="price-detail">&#8358;'.$amount.'
-                            <div class="payee">
-                                <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                                <p class="payee-name"
-                                    style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                    '.$payeename.'
-                                </p>
-                            </div>';
-
-
-
-                            $name = $data['product_id'].$data['payment_id'];
-
-                            if($user == "agent2"){
-                                $output5 = '</div>
-                        </div>';
-                            } else {
-                                $output5 = '<form action="" class="deletep-form" method="POST">
-                                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                            </form>
-                        </div>
-                        </div>';
-                            }
-
-                    if(isset($_POST["deletel".$name])){
-                    $insertupdate =
-                    $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-                    $deletedp = "deletedl";
-                    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-                    }
-                    }
-                    $output .= "$output1$output2$output3$output4$output5";
-                    }
-                    }
-                    } else {
-                    $output .= "<div class='success'>
-                        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-                        <p>We can't find this transaction</p>
-                    </div>";
-                    }
-
-                    echo $output;
-                    }
-
-
-                        function searchAgentDate($name,$user,$unique){
-                        if($user == "agent"){
-                        $sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' AND agent_id =
-                        '{$unique}'ORDER BY payment_id DESC";
-                        }
-
-                        if($user == "normaluser"){
-                        $sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' AND customer_id =
-                        '{$unique}'ORDER BY payment_id DESC";
-                        }
-                        $result = $this->dbcon->query($sql);
-                        $output = "";
-                        if($result->num_rows > 0){
-                        while($data = $result->fetch_assoc()){
-                        if($data['sub_status'] == "Failed"){
-                            if($data['payment_mode'] == "Offline"){
-                                if($data['offline_status'] == ""){
-                                    $outputmode = '<p
-                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                    Offline: Approved</p>';
-                                } else {
-                                    $outputmode = ' <p
-                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                    Offline: '.$data['offline_status'].'</p>';
-                                }
-                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                            <div class="radius">
-                                <img src="landimage/'.$data['product_image'].'" alt="">
-                            </div>
-                            <div class="details">
-                                <p class="pname">'.$data['product_name'].'</p>
-                                <div class="inner-detail">
-                                    <div class="date" style="font-size: 14px;">
-                                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                    </div>
-                                </div>
-                               '.$outputmode.'
-                            </div> ';
-                            } else {
-                                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                                <div class="radius">
-                                    <img src="landimage/'.$data['product_image'].'" alt="">
-                                </div>
-                                <div class="details">
-                                    <p class="pname">'.$data['product_name'].'</p>
-                                    <div class="inner-detail">
-                                        <div class="date" style="font-size: 14px;">
-                                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                        </div>
-                                    </div>
-                                </div> ';
-                            }
-                      
-
-                            if($data['product_unit'] == "1"){
-                            $unit = $data['product_unit']." Unit";
-                            } else {
-                            $unit = $data['product_unit']." Units";
-                            }
-                            $output2 = '
-                            <div class="price-detail detail3">
-                                '.$unit.'
-                            </div>
-                            <div class="price-detail detail3">
-                                '.$data['payment_method'].'</div> ';
-
-
-                            if($data['delete_status'] == "Deleted"){
-
-                            $output3 = ' <div class="detail-four">
-                                <div class="detail"
-                                    style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                    <p style="font-size: 14px; color: #fff;">Deleted</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
-
-                    $output4 = "";
-                    $output5 = "";
-
-                    } else {
-
-                    $unitprice = $data['product_price'];
-                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                    $amount = number_format($unitprice);
-                    } else {
-                    $amount = round($unitprice);
-                    }
-
-
-                    if($user == "agent"){
-                    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-                    $result3 = $this->dbcon->query($sql3);
-                    $row3 = $result3->fetch_assoc();
-                    if($data['payee'] == $row3['agent_name']){
-                    $payeename = "You";
-                    } else {
-                    $payeename = $data['payee'];
-                    }
-                    }
-
-                    if($user == "normaluser"){
-                    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-                    $result3 = $this->dbcon->query($sql3);
-                    $row3 = $result3->fetch_assoc();
-                    if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
-                    $payeename = "You";
-                    } else {
-                    $payeename = $data['payee'];
-                    }
-                    }
-
-                    $output3 = "";
-                    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-                        <span style="font-size: 12px;">(Failed)</span>
-                        <div class="payee">
-                            <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
-                            <p class="payee-name"
-                                style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                '.$payeename.'
-                            </p>
-                        </div>
-                    </div>
-                </div>';
-
-                $name = $data['product_id'].$data['payment_id'];
-
-                }
-                $output .= "$output1$output2$output3$output4";
-                } else {
-                    if($data['payment_mode'] == "Offline"){
-                        if($data['offline_status'] == ""){
-                            $outputmode = '<p
-                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                            Offline: Approved</p>';
-                        } else {
-                            $outputmode = ' <p
-                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                            Offline: '.$data['offline_status'].'</p>';
-                        }
-                        $output1 = ' <div class="transaction-details">
-                        <div class="radius">
-                            <img src="landimage/'.$data['product_image'].'" alt="">
-                        </div>
-                        <div class="details">
-                            <p class="pname">'.$data['product_name'].'</p>
-                            <div class="inner-detail">
-                                <div class="date" style="font-size: 14px;">
-                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                </div>
-                            </div>
-                            '.$outputmode.'
-                        </div> ';
-                    } else {
-                        $output1 = ' <div class="transaction-details">
-                        <div class="radius">
-                            <img src="landimage/'.$data['product_image'].'" alt="">
-                        </div>
-                        <div class="details">
-                            <p class="pname">'.$data['product_name'].'</p>
-                            <div class="inner-detail">
-                                <div class="date" style="font-size: 14px;">
-                                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                                </div>
-                            </div>
-                        </div> ';
-                    }
-              
-
-                    if($data['product_unit'] == "1"){
-                    $unit = $data['product_unit']." Unit";
-                    } else {
-                    $unit = $data['product_unit']." Units";
-                    }
-
-                    $output2 = '
-                    <div class="price-detail detail3">
-                        '.$unit.'
-                    </div>
-                    <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
-
-
-                    if($data['delete_status'] == "Deleted"){
-
-                    $name = $data['product_id'].$data['payment_id'];
-
-                    $output3 = ' <div class="detail-four">
-                        <div class="detail"
-                            style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                            <p style="font-size: 14px; color: #fff;">Deleted</p>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-
-            $output4 = "";
-            } else {
-
-            $unitprice = $data['product_price'];
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-            $amount = number_format($unitprice);
-            } else {
-            $amount = round($unitprice);
-            }
-
-            if($user == "agent"){
-            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['agent_name']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-
-            if($user == "normaluser"){
-            $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-
-            $output3 = "";
-
-            $output4 = '<div class="price-detail">&#8358;'.$amount.'
-                <div class="payee">
-                    <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                        '.$payeename.'
-                    </p>
+                                    <td>'.$paystatus.'</td>
+                                    <td>'.$paystatus2.'</td>
+                                    <td>'.$paystatus3.'</td>
+</tr>
+';
+} else {
+$unitprice = $value['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($value['sub_status'] != "Failed"){
+    $paystatus='Successful';
+} else {
+    $paystatus='Failed';
+}
+
+if($value['offline_status'] == ""){
+    $paystatus2='Online';
+} else {
+    $paystatus2='Offline';
+}
+
+if($value['delete_status'] == ""){
+    $paystatus3='Undeleted';
+} else {
+    $paystatus3= $value['delete_status'];
+}
+$uniqueid = $value['customer_id'];
+$sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
+$result2 = $this->dbcon->query($sql2);
+$row2 = $result2->fetch_assoc();
+$output.= '
+<tr>
+    <td>'.$value['payment_id'].'</td>
+    <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+    </td>
+    <td>&#8358;'.$amount.'</td>
+    <td>'.$value['product_name'].'</td>
+    <td>'.$value['payee'].'</td>
+    <td>'.$value['payment_date'].'</td>
+    <td>'.$value['payment_time'].'</td>
+    <td>'.$paystatus.'</td>
+    <td>'.$paystatus2.'</td>
+    <td>'.$paystatus3.'</td>
+</tr>
+';
+}
+}
+} else {
+$output .= "";
+}
+}
+} else {
+$output .= "";
+}
+
+echo $output;
+}
+
+
+function downloadByLand2($name,$mode,$userid){
+if($mode == "downloadland"){
+$sql = "SELECT * FROM land_product WHERE product_name = '{$name}'";
+}
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+$data = $result->fetch_assoc();
+$sql2 = "SELECT * FROM land_history WHERE product_id = '{$data['unique_id']}' AND customer_id = '{$userid}' ORDER BY
+payment_id DESC";
+$result2 = $this->dbcon->query($sql2);
+$rows = array();
+if($this->dbcon->affected_rows > 0){
+while($row2 = $result2->fetch_assoc()){
+$rows[] = $row2;
+}
+if(!empty($rows)){
+foreach ($rows as $key => $value) {
+if($value['sub_status'] == "Failed"){
+$unitprice = $value['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($value['sub_status'] != "Failed"){
+    $paystatus='Successful';
+} else {
+    $paystatus='Failed';
+}
+
+if($value['offline_status'] == ""){
+    $paystatus2='Online';
+} else {
+    $paystatus2='Offline';
+}
+
+if($value['delete_status'] == ""){
+    $paystatus3='Undeleted';
+} else {
+    $paystatus3= $value['delete_status'];
+}
+$uniqueid = $value['customer_id'];
+$sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
+$result2 = $this->dbcon->query($sql2);
+$row2 = $result2->fetch_assoc();
+$output.= '
+<tr>
+    <td>'.$value['payment_id'].'</td>
+    <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+    </td>
+    <td>&#8358;'.$amount.'</td>
+    <td>'.$value['product_name'].'</td>
+    <td>'.$value['payee'].'</td>
+    <td>'.$value['payment_date'].'</td>
+    <td>'.$value['payment_time'].'</td>
+    <td>'.$paystatus.'</td>
+    <td>'.$paystatus2.'</td>
+    <td>'.$paystatus3.'</td>
+</tr>
+';
+} else {
+$unitprice = $value['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($value['sub_status'] != "Failed"){
+    $paystatus='Successful';
+} else {
+    $paystatus='Failed';
+}
+
+if($value['offline_status'] == ""){
+    $paystatus2='Online';
+} else {
+    $paystatus2='Offline';
+}
+
+if($value['delete_status'] == ""){
+    $paystatus3='Undeleted';
+} else {
+    $paystatus3= $value['delete_status'];
+}
+$uniqueid = $value['customer_id'];
+$sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
+$result2 = $this->dbcon->query($sql2);
+$row2 = $result2->fetch_assoc();
+$output.= '
+<tr>
+    <td>'.$value['payment_id'].'</td>
+    <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+    </td>
+    <td>&#8358;'.$amount.'</td>
+    <td>'.$value['product_name'].'</td>
+    <td>'.$value['payee'].'</td>
+    <td>'.$value['payment_date'].'</td>
+    <td>'.$value['payment_time'].'</td>
+    <td>'.$paystatus.'</td>
+    <td>'.$paystatus2.'</td>
+    <td>'.$paystatus3.'</td>
+</tr>
+';
+}
+}
+} else {
+$output .= "";
+}
+}
+} else {
+$output .= "";
+}
+
+echo $output;
+}
+
+
+
+
+
+function searchByDate($name,$user,$unique){
+$sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' ORDER BY payment_id
+DESC";
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+            '.$outputmode.'
+        </div>
+
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
             </div>
-        </div>';
-
+        </div> ';
         }
-        $output .= "$output1$output2$output3$output4";
 
+
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
         }
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">
+            '.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted"){
+
+        $name = $data['product_id'].$data['payment_id'];
+
+        $output3 = '<form action="" class="restore-form" method="POST">
+            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+        </form>
+    </div>
+</div>';
+
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+
+
+}
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "subadmin"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "superadmin"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output5 = '<form action="" class="deletep-form" method="POST">
+        <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
+
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
+        }
+
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted"){
+
+        $name = $data['product_id'].$data['payment_id'];
+
+        $output3 = '<form action="" class="restore-form" method="POST">
+            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+        </form>
+    </div>
+    <div>';
+
+        $output4 = "";
+        $output5 = "";
+
+
+        if(isset($_POST["restorel".$name])){
+        $insertupdate =
+        $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+        $deletedp = "restorel";
+        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
         }
         } else {
-        $output .= "<div class='success'>
-            <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-            <p>We can't find this transaction</p>
-        </div>";
-        }
 
-        echo $output;
-        }
-
-
-        function downloadByMode($name,$mode){
-        if($mode == "downloaddate"){
-        $sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' ORDER BY payment_id DESC";
-        }
-
-        if($mode == "downloadpayer"){
-        $sql = "SELECT * FROM land_history WHERE payee = '{$name}' ORDER BY payment_id DESC";
-        }
-
-        if($mode == "downloadfailed"){
-        $sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' ORDER BY payment_id DESC";
-        }
-
-        if($mode == "downloadsuccess"){
-        $sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' ORDER BY payment_id DESC";
-        }
-
-        if($mode == "downloaddeleted"){
-        $sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' ORDER BY payment_id DESC";
-        }
-        $result = $this->dbcon->query($sql);
-        $output = "";
-        if($result->num_rows > 0){
-        while($data = $result->fetch_assoc()){
-        if($data['sub_status'] == "Failed"){
         $unitprice = $data['product_price'];
         if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
         $amount = number_format($unitprice);
         } else {
         $amount = round($unitprice);
         }
-        $uniqueid = $data['customer_id'];
-        $sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
-        $result2 = $this->dbcon->query($sql2);
-        $row2 = $result2->fetch_assoc();
-        $output.= '
-        <tr>
-            <td>'.$data['payment_id'].'</td>
-            <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
-            </td>
-            <td>&#8358;'.$amount.'</td>
-            <td>'.$data['product_name'].'</td>
-            <td>'.$data['payee'].'</td>
-            <td>'.$data['payment_date'].'</td>
-            <td>'.$data['payment_time'].'</td>
-        </tr>
-        ';
+
+
+        if($user == "subadmin"){
+        $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+        $result3 = $this->dbcon->query($sql3);
+        $row3 = $result3->fetch_assoc();
+        if($data['payee'] == $row3['subadmin_name']){
+        $payeename = "You";
         } else {
-        $unitprice = $data['product_price'];
-        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-        $amount = number_format($unitprice);
+        $payeename = $data['payee'];
+        }
+        }
+
+        if($user == "superadmin"){
+        $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+        $result3 = $this->dbcon->query($sql3);
+        $row3 = $result3->fetch_assoc();
+        if($data['payee'] == $row3['super_adminname']){
+        $payeename = "You";
         } else {
-        $amount = round($unitprice);
-        }
-        $uniqueid = $data['customer_id'];
-        $sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
-        $result2 = $this->dbcon->query($sql2);
-        $row2 = $result2->fetch_assoc();
-        $output.= '
-        <tr>
-            <td>'.$data['payment_id'].'</td>
-            <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
-            </td>
-            <td>&#8358;'.$amount.'</td>
-            <td>'.$data['product_name'].'</td>
-            <td>'.$data['payee'].'</td>
-            <td>'.$data['payment_date'].'</td>
-            <td>'.$data['payment_time'].'</td>
-        </tr>
-        ';
+        $payeename = $data['payee'];
         }
         }
-        } else {
-        $output .= "";
-        }
 
-        echo $output;
-        }
+        $output3 = "";
 
-
-        function downloadByMode2($name,$mode,$userid){
-            if($mode == "downloaddate"){
-            $sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
-            }
-    
-    
-            if($mode == "downloadfailed"){
-            $sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
-            }
-    
-            if($mode == "downloadsuccess"){
-            $sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
-            }
-    
-            if($mode == "downloaddeleted"){
-            $sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
-            }
-            $result = $this->dbcon->query($sql);
-            $output = "";
-            if($result->num_rows > 0){
-            while($data = $result->fetch_assoc()){
-            if($data['sub_status'] == "Failed"){
-            $unitprice = $data['product_price'];
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-            $amount = number_format($unitprice);
-            } else {
-            $amount = round($unitprice);
-            }
-            $uniqueid = $data['customer_id'];
-            $sql2 = "SELECT * FROM user WHERE unique_id = '{$userid}'";
-            $result2 = $this->dbcon->query($sql2);
-            $row2 = $result2->fetch_assoc();
-            $output.= '
-            <tr>
-                <td>'.$data['payment_id'].'</td>
-                <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
-                </td>
-                <td>&#8358;'.$amount.'</td>
-                <td>'.$data['product_name'].'</td>
-                <td>'.$data['payee'].'</td>
-                <td>'.$data['payment_date'].'</td>
-                <td>'.$data['payment_time'].'</td>
-            </tr>
-            ';
-            } else {
-            $unitprice = $data['product_price'];
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-            $amount = number_format($unitprice);
-            } else {
-            $amount = round($unitprice);
-            }
-            $uniqueid = $data['customer_id'];
-            $sql2 = "SELECT * FROM user WHERE unique_id = '{$userid}'";
-            $result2 = $this->dbcon->query($sql2);
-            $row2 = $result2->fetch_assoc();
-            $output.= '
-            <tr>
-                <td>'.$data['payment_id'].'</td>
-                <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
-                </td>
-                <td>&#8358;'.$amount.'</td>
-                <td>'.$data['product_name'].'</td>
-                <td>'.$data['payee'].'</td>
-                <td>'.$data['payment_date'].'</td>
-                <td>'.$data['payment_time'].'</td>
-            </tr>
-            ';
-            }
-            }
-            } else {
-            $output .= "";
-            }
-    
-            echo $output;
-            }
-    
+        $output4 = '<div class="price-detail">&#8358;'.$amount.'
+            <div class="payee">
+                <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                    '.$payeename.'
+                </p>
+            </div>';
 
 
-        function searchByPayer($name,$user,$unique){
-        $sql = "SELECT * FROM land_history WHERE payee = '{$name}' ORDER BY payment_id DESC";
-        $result = $this->dbcon->query($sql);
-        $output = "";
-        if($result->num_rows > 0){
-        while($data = $result->fetch_assoc()){
-        if($data['sub_status'] == "Failed"){
-            if($data['payment_mode'] == "Offline"){
-                if($data['offline_status'] == ""){
-                    $outputmode = '<p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: Approved</p>';
-                } else {
-                    $outputmode = ' <p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: '.$data['offline_status'].'</p>';
-                }
-                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                <div class="radius">
-                    <img src="landimage/'.$data['product_image'].'" alt="">
+
+            $name = $data['product_id'].$data['payment_id'];
+
+            $output5 = '<form action="" class="deletep-form" method="POST">
+                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+            </form>
+        </div>
+    </div>
+    ';
+
+    if(isset($_POST["deletel".$name])){
+    $insertupdate =
+    $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+    $deletedp = "deletedl";
+    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+    }
+    }
+    $output .= "$output1$output2$output3$output4$output5";
+    }
+    }
+    } else {
+    $output .= "<div class='success'>
+        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+        <p>We can't find this transaction</p>
+    </div>";
+    }
+
+    echo $output;
+    }
+
+
+    function searchByDate2($name,$user,$unique,$userid){
+    $sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id
+    DESC";
+    $result = $this->dbcon->query($sql);
+    $output = "";
+    if($result->num_rows > 0){
+    while($data = $result->fetch_assoc()){
+    if($data['sub_status'] == "Failed"){
+    if($data['payment_mode'] == "Offline"){
+    if($data['offline_status'] == ""){
+    $outputmode = '<p
+        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+        Offline: Approved</p>';
+    } else {
+    $outputmode = ' <p
+        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+        Offline: '.$data['offline_status'].'</p>';
+    }
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
-                <div class="details">
-                    <p class="pname">'.$data['product_name'].'</p>
-                    <div class="inner-detail">
-                        <div class="date" style="font-size: 14px;">
-                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                        </div>
+            </div>
+            '.$outputmode.'
+        </div> ';
+        } else {
+        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            <div class="radius">
+                <img src="landimage/'.$data['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$data['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                     </div>
-                  '.$outputmode.'
-                </div> ';
-            } else {
-                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                <div class="radius">
-                    <img src="landimage/'.$data['product_image'].'" alt="">
                 </div>
-                <div class="details">
-                    <p class="pname">'.$data['product_name'].'</p>
-                    <div class="inner-detail">
-                        <div class="date" style="font-size: 14px;">
-                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                        </div>
-                    </div>
-                </div> ';
+            </div> ';
             }
-      
+
 
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
@@ -7597,124 +6970,973 @@ if($this->dbcon->affected_rows > 0){
 
             $name = $data['product_id'].$data['payment_id'];
 
-            $output3 = '<form action="" class="restore-form" method="POST">
-                <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
+            if($user == "agent2"){
+            $output3 = ' <div class="detail-four">
+                <div class="detail"
+                    style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <p style="font-size: 14px; color: #fff;">Deleted</p>
+                </div>
+            </div>
         </div>
     </div>';
-
-    $output4 = "";
-    $output5 = "";
-    if(isset($_POST["restorel".$name])){
-    $insertupdate =
-    $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-    $deletedp = "restorel";
-    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-
-
-    }
     } else {
+    $output3 = '<form action="" class="restore-form" method="POST">
+        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+}
 
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
+
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+
+
+}
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "subadmin2"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "supadmin2"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "agent2"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+    if($user == "agent2"){
+    $output5 = '
+</div>
+</div>';
+} else {
+$output5 = '<form action="" class="deletep-form" method="POST">
+    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+</form>
+</div>
+</div>';
+}
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
     } else {
-    $amount = round($unitprice);
-    }
-
-
-    if($user == "subadmin"){
-    $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['subadmin_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
-
-    if($user == "superadmin"){
-    $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['super_adminname']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
-
-    $output3 = "";
-    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-        <span style="font-size: 12px;">(Failed)</span>
-        <div class="payee">
-            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
         </div> ';
+        }
 
 
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
+        }
+
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted"){
 
         $name = $data['product_id'].$data['payment_id'];
-
-        $output5 = '<form action="" class="deletep-form" method="POST">
-            <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+        if($user == "agent2"){
+        $output3 = ' <div class="detail-four">
+            <div class="detail"
+                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <p style="font-size: 14px; color: #fff;">Deleted</p>
+            </div>
+        </div>
+    </div>
+    <div>';
+        } else {
+        $output3 = '<form action="" class="restore-form" method="POST">
+            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
                 style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
         </form>
     </div>
-    </div>';
-    if(isset($_POST["deletel".$name])){
-    $insertupdate =
-    $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-    $deletedp = "deletedl";
-    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-    }
-    }
-    $output .= "$output1$output2$output3$output4$output5";
-    } else {
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-                '.$outputmode.'
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
+    <div>';
         }
-   
+
+
+        $output4 = "";
+        $output5 = "";
+
+
+        if(isset($_POST["restorel".$name])){
+        $insertupdate =
+        $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+        $deletedp = "restorel";
+        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+        }
+        } else {
+
+        $unitprice = $data['product_price'];
+        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+        $amount = number_format($unitprice);
+        } else {
+        $amount = round($unitprice);
+        }
+
+
+        if($user == "subadmin2"){
+        $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+        $result3 = $this->dbcon->query($sql3);
+        $row3 = $result3->fetch_assoc();
+        if($data['payee'] == $row3['subadmin_name']){
+        $payeename = "You";
+        } else {
+        $payeename = $data['payee'];
+        }
+        }
+
+        if($user == "supadmin2"){
+        $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+        $result3 = $this->dbcon->query($sql3);
+        $row3 = $result3->fetch_assoc();
+        if($data['payee'] == $row3['super_adminname']){
+        $payeename = "You";
+        } else {
+        $payeename = $data['payee'];
+        }
+        }
+
+        if($user == "agent2"){
+        $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+        $result3 = $this->dbcon->query($sql3);
+        $row3 = $result3->fetch_assoc();
+        if($data['payee'] == $row3['agent_name']){
+        $payeename = "You";
+        } else {
+        $payeename = $data['payee'];
+        }
+        }
+
+        $output3 = "";
+
+        $output4 = '<div class="price-detail">&#8358;'.$amount.'
+            <div class="payee">
+                <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                    '.$payeename.'
+                </p>
+            </div>';
+
+
+
+            $name = $data['product_id'].$data['payment_id'];
+
+            if($user == "agent2"){
+            $output5 = '
+        </div>
+    </div>';
+    } else {
+    $output5 = '<form action="" class="deletep-form" method="POST">
+        <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+}
+
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+function searchAgentDate($name,$user,$unique){
+if($user == "agent"){
+$sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' AND agent_id =
+'{$unique}'ORDER BY payment_id DESC";
+}
+
+if($user == "normaluser"){
+$sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' AND customer_id =
+'{$unique}'ORDER BY payment_id DESC";
+}
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
+
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
+        }
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">
+            '.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted"){
+
+        $output3 = ' <div class="detail-four">
+            <div class="detail"
+                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <p style="font-size: 14px; color: #fff;">Deleted</p>
+            </div>
+        </div>
+    </div>
+</div>';
+
+$output4 = "";
+$output5 = "";
+
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div>
+</div>
+</div>';
+
+$name = $data['product_id'].$data['payment_id'];
+
+}
+$output .= "$output1$output2$output3$output4";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
+
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
+        }
+
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted"){
+
+        $name = $data['product_id'].$data['payment_id'];
+
+        $output3 = ' <div class="detail-four">
+            <div class="detail"
+                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <p style="font-size: 14px; color: #fff;">Deleted</p>
+            </div>
+        </div>
+    </div>
+</div>';
+
+$output4 = "";
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+
+$output4 = '<div class="price-detail">&#8358;'.$amount.'
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div>
+</div>
+</div>';
+
+}
+$output .= "$output1$output2$output3$output4";
+
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+function downloadByMode($name,$mode){
+if($mode == "downloaddate"){
+$sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' ORDER BY payment_id DESC";
+}
+
+if($mode == "downloadpayer"){
+$sql = "SELECT * FROM land_history WHERE payee = '{$name}' ORDER BY payment_id DESC";
+}
+
+if($mode == "downloadfailed"){
+$sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' ORDER BY payment_id DESC";
+}
+
+if($mode == "downloadsuccess"){
+$sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' ORDER BY payment_id DESC";
+}
+
+if($mode == "downloaddeleted"){
+$sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' ORDER BY payment_id DESC";
+}
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($value['sub_status'] != "Failed"){
+    $paystatus='Successful';
+} else {
+    $paystatus='Failed';
+}
+
+if($value['offline_status'] == ""){
+    $paystatus2='Online';
+} else {
+    $paystatus2='Offline';
+}
+
+if($value['delete_status'] == ""){
+    $paystatus3='Undeleted';
+} else {
+    $paystatus3= $value['delete_status'];
+}
+$uniqueid = $data['customer_id'];
+$sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
+$result2 = $this->dbcon->query($sql2);
+$row2 = $result2->fetch_assoc();
+$output.= '
+<tr>
+    <td>'.$data['payment_id'].'</td>
+    <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+    </td>
+    <td>&#8358;'.$amount.'</td>
+    <td>'.$data['product_name'].'</td>
+    <td>'.$data['payee'].'</td>
+    <td>'.$data['payment_date'].'</td>
+    <td>'.$data['payment_time'].'</td>
+    <td>'.$paystatus.'</td>
+    <td>'.$paystatus2.'</td>
+    <td>'.$paystatus3.'</td>
+</tr>
+';
+} else {
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($value['sub_status'] != "Failed"){
+    $paystatus='Successful';
+} else {
+    $paystatus='Failed';
+}
+
+if($value['offline_status'] == ""){
+    $paystatus2='Online';
+} else {
+    $paystatus2='Offline';
+}
+
+if($value['delete_status'] == ""){
+    $paystatus3='Undeleted';
+} else {
+    $paystatus3= $value['delete_status'];
+}
+
+$uniqueid = $data['customer_id'];
+$sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
+$result2 = $this->dbcon->query($sql2);
+$row2 = $result2->fetch_assoc();
+$output.= '
+<tr>
+    <td>'.$data['payment_id'].'</td>
+    <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+    </td>
+    <td>&#8358;'.$amount.'</td>
+    <td>'.$data['product_name'].'</td>
+    <td>'.$data['payee'].'</td>
+    <td>'.$data['payment_date'].'</td>
+    <td>'.$data['payment_time'].'</td>
+    <td>'.$paystatus.'</td>
+    <td>'.$paystatus2.'</td>
+    <td>'.$paystatus3.'</td>
+</tr>
+';
+}
+}
+} else {
+$output .= "";
+}
+
+echo $output;
+}
+
+
+function downloadByMode2($name,$mode,$userid){
+if($mode == "downloaddate"){
+$sql = "SELECT * FROM land_history WHERE payment_date = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id
+DESC";
+}
+
+
+if($mode == "downloadfailed"){
+$sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
+}
+
+if($mode == "downloadsuccess"){
+$sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
+}
+
+if($mode == "downloaddeleted"){
+$sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id
+DESC";
+}
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($value['sub_status'] != "Failed"){
+    $paystatus='Successful';
+} else {
+    $paystatus='Failed';
+}
+
+if($value['offline_status'] == ""){
+    $paystatus2='Online';
+} else {
+    $paystatus2='Offline';
+}
+
+if($value['delete_status'] == ""){
+    $paystatus3='Undeleted';
+} else {
+    $paystatus3= $value['delete_status'];
+}
+
+$uniqueid = $data['customer_id'];
+$sql2 = "SELECT * FROM user WHERE unique_id = '{$userid}'";
+$result2 = $this->dbcon->query($sql2);
+$row2 = $result2->fetch_assoc();
+$output.= '
+<tr>
+    <td>'.$data['payment_id'].'</td>
+    <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+    </td>
+    <td>&#8358;'.$amount.'</td>
+    <td>'.$data['product_name'].'</td>
+    <td>'.$data['payee'].'</td>
+    <td>'.$data['payment_date'].'</td>
+    <td>'.$data['payment_time'].'</td>
+    <td>'.$paystatus.'</td>
+    <td>'.$paystatus2.'</td>
+    <td>'.$paystatus3.'</td>
+</tr>
+';
+} else {
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($value['sub_status'] != "Failed"){
+    $paystatus='Successful';
+} else {
+    $paystatus='Failed';
+}
+
+if($value['offline_status'] == ""){
+    $paystatus2='Online';
+} else {
+    $paystatus2='Offline';
+}
+
+if($value['delete_status'] == ""){
+    $paystatus3='Undeleted';
+} else {
+    $paystatus3= $value['delete_status'];
+}
+$uniqueid = $data['customer_id'];
+$sql2 = "SELECT * FROM user WHERE unique_id = '{$userid}'";
+$result2 = $this->dbcon->query($sql2);
+$row2 = $result2->fetch_assoc();
+$output.= '
+<tr>
+    <td>'.$data['payment_id'].'</td>
+    <td> <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+    </td>
+    <td>&#8358;'.$amount.'</td>
+    <td>'.$data['product_name'].'</td>
+    <td>'.$data['payee'].'</td>
+    <td>'.$data['payment_date'].'</td>
+    <td>'.$data['payment_time'].'</td>
+    <td>'.$paystatus.'</td>
+    <td>'.$paystatus2.'</td>
+    <td>'.$paystatus3.'</td>
+</tr>
+';
+}
+}
+} else {
+$output .= "";
+}
+
+echo $output;
+}
+
+
+
+function searchByPayer($name,$user,$unique){
+$sql = "SELECT * FROM land_history WHERE payee = '{$name}' ORDER BY payment_id DESC";
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
+
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
+        }
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">
+            '.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted"){
+
+        $name = $data['product_id'].$data['payment_id'];
+
+        $output3 = '<form action="" class="restore-form" method="POST">
+            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+        </form>
+    </div>
+</div>';
+
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+
+
+}
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "subadmin"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "superadmin"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output5 = '<form action="" class="deletep-form" method="POST">
+        <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -7850,121 +8072,8 @@ if($this->dbcon->affected_rows > 0){
     if(!empty($rows)){
     foreach ($rows as $key => $value) {
     if($value['sub_status'] == "Failed"){
-        if($value['offline_status'] != ""){
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$value['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$value['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                    </div>
-                </div>
-                <p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: '.$value['offline_status'].'</p>
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$value['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$value['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
-        }
-   
-
-        if($value['product_unit'] == "1"){
-        $unit = $value['product_unit']." Unit";
-        } else {
-        $unit = $value['product_unit']." Units";
-        }
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
-        </div>
-        <div class="price-detail detail3">
-            '.$value['payment_method'].'</div> ';
-
-
-        if($value['delete_status'] == "Deleted"){
-
-        $output3 = ' <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff;">Deleted</p>
-            </div>
-        </div>
-    </div>
-    </div>';
-
-    $output4 = "";
-    $output5 = "";
-
-    } else {
-
-    $unitprice = $value['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
-
-
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($value['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $value['payee'];
-    }
-    }
-
-    $output3 = "";
-    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-        <span style="font-size: 12px;">(Failed)</span>
-        <div class="payee">
-            <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
-    </div>
-    </div>';
-
-    $name = $value['product_id'].$value['payment_id'];
-
-    }
-    $output .= "$output1$output2$output3$output4";
-    } else {
-        if($value['offline_status'] != ""){
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$value['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$value['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                    </div>
-                </div>
-                <p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: '.$value['offline_status'].'</p>
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details">
+    if($value['offline_status'] != ""){
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
         <div class="radius">
             <img src="landimage/'.$value['product_image'].'" alt="">
         </div>
@@ -7975,935 +8084,48 @@ if($this->dbcon->affected_rows > 0){
                     <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
                 </div>
             </div>
+            <p
+                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+                Offline: '.$value['offline_status'].'</p>
         </div> ';
-        }
-    
-
-        if($value['product_unit'] == "1"){
-        $unit = $value['product_unit']." Unit";
         } else {
-        $unit = $value['product_unit']." Units";
-        }
-
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
-        </div>
-        <div class="price-detail detail3">'.$value['payment_method'].'</div> ';
-
-
-        if($value['delete_status'] == "Deleted"){
-
-        $name = $value['product_id'].$value['payment_id'];
-
-        $output3 = ' <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff;">Deleted</p>
-            </div>
-        </div>
-    </div>
-    </div>';
-
-    $output4 = "";
-    } else {
-
-    $unitprice = $value['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
-
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($value['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $value['payee'];
-    }
-    }
-
-    $output3 = "";
-
-    $output4 = '<div class="price-detail">&#8358;'.$amount.'
-        <div class="payee">
-            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
-    </div>
-    </div>';
-
-    }
-    $output .= "$output1$output2$output3$output4";
-    }
-    }} else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this transaction</p>
-    </div>";
-    }}
-    } else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this user on your customer list</p>
-    </div>";
-    }
-    } else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this transaction</p>
-    </div>";
-    }
-
-    echo $output;
-    }
-
-
-    function searchAgentLand($name,$user,$unique){
-    $sql = "SELECT * FROM land_product WHERE product_name = '{$name}'";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    if($result->num_rows > 0){
-    $data = $result->fetch_assoc();
-    if($user == "normaluser"){
-    $sql2 = "SELECT * FROM land_history WHERE product_id = '{$data['unique_id']}' AND customer_id = '{$unique}' ORDER BY
-    payment_id DESC";
-    }
-
-    if($user == "agent"){
-    $sql2 = "SELECT * FROM land_history WHERE product_id = '{$data['unique_id']}' AND agent_id = '{$unique}' ORDER BY
-    payment_id DESC";
-    }
-    $result2 = $this->dbcon->query($sql2);
-    $rows = array();
-    if($this->dbcon->affected_rows > 0){
-    while($row2 = $result2->fetch_assoc()){
-    $rows[] = $row2;
-    }
-    if(!empty($rows)){
-    foreach ($rows as $key => $value) {
-    if($value['sub_status'] == "Failed"){
-        if($value['offline_status'] != ""){
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$value['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$value['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                    </div>
-                </div>
-                <p
-                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                            Offline: '.$value['offline_status'].'</p>
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$value['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$value['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
-        }
-   
-
-        if($value['product_unit'] == "1"){
-        $unit = $value['product_unit']." Unit";
-        } else {
-        $unit = $value['product_unit']." Units";
-        }
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
-        </div>
-        <div class="price-detail detail3">
-            '.$value['payment_method'].'</div> ';
-
-
-        if($value['delete_status'] == "Deleted"){
-
-        $output3 = ' <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff;">Deleted</p>
-            </div>
-        </div>
-    </div>
-    </div>';
-
-    $output4 = "";
-    $output5 = "";
-
-    } else {
-
-    $unitprice = $value['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
-
-
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($value['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $value['payee'];
-    }
-    }
-
-    if($user == "normaluser"){
-    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($value['payee'] == $row3['first_name']." ".$row3['last_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $value['payee'];
-    }
-    }
-
-    $output3 = "";
-    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-        <span style="font-size: 12px;">(Failed)</span>
-        <div class="payee">
-            <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
-    </div>
-    </div>';
-
-    $name = $value['product_id'].$value['payment_id'];
-
-    }
-    $output .= "$output1$output2$output3$output4";
-    } else {
-        if($value['offline_status'] != ""){
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$value['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$value['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                    </div>
-                </div>
-                <p
-                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                                Offline: '.$value['offline_status'].'</p>
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details">
-        <div class="radius">
-            <img src="landimage/'.$value['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$value['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
-                </div>
-            </div>
-        </div> ';
-        }
-    
-
-        if($value['product_unit'] == "1"){
-        $unit = $value['product_unit']." Unit";
-        } else {
-        $unit = $value['product_unit']." Units";
-        }
-
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
-        </div>
-        <div class="price-detail detail3">'.$value['payment_method'].'</div> ';
-
-
-        if($value['delete_status'] == "Deleted"){
-
-        $name = $value['product_id'].$value['payment_id'];
-
-        $output3 = ' <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff;">Deleted</p>
-            </div>
-        </div>
-    </div>
-    </div>';
-
-    $output4 = "";
-    } else {
-
-    $unitprice = $value['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
-
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($value['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $value['payee'];
-    }
-    }
-
-    if($user == "normaluser"){
-    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($value['payee'] == $row3['first_name']." ".$row3['last_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $value['payee'];
-    }
-    }
-
-    $output3 = "";
-
-    $output4 = '<div class="price-detail">&#8358;'.$amount.'
-        <div class="payee">
-            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
-    </div>
-    </div>';
-
-    }
-    $output .= "$output1$output2$output3$output4";
-
-    }
-    }
-    } else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this transaction</p>
-    </div>";
-    }
-    }
-    } else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this transaction</p>
-    </div>";
-    }
-
-    echo $output;
-    }
-
-
-    function searchFailedTransactions($name,$user,$unique){
-    $sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' ORDER BY payment_id DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    if($data['sub_status'] == "Failed"){
-       
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
-        
-  
-
-        if($data['product_unit'] == "1"){
-        $unit = $data['product_unit']." Unit";
-        } else {
-        $unit = $data['product_unit']." Units";
-        }
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
-        </div>
-        <div class="price-detail detail3">
-            '.$data['payment_method'].'</div> ';
-
-
-        if($data['delete_status'] == "Deleted"){
-
-        $name = $data['product_id'].$data['payment_id'];
-
-        $output3 = '<form action="" class="restore-form" method="POST">
-            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-        </form>
-    </div>
-    </div>';
-
-    $output4 = "";
-    $output5 = "";
-    if(isset($_POST["restorel".$name])){
-    $insertupdate =
-    $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-    $deletedp = "restorel";
-    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-
-
-    }
-    } else {
-
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
-
-
-    if($user == "subadmin"){
-    $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['subadmin_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
-
-    if($user == "superadmin"){
-    $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['super_adminname']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
-
-    $output3 = "";
-    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-        <span style="font-size: 12px;">(Failed)</span>
-        <div class="payee">
-            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div> ';
-
-
-
-        $name = $data['product_id'].$data['payment_id'];
-
-        $output5 = '<form action="" class="deletep-form" method="POST">
-            <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-        </form>
-    </div>
-    </div>';
-    if(isset($_POST["deletel".$name])){
-    $insertupdate =
-    $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-    $deletedp = "deletedl";
-    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-    }
-    }
-    $output .= "$output1$output2$output3$output4$output5";
-    } else {
-       
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
-        
-   
-
-        if($data['product_unit'] == "1"){
-        $unit = $data['product_unit']." Unit";
-        } else {
-        $unit = $data['product_unit']." Units";
-        }
-
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
-        </div>
-        <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
-
-
-        if($data['delete_status'] == "Deleted"){
-
-        $name = $data['product_id'].$data['payment_id'];
-
-        $output3 = '<form action="" class="restore-form" method="POST">
-            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-        </form>
-    </div>
-    <div>';
-
-        $output4 = "";
-        $output5 = "";
-
-
-        if(isset($_POST["restorel".$name])){
-        $insertupdate =
-        $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-        $deletedp = "restorel";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-        }
-        } else {
-
-        $unitprice = $data['product_price'];
-        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-        $amount = number_format($unitprice);
-        } else {
-        $amount = round($unitprice);
-        }
-
-
-        if($user == "subadmin"){
-        $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-        $result3 = $this->dbcon->query($sql3);
-        $row3 = $result3->fetch_assoc();
-        if($data['payee'] == $row3['subadmin_name']){
-        $payeename = "You";
-        } else {
-        $payeename = $data['payee'];
-        }
-        }
-
-        if($user == "superadmin"){
-        $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-        $result3 = $this->dbcon->query($sql3);
-        $row3 = $result3->fetch_assoc();
-        if($data['payee'] == $row3['super_adminname']){
-        $payeename = "You";
-        } else {
-        $payeename = $data['payee'];
-        }
-        }
-
-        $output3 = "";
-
-        $output4 = '<div class="price-detail">&#8358;'.$amount.'
-            <div class="payee">
-                <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                    '.$payeename.'
-                </p>
-            </div>';
-
-
-
-            $name = $data['product_id'].$data['payment_id'];
-
-            $output5 = '<form action="" class="deletep-form" method="POST">
-                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
-        </div>
-    </div>
-    ';
-
-    if(isset($_POST["deletel".$name])){
-    $insertupdate =
-    $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-    $deletedp = "deletedl";
-    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-    }
-    }
-    $output .= "$output1$output2$output3$output4$output5";
-    }
-    }
-    } else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this transaction</p>
-    </div>";
-    }
-
-    echo $output;
-    }
-
-
-    function searchFailedTransactions3($name,$user,$unique,$userid){
-        $sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
-        $result = $this->dbcon->query($sql);
-        $output = "";
-        if($result->num_rows > 0){
-        while($data = $result->fetch_assoc()){
-        if($data['sub_status'] == "Failed"){
-       
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-                
-            </div> ';
-        
-       
-    
-            if($data['product_unit'] == "1"){
-            $unit = $data['product_unit']." Unit";
-            } else {
-            $unit = $data['product_unit']." Units";
-            }
-            $output2 = '
-            <div class="price-detail detail3">
-                '.$unit.'
-            </div>
-            <div class="price-detail detail3">
-                '.$data['payment_method'].'</div> ';
-    
-    
-            if($data['delete_status'] == "Deleted" && $user != "agent2"){
-    
-            $name = $data['product_id'].$data['payment_id'];
-    
-            $output3 = '<form action="" class="restore-form" method="POST">
-                <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
-        </div>
-        </div>';
-    
-        $output4 = "";
-        $output5 = "";
-        if(isset($_POST["restorel".$name])){
-        $insertupdate =
-        $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-        $deletedp = "restorel";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-    
-    
-        }
-        } else {
-    
-        $unitprice = $data['product_price'];
-        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-        $amount = number_format($unitprice);
-        } else {
-        $amount = round($unitprice);
-        }
-    
-    
-        if($user == "subadmin2"){
-        $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-        $result3 = $this->dbcon->query($sql3);
-        $row3 = $result3->fetch_assoc();
-        if($data['payee'] == $row3['subadmin_name']){
-        $payeename = "You";
-        } else {
-        $payeename = $data['payee'];
-        }
-        }
-    
-        if($user == "supadmin2"){
-        $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-        $result3 = $this->dbcon->query($sql3);
-        $row3 = $result3->fetch_assoc();
-        if($data['payee'] == $row3['super_adminname']){
-        $payeename = "You";
-        } else {
-        $payeename = $data['payee'];
-        }
-        }
-
-        if($user == "agent2"){
-            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['agent_name']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-
-    
-        $output3 = "";
-        $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-            <span style="font-size: 12px;">(Failed)</span>
-            <div class="payee">
-                <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                    '.$payeename.'
-                </p>
-            </div> ';
-    
-    
-    
-            $name = $data['product_id'].$data['payment_id'];
-    
-            if($user == "agent2"){
-                $output5 = '</div>
-        </div>';
-            } else {
-                $output5 = '<form action="" class="deletep-form" method="POST">
-                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
-        </div>
-        </div>';
-            }
-        if(isset($_POST["deletel".$name])){
-        $insertupdate =
-        $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-        $deletedp = "deletedl";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-        }
-        }
-        $output .= "$output1$output2$output3$output4$output5";
-        } else {
-           
-                $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
-            
-        
-    
-            if($data['product_unit'] == "1"){
-            $unit = $data['product_unit']." Unit";
-            } else {
-            $unit = $data['product_unit']." Units";
-            }
-    
-            $output2 = '
-            <div class="price-detail detail3">
-                '.$unit.'
-            </div>
-            <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
-    
-    
-            if($data['delete_status'] == "Deleted" && $user != "agent2"){
-    
-            $name = $data['product_id'].$data['payment_id'];
-    
-            $output3 = '<form action="" class="restore-form" method="POST">
-                <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
-        </div>
-        <div>';
-    
-            $output4 = "";
-            $output5 = "";
-    
-    
-            if(isset($_POST["restorel".$name])){
-            $insertupdate =
-            $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-            $deletedp = "restorel";
-            header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-            }
-            } else {
-    
-            $unitprice = $data['product_price'];
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-            $amount = number_format($unitprice);
-            } else {
-            $amount = round($unitprice);
-            }
-    
-    
-            if($user == "subadmin2"){
-            $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['subadmin_name']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-    
-            if($user == "supadmin2"){
-            $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['super_adminname']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-
-            if($user == "agent2"){
-                $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-                $result3 = $this->dbcon->query($sql3);
-                $row3 = $result3->fetch_assoc();
-                if($data['payee'] == $row3['agent_name']){
-                $payeename = "You";
-                } else {
-                $payeename = $data['payee'];
-                }
-                }
-
-    
-            $output3 = "";
-    
-            $output4 = '<div class="price-detail">&#8358;'.$amount.'
-                <div class="payee">
-                    <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                        '.$payeename.'
-                    </p>
-                </div>';
-    
-    
-    
-                $name = $data['product_id'].$data['payment_id'];
-    
-                if($user == "agent2"){
-                    $output5 = '</div>
-            </div>';
-                } else {
-                    $output5 = '<form action="" class="deletep-form" method="POST">
-                    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                </form>
-            </div>
-            </div>';
-                }
-    
-        if(isset($_POST["deletel".$name])){
-        $insertupdate =
-        $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-        $deletedp = "deletedl";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-        }
-        }
-        $output .= "$output1$output2$output3$output4$output5";
-        }
-        }
-        } else {
-        $output .= "<div class='success'>
-            <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-            <p>We can't find this transaction</p>
-        </div>";
-        }
-    
-        echo $output;
-        }
-    
-
-
-
-    function searchFailedTransactions2($name,$user,$unique){
-    if($user == "agent"){
-    $sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' AND agent_id = '{$unique}' ORDER BY payment_id
-    DESC";
-    }
-
-    if($user == "normaluser"){
-    $sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' AND customer_id = '{$unique}' ORDER BY payment_id
-    DESC";
-    }
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    if($data['sub_status'] == "Failed"){
-   
         $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-        <div class="radius">
-            <img src="landimage/'.$data['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$data['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            <div class="radius">
+                <img src="landimage/'.$value['product_image'].'" alt="">
+            </div>
+            <div class="details">
+                <p class="pname">'.$value['product_name'].'</p>
+                <div class="inner-detail">
+                    <div class="date" style="font-size: 14px;">
+                        <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                    </div>
+                </div>
+            </div> ';
+            }
+
+
+            if($value['product_unit'] == "1"){
+            $unit = $value['product_unit']." Unit";
+            } else {
+            $unit = $value['product_unit']." Units";
+            }
+            $output2 = '
+            <div class="price-detail detail3">
+                '.$unit.'
+            </div>
+            <div class="price-detail detail3">
+                '.$value['payment_method'].'</div> ';
+
+
+            if($value['delete_status'] == "Deleted"){
+
+            $output3 = ' <div class="detail-four">
+                <div class="detail"
+                    style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <p style="font-size: 14px; color: #fff;">Deleted</p>
                 </div>
             </div>
-        </div> ';
-    
-    
-
-        if($data['product_unit'] == "1"){
-        $unit = $data['product_unit']." Unit";
-        } else {
-        $unit = $data['product_unit']." Units";
-        }
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
         </div>
-        <div class="price-detail detail3">
-            '.$data['payment_method'].'</div> ';
-
-
-        if($data['delete_status'] == "Deleted"){
-
-        $output3 = ' <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff;">Deleted</p>
-            </div>
-        </div>
-    </div>
     </div>';
 
     $output4 = "";
@@ -8911,7 +8133,7 @@ if($this->dbcon->affected_rows > 0){
 
     } else {
 
-    $unitprice = $data['product_price'];
+    $unitprice = $value['product_price'];
     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
     $amount = number_format($unitprice);
     } else {
@@ -8923,21 +8145,10 @@ if($this->dbcon->affected_rows > 0){
     $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
     $result3 = $this->dbcon->query($sql3);
     $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['agent_name']){
+    if($value['payee'] == $row3['agent_name']){
     $payeename = "You";
     } else {
-    $payeename = $data['payee'];
-    }
-    }
-
-    if($user == "normaluser"){
-    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
+    $payeename = $value['payee'];
     }
     }
 
@@ -8951,197 +8162,557 @@ if($this->dbcon->affected_rows > 0){
             </p>
         </div>
     </div>
-    </div>';
+</div>';
+
+$name = $value['product_id'].$value['payment_id'];
+
+}
+$output .= "$output1$output2$output3$output4";
+} else {
+if($value['offline_status'] != ""){
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$value['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$value['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+            </div>
+        </div>
+        <p
+            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+            Offline: '.$value['offline_status'].'</p>
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$value['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$value['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
+
+        if($value['product_unit'] == "1"){
+        $unit = $value['product_unit']." Unit";
+        } else {
+        $unit = $value['product_unit']." Units";
+        }
+
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">'.$value['payment_method'].'</div> ';
+
+
+        if($value['delete_status'] == "Deleted"){
+
+        $name = $value['product_id'].$value['payment_id'];
+
+        $output3 = ' <div class="detail-four">
+            <div class="detail"
+                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <p style="font-size: 14px; color: #fff;">Deleted</p>
+            </div>
+        </div>
+    </div>
+</div>';
+
+$output4 = "";
+} else {
+
+$unitprice = $value['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($value['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $value['payee'];
+}
+}
+
+$output3 = "";
+
+$output4 = '<div class="price-detail">&#8358;'.$amount.'
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div>
+</div>
+</div>';
+
+}
+$output .= "$output1$output2$output3$output4";
+}
+}} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this user on your customer list</p>
+</div>";
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+function searchAgentLand($name,$user,$unique){
+$sql = "SELECT * FROM land_product WHERE product_name = '{$name}'";
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+$data = $result->fetch_assoc();
+if($user == "normaluser"){
+$sql2 = "SELECT * FROM land_history WHERE product_id = '{$data['unique_id']}' AND customer_id = '{$unique}' ORDER BY
+payment_id DESC";
+}
+
+if($user == "agent"){
+$sql2 = "SELECT * FROM land_history WHERE product_id = '{$data['unique_id']}' AND agent_id = '{$unique}' ORDER BY
+payment_id DESC";
+}
+$result2 = $this->dbcon->query($sql2);
+$rows = array();
+if($this->dbcon->affected_rows > 0){
+while($row2 = $result2->fetch_assoc()){
+$rows[] = $row2;
+}
+if(!empty($rows)){
+foreach ($rows as $key => $value) {
+if($value['sub_status'] == "Failed"){
+if($value['offline_status'] != ""){
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$value['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$value['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+            </div>
+        </div>
+        <p
+            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+            Offline: '.$value['offline_status'].'</p>
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$value['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$value['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
+
+        if($value['product_unit'] == "1"){
+        $unit = $value['product_unit']." Unit";
+        } else {
+        $unit = $value['product_unit']." Units";
+        }
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">
+            '.$value['payment_method'].'</div> ';
+
+
+        if($value['delete_status'] == "Deleted"){
+
+        $output3 = ' <div class="detail-four">
+            <div class="detail"
+                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <p style="font-size: 14px; color: #fff;">Deleted</p>
+            </div>
+        </div>
+    </div>
+</div>';
+
+$output4 = "";
+$output5 = "";
+
+} else {
+
+$unitprice = $value['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($value['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $value['payee'];
+}
+}
+
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($value['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $value['payee'];
+}
+}
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div>
+</div>
+</div>';
+
+$name = $value['product_id'].$value['payment_id'];
+
+}
+$output .= "$output1$output2$output3$output4";
+} else {
+if($value['offline_status'] != ""){
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$value['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$value['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+            </div>
+        </div>
+        <p
+            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+            Offline: '.$value['offline_status'].'</p>
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$value['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$value['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$value['payment_month'].'</span>&nbsp;<span>'.$value['payment_day'].'</span>,<span>'.$value['payment_year'].'</span>,<span>'.$value['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
+
+        if($value['product_unit'] == "1"){
+        $unit = $value['product_unit']." Unit";
+        } else {
+        $unit = $value['product_unit']." Units";
+        }
+
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">'.$value['payment_method'].'</div> ';
+
+
+        if($value['delete_status'] == "Deleted"){
+
+        $name = $value['product_id'].$value['payment_id'];
+
+        $output3 = ' <div class="detail-four">
+            <div class="detail"
+                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <p style="font-size: 14px; color: #fff;">Deleted</p>
+            </div>
+        </div>
+    </div>
+</div>';
+
+$output4 = "";
+} else {
+
+$unitprice = $value['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($value['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $value['payee'];
+}
+}
+
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($value['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $value['payee'];
+}
+}
+
+$output3 = "";
+
+$output4 = '<div class="price-detail">&#8358;'.$amount.'
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div>
+</div>
+</div>';
+
+}
+$output .= "$output1$output2$output3$output4";
+
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+function searchFailedTransactions($name,$user,$unique){
+$sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' ORDER BY payment_id DESC";
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+    </div> ';
+
+
+
+    if($data['product_unit'] == "1"){
+    $unit = $data['product_unit']." Unit";
+    } else {
+    $unit = $data['product_unit']." Units";
+    }
+    $output2 = '
+    <div class="price-detail detail3">
+        '.$unit.'
+    </div>
+    <div class="price-detail detail3">
+        '.$data['payment_method'].'</div> ';
+
+
+    if($data['delete_status'] == "Deleted"){
 
     $name = $data['product_id'].$data['payment_id'];
 
-    }
-    $output .= "$output1$output2$output3$output4";
-    } else {
-       
-            $output1 = ' <div class="transaction-details">
-        <div class="radius">
-            <img src="landimage/'.$data['product_image'].'" alt="">
-        </div>
-        <div class="details">
-            <p class="pname">'.$data['product_name'].'</p>
-            <div class="inner-detail">
-                <div class="date" style="font-size: 14px;">
-                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                </div>
-            </div>
-        </div> ';
-        
-    
+    $output3 = '<form action="" class="restore-form" method="POST">
+        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
 
-        if($data['product_unit'] == "1"){
-        $unit = $data['product_unit']." Unit";
-        } else {
-        $unit = $data['product_unit']." Units";
-        }
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
 
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
-        </div>
-        <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
 
 
-        if($data['delete_status'] == "Deleted"){
+}
+} else {
 
-        $name = $data['product_id'].$data['payment_id'];
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
 
-        $output3 = ' <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff;">Deleted</p>
-            </div>
-        </div>
+
+if($user == "subadmin"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "superadmin"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output5 = '<form action="" class="deletep-form" method="POST">
+        <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
     </div>
-    </div>';
-
-    $output4 = "";
-    } else {
-
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
-
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
-
-    if($user == "normaluser"){
-    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
-
-    $output3 = "";
-
-    $output4 = '<div class="price-detail">&#8358;'.$amount.'
-        <div class="payee">
-            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
-    </div>
-    </div>';
-
-    }
-    $output .= "$output1$output2$output3$output4";
-
-    }
-    }
-    } else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this transaction</p>
-    </div>";
-    }
-
-    echo $output;
-    }
-
-
-
-
-    function searchDeletedTransactions($name,$user,$unique){
-    $sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' ORDER BY payment_id DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    if($data['sub_status'] == "Failed"){
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
             </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-               '.$outputmode.'
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
-        }
-   
-
-        if($data['product_unit'] == "1"){
-        $unit = $data['product_unit']." Unit";
-        } else {
-        $unit = $data['product_unit']." Units";
-        }
-        $output2 = '
-        <div class="price-detail detail3">
-            '.$unit.'
         </div>
-        <div class="price-detail detail3">
-            '.$data['payment_method'].'</div> ';
+    </div> ';
 
 
-        if($data['delete_status'] == "Deleted"){
 
-        $name = $data['product_id'].$data['payment_id'];
+    if($data['product_unit'] == "1"){
+    $unit = $data['product_unit']." Unit";
+    } else {
+    $unit = $data['product_unit']." Units";
+    }
 
-        $output3 = '<form action="" class="restore-form" method="POST">
-            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-        </form>
+    $output2 = '
+    <div class="price-detail detail3">
+        '.$unit.'
     </div>
-    </div>';
+    <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+
+
+    if($data['delete_status'] == "Deleted"){
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output3 = '<form action="" class="restore-form" method="POST">
+        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+<div>';
 
     $output4 = "";
     $output5 = "";
+
+
     if(isset($_POST["restorel".$name])){
     $insertupdate =
     $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
 
     $deletedp = "restorel";
     header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-
-
     }
     } else {
 
@@ -9176,14 +8747,14 @@ if($this->dbcon->affected_rows > 0){
     }
 
     $output3 = "";
-    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-        <span style="font-size: 12px;">(Failed)</span>
+
+    $output4 = '<div class="price-detail">&#8358;'.$amount.'
         <div class="payee">
             <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
             <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
                 '.$payeename.'
             </p>
-        </div> ';
+        </div>';
 
 
 
@@ -9194,28 +8765,559 @@ if($this->dbcon->affected_rows > 0){
                 style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
         </form>
     </div>
-    </div>';
-    if(isset($_POST["deletel".$name])){
-    $insertupdate =
-    $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+</div>
+';
 
-    $deletedp = "deletedl";
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+function searchFailedTransactions3($name,$user,$unique,$userid){
+$sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+
+    </div> ';
+
+
+
+    if($data['product_unit'] == "1"){
+    $unit = $data['product_unit']." Unit";
+    } else {
+    $unit = $data['product_unit']." Units";
+    }
+    $output2 = '
+    <div class="price-detail detail3">
+        '.$unit.'
+    </div>
+    <div class="price-detail detail3">
+        '.$data['payment_method'].'</div> ';
+
+
+    if($data['delete_status'] == "Deleted" && $user != "agent2"){
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output3 = '<form action="" class="restore-form" method="POST">
+        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+
+
+}
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "subadmin2"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "supadmin2"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "agent2"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    if($user == "agent2"){
+    $output5 = '
+</div>
+</div>';
+} else {
+$output5 = '<form action="" class="deletep-form" method="POST">
+    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+</form>
+</div>
+</div>';
+}
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+    </div> ';
+
+
+
+    if($data['product_unit'] == "1"){
+    $unit = $data['product_unit']." Unit";
+    } else {
+    $unit = $data['product_unit']." Units";
+    }
+
+    $output2 = '
+    <div class="price-detail detail3">
+        '.$unit.'
+    </div>
+    <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+
+
+    if($data['delete_status'] == "Deleted" && $user != "agent2"){
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output3 = '<form action="" class="restore-form" method="POST">
+        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+<div>';
+
+    $output4 = "";
+    $output5 = "";
+
+
+    if(isset($_POST["restorel".$name])){
+    $insertupdate =
+    $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+    $deletedp = "restorel";
     header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
     }
-    }
-    $output .= "$output1$output2$output3$output4$output5";
     } else {
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details">
+
+    $unitprice = $data['product_price'];
+    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+    $amount = number_format($unitprice);
+    } else {
+    $amount = round($unitprice);
+    }
+
+
+    if($user == "subadmin2"){
+    $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+    $result3 = $this->dbcon->query($sql3);
+    $row3 = $result3->fetch_assoc();
+    if($data['payee'] == $row3['subadmin_name']){
+    $payeename = "You";
+    } else {
+    $payeename = $data['payee'];
+    }
+    }
+
+    if($user == "supadmin2"){
+    $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+    $result3 = $this->dbcon->query($sql3);
+    $row3 = $result3->fetch_assoc();
+    if($data['payee'] == $row3['super_adminname']){
+    $payeename = "You";
+    } else {
+    $payeename = $data['payee'];
+    }
+    }
+
+    if($user == "agent2"){
+    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+    $result3 = $this->dbcon->query($sql3);
+    $row3 = $result3->fetch_assoc();
+    if($data['payee'] == $row3['agent_name']){
+    $payeename = "You";
+    } else {
+    $payeename = $data['payee'];
+    }
+    }
+
+
+    $output3 = "";
+
+    $output4 = '<div class="price-detail">&#8358;'.$amount.'
+        <div class="payee">
+            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                '.$payeename.'
+            </p>
+        </div>';
+
+
+
+        $name = $data['product_id'].$data['payment_id'];
+
+        if($user == "agent2"){
+        $output5 = '
+    </div>
+</div>';
+} else {
+$output5 = '<form action="" class="deletep-form" method="POST">
+    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+</form>
+</div>
+</div>';
+}
+
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+
+
+function searchFailedTransactions2($name,$user,$unique){
+if($user == "agent"){
+$sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' AND agent_id = '{$unique}' ORDER BY payment_id
+DESC";
+}
+
+if($user == "normaluser"){
+$sql = "SELECT * FROM land_history WHERE sub_status = '{$name}' AND customer_id = '{$unique}' ORDER BY payment_id
+DESC";
+}
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+    </div> ';
+
+
+
+    if($data['product_unit'] == "1"){
+    $unit = $data['product_unit']." Unit";
+    } else {
+    $unit = $data['product_unit']." Units";
+    }
+    $output2 = '
+    <div class="price-detail detail3">
+        '.$unit.'
+    </div>
+    <div class="price-detail detail3">
+        '.$data['payment_method'].'</div> ';
+
+
+    if($data['delete_status'] == "Deleted"){
+
+    $output3 = ' <div class="detail-four">
+        <div class="detail"
+            style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <p style="font-size: 14px; color: #fff;">Deleted</p>
+        </div>
+    </div>
+</div>
+</div>';
+
+$output4 = "";
+$output5 = "";
+
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div>
+</div>
+</div>';
+
+$name = $data['product_id'].$data['payment_id'];
+
+}
+$output .= "$output1$output2$output3$output4";
+} else {
+
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+    </div> ';
+
+
+
+    if($data['product_unit'] == "1"){
+    $unit = $data['product_unit']." Unit";
+    } else {
+    $unit = $data['product_unit']." Units";
+    }
+
+    $output2 = '
+    <div class="price-detail detail3">
+        '.$unit.'
+    </div>
+    <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+
+
+    if($data['delete_status'] == "Deleted"){
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output3 = ' <div class="detail-four">
+        <div class="detail"
+            style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <p style="font-size: 14px; color: #fff;">Deleted</p>
+        </div>
+    </div>
+</div>
+</div>';
+
+$output4 = "";
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+
+$output4 = '<div class="price-detail">&#8358;'.$amount.'
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div>
+</div>
+</div>';
+
+}
+$output .= "$output1$output2$output3$output4";
+
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+
+
+function searchDeletedTransactions($name,$user,$unique){
+$sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' ORDER BY payment_id DESC";
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -9226,23 +9328,145 @@ if($this->dbcon->affected_rows > 0){
                     <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
             </div>
-           '.$outputmode.'
         </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
         }
-   
+
+
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
+        }
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">
+            '.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted"){
+
+        $name = $data['product_id'].$data['payment_id'];
+
+        $output3 = '<form action="" class="restore-form" method="POST">
+            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+        </form>
+    </div>
+</div>';
+
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+
+
+}
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "subadmin"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "superadmin"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output5 = '<form action="" class="deletep-form" method="POST">
+        <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -9356,38 +9580,39 @@ if($this->dbcon->affected_rows > 0){
 
 
     function searchDeletedTransactions3($name,$user,$unique,$userid){
-        $sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
-        $result = $this->dbcon->query($sql);
-        $output = "";
-        if($result->num_rows > 0){
-        while($data = $result->fetch_assoc()){
-        if($data['sub_status'] == "Failed"){
-            if($data['payment_mode'] = "Offline"){
-                if($data['offline_status'] == ""){
-                    $outputmode = '<p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: Approved</p>';
-                } else {
-                    $outputmode = ' <p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: '.$data['offline_status'].'</p>';
-                }
-                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-                <div class="radius">
-                    <img src="landimage/'.$data['product_image'].'" alt="">
+    $sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' AND customer_id = '{$userid}' ORDER BY payment_id
+    DESC";
+    $result = $this->dbcon->query($sql);
+    $output = "";
+    if($result->num_rows > 0){
+    while($data = $result->fetch_assoc()){
+    if($data['sub_status'] == "Failed"){
+    if($data['payment_mode'] = "Offline"){
+    if($data['offline_status'] == ""){
+    $outputmode = '<p
+        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+        Offline: Approved</p>';
+    } else {
+    $outputmode = ' <p
+        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+        Offline: '.$data['offline_status'].'</p>';
+    }
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
-                <div class="details">
-                    <p class="pname">'.$data['product_name'].'</p>
-                    <div class="inner-detail">
-                        <div class="date" style="font-size: 14px;">
-                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                        </div>
-                    </div>
-                    '.$outputmode.'
-                    
-                </div> ';
-            } else {
-                $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+            </div>
+            '.$outputmode.'
+
+        </div> ';
+        } else {
+        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
             <div class="radius">
                 <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
@@ -9400,8 +9625,8 @@ if($this->dbcon->affected_rows > 0){
                 </div>
             </div> ';
             }
-        
-    
+
+
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
             } else {
@@ -9413,53 +9638,218 @@ if($this->dbcon->affected_rows > 0){
             </div>
             <div class="price-detail detail3">
                 '.$data['payment_method'].'</div> ';
-    
-    
+
+
             if($data['delete_status'] == "Deleted"){
-    
+
             $name = $data['product_id'].$data['payment_id'];
 
             if($user == "agent2"){
-                $output3 = ' <div class="detail-four">
+            $output3 = ' <div class="detail-four">
                 <div class="detail"
                     style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                     <p style="font-size: 14px; color: #fff;">Deleted</p>
                 </div>
             </div>
         </div>
-        </div>';
-            } else {
-                $output3 = '<form action="" class="restore-form" method="POST">
-                <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
+    </div>';
+    } else {
+    $output3 = '<form action="" class="restore-form" method="POST">
+        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+}
+
+
+
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+
+
+}
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "subadmin2"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "supadmin2"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "agent2"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+
+$output3 = "";
+if($user == "agent2"){
+$output4 = '';
+} else {
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+    }
+
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    if($user == "agent2"){
+    $output5 = '
+    <div class="detail-four">
+        <div class="detail"
+            style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <p style="font-size: 14px; color: #fff;">Deleted</p>
         </div>
-        </div>';
-            }
-    
-           
-    
+    </div>
+</div>
+</div>';
+} else {
+$output5 = '<form action="" class="deletep-form" method="POST">
+    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+</form>
+</div>
+</div>';
+}
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
+
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
+        }
+
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted" && $user != "agent2"){
+
+        $name = $data['product_id'].$data['payment_id'];
+
+        $output3 = '<form action="" class="restore-form" method="POST">
+            <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+        </form>
+    </div>
+    <div>';
+
         $output4 = "";
         $output5 = "";
+
+
         if(isset($_POST["restorel".$name])){
         $insertupdate =
         $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
+
         $deletedp = "restorel";
         header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-    
-    
         }
         } else {
-    
+
         $unitprice = $data['product_price'];
         if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
         $amount = number_format($unitprice);
         } else {
         $amount = round($unitprice);
         }
-    
-    
+
+
         if($user == "subadmin2"){
         $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
         $result3 = $this->dbcon->query($sql3);
@@ -9470,7 +9860,7 @@ if($this->dbcon->affected_rows > 0){
         $payeename = $data['payee'];
         }
         }
-    
+
         if($user == "supadmin2"){
         $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
         $result3 = $this->dbcon->query($sql3);
@@ -9483,297 +9873,132 @@ if($this->dbcon->affected_rows > 0){
         }
 
         if($user == "agent2"){
-            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['agent_name']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-
-    
-        $output3 = "";
-        if($user == "agent2"){
-            $output4 = '';
+        $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+        $result3 = $this->dbcon->query($sql3);
+        $row3 = $result3->fetch_assoc();
+        if($data['payee'] == $row3['agent_name']){
+        $payeename = "You";
         } else {
-            $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-            <span style="font-size: 12px;">(Failed)</span>
+        $payeename = $data['payee'];
+        }
+        }
+
+
+        $output3 = "";
+
+        if($user == "agent2"){
+        $output4 = '';
+        } else {
+        $output4 = '<div class="price-detail">&#8358;'.$amount.'
             <div class="payee">
                 <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
                 <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
                     '.$payeename.'
                 </p>
-            </div> ';
-        }
-       
-    
-    
-    
+            </div>';
+            }
+
+
+
+
             $name = $data['product_id'].$data['payment_id'];
-    
+
             if($user == "agent2"){
-                $output5 = '
-                <div class="detail-four">
+            $output5 = '
+            <div class="detail-four">
                 <div class="detail"
                     style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                     <p style="font-size: 14px; color: #fff;">Deleted</p>
                 </div>
             </div>
-                </div>
-        </div>';
-            } else {
-                $output5 = '<form action="" class="deletep-form" method="POST">
-                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
         </div>
-        </div>';
-            }
-        if(isset($_POST["deletel".$name])){
-        $insertupdate =
-        $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-        $deletedp = "deletedl";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-        }
-        }
-        $output .= "$output1$output2$output3$output4$output5";
-        } else {
-            if($data['payment_mode'] == "Offline"){
-                if($data['offline_status'] == ""){
-                    $outputmode = '<p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: Approved</p>';
-                } else {
-                    $outputmode = ' <p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: '.$data['offline_status'].'</p>';
-                }
-                $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>';
+    } else {
+    $output5 = '<form action="" class="deletep-form" method="POST">
+        <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+}
+
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+
+function searchDeletedTransactions2($name,$user,$unique){
+if($user == "agent"){
+$sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' AND agent_id = '{$unique}' ORDER BY payment_id
+DESC";
+}
+
+if($user == "normaluser"){
+$sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' AND customer_id = '{$unique}' ORDER BY payment_id
+DESC";
+}
+
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
             </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-               '.$outputmode.'
-            </div> ';
-            } else {
-                $output1 = ' <div class="transaction-details">
-                <div class="radius">
-                    <img src="landimage/'.$data['product_image'].'" alt="">
-                </div>
-                <div class="details">
-                    <p class="pname">'.$data['product_name'].'</p>
-                    <div class="inner-detail">
-                        <div class="date" style="font-size: 14px;">
-                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                        </div>
-                    </div>
-                </div> ';
-            }
-      
-    
-            if($data['product_unit'] == "1"){
-            $unit = $data['product_unit']." Unit";
-            } else {
-            $unit = $data['product_unit']." Units";
-            }
-    
-            $output2 = '
-            <div class="price-detail detail3">
-                '.$unit.'
-            </div>
-            <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
-    
-    
-            if($data['delete_status'] == "Deleted" && $user != "agent2"){
-    
-            $name = $data['product_id'].$data['payment_id'];
-    
-            $output3 = '<form action="" class="restore-form" method="POST">
-                <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
         </div>
-        <div>';
-    
-            $output4 = "";
-            $output5 = "";
-    
-    
-            if(isset($_POST["restorel".$name])){
-            $insertupdate =
-            $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-            $deletedp = "restorel";
-            header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-            }
-            } else {
-    
-            $unitprice = $data['product_price'];
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-            $amount = number_format($unitprice);
-            } else {
-            $amount = round($unitprice);
-            }
-    
-    
-            if($user == "subadmin2"){
-            $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['subadmin_name']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-    
-            if($user == "supadmin2"){
-            $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['super_adminname']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-
-            if($user == "agent2"){
-                $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-                $result3 = $this->dbcon->query($sql3);
-                $row3 = $result3->fetch_assoc();
-                if($data['payee'] == $row3['agent_name']){
-                $payeename = "You";
-                } else {
-                $payeename = $data['payee'];
-                }
-                }
-
-    
-            $output3 = "";
-    
-            if($user == "agent2"){
-                $output4 = '';
-            } else {
-                $output4 = '<div class="price-detail">&#8358;'.$amount.'
-                <div class="payee">
-                    <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                        '.$payeename.'
-                    </p>
-                </div>';
-            }
-            
-    
-    
-    
-                $name = $data['product_id'].$data['payment_id'];
-    
-                if($user == "agent2"){
-                    $output5 = '
-                    <div class="detail-four">
-                    <div class="detail"
-                        style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <p style="font-size: 14px; color: #fff;">Deleted</p>
-                    </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
-                    </div>
-            </div>';
-                } else {
-                    $output5 = '<form action="" class="deletep-form" method="POST">
-                    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-                </form>
             </div>
-            </div>';
-                }
-    
-        if(isset($_POST["deletel".$name])){
-        $insertupdate =
-        $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-        $deletedp = "deletedl";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+        </div> ';
         }
-        }
-        $output .= "$output1$output2$output3$output4$output5";
-        }
-        }
-        } else {
-        $output .= "<div class='success'>
-            <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-            <p>We can't find this transaction</p>
-        </div>";
-        }
-    
-        echo $output;
-        }
-    
 
-
-    function searchDeletedTransactions2($name,$user,$unique){
-    if($user == "agent"){
-    $sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' AND agent_id = '{$unique}' ORDER BY payment_id
-    DESC";
-    }
-
-    if($user == "normaluser"){
-    $sql = "SELECT * FROM land_history WHERE delete_status = '{$name}' AND customer_id = '{$unique}' ORDER BY payment_id
-    DESC";
-    }
-
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    if($data['sub_status'] == "Failed"){
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-                '.$outputmode.'
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
-        }
-   
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -9797,98 +10022,98 @@ if($this->dbcon->affected_rows > 0){
             </div>
         </div>
     </div>
-    </div>';
+</div>';
 
-    $output4 = "";
-    $output5 = "";
+$output4 = "";
+$output5 = "";
 
-    } else {
+} else {
 
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
 
 
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-    if($user == "normaluser"){
-    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-    $output3 = "";
-    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-        <span style="font-size: 12px;">(Failed)</span>
-        <div class="payee">
-            <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
     </div>
-    </div>';
+</div>
+</div>';
 
-    $name = $data['product_id'].$data['payment_id'];
+$name = $data['product_id'].$data['payment_id'];
 
-    }
-    $output .= "$output1$output2$output3$output4";
+}
+$output .= "$output1$output2$output3$output4";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
     } else {
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
+    $output1 = ' <div class="transaction-details">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
-               '.$outputmode.'
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
+        </div> ';
         }
-   
+
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -9914,87 +10139,101 @@ if($this->dbcon->affected_rows > 0){
             </div>
         </div>
     </div>
-    </div>';
+</div>';
 
-    $output4 = "";
-    } else {
+$output4 = "";
+} else {
 
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
 
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
 
-    if($user == "normaluser"){
-    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-    $output3 = "";
+$output3 = "";
 
-    $output4 = '<div class="price-detail">&#8358;'.$amount.'
-        <div class="payee">
-            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
+$output4 = '<div class="price-detail">&#8358;'.$amount.'
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
     </div>
-    </div>';
+</div>
+</div>';
 
-    }
-    $output .= "$output1$output2$output3$output4";
+}
+$output .= "$output1$output2$output3$output4";
 
-    }
-    }
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+function searchSuccessfulTransactions($name,$user,$unique){
+$sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' ORDER BY payment_id DESC";
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
     } else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this transaction</p>
-    </div>";
-    }
-
-    echo $output;
-    }
-
-
-    function searchSuccessfulTransactions($name,$user,$unique){
-    $sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' ORDER BY payment_id DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    if($data['sub_status'] == "Failed"){
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -10005,23 +10244,9 @@ if($this->dbcon->affected_rows > 0){
                     <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
             </div>
-           '.$outputmode.'
         </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
         }
-   
+
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -10045,106 +10270,106 @@ if($this->dbcon->affected_rows > 0){
                 style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
         </form>
     </div>
-    </div>';
+</div>';
 
-    $output4 = "";
-    $output5 = "";
-    if(isset($_POST["restorel".$name])){
-    $insertupdate =
-    $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
 
-    $deletedp = "restorel";
-    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-
-
-    }
-    } else {
-
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
 
 
-    if($user == "subadmin"){
-    $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['subadmin_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+}
+} else {
 
-    if($user == "superadmin"){
-    $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['super_adminname']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
-
-    $output3 = "";
-    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-        <span style="font-size: 12px;">(Failed)</span>
-        <div class="payee">
-            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div> ';
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
 
 
+if($user == "subadmin"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-        $name = $data['product_id'].$data['payment_id'];
+if($user == "superadmin"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-        $output5 = '<form action="" class="deletep-form" method="POST">
-            <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-        </form>
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    $output5 = '<form action="" class="deletep-form" method="POST">
+        <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
     </div>
-    </div>';
-    if(isset($_POST["deletel".$name])){
-    $insertupdate =
-    $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-
-    $deletedp = "deletedl";
-    header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-    }
-    }
-    $output .= "$output1$output2$output3$output4$output5";
-    } else {
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
             </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-               '.$outputmode.'
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details">
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -10157,7 +10382,7 @@ if($this->dbcon->affected_rows > 0){
             </div>
         </div> ';
         }
-    
+
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -10200,7 +10425,7 @@ if($this->dbcon->affected_rows > 0){
         if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
         $amount = number_format($unitprice);
         } else {
-        $amount = round($unitprice);
+        $amount = $unitprice;
         }
 
 
@@ -10271,37 +10496,38 @@ if($this->dbcon->affected_rows > 0){
 
 
     function searchSuccessfulTransactions3($name,$user,$unique,$userid){
-        $sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' AND customer_id = '{$userid}' ORDER BY payment_id DESC";
-        $result = $this->dbcon->query($sql);
-        $output = "";
-        if($result->num_rows > 0){
-        while($data = $result->fetch_assoc()){
-        if($data['sub_status'] == "Failed"){
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
+    $sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' AND customer_id = '{$userid}' ORDER BY payment_id
+    DESC";
+    $result = $this->dbcon->query($sql);
+    $output = "";
+    if($result->num_rows > 0){
+    while($data = $result->fetch_assoc()){
+    if($data['sub_status'] == "Failed"){
+    if($data['payment_mode'] == "Offline"){
+    if($data['offline_status'] == ""){
+    $outputmode = '<p
+        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+        Offline: Approved</p>';
+    } else {
+    $outputmode = ' <p
+        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+        Offline: '.$data['offline_status'].'</p>';
+    }
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
-              '.$outputmode.'
-            </div> ';
+            </div>
+            '.$outputmode.'
+        </div> ';
         } else {
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
             <div class="radius">
                 <img src="landimage/'.$data['product_image'].'" alt="">
             </div>
@@ -10313,9 +10539,9 @@ if($this->dbcon->affected_rows > 0){
                     </div>
                 </div>
             </div> ';
-        }
-       
-    
+            }
+
+
             if($data['product_unit'] == "1"){
             $unit = $data['product_unit']." Unit";
             } else {
@@ -10327,347 +10553,151 @@ if($this->dbcon->affected_rows > 0){
             </div>
             <div class="price-detail detail3">
                 '.$data['payment_method'].'</div> ';
-    
-    
+
+
             if($data['delete_status'] == "Deleted"){
-    
+
             $name = $data['product_id'].$data['payment_id'];
-             if($user == "agent2"){
-                $output3 = ' <div class="detail-four">
+            if($user == "agent2"){
+            $output3 = ' <div class="detail-four">
                 <div class="detail"
                     style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                     <p style="font-size: 14px; color: #fff;">Deleted</p>
                 </div>
             </div>
         </div>
-        </div>';
-               
-             } else {
-                $output3 = '<form action="" class="restore-form" method="POST">
-                <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
-        </div>
-        </div>';
-             }
-           
-    
-        $output4 = "";
-        $output5 = "";
-        if(isset($_POST["restorel".$name])){
-        $insertupdate =
-        $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-        $deletedp = "restorel";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-    
-    
-        }
-        } else {
-    
-        $unitprice = $data['product_price'];
-        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-        $amount = number_format($unitprice);
-        } else {
-        $amount = round($unitprice);
-        }
-    
-    
-        if($user == "subadmin2"){
-        $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-        $result3 = $this->dbcon->query($sql3);
-        $row3 = $result3->fetch_assoc();
-        if($data['payee'] == $row3['subadmin_name']){
-        $payeename = "You";
-        } else {
-        $payeename = $data['payee'];
-        }
-        }
-    
-        if($user == "supadmin2"){
-        $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-        $result3 = $this->dbcon->query($sql3);
-        $row3 = $result3->fetch_assoc();
-        if($data['payee'] == $row3['super_adminname']){
-        $payeename = "You";
-        } else {
-        $payeename = $data['payee'];
-        }
-        }
+    </div>';
 
-        if($user == "agent2"){
-            $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['agent_name']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
+    } else {
+    $output3 = '<form action="" class="restore-form" method="POST">
+        <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+            style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+    </form>
+</div>
+</div>';
+}
 
-    
-        $output3 = "";
-       
-            $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-            <span style="font-size: 12px;">(Failed)</span>
-            <div class="payee">
-                <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                    '.$payeename.'
-                </p>
-            </div> ';
-        
-      
-    
-    
-    
-            $name = $data['product_id'].$data['payment_id'];
-    
-            if($user == "agent2"){
-                $output5 = '
-                </div>
-        </div>';
-            } else {
-                $output5 = '<form action="" class="deletep-form" method="POST">
-                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
-        </div>
-        </div>';
-            }
 
-        if(isset($_POST["deletel".$name])){
-        $insertupdate =
-        $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-        $deletedp = "deletedl";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-        }
-        }
-        $output .= "$output1$output2$output3$output4$output5";
-        } else {
-            if($data['payment_mode'] == "Offline"){
-                if($data['offline_status'] == ""){
-                    $outputmode = '<p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: Approved</p>';
-                } else {
-                    $outputmode = ' <p
-                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                    Offline: '.$data['offline_status'].'</p>';
-                }
-                $output1 = ' <div class="transaction-details">
-                <div class="radius">
-                    <img src="landimage/'.$data['product_image'].'" alt="">
-                </div>
-                <div class="details">
-                    <p class="pname">'.$data['product_name'].'</p>
-                    <div class="inner-detail">
-                        <div class="date" style="font-size: 14px;">
-                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                        </div>
-                    </div>
-                    '.$outputmode.'
-                </div> ';
-            } else {
-                $output1 = ' <div class="transaction-details">
-                <div class="radius">
-                    <img src="landimage/'.$data['product_image'].'" alt="">
-                </div>
-                <div class="details">
-                    <p class="pname">'.$data['product_name'].'</p>
-                    <div class="inner-detail">
-                        <div class="date" style="font-size: 14px;">
-                            <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                        </div>
-                    </div>
-                </div> ';
-            }
-       
-    
-            if($data['product_unit'] == "1"){
-            $unit = $data['product_unit']." Unit";
-            } else {
-            $unit = $data['product_unit']." Units";
-            }
-    
-            $output2 = '
-            <div class="price-detail detail3">
-                '.$unit.'
-            </div>
-            <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
-    
-    
-            if($data['delete_status'] == "Deleted"){
-    
-            $name = $data['product_id'].$data['payment_id'];
-            
-            if($user == "agent2"){
-                $output3 = ' <div class="detail-four">
-                <div class="detail"
-                    style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <p style="font-size: 14px; color: #fff;">Deleted</p>
-                </div>
+$output4 = "";
+$output5 = "";
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+
+
+}
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "subadmin2"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "supadmin2"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "agent2"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+
+$output3 = "";
+
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div> ';
+
+
+
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+    if($user == "agent2"){
+    $output5 = '
+</div>
+</div>';
+} else {
+$output5 = '<form action="" class="deletep-form" method="POST">
+    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+</form>
+</div>
+</div>';
+}
+
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
             </div>
         </div>
-        </div>';
-               
-             } else {
-                $output3 = '<form action="" class="restore-form" method="POST">
-                <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
-        </div>
-        </div>';
-             }
-    
-            $output4 = "";
-            $output5 = "";
-    
-    
-            if(isset($_POST["restorel".$name])){
-            $insertupdate =
-            $user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-            $deletedp = "restorel";
-            header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-            }
-            } else {
-    
-            $unitprice = $data['product_price'];
-            if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-            $amount = number_format($unitprice);
-            } else {
-            $amount = round($unitprice);
-            }
-    
-    
-            if($user == "subadmin2"){
-            $sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['subadmin_name']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-    
-            if($user == "supadmin2"){
-            $sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            if($data['payee'] == $row3['super_adminname']){
-            $payeename = "You";
-            } else {
-            $payeename = $data['payee'];
-            }
-            }
-
-            if($user == "agent2"){
-                $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-                $result3 = $this->dbcon->query($sql3);
-                $row3 = $result3->fetch_assoc();
-                if($data['payee'] == $row3['agent_name']){
-                $payeename = "You";
-                } else {
-                $payeename = $data['payee'];
-                }
-                }
-
-    
-            $output3 = "";
-            
-             
-                $output4 = '<div class="price-detail">&#8358;'.$amount.'
-                <div class="payee">
-                    <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                        '.$payeename.'
-                    </p>
-                </div>';
-               
-                
-                $name = $data['product_id'].$data['payment_id'];
-    
-              
-            if($user == "agent2"){
-                $output5 = '
-              
-                </div>
-        </div>';
-            } else {
-                $output5 = '<form action="" class="deletep-form" method="POST">
-                <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
-                    style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
-            </form>
-        </div>
-        </div>';
-            }
-    
-        if(isset($_POST["deletel".$name])){
-        $insertupdate =
-        $user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
-    
-        $deletedp = "deletedl";
-        header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
-        }
-        }
-        $output .= "$output1$output2$output3$output4$output5";
-        }
-        }
-        } else {
-        $output .= "<div class='success'>
-            <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-            <p>We can't find this transaction</p>
-        </div>";
-        }
-    
-        echo $output;
-        }
-
-
-    function searchSuccessfulTransactions2($name,$user,$unique){
-    if($user == "agent"){
-    $sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' AND agent_id = '{$unique}' AND delete_status = ''
-    ORDER BY payment_id DESC";
-    }
-
-    if($user == "normaluser"){
-    $sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' AND customer_id = '{$unique}' AND delete_status = ''
-    ORDER BY payment_id DESC";
-    }
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    if($data['sub_status'] == "Failed"){
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-                '.$outputmode.'
-            </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -10680,7 +10710,203 @@ if($this->dbcon->affected_rows > 0){
             </div>
         </div> ';
         }
-    
+
+
+        if($data['product_unit'] == "1"){
+        $unit = $data['product_unit']." Unit";
+        } else {
+        $unit = $data['product_unit']." Units";
+        }
+
+        $output2 = '
+        <div class="price-detail detail3">
+            '.$unit.'
+        </div>
+        <div class="price-detail detail3">'.$data['payment_method'].'</div> ';
+
+
+        if($data['delete_status'] == "Deleted"){
+
+        $name = $data['product_id'].$data['payment_id'];
+
+        if($user == "agent2"){
+        $output3 = ' <div class="detail-four">
+            <div class="detail"
+                style="width: 100px; height: 20px; background-color: #7e252b; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <p style="font-size: 14px; color: #fff;">Deleted</p>
+            </div>
+        </div>
+    </div>
+</div>';
+
+} else {
+$output3 = '<form action="" class="restore-form" method="POST">
+    <input class="price" type="submit" value="Restore" name="restorel'.$name.'"
+        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+</form>
+</div>
+</div>';
+}
+
+$output4 = "";
+$output5 = "";
+
+
+if(isset($_POST["restorel".$name])){
+$insertupdate =
+$user->updateLandHistory4($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "restorel";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+} else {
+
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
+
+
+if($user == "subadmin2"){
+$sql3 = "SELECT * FROM sub_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['subadmin_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "supadmin2"){
+$sql3 = "SELECT * FROM super_admin WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['super_adminname']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+if($user == "agent2"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
+
+
+$output3 = "";
+
+
+$output4 = '<div class="price-detail">&#8358;'.$amount.'
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
+    </div>';
+
+
+    $name = $data['product_id'].$data['payment_id'];
+
+
+    if($user == "agent2"){
+    $output5 = '
+
+</div>
+</div>';
+} else {
+$output5 = '<form action="" class="deletep-form" method="POST">
+    <input class="price" type="submit" value="Delete" name="deletel'.$name.'"
+        style="background-color: #7e252b; color: #fff; height: 19px; padding: 0; width: 100px;" />
+</form>
+</div>
+</div>';
+}
+
+if(isset($_POST["deletel".$name])){
+$insertupdate =
+$user->updateLandHistory3($data['product_id'],$data['payment_id'],$data['payment_method'],$data['newpay_id']);
+
+$deletedp = "deletedl";
+header("Location: successpage/deletesuccess.php?detect=".$deletedp."");
+}
+}
+$output .= "$output1$output2$output3$output4$output5";
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+function searchSuccessfulTransactions2($name,$user,$unique){
+if($user == "agent"){
+$sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' AND agent_id = '{$unique}' AND delete_status = ''
+ORDER BY payment_id DESC";
+}
+
+if($user == "normaluser"){
+$sql = "SELECT * FROM land_history WHERE sub_status != 'Failed' AND customer_id = '{$unique}' AND delete_status = ''
+ORDER BY payment_id DESC";
+}
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+while($data = $result->fetch_assoc()){
+if($data['sub_status'] == "Failed"){
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
+    } else {
+    $output1 = ' <div class="transaction-details" style="border: 2px solid red;">
+        <div class="radius">
+            <img src="landimage/'.$data['product_image'].'" alt="">
+        </div>
+        <div class="details">
+            <p class="pname">'.$data['product_name'].'</p>
+            <div class="inner-detail">
+                <div class="date" style="font-size: 14px;">
+                    <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+                </div>
+            </div>
+        </div> ';
+        }
+
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -10704,71 +10930,85 @@ if($this->dbcon->affected_rows > 0){
             </div>
         </div>
     </div>
-    </div>';
+</div>';
 
-    $output4 = "";
-    $output5 = "";
+$output4 = "";
+$output5 = "";
 
-    } else {
+} else {
 
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
 
 
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-    if($user == "normaluser"){
-    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-    $output3 = "";
-    $output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
-        <span style="font-size: 12px;">(Failed)</span>
-        <div class="payee">
-            <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
+$output3 = "";
+$output4 = '<div class="price-detail" style="color: red;">&#8358;'.$amount.'
+    <span style="font-size: 12px;">(Failed)</span>
+    <div class="payee">
+        <p class="payee-tag" stylvaluelor: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
+        </p>
     </div>
-    </div>';
+</div>
+</div>';
 
-    $name = $data['product_id'].$data['payment_id'];
+$name = $data['product_id'].$data['payment_id'];
 
-    }
-    $output .= "$output1$output2$output3$output4";
+}
+$output .= "$output1$output2$output3$output4";
+} else {
+if($data['payment_mode'] == "Offline"){
+if($data['offline_status'] == ""){
+$outputmode = '<p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: Approved</p>';
+} else {
+$outputmode = ' <p
+    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
+    Offline: '.$data['offline_status'].'</p>';
+}
+$output1 = ' <div class="transaction-details">
+    <div class="radius">
+        <img src="landimage/'.$data['product_image'].'" alt="">
+    </div>
+    <div class="details">
+        <p class="pname">'.$data['product_name'].'</p>
+        <div class="inner-detail">
+            <div class="date" style="font-size: 14px;">
+                <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
+            </div>
+        </div>
+        '.$outputmode.'
+    </div> ';
     } else {
-        if($data['payment_mode'] == "Offline"){
-            if($data['offline_status'] == ""){
-                $outputmode = '<p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: Approved</p>';
-            } else {
-                $outputmode = ' <p
-                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px;">
-                Offline: '.$data['offline_status'].'</p>';
-            }
-            $output1 = ' <div class="transaction-details">
+    $output1 = ' <div class="transaction-details">
         <div class="radius">
             <img src="landimage/'.$data['product_image'].'" alt="">
         </div>
@@ -10779,23 +11019,9 @@ if($this->dbcon->affected_rows > 0){
                     <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
                 </div>
             </div>
-           '.$outputmode.'
         </div> ';
-        } else {
-            $output1 = ' <div class="transaction-details">
-            <div class="radius">
-                <img src="landimage/'.$data['product_image'].'" alt="">
-            </div>
-            <div class="details">
-                <p class="pname">'.$data['product_name'].'</p>
-                <div class="inner-detail">
-                    <div class="date" style="font-size: 14px;">
-                        <span>'.$data['payment_month'].'</span>&nbsp;<span>'.$data['payment_day'].'</span>,<span>'.$data['payment_year'].'</span>,<span>'.$data['payment_time'].'</span>
-                    </div>
-                </div>
-            </div> ';
         }
-  
+
 
         if($data['product_unit'] == "1"){
         $unit = $data['product_unit']." Unit";
@@ -10821,214 +11047,214 @@ if($this->dbcon->affected_rows > 0){
             </div>
         </div>
     </div>
-    </div>';
+</div>';
 
-    $output4 = "";
-    } else {
+$output4 = "";
+} else {
 
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format($unitprice);
-    } else {
-    $amount = round($unitprice);
-    }
+$unitprice = $data['product_price'];
+if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+$amount = number_format($unitprice);
+} else {
+$amount = round($unitprice);
+}
 
-    if($user == "agent"){
-    $sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['agent_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+if($user == "agent"){
+$sql3 = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['agent_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-    if($user == "normaluser"){
-    $sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
-    $payeename = "You";
-    } else {
-    $payeename = $data['payee'];
-    }
-    }
+if($user == "normaluser"){
+$sql3 = "SELECT * FROM user WHERE unique_id = '{$unique}'";
+$result3 = $this->dbcon->query($sql3);
+$row3 = $result3->fetch_assoc();
+if($data['payee'] == $row3['first_name']." ".$row3['last_name']){
+$payeename = "You";
+} else {
+$payeename = $data['payee'];
+}
+}
 
-    $output3 = "";
+$output3 = "";
 
-    $output4 = '<div class="price-detail">&#8358;'.$amount.'
-        <div class="payee">
-            <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
-            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                '.$payeename.'
-            </p>
-        </div>
-    </div>
-    </div>';
-
-    }
-    $output .= "$output1$output2$output3$output4";
-    }
-    }
-    } else {
-    $output .= "<div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>We can't find this transaction</p>
-    </div>";
-    }
-
-    echo $output;
-    }
-
-
-
-
-    function searchEarningAgent($name){
-    $sql = "SELECT * FROM agent_table WHERE agent_email = '{$name}'";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    if($result->num_rows > 0){
-    $agentid = [];
-    while($data = $result->fetch_assoc()){
-    array_push($agentid,$data['uniqueagent_id']);
-    }
-    $agentid2 = array_unique($agentid);
-    foreach ($agentid2 as $key => $value) {
-    $sql = "SELECT * FROM earning_history WHERE earner_id = '{$value}'";
-    $result2 = $this->dbcon->query($sql);
-    $row = $result2->fetch_assoc();
-    if(!empty($row)){
-    $sql = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
-    $result3 = $this->dbcon->query($sql);
-    $row2 = $result3->fetch_assoc();
-
-    $output1 = '<div class="account-detail2">
-        <div class="radius"> ';
-            if(!empty($row2['agent_img'])){
-            $output2 = '<img src="profileimage/'.$row2['agent_img'].'" alt="profile image" /></div>';
-        }
-        if(empty($row2['agent_img'])){
-        $output2 = '<div class="empty-img">
-            <i class="ri-user-fill"></i>
-        </div>
-    </div> ';
-    }
-    $output3 ='
-    <div class="flex">
-        <p style="text-transform: capitalize;">
-            <span>'.$row2['agent_name'].'</span>
+$output4 = '<div class="price-detail">&#8358;'.$amount.'
+    <div class="payee">
+        <p class="payee-tag" style="color: #808080;">Paid By:</p>&nbsp;
+        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+            '.$payeename.'
         </p>
-        <span class="email-span">'.$row2['agent_email'].'</span>
+    </div>
+</div>
+</div>';
+
+}
+$output .= "$output1$output2$output3$output4";
+}
+}
+} else {
+$output .= "<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>We can't find this transaction</p>
+</div>";
+}
+
+echo $output;
+}
+
+
+
+
+function searchEarningAgent($name){
+$sql = "SELECT * FROM agent_table WHERE agent_email = '{$name}'";
+$result = $this->dbcon->query($sql);
+$output = "";
+if($result->num_rows > 0){
+$agentid = [];
+while($data = $result->fetch_assoc()){
+array_push($agentid,$data['uniqueagent_id']);
+}
+$agentid2 = array_unique($agentid);
+foreach ($agentid2 as $key => $value) {
+$sql = "SELECT * FROM earning_history WHERE earner_id = '{$value}'";
+$result2 = $this->dbcon->query($sql);
+$row = $result2->fetch_assoc();
+if(!empty($row)){
+$sql = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
+$result3 = $this->dbcon->query($sql);
+$row2 = $result3->fetch_assoc();
+
+$output1 = '<div class="account-detail2">
+    <div class="radius"> ';
+        if(!empty($row2['agent_img'])){
+        $output2 = '<img src="profileimage/'.$row2['agent_img'].'" alt="profile image" /></div>';
+    }
+    if(empty($row2['agent_img'])){
+    $output2 = '<div class="empty-img">
+        <i class="ri-user-fill"></i>
+    </div>
+</div> ';
+}
+$output3 ='
+<div class="flex">
+    <p style="text-transform: capitalize;">
+        <span>'.$row2['agent_name'].'</span>
+    </p>
+    <span class="email-span">'.$row2['agent_email'].'</span>
+</div>
+
+<a href="agentinfo.php?unique='.$row2['uniqueagent_id'].'&real=91838JDFOJOEI939" style="color: #808080;"><i
+        class="ri-arrow-right-s-line"></i></a>
+</div> ';
+$output .= ''.$output1.''.$output2.''.$output3.'';
+}
+} }
+
+if(empty($row)){
+$output .= "
+<div class='success'>
+    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+    <p>This agent has not earned yet</p>
+</div>
+";
+}
+echo $output;
+}
+
+
+
+
+function searchYurlandReferral($name){
+$sql = "SELECT * FROM user WHERE email = '{$name}' AND referral_id = 'Yurland'";
+$result = $this->dbcon->query($sql);
+$row2 = $result->fetch_assoc();
+$output = "";
+if($result->num_rows > 0){
+$output1 = '
+<div class="transaction-details2">
+    <div class="details" style="text-transform: capitalize;">
+        <p class="pname email-span">
+            <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
+        </p>
     </div>
 
-    <a href="agentinfo.php?unique='.$row2['uniqueagent_id'].'&real=91838JDFOJOEI939" style="color: #808080;"><i
-            class="ri-arrow-right-s-line"></i></a>
+    <div class="details hide flexdetail" style="text-transform: lowercase;">
+        <p class="pname email-span"> '.$row2['email'].'</p>
     </div> ';
-    $output .= ''.$output1.''.$output2.''.$output3.'';
-    }
-    } }
 
-    if(empty($row)){
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>This agent has not earned yet</p>
+    $unique = $row2['unique_id'];
+    $date = $row2['user_date'];
+    $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}'";
+    $result1 = $this->dbcon->query($sql1);
+    $row1 = $result1->fetch_assoc();
+    foreach ($row1 as $key => $value1) {
+    if(is_null($value1)){
+    $data1 = "0";
+    } else{
+    $data1 = $value1;
+    }
+    }
+
+    $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
+    $result2 = $this->dbcon->query($sql2);
+    $row2 = $result2->fetch_assoc();
+    foreach ($row2 as $key => $value) {
+    $data2 = $value;
+    }
+
+    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status = '' AND
+    delete_status != 'Deleted'";
+    $result3 = $this->dbcon->query($sql3);
+    $row3 = $result3->fetch_assoc();
+
+
+    foreach ($row3 as $key => $value3) {
+    if(is_null($value3)){
+    $data3 = "0";
+    } else{
+
+    if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
+    $data3 = number_format($value3);
+    } else {
+    $data3 = $value3;
+    }
+    }
+    }
+
+
+    $output2 = '
+    <div class="details" style="text-transform: capitalize;">
+        <p class="pname">'.$data1.'</p>
     </div>
-    ";
-    }
-    echo $output;
-    }
+
+    <div class="details" style="text-transform: capitalize;">
+        <p class="pname">&#8358;'.$data3.'</p>
+    </div>
+
+    <div class="details hide flexdetail" style="text-transform: capitalize;">
+        <p class="pname">'.$data2.'</p>
+    </div>
+
+    <div class="details hide flexdetail" style="text-transform: capitalize;">
+        <p class="pname">'.$date.'</p>
+    </div>
+
+    <div class="details" style="text-transform: capitalize;">
+        <div class="detail" style="">
+            <a href="customerprofileinfo.php?unique='.$unique.'&real=91838JDFOJOEI939">
+                <p style="font-size: 14px; color: #fff;">View</p>
+            </a>
+        </div>
+    </div>
+    ';
 
 
-
-
-    function searchYurlandReferral($name){
-    $sql = "SELECT * FROM user WHERE email = '{$name}' AND referral_id = 'Yurland'";
-    $result = $this->dbcon->query($sql);
-    $row2 = $result->fetch_assoc();
-    $output = "";
-    if($result->num_rows > 0){
-     $output1 = '
-                                <div class="transaction-details2">
-                                    <div class="details" style="text-transform: capitalize;">
-                                        <p class="pname email-span">
-                                            <span>'.$row2['first_name'].'</span>&nbsp;<span>'.$row2['last_name'].'</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="details hide flexdetail" style="text-transform: lowercase;">
-                                        <p class="pname email-span"> '.$row2['email'].'</p>
-                                    </div> ';
-
-                                    $unique = $row2['unique_id'];
-                                    $date = $row2['user_date'];
-                                    $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}'";
-                                    $result1 = $this->dbcon->query($sql1);
-                                    $row1 = $result1->fetch_assoc();
-                                    foreach ($row1 as $key => $value1) {
-                                    if(is_null($value1)){
-                                    $data1 = "0";
-                                    } else{
-                                    $data1 = $value1;
-                                    }
-                                    }
-
-                                    $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
-                                    $result2 = $this->dbcon->query($sql2);
-                                    $row2 = $result2->fetch_assoc();
-                                    foreach ($row2 as $key => $value) {
-                                    $data2 = $value;
-                                    }
-
-                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status = ''";
-                                    $result3 = $this->dbcon->query($sql3);
-                                    $row3 = $result3->fetch_assoc();
-                                   
-
-                                    foreach ($row3 as $key => $value3) {
-                                    if(is_null($value3)){
-                                    $data3 = "0";
-                                    } else{
-
-                                    if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
-                                    $data3 = number_format($value3);
-                                    } else {
-                                    $data3 = $value3;
-                                    }
-                                    }
-                                    }
-
-
-                                    $output2 = '
-                                    <div class="details" style="text-transform: capitalize;">
-                                        <p class="pname">'.$data1.'</p>
-                                    </div>
-
-                                    <div class="details" style="text-transform: capitalize;">
-                                        <p class="pname">&#8358;'.$data3.'</p>
-                                    </div>
-
-                                    <div class="details hide flexdetail" style="text-transform: capitalize;">
-                                        <p class="pname">'.$data2.'</p>
-                                    </div>
-
-                                    <div class="details hide flexdetail" style="text-transform: capitalize;">
-                                        <p class="pname">'.$date.'</p>
-                                    </div>
-
-                                    <div class="details" style="text-transform: capitalize;">
-                                        <div class="detail" style="">
-                                            <a
-                                                href="customerprofileinfo.php?unique='.$unique.'&real=91838JDFOJOEI939">
-                                                <p style="font-size: 14px; color: #fff;">View</p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    ';
-
-
-                                    $output .= ''.$output1.''.$output2.'';
+    $output .= ''.$output1.''.$output2.'';
     }else {
     $output .= "
     <div class='success'>
@@ -11042,130 +11268,119 @@ if($this->dbcon->affected_rows > 0){
 
 
     function searchAllocation($name){
-        $sql = "SELECT * FROM payment JOIN user ON payment.customer_id = user.unique_id WHERE balance < 2  AND user.email = '{$name}' AND payment.allocation_status != 'approved' ORDER BY payment_id DESC";
-        $result = $this->dbcon->query($sql);
+    $sql = "SELECT * FROM payment JOIN user ON payment.customer_id = user.unique_id WHERE balance < 2 AND
+        user.email='{$name}' AND payment.allocation_status !='approved' ORDER BY payment_id DESC"; $result=$this->
+        dbcon->query($sql);
         $output = "";
         $rows = array();
         if($this->dbcon->affected_rows > 0){
-            while($row = $result->fetch_assoc()){
-                $rows[] = $row;
-            }
-
-            if(!empty($rows)){
-            foreach($rows as $key => $value){
-              
-     $unitprice = $value['product_price'];
-     if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                       $price =  number_format($unitprice);
-                     } else {
-                         $price = round($unitprice);
-                     }
-    
-                    
-                 if($value['allocation_status'] == "approved"){
-                    $status =  "Paid";
-                 }
-
-                 if($value['allocation_status'] == "unapproved"){
-                    $status =  "Pending Payment";
-                 }
-                
-$output .= '<div class="transaction-details2">
-    <div class="details" style="text-transform: capitalize;">
-        <p class="pname email-span">
-            <span>'.$value['first_name'].'</span>&nbsp;<span>'.$value['last_name'].'</span>
-        </p>
-    </div>
-
-    <div class="details hide flexdetail" style="text-transform: capitalize;">
-        <p class="pname email-span">'.$value['product_name'].'</p>
-    </div>
-
-    <div class="details hide flexdetail" style="text-transform: capitalize;">
-        <p class="pname email-span">'.$value['product_location'].'</p>
-    </div>
-
-    <div class="details hide flexdetail" style="text-transform: capitalize;">
-        <p class="pname email-span">'.$value['product_unit'].'</p>
-    </div>
-
-    <div class="details hide flexdetail" style="text-transform: capitalize;">
-        <p class="pname email-span">&#8358;<span>'.$price.'</span></p>
-    </div>
-
-    <div class="details flexdetail" style="text-transform: capitalize;">
-        <p class="pname">'.$status.'</p>
-    </div>
-
-    <div class="details" style="text-transform: capitalize;">
-        <div class="detail" style="">
-            <a href="customerprofileinfo.php?unique='.$value['unique_id'].'&real=91838JDFOJOEI939">
-<p style="font-size: 14px; color: #fff;">View</p>
-</a>
-</div>
-</div>
-
-
-</div>
-
-';
-}
-}
-}else{
-$output .= '<div class="success">
-<img src="images/asset_success.svg" alt="" />
-<p>There are no allocated customers yet!</p>
-</div>';
-}
-
-echo $output;
-}
-
-
-function searchPaying($name){
-    $sql = "SELECT * FROM land_history JOIN user ON land_history.customer_id = user.unique_id WHERE  user.email = '{$name}' ORDER BY payment_id DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    $rows = array();
-    if($this->dbcon->affected_rows > 0){
         while($row = $result->fetch_assoc()){
-            $rows[] = $row;
+        $rows[] = $row;
         }
 
         if(!empty($rows)){
         foreach($rows as $key => $value){
-          
- $unitprice = $value['product_price'];
- if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                   $price =  number_format($unitprice);
-                 } else {
-                     $price = round($unitprice);
-                 }
 
-                 $unitprice = $value['balance'];
-                 if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-                                   $price2 = number_format($unitprice);
-                                 } else {
-                                    if($unitprice < "5"){
-                                        $price2 = "0";
-                                    }else {
-                                     $price2 = round($unitprice);
-                                    }
-                                 }
+        $unitprice = $value['product_price'];
+        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+        $price = number_format($unitprice);
+        } else {
+        $price = round($unitprice);
+        }
 
-                                 if($value['payment_method'] == "Outright" || $value['payment_method'] == "Subscription"){
-                                    $date =  "Nil";
-                                 } else {
-                                    $date = $value['sub_period'];
-                                 }
 
-        
-            
-$output .= '<div class="transaction-details2">
+        if($value['allocation_status'] == "approved"){
+        $status = "Paid";
+        }
+
+        if($value['allocation_status'] == "unapproved"){
+        $status = "Pending Payment";
+        }
+
+        $output .= '<div class="transaction-details2">
+            <div class="details" style="text-transform: capitalize;">
+                <p class="pname email-span">
+                    <span>'.$value['first_name'].'</span>&nbsp;<span>'.$value['last_name'].'</span>
+                </p>
+            </div>
+
+            <div class="details hide flexdetail" style="text-transform: capitalize;">
+                <p class="pname email-span">'.$value['product_name'].'</p>
+            </div>
+
+            <div class="details hide flexdetail" style="text-transform: capitalize;">
+                <p class="pname email-span">'.$value['product_location'].'</p>
+            </div>
+
+            <div class="details hide flexdetail" style="text-transform: capitalize;">
+                <p class="pname email-span">'.$value['product_unit'].'</p>
+            </div>
+
+            <div class="details hide flexdetail" style="text-transform: capitalize;">
+                <p class="pname email-span">&#8358;<span>'.$price.'</span></p>
+            </div>
+
+            <div class="details flexdetail" style="text-transform: capitalize;">
+                <p class="pname">'.$status.'</p>
+            </div>
+
+            <div class="details" style="text-transform: capitalize;">
+                <div class="detail" style="">
+                    <a href="customerprofileinfo.php?unique='.$value['unique_id'].'&real=91838JDFOJOEI939">
+                        <p style="font-size: 14px; color: #fff;">View</p>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+
+        ';
+        }
+        }
+        }else{
+        $output .= '<div class="success">
+            <img src="images/asset_success.svg" alt="" />
+            <p>There are no allocated customers yet!</p>
+        </div>';
+        }
+
+        echo $output;
+        }
+
+
+        function searchPaying($name){
+        $sql = "SELECT * FROM land_history JOIN user ON land_history.customer_id = user.unique_id WHERE user.email =
+        '{$name}' ORDER BY payment_id DESC";
+        $result = $this->dbcon->query($sql);
+        $output = "";
+        $rows = array();
+        if($this->dbcon->affected_rows > 0){
+        while($row = $result->fetch_assoc()){
+        $rows[] = $row;
+        }
+
+        if(!empty($rows)){
+        foreach($rows as $key => $value){
+
+        $unitprice = $value['product_price'];
+        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+        $price = number_format($unitprice);
+        } else {
+        $price = round($unitprice);
+        }
+
+        $unitprice = $value['balance'];
+        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+        $price2 = number_format($unitprice);
+        } else {
+        if($unitprice < "5" ){ $price2="0" ; }else { $price2=round($unitprice); } }
+            if($value['payment_method']=="Outright" || $value['payment_method']=="Subscription" ){ $date="Nil" ; } else
+            { $date=$value['sub_period']; } $output .='<div class="transaction-details2">
 <div class="details" style="text-transform: capitalize;">
     <p class="pname email-span">
-        <span>'.$value['first_name'].'</span>&nbsp;<span>'.$value['last_name'].'</span>
-    </p>
+        <span>' .$value['first_name'].'</span>&nbsp;<span>'.$value['last_name'].'</span>
+            </p>
 </div>
 
 <div class="details hide flexdetail" style="text-transform: capitalize;">
@@ -11195,9 +11410,9 @@ $output .= '<div class="transaction-details2">
 <div class="details" style="text-transform: capitalize;">
     <div class="detail" style="">
         <a href="customerprofileinfo.php?unique='.$value['unique_id'].'&real=91838JDFOJOEI939">
-<p style="font-size: 14px; color: #fff;">View</p>
-</a>
-</div>
+            <p style="font-size: 14px; color: #fff;">View</p>
+        </a>
+    </div>
 </div>
 
 
@@ -11208,8 +11423,8 @@ $output .= '<div class="transaction-details2">
 }
 }else{
 $output .= '<div class="success">
-<img src="images/asset_success.svg" alt="" />
-<p>There are no paying customers yet!</p>
+    <img src="images/asset_success.svg" alt="" />
+    <p>There are no paying customers yet!</p>
 </div>';
 }
 
@@ -11274,7 +11489,8 @@ $output1 = '
     $output5 = '<div class="details" style="text-transform: capitalize;">
         <p class="pname">&#8358;';
             $unique3 = $data['unique_id'];
-            $sql3 = "SELECT SUM(product_price) FROM land_history WHERE agent_id='{$unique3}' AND offline_status=''";
+            $sql3 = "SELECT SUM(product_price) FROM land_history WHERE agent_id='{$unique3}' AND offline_status='' AND
+            delete_status != 'Deleted'";
             $result3 = $this->dbcon->query($sql3);
             $row3 = $result3->fetch_assoc();
             foreach($row3 as $key => $value3){
@@ -11382,7 +11598,8 @@ $output1 = '
 
         $output5 = '<div class="details" style="text-transform: capitalize;">
             <p class="pname">&#8358;';
-                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND offline_status = ''ORDER BY
+                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND offline_status
+                = ''ORDER BY
                 earning_id DESC";
                 $result3 = $this->dbcon->query($sql3);
 
@@ -11430,7 +11647,7 @@ $output1 = '
         echo $output;
         }
 
-        
+
 
 
         function searchProductList($name){
@@ -11654,8 +11871,7 @@ $output1 = '
 
             $customer = $row5;
 
-            $output3 = '<div class="details hide flexdetail"
-                style="text-transform: capitalize;">
+            $output3 = '<div class="details hide flexdetail" style="text-transform: capitalize;">
                 <p class="pname">';
 
                     if(!empty($customer)){
@@ -11712,2285 +11928,2334 @@ $output1 = '
 
             $output .=
             ''.$output1.''.$output5.''.$output6.''.$output7.''.$output8.''.$output3.''.$output4.''.$output2.''.$output9.'';
-    }
-    } else {
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>This agent does not exist </p>
-    </div>
-    ";
-    }
-
-    echo $output;
-    }
-
-
-    function searchCustomerEarning($name){
-        $sql = "SELECT * FROM user WHERE email = '{$name}'";
-        $result = $this->dbcon->query($sql);
-        $output = "";
-
-        if($result->num_rows > 0){
-        while($data = $result->fetch_assoc()){
-        $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-        '{$data['unique_id']}' AND offline_status = ''
-        ORDER BY
-        earning_id DESC";
-        $result2 = $this->dbcon->query($totalpayment);
-        $row = $result2->fetch_assoc();
-        if($result2->num_rows == 1){
-        foreach ($row as $key => $value) {
-        $sumearn = $value;
-        }
-        }else{
-        $sumearn = $row;
-        }
-        // if($result->num_rows == 1){
-        // return $row;
-        // }else{
-        // return $row;
-        // }
-
-        $output1 = '
-        <div class="transaction-details2">
-                                    <div class="details" style="text-transform: capitalize;">
-                                        <p class="pname email-span">
-                                            <span>'.$data['first_name'].'</span>&nbsp;<span>'.$data['last_name'].'</span>
-                                        </p>
-                                    </div>
-
-                                    <div class="details hide flexdetail" style="text-transform: lowercase;">
-                                        <p class="pname email-span"> '.$data['email'].'</p>
-                                    </div> ';
-
-                                    $unique = $data['unique_id'];
-                                    $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}'";
-                                    $result1 = $this->dbcon->query($sql1);
-                                    $row1 = $result1->fetch_assoc();
-                                    foreach ($row1 as $key => $value1) {
-                                    if(is_null($value1)){
-                                    $data1 = "0";
-                                    } else{
-                                    $data1 = $value1;
-                                    }
-                                    }
-
-                                    $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
-                                    $result2 = $this->dbcon->query($sql2);
-                                    $row2 = $result2->fetch_assoc();
-                                    foreach ($row2 as $key => $value) {
-                                    $data2 = $value;
-                                    }
-
-                                    $sql5 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-                                    '{$unique}' AND offline_status = ''ORDER BY earning_id DESC";
-                                    $result5 = $this->dbcon->query($sql5);
-                                    $row5 = $result5->fetch_assoc();
-                                    if($result5->num_rows == 1){
-                                    foreach ($row5 as $key => $value) {
-                                    $unitprice5 = $value;
-                                    }
-                                    }else{
-                                    $unitprice5 = $row5;
-                                    }
-                
-                                    if($unitprice5 > 999 || $unitprice5 > 9999 || $unitprice5 > 99999 ||
-                                    $unitprice5 > 999999){
-                                    $data5 = number_format(round($unitprice5));
-                                    } else {
-                                    $data5 = round($unitprice5);
-                                    }
-
-                                    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status = ''";
-                                    $result3 = $this->dbcon->query($sql3);
-                                    $row3 = $result3->fetch_assoc();
-                                    $date = $data['user_date'];
-
-                                    foreach ($row3 as $key => $value3) {
-                                    if(is_null($value3)){
-                                    $data3 = "0";
-                                    } else{
-
-                                    if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
-                                    $data3 = number_format($value3);
-                                    } else {
-                                    $data3 = $value3;
-                                    }
-                                    }
-                                    }
-
-                                    $referral = $data['personal_ref'];
-    $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
-    $result4 = $this->dbcon->query($sql4);
-    $row4 = $result4->fetch_assoc();
-
-    foreach ($row4 as $key => $value4) {
-    $data4 = $value4;
-    };
-
-
-                                    $output2 = '
-                                    <div class="details" style="text-transform: capitalize;">
-                                        <p class="pname">&#8358;'.$data5.'</p>
-                                    </div>
-
-                                    <div class="details hide flexdetail" style="text-transform: capitalize;">
-                                        <p class="pname">'.$data1.'</p>
-                                    </div>
-
-                                    <div class="details hide flexdetail" style="text-transform: capitalize;">
-                                        <p class="pname">&#8358;'.$data3.'</p>
-                                    </div>
-
-                                    
-                                    <div class="details" style="text-transform: capitalize;">
-                                        <p class="pname">'.$data4.'</p>
-                                    </div>
-
-            
-                                    <div class="details" style="text-transform: capitalize;">
-                                        <div class="detail" style="">
-                                            <a
-                                                href="customerprofileinfo.php?unique='.$data['unique_id'].'&real=91838JDFOJOEI939">
-                                                <p style="font-size: 14px; color: #fff;">View</p>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    ';
-
-
-                                   
-    }
-    $output .= ''.$output1.''.$output2.'';
-    } else {
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>This customer does not exist </p>
-    </div>
-    ";
-    }
-
-    echo $output;
-    }
-
-
-    function searchExecutiveEarning($name){
-    $sql = "SELECT * FROM executive WHERE executive_email = '{$name}'";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    $date = $data['executive_date'];
-    $execid = $data['unique_id'];
-    $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND offline_status =''ORDER BY
-    earning_id
-    DESC";
-    $result2=$this->dbcon->query($totalpayment);
-    $row = $result2->fetch_assoc();
-    if($result2->num_rows == 1){
-    foreach ($row as $key => $value) {
-    $sumearn = $value;
-    }
-    }else{
-    $sumearn = $row;
-    }
-    // if($result->num_rows == 1){
-    // return $row;
-    // }else{
-    // return $row;
-    // }
-
-    $output1 = '
-    <div class="transaction-details2">
-        <div class="details" style="text-transform: capitalize;">
-            <p class="pname email-span">
-                <span>'.$data['full_name'].'</span>
-            </p>
-        </div>
-
-        <div class="details hide flexdetail" style="text-transform: lowercase;">
-            <p class="pname email-span"> '.$data['executive_email'].'</p>
-        </div>
-        <div class="details hide flexdetail" style="text-transform: lowercase;">
-            <p class="pname email-span"> '.$data['earning'].'%</p>
-        </div>
-        ';
-
-        $execid = $data['unique_id'];
-        $execdate = $data['executive_date'];
-        $execearn = $data['earning'];
-
-        $output5 = '<div class="details" style="text-transform: capitalize;">
-            <p class="pname">&#8358;';
-                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND offline_status = ''ORDER BY
-                earning_id DESC";
-                $result3 = $this->dbcon->query($sql3);
-
-                $row3 = $result3->fetch_assoc();
-                if($result3->num_rows == 1){
-                foreach ($row3 as $key => $value) {
-                $unitprice3 = $value;
-                }
-                }else{
-                $unitprice3 = $row3;
-                }
-
-                if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 || $unitprice3 > 999999){
-                $data3 = number_format(round($unitprice3));
-                } else {
-                $data3 = round($unitprice3);
-                }
-
-
-
-                $output6 = $data3.'</p>
-        </div> ';
-
-
-        $output9 = ' <div class="details" style="text-transform: capitalize;">
-            <div class="detail" style="">
-                <a href="execinfo.php?unique='.$execid.'&real=91838JDFOJOEI939">
-                    <p style="font-size: 14px; color: #fff;">View</p>
-                </a>
-            </div>
-        </div>';
-
-
-        $output .= ''.$output1.''.$output5.''.$output6.''.$output9.'';
-
-}
-} else {
-$output .= "
-<div class='success'>
-    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-    <p>This executive does not exist </p>
-</div>
-";
-}
-
-echo $output;
-}
-
-
-function searchAgentEarningByMonth($month,$year){
-$sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}' ORDER BY
-earning_id
-DESC";
-$result = $this->dbcon->query($sql);
-$output = "";
-$agentid = [];
-if($result->num_rows > 0){
-while($data = $result->fetch_assoc()){
-array_push($agentid,$data['earner_id']);
-}
-
-$agentid2 = array_unique($agentid);
-$agentdata = [];
-foreach($agentid2 as $key => $value) {
-
-$totalpayment = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
-$result2 = $this->dbcon->query($totalpayment);
-$row = $result2->fetch_assoc();
-if($result2->num_rows > 0){
-array_push($agentdata,$row['uniqueagent_id']);
-}
-// else{
-// return $row;
-// }
-
-}
-
-
-
-foreach($agentdata as $key => $value){
-
-$totalagent = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
-$results = $this->dbcon->query($totalagent);
-$row4 = $results->fetch_assoc();
-$agentdate = $row4['agent_date'];
-$totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND payment_month =
-'{$month}' AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
-
-$result3=$this->dbcon->query($totalearning);
-$row2 = $result3->fetch_assoc();
-
-
-$output1 = '
-                                    <div class="transaction-details2">
-                                        <div class="details" style="text-transform: capitalize;">
-                                            <p class="pname email-span">
-                                                <span>'.$row4['agent_name'].'</span>
-                                            </p>
-                                        </div>
-
-                                        <div class="details hide flexdetail" style="text-transform: lowercase;">
-                                            <p class="pname email-span"> '.$row4['agent_email'].'</p>
-                                        </div> ';
-
-                                        $output5 = '<div class="details" style="text-transform: capitalize;">
-                                            <p class="pname">&#8358;';
-                                                $agentid = $row4['uniqueagent_id'];
-                                                $refid = $row4['referral_id'];
-                                                $percentage = $row4['earning_percentage'];
-                                                $agentdate = $row4['agent_date'];
-                                                $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-                                                '{$agentid}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
-                                                $result = $this->dbcon->query($sql);
-                                                $row = $result->fetch_assoc();
-                                                if($result->num_rows == 1){
-                                                foreach ($row as $key => $value) {
-                                                $unitprice2 = $value;
-                                                }
-                                                }else{
-                                                $unitprice2 = $row;
-                                                }
-
-                                                if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 ||
-                                                $unitprice2 > 999999){
-                                                $data3 = number_format(round($unitprice2));
-                                                } else {
-                                                $data3 = round($unitprice2);
-                                                }
-
-                                                $output6 = $data3.'</p>
-                                        </div> ';
-
-
-                                        $output7 = '<div class="details" style="text-transform: capitalize;">
-                                            <p class="pname">&#8358;';
-                                                $agentid = $row4['uniqueagent_id'];
-                                                $refid = $row4['referral_id'];
-                                                $agentdate = $row4['agent_date'];
-                                                $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
-                                                = '{$agentid}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
-                                                $result2 = $this->dbcon->query($sql2);
-                                                $row2 = $result2->fetch_assoc();
-                                                if($result2->num_rows == 1){
-                                                foreach ($row2 as $key => $value) {
-                                                $unitprice3 = $value;
-                                                }
-                                                }else{
-                                                $unitprice3 = $row2;
-                                                }
-
-                                                if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 ||
-                                                $unitprice3 > 999999){
-                                                $data3 = number_format(round($unitprice3));
-                                                } else {
-                                                $data3 = round($unitprice3);
-                                                }
-
-                                                $output8 = $data3.'</p>
-                                        </div> ';
-
-
-                                        $sql5 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
-                                        DESC";
-                                        $result5 = $this->dbcon->query($sql5);
-                                        $row5 = array();
-                                        while($row = $result5->fetch_assoc()){
-                                        $row5[] = $row;
-                                        }
-
-                                        $customer = $row5;
-
-                                        $output3 = '<div class="details hide flexdetail"
-                                            style="text-transform: capitalize;">
-                                            <p class="pname">';
-
-                                                if(!empty($customer)){
-                                                $percent = $percentage / 100;
-                                                $agenttotalunits = [];
-                                                foreach($customer as $key => $value2){
-                                                $unique = $value2['unique_id'];
-                                                $sql1 = "SELECT SUM(product_unit) FROM payment WHERE
-                                                customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
-                                                $result1 = $this->dbcon->query($sql1);
-                                                $total1 = $result1->fetch_assoc();
-                                                foreach($total1 as $key => $value3){
-                                                if(is_null($value3)){
-                                                //echo "0";
-                                                } else {
-                                                array_push($agenttotalunits,$value3);
-                                                } }
-
-                                                }
-                                                $sumunits = array_sum($agenttotalunits);
-                                                $data1 = $sumunits;
-                                                } else {
-                                                $data1 = "0";
-                                                }
-                                                $output4 = $data1.'</p>
-                                        </div> ';
-
-                                        $referral = $row4['referral_id'];
-                                        $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
-                                        $result4 = $this->dbcon->query($sql4);
-                                        $row4 = $result4->fetch_assoc();
-
-                                        foreach ($row4 as $key => $value4) {
-                                        $data4 = $value4;
-                                        };
-
-                                        $output2 = '
-                                        <div class="details" style="text-transform: capitalize;">
-                                            <p class="pname">'.$data4.'</p>
-                                        </div>
-
-                                        ';
-
-
-
-                                        $output9 = ' <div class="details" style="text-transform: capitalize;">
-                                            <div class="detail" style="">
-                                                <a href="agentinfo.php?unique='.$agentid.'&real=91838JDFOJOEI939">
-                                                    <p style="font-size: 14px; color: #fff;">View</p>
-                                                </a>
-                                            </div>
-                                        </div></div>';
-
-
-                                        $output .=
-                                        ''.$output1.''.$output5.''.$output6.''.$output7.''.$output8.''.$output3.''.$output4.''.$output2.''.$output9.'';
-}
-
-} else {
-$output .= "
-<div class='success'>
-    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-    <p>No agent has earned on this month</p>
-</div>
-";
-}
-
-echo $output;
-}
-
-function searchUserEarningByMonth($month,$year){
-    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}' ORDER BY
-    earning_id
-    DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-    $agentid = [];
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    array_push($agentid,$data['earner_id']);
-    }
-    
-    $agentid2 = array_unique($agentid);
-    $agentdata = [];
-    foreach($agentid2 as $key => $value) {
-    
-    $totalpayment = "SELECT * FROM user WHERE unique_id = '{$value}'";
-    $result2 = $this->dbcon->query($totalpayment);
-    $row = $result2->fetch_assoc();
-    if($result2->num_rows > 0){
-    array_push($agentdata,$row['unique_id']);
-    }
-    // else{
-    // return $row;
-    // }
-    
-    }
-    
-    
-    
-    foreach($agentdata as $key => $value){
-    
-    $totalagent = "SELECT * FROM user WHERE unique_id = '{$value}'";
-    $results = $this->dbcon->query($totalagent);
-    $row4 = $results->fetch_assoc();
-    $agentdate = $row4['user_date'];
-    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND payment_month =
-    '{$month}' AND payment_year = '{$year}'  AND offline_status = ''ORDER BY earning_id DESC";
-    
-    $result3=$this->dbcon->query($totalearning);
-    $row2 = $result3->fetch_assoc();
-    
-    
-    $output1 = '
-    <div class="transaction-details2">
-    <div class="details" style="text-transform: capitalize;">
-        <p class="pname email-span">
-            <span>'.$row4['first_name'].'</span>&nbsp;<span>'.$row4['last_name'].'</span>
-        </p>
-    </div>
-
-    <div class="details hide flexdetail" style="text-transform: lowercase;">
-        <p class="pname email-span"> '.$row4['email'].'</p>
-    </div> ';
-
-    $unique = $row4['unique_id'];
-    $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
-    $result1 = $this->dbcon->query($sql1);
-    $row1 = $result1->fetch_assoc();
-    foreach ($row1 as $key => $value1) {
-    if(is_null($value1)){
-    $data1 = "0";
-    } else{
-    $data1 = $value1;
-    }
-    }
-
-    $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
-    $result2 = $this->dbcon->query($sql2);
-    $row2 = $result2->fetch_assoc();
-    foreach ($row2 as $key => $value) {
-    $data2 = $value;
-    }
-
-    $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = ''";
-    $result3 = $this->dbcon->query($sql3);
-    $row3 = $result3->fetch_assoc();
-    foreach ($row3 as $key => $value3) {
-        if(is_null($value3)){
-        $data3 = "0";
-        } else{
-    
-        if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
-        $data3 = number_format($value3);
-        } else {
-        $data3 = $value3;
-        }
-        }
-        }
-    
-    $sql5 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
-    '{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
-    $result5 = $this->dbcon->query($sql5);
-    $row5 = $result5->fetch_assoc();
-    if($result5->num_rows == 1){
-    foreach ($row5 as $key => $value5) {
-    $unitprice5 = $value5;
-    }
-    }else{
-    $unitprice5 = $row5;
-    }
-
-    if($unitprice5 > 999 || $unitprice5 > 9999 || $unitprice5 > 99999 ||
-    $unitprice5 > 999999){
-    $data5 = number_format(round($unitprice5));
-    } else {
-    $data5 = round($unitprice5);
-    }
-
-    $referral = $row4['personal_ref'];
-    $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
-    $result4 = $this->dbcon->query($sql4);
-    $row4 = $result4->fetch_assoc();
-
-    foreach ($row4 as $key => $value4) {
-    $data4 = $value4;
-    };
-
-    
-
-
-    $output2 = '
-    <div class="details" style="text-transform: capitalize;">
-    <p class="pname">&#8358;'.$data5.'</p>
-      </div>
-
-    <div class="details hide flexdetail" style="text-transform: capitalize;">
-        <p class="pname">'.$data1.'</p>
-    </div>
-
-    <div class="details hide flexdetail" style="text-transform: capitalize;">
-        <p class="pname">&#8358;'.$data3.'</p>
-    </div>
-
-
-    <div class="details" style="text-transform: capitalize;">
-        <p class="pname">'.$data4.'</p>
-    </div>
-
-    
-    <div class="details" style="text-transform: capitalize;">
-        <div class="detail" style="">
-            <a
-                href="customerprofileinfo.php?unique='.$unique.'&real=91838JDFOJOEI939">
-                <p style="font-size: 14px; color: #fff;">View</p>
-            </a>
-        </div>
-    </div>
-    </div>
-    ';
-
-
-    $output .= ''.$output1.''.$output2.'';
-    }
-    
-    } else {
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>No user has earned on this month</p>
-    </div>
-    ";
-    }
-    
-    echo $output;
-    }
-    
-
-
-function searchExecutiveEarningByMonth($month,$year){
-$sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}' ORDER BY
-earning_id
-DESC";
-$result = $this->dbcon->query($sql);
-$output = "";
-
-if($result->num_rows > 0){
-
-$agentdata = [];
-
-$totalpayment = "SELECT * FROM executive";
-$result2 = $this->dbcon->query($totalpayment);
-if($result2->num_rows > 0){
-while($row = $result2->fetch_assoc()){
-array_push($agentdata,$row['unique_id']);
-
-}
-}
-// else{
-// return $row;
-// }
-
-foreach($agentdata as $key => $value){
-
-$totalagent = "SELECT * FROM executive WHERE unique_id = '{$value}'";
-$results = $this->dbcon->query($totalagent);
-$row4 = $results->fetch_assoc();
-$execdate = $row4['executive_date'];
-$execid = $row4['unique_id'];
-$totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND
-payment_month='{$month}' AND payment_year =
-'{$year}' AND offline_status = ''ORDER BY earning_id DESC"; $result3=$this->
-dbcon->query($totalearning);
-$row2 = $result3->fetch_assoc();
-if($result3->num_rows == 1){
-foreach ($row2 as $key => $value) {
-$sumearn = $value;
-}
-}else{
-$sumearn = $row;
-}
-
-$output1 = '
-    <div class="transaction-details2">
-        <div class="details" style="text-transform: capitalize;">
-            <p class="pname email-span">
-                <span>'.$row4['full_name'].'</span>
-            </p>
-        </div>
-
-        <div class="details hide flexdetail" style="text-transform: lowercase;">
-            <p class="pname email-span"> '.$row4['executive_email'].'</p>
-        </div>
-        <div class="details hide flexdetail" style="text-transform: lowercase;">
-            <p class="pname email-span"> '.$row4['earning'].'%</p>
-        </div>
-        ';
-
-        $execid = $row4['unique_id'];
-        $execdate = $row4['executive_date'];
-        $execearn = $row4['earning'];
-
-        $output5 = '<div class="details" style="text-transform: capitalize;">
-            <p class="pname">&#8358;';
-                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND payment_month = '{$month}' AND payment_year = '{$year}' AND offline_status = '' ORDER BY
-                earning_id DESC";
-                $result3 = $this->dbcon->query($sql3);
-
-                $row3 = $result3->fetch_assoc();
-                if($result3->num_rows == 1){
-                foreach ($row3 as $key => $value) {
-                $unitprice3 = $value;
-                }
-                }else{
-                $unitprice3 = $row3;
-                }
-
-                if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 || $unitprice3 > 999999){
-                $data3 = number_format(round($unitprice3));
-                } else {
-                $data3 = round($unitprice3);
-                }
-
-
-
-                $output6 = $data3.'</p>
-        </div> ';
-
-
-        $output9 = ' <div class="details" style="text-transform: capitalize;">
-            <div class="detail" style="">
-                <a href="execinfo.php?unique='.$execid.'&real=91838JDFOJOEI939">
-                    <p style="font-size: 14px; color: #fff;">View</p>
-                </a>
-            </div>
-        </div>
-        </div>';
-
-
-        $output .= ''.$output1.''.$output5.''.$output6.''.$output9.'';
-
-}
-
-} else {
-$output .= "
-<div class='success'>
-    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-    <p>No executive has earned on this month</p>
-</div>
-";
-}
-
-echo $output;
-}
-
-function downloadAgentEarning($month,$year){
-$sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}' ORDER BY
-earning_id
-DESC";
-$result = $this->dbcon->query($sql);
-$alldata = "";
-$agentid = [];
-
-if($result->num_rows > 0){
-while($data = $result->fetch_assoc()){
-array_push($agentid,$data['earner_id']);
-}
-
-$agentid2 = array_unique($agentid);
-$agentdata = [];
-foreach($agentid2 as $key => $value) {
-$totalpayment = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
-$result2 = $this->dbcon->query($totalpayment);
-$row = $result2->fetch_assoc();
-if($result2->num_rows > 0){
-array_push($agentdata,$row['uniqueagent_id']);
-}
-// else{
-// return $row;
-// }
-}
-foreach($agentdata as $key => $value){
-
-$totalagent = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
-$results = $this->dbcon->query($totalagent);
-$row4 = $results->fetch_assoc();
-$agentdate = $row4['agent_date'];
-$totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
-payment_month='{$month}' AND payment_year = '{$year}' AND offline_status = ''ORDER BY earning_id
-DESC"; $result3=$this->dbcon->query($totalearning);
-$row2 = $result3->fetch_assoc();
-
-$sql6 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
-= '{$value}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status = ''ORDER BY earning_id DESC";
-$result6 = $this->dbcon->query($sql6);
-$row6 = $result6->fetch_assoc();
-if($result6->num_rows == 1){
-foreach ($row6 as $key => $value) {
-$unitprice6 = $value;
-}
-}else{
-$unitprice6 = $row2;
-}
-
-if($unitprice6 > 999 || $unitprice6 > 9999 || $unitprice6 > 99999 ||
-$unitprice6 > 999999){
-$paymentprocessed = number_format(round($unitprice6));
-} else {
-    $paymentprocessed = round($unitprice6);
-}
-
-$refid = $row4['referral_id'];
-
-
-$sql7 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
-DESC";
-$result7 = $this->dbcon->query($sql7);
-$row7 = array();
-while($row = $result7->fetch_assoc()){
-$row7[] = $row;
-}
-
-$customer = $row7;
-
-        if(!empty($customer)){
-        $percent = $percentage / 100;
-        $agenttotalunits = [];
-        foreach($customer as $key => $value2){
-        $unique = $value2['unique_id'];
-        
-$sql8 = "SELECT SUM(product_unit) FROM payment WHERE
-customer_id='{$unique}' AND payment_month = '{$month}'  AND payment_year = '{$year}'";
-$result8 = $this->dbcon->query($sql8);
-$total8 = $result8->fetch_assoc();
-foreach($total8 as $key => $value3){
-if(is_null($value3)){
-//echo "0";
-} else {
-array_push($agenttotalunits,$value3);
-} }
-
-}
-$sumunits = array_sum($agenttotalunits);
-$noofunits = $sumunits;
-} else {
-$noofunits = "0";
-}
-
-
-if(!empty($row4['group_id'])){
-$group = "SELECT * FROM group_table WHERE uniquegroup_id = '{$row4['group_id']}'";
-$result5 = $this->dbcon->query($group);
-$row5 = $result5->fetch_assoc();
-$groupname = $row5['group_name'];
-} else {
-$groupname = "None";
-}
-
-
-if($result3->num_rows == 1){
-foreach ($row2 as $key => $value) {
-$earnedprice = $value;
-$unitprice = $earnedprice;
-
-if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-$price = number_format(round($unitprice));
-} else {
-$price = round($unitprice);
-}
-
-}
-} else {
-$sumearn = $row2;
-}
-
-
-$output2 = '
-<tr>
-    <td>'.$row4['agent_id'].'</td>
-    <td>'.$month.'</td>
-    <td>'.$year.'</td>
-    <td>'.$row4['agent_name'].'</td>
-    <td>Agent</td>
-    <td>'.$groupname.'</td>
-    <td>'.$row4['bank_name'].'</td>
-    <td>'.$row4['account_number'].'</td>
-    <td>'.$row4['reg_account_name'].'</td>
-    <td>&#8358;'.$price.'</td>
-    <td>&#8358;'.$paymentprocessed.'</td>
-    <td>'.$noofunits.'</td>
-</tr>
-';
-
-
-
-$alldata .= ''.$output2.'';
-}
-
-
-
-} else {
-$alldata .= "No Data";
-
-}
-
-echo $alldata;
-}
-
-function downloadUserEarning($month,$year){
-    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}' ORDER BY
-    earning_id
-    DESC";
-    $result = $this->dbcon->query($sql);
-    $alldata = "";
-    $agentid = [];
-    
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    array_push($agentid,$data['earner_id']);
-    }
-    
-    $agentid2 = array_unique($agentid);
-    $agentdata = [];
-    foreach($agentid2 as $key => $value) {
-    $totalpayment = "SELECT * FROM user WHERE unique_id = '{$value}'";
-    $result2 = $this->dbcon->query($totalpayment);
-    $row = $result2->fetch_assoc();
-    if($result2->num_rows > 0){
-    array_push($agentdata,$row['unique_id']);
-    }
-    // else{
-    // return $row;
-    // }
-    }
-    foreach($agentdata as $key => $value){
-    
-    $totalagent = "SELECT * FROM user WHERE unique_id = '{$value}'";
-    $results = $this->dbcon->query($totalagent);
-    $row4 = $results->fetch_assoc();
-    $agentdate = $row4['user_date'];
-    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
-    payment_month='{$month}' AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id
-    DESC"; $result3=$this->dbcon->query($totalearning);
-    $row2 = $result3->fetch_assoc();
-    
-    $sql6 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$value}' AND payment_month = '{$month}'  AND payment_year = '{$year}' AND offline_status=''";
-    $result6 = $this->dbcon->query($sql6);
-    $row6 = $result6->fetch_assoc();
-    if($result6->num_rows == 1){
-    foreach ($row6 as $key => $value) {
-    $unitprice6 = $value;
-    }
-    }else{
-    $unitprice6 = $row2;
-    }
-    
-    if($unitprice6 > 999 || $unitprice6 > 9999 || $unitprice6 > 99999 ||
-    $unitprice6 > 999999){
-    $paymentprocessed = number_format(round($unitprice6));
-    } else {
-        $paymentprocessed = round($unitprice6);
-    }
-    
-    $refid = $row4['personal_ref'];
-    
-    
-    $sql7 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
-    DESC";
-    $result7 = $this->dbcon->query($sql7);
-    $row7 = array();
-    while($row = $result7->fetch_assoc()){
-    $row7[] = $row;
-    }
-    
-    $customer = $row7;
-    
-           
-    
-    if($result3->num_rows == 1){
-    foreach ($row2 as $key => $value) {
-    $earnedprice = $value;
-    $unitprice = $earnedprice;
-    
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $price = number_format(round($unitprice));
-    } else {
-    $price = round($unitprice);
-    }
-    
-    }
-    } else {
-    $sumearn = $row2;
-    }
-    
-    
-    $output2 = '
-    <tr>
-        <td>'.$row4['user_id'].'</td>
-        <td>'.$month.'</td>
-        <td>'.$year.'</td>
-        <td>'.$row4['first_name'].' '.$row4['last_name'].'</td>
-        <td>User</td>
-        <td>'.$row4['bank_name'].'</td>
-        <td>'.$row4['account_number'].'</td>
-        <td>&#8358;'.$price.'</td>
-        <td>&#8358;'.$paymentprocessed.'</td>
-    </tr>
-    ';
-    
-    
-    
-    $alldata .= ''.$output2.'';
-    }
-    
-    
-    
-    } else {
-    $alldata .= "No Data";
-    
-    }
-    
-    echo $alldata;
-    }
-
-
-function downloadExecutiveEarning($month,$year){
-$sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}' ORDER BY
-earning_id
-DESC";
-$result = $this->dbcon->query($sql);
-$alldata = "";
-
-
-if($result->num_rows > 0){
-
-$agentdata = [];
-
-$totalpayment = "SELECT * FROM executive";
-$result2 = $this->dbcon->query($totalpayment);
-if($result2->num_rows > 0){
-while($row = $result2->fetch_assoc()){
-array_push($agentdata,$row['unique_id']);
-}
-}
-// else{
-// return $row;
-// }
-
-foreach($agentdata as $key => $value){
-
-$totalagent = "SELECT * FROM executive WHERE unique_id = '{$value}'";
-$results = $this->dbcon->query($totalagent);
-$row4 = $results->fetch_assoc();
-$execdate = $row4['executive_date'];
-$execid = $row4['unique_id'];
-$totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND
-payment_month='{$month}' AND
-payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
-$result3=$this->dbcon->query($totalearning);
-$row2 = $result3->fetch_assoc();
-
-
-if($result3->num_rows == 1){
-foreach ($row2 as $key => $value) {
-$earnedprice = $value;
-$unitprice = $earnedprice;
-
-if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-$price = number_format(round($unitprice));
-} else {
-$price = round($unitprice);
-}
-
-}
-} else {
-$sumearn = $row2;
-}
-
-$output2 = '
-<tr>
-    <td>'.$row4['executive_id'].'</td>
-    <td>'.$month.'</td>
-    <td>'.$year.'</td>
-    <td>'.$row4['full_name'].'</td>
-    <td>Executive</td>
-    <td>&#8358;'.$price.'</td>
-</tr>
-';
-
-
-
-$alldata .= ''.$output2.'';
-}
-
-
-
-} else {
-$alldata .= "No Data";
-
-}
-
-echo $alldata;
-}
-
-
-function searchGroup($name){
-$sql = "SELECT * FROM group_table WHERE group_name = '{$name}'";
-$result = $this->dbcon->query($sql);
-$output = "";
-
-if($result->num_rows > 0){
-while($data = $result->fetch_assoc()){
-$output1 = '
-<div class="transaction-details2">
-    <div class="details" style="text-transform: capitalize;">
-        <p class="pname email-span">
-            <span>'.$data['group_name'].'</span>
-        </p>
-    </div>
-
-    <div class="details hide flexdetail" style="text-transform: capitalize;">
-        <p class="pname email-span"> '.$data['group_location'].'</p>
-    </div>
-
-    <div class="details hide flexdetail" style="text-transform: capitalize;">
-        <p class="pname email-span"> '.$data['group_head'].'</p>
-    </div>
-    ';
-
-    $groupid = $data['uniquegroup_id'];
-
-
-    $output5 = '<div class="details" style="text-transform: capitalize;">
-        <p class="pname">';
-
-            $sql3 = "SELECT COUNT(uniqueagent_id) FROM agent_table WHERE group_id='{$groupid}'";
-            $result3 = $this->dbcon->query($sql3);
-            $row3 = $result3->fetch_assoc();
-            foreach($row3 as $key => $value3){
-            if(is_null($value3)){
-            $data3 = "0";
-            } else {
-            $data3 = $value3;
-            }
-
-            }
-            $output6 = $data3.'</p>
-    </div> ';
-
-
-    $output9 = ' <div class="details" style="text-transform: capitalize;">
-        <div class="detail" style="">
-            <a href="groupinfo.php?unique='.$groupid.'&real=91838JDFOJOEI939">
-                <p style="font-size: 14px; color: #fff;">View</p>
-            </a>
-        </div>
-    </div>';
-
-
-    $output .= ''.$output1.''.$output5.''.$output6.''.$output9.'';
-    }
-    } else {
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
-        <p>This group does not exist </p>
-    </div>
-    ";
-    }
-
-    echo $output;
-    }
-
-
-
-
-    function selectEarningbyname($name){
-    $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-    earning_history.earner_id AND agent_name =
-    '{$name}' ORDER BY earning_id DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-
-    $earnedprice= $data['earned_amount'];
-    $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999 || $unitprice > 99999 ||
-    $unitprice > 999999){
-    $unit = number_format(round($unitprice));
-    } else {
-    $unit = round($unitprice);
-    }
-
-    if($data['payee'] == $data['earnee'] ){
-        if($data['offline_status'] != ""){
-            $customer = "Paid Offline:";
-        } else {
-            $customer = "".$data['earnee']." Paid:";
-        }
-    }
-    else {
-        if($data['offline_status'] != ""){
-            $customer = "Paid Offline:";
-        } else {
-            $customer = "Customer Paid:";
-        }
-    }
-
-    $unitprice2 = $data['product_price'];
-
-    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-    $unit2 = number_format(round($unitprice2));
-    } else {
-    $unit2 = round($unitprice2);
-    }
-
-    
-    if($data['balance_earning'] != ""){
-    if($data['earning_status'] == "unpaid"){ 
-                        $output2 = '<div class="detail-four">
-                        <div class="detail"
-                            style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                            <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
-                        </div>
-                    </div>';
-                        }
-        
-    if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
-        $output2 = '  <div class="detail-four">
-        <div class="detail"
-            style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-            <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-        </div>
-    </div>';
-    }
-                    } else {
-                        $output2 = "";
-                    }
-                    if($data['payment_mode'] == "Offline"){
-                        if($data['offline_status'] == ""){
-                          $outputmode=' <p
-                          style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                          Approved</p>';
-                        } else {
-                            $outputmode = ' <p
-                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                            '.$data['offline_status'].'</p>';
-                        }
-                        $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
-                        <div class="account-detail2"
-                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                            <div class="flex">
-                               '.$outputmode.'
-                                <p style="text-transform: uppercase;">
-                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                        earned &#8358;'.$unit.'</span>
-                                </p>
-                                <div class="payee">
-                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                </div>
-                                <div class="inner-detail">
-                                    <div class="date">
-                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                    </div>
-                                </div>
-                                '.$output2.'
-                            </div>
-                        </div>
-                
-                    </a> ';
-                
-                    } else {
-                        $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
-                        <div class="account-detail2"
-                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                            <div class="flex">
-                                <p style="text-transform: uppercase;">
-                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                        earned &#8358;'.$unit.'</span>
-                                </p>
-                                <div class="payee">
-                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                    <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                </div>
-                                <div class="inner-detail">
-                                    <div class="date">
-                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                    </div>
-                                </div>
-                                '.$output2.'
-                            </div>
-                        </div>
-                
-                    </a> ';
-                
-                    }
-   
-    }
-    } else {
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-        <p>This agent does not exist</p>
-    </div>
-    ";
-    }
-
-    echo $output;
-    }
-
-    function selectUserEarningbyname($name){
-    $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id AND
-    earnee = '{$name}'
-    ORDER BY earner_id DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    $earnedprice = $data['earned_amount'];
-    $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999 || $unitprice > 99999 ||
-    $unitprice > 999999){
-    $unit = number_format(round($unitprice));
-    } else {
-    $unit = round($unitprice);
-    }
-
-    if($data['payee'] == $data['earnee'] ){
-        if($data['offline_status'] != ""){
-            $customer = "Paid Offline:";
-        } else {
-            $customer = "".$data['earnee']." Paid:";
-        }
-    }
-    else {
-        if($data['offline_status'] != ""){
-            $customer = "Paid Offline:";
-        } else {
-            $customer = "Customer Paid:";
-        }
-    }
-
-    $unitprice2 = $data['product_price'];
-
-    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-    $unit2 = number_format(round($unitprice2));
-    } else {
-    $unit2 = round($unitprice2);
-    }
-
-    if($data['balance_earning'] != ""){
-        if($data['earning_status'] == "unpaid"){ 
-                            $output2 = '<div class="detail-four">
-                            <div class="detail"
-                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
-                            </div>
-                        </div>';
-                            }
-            
-        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
-            $output2 = '  <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-            </div>
-        </div>';
-        }
-                        } else {
-                            $output2 = "";
-                        }
-                        if($data['payment_mode'] == "Offline"){
-                            if($data['offline_status'] == ""){
-                                $outputmode=' <p
-                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                Approved</p>';
-                              } else {
-                                  $outputmode = ' <p
-                                  style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                  '.$data['offline_status'].'</p>';
-                              }
-                            $output.= '
-                            <div class="account-detail2"
-                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                                <div class="flex">
-                               '.$outputmode.'
-                                    <p style="text-transform: uppercase;">
-                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                            earned &#8358;'.$unit.'</span>
-                                    </p>
-                                    <div class="payee">
-                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                    </div>
-                                    <div class="inner-detail">
-                                        <div class="date">
-                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                        </div>
-                                    </div>
-                                    '.$output2.'
-                                </div>
-                            </div>
-                        
-                            ';
-                        
-                        } else {
-                            $output.= '
-    <div class="account-detail2"
-        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-        <div class="flex">
-            <p style="text-transform: uppercase;">
-                <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                    earned &#8358;'.$unit.'</span>
-            </p>
-            <div class="payee">
-                <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                    &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-            </div>
-            <div class="inner-detail">
-                <div class="date">
-                    <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                </div>
-            </div>
-            '.$output2.'
-        </div>
-    </div>
-
-    ';
-
-                        }
-    
-    }
-    } else {
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-        <p>This customer does not exist</p>
-    </div>
-    ";
-    }
-
-    echo $output;
-    }
-
-
-    function downloadByEarnMode($name,$mode,$user){
-    if($user == "customer"){
-    if($mode == "downloadearnname"){
-    $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id AND
-    earnee = '{$name}'
-    ORDER BY earner_id DESC";
-    }
-
-    if($mode == "downloadearndate"){
-    $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-    AND payment_date =
-    '{$name}' ORDER BY earning_id DESC";
-    }
-
-    if($mode == "downloadpending"){
-        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-        AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
-    }
-
-        if($mode == "downloadpaid"){
-            $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-            AND earning_history.balance_earning = 0 AND earning_history.earning_status = 'paid' ORDER BY earning_id DESC";
-        }
-
-        
-        if($mode == "downloadunpaid"){
-            $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-            AND earning_history.earning_status = 'unpaid' ORDER BY earning_id DESC";
-        }
-    }
-
-    if($user == "agent"){
-    if($mode == "downloadearnname"){
-    $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-    earning_history.earner_id AND agent_name =
-    '{$name}' ORDER BY earning_id DESC";
-    }
-
-    if($mode == "downloadearndate"){
-    $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-    earning_history.earner_id AND
-    payment_date = '{$name}' ORDER BY earning_id DESC";
-    }
-
-    if($mode == "downloadpending"){
-        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-        earning_history.earner_id AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
-        }
-
-        if($mode == "downloadpaid"){
-            $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-            earning_history.earner_id AND earning_history.balance_earning = 0 AND earning_history.earning_status = 'paid' ORDER BY earning_id DESC";
-            }
-
-            if($mode == "downloadunpaid"){
-                $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-                earning_history.earner_id AND earning_history.earning_status = 'unpaid' ORDER BY earning_id DESC";
-                }
-    }
-
-
-    if($user == "executive"){
-      
-        if($mode == "downloadpending"){
-            $sql = "SELECT * FROM earning_history WHERE earner_id = '{$name}' AND earning_status='unpaid' ORDER BY earning_id DESC";
-            }
-    
-            if($mode == "downloadpaid"){
-                $sql = "SELECT * FROM earning_history WHERE earner_id = '{$name}' AND balance_earning = 0  AND earning_status = 'paid' ORDER BY earning_id DESC";
-                }
-    
-                if($mode == "downloadunpaid"){
-                    $sql = "SELECT * FROM earning_history WHERE earner_id = '{$name}' AND earning_status = 'unpaid' ORDER BY earning_id DESC";
-                    }
-        }
-
-    $result = $this->dbcon->query($sql);
-    $output = "";
-
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    $earnedprice = $data['earned_amount'];
-    $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999 || $unitprice > 99999 ||
-    $unitprice > 999999){
-    $unit = number_format(round($unitprice));
-    } else {
-    $unit = round($unitprice);
-    }
-
-    if($data['payee'] == $data['earnee'] ){
-    $customer = "".$data['earnee']." Paid:";
-    }
-    else {
-    $customer = "Customer Paid:"; }
-
-    $unitprice2 = $data['product_price'];
-
-    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
-    $unit2 = number_format(round($unitprice2));
-    } else {
-    $unit2 = round($unitprice2);
-    }
-
-    $uniqueid = $data['earner_id'];
-    $sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
-    $result2 = $this->dbcon->query($sql2);
-    $row2 = $result2->fetch_assoc();
-
-    $unitprice = $data['product_price'];
-    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
-    $amount = number_format(round($unitprice));
-    } else {
-    $amount = round($unitprice);
-    }
-
-
-
-
-    $unitprice3 = $data['product_price'] - $earnedprice;
-    if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 || $unitprice3 > 999999){
-    $amount3 = number_format(round($unitprice3));
-    } else {
-    $amount3 = round($unitprice3); }
-
-    if($user == "customer"){
-    $usertype = "User";
-    $output.= '
-    <tr>
-        <td><span>'.$row2['user_id'].'</span></td>
-        <td><span>'.$row2['first_name'].'</span><span>'.$row2['last_name'].'</span></td>
-        <td><span>'.$data['earner_id'].'</span></td>
-        <td>'.$usertype.'</td>
-        <td>'.$row2['bank_name'].'</td>
-        <td>'.$row2['account_number'].'</td>
-        <td>'.$unit.'</td>
-        <td></td>
-        <td></td>
-    </tr>
-    ';
-    }
-
-    if($user == "agent"){
-    $usertype = "Agent";
-
-    $output.= '
-    <tr>
-        <td><span>'.$row2['agent_id'].'</span></td>
-        <td><span>'.$row2['agent_name'].'</span></td>
-        <td><span>'.$data['earner_id'].'</span></td>
-        <td>'.$usertype.'</td>
-        <td>'.$row2['bank_name'].'</td>
-        <td>'.$row2['account_number'].'</td>
-        <td>'.$unit.'</td>
-        <td></td>
-        <td></td>
-    </tr>
-    ';
-    }
-
-    
-
-    }
-    } else {
-    $output .= " ";
-    }
-
-    echo $output;
-    }
-
-    function selectUserEarningbyDate($name){
-    $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-    AND payment_date =
-    '{$name}' ORDER BY earning_id DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
-
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
-    $earnedprice = $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999
-    || $unitprice > 99999 || $unitprice >
-    999999){
-    $unit = number_format(round($unitprice));
-    } else {
-    $unit = round($unitprice);
-    }
-
-    if($data['payee'] == $data['earnee'] ){
-        if($data['offline_status'] != ""){
-            $customer = "Paid Offline:";
-        } else {
-            $customer = "".$data['earnee']." Paid:";
-        }
-    }
-    else {
-        if($data['offline_status'] != ""){
-            $customer = "Paid Offline:";
-        } else {
-            $customer = "Customer Paid:";
-        }
-    }
-
-    $unitprice2 = $data['product_price'];
-
-    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
-    999999){
-    $unit2 = number_format(round($unitprice2));
-    } else {
-    $unit2 = round($unitprice2);
-    }
-
-    if($data['balance_earning'] != ""){
-        if($data['earning_status'] == "unpaid"){ 
-                            $output2 = '<div class="detail-four">
-                            <div class="detail"
-                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
-                            </div>
-                        </div>';
-                            }
-            
-        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
-            $output2 = '  <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-            </div>
-        </div>';
-        }
-                        } else {
-                            $output2 = "";
-                        }
-                        if($data['payment_mode'] == "Offline"){
-                            if($data['offline_status'] == ""){
-                                $outputmode=' <p
-                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                Approved</p>';
-                              } else {
-                                  $outputmode = ' <p
-                                  style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                  '.$data['offline_status'].'</p>';
-                              }
-                            $output.= '
-                            <div class="account-detail2"
-                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                                <div class="flex">
-                                '.$outputmode.'
-                                    <p style="text-transform: uppercase;">
-                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                            earned &#8358;'.$unit.'</span>
-                                    </p>
-                                    <div class="payee">
-                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                    </div>
-                                    <div class="inner-detail">
-                                        <div class="date">
-                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                        </div>
-                                    </div>
-                                    '.$output2.'
-                                </div>
-                            </div>
-                        
-                            ';
-                        
-                        } else {
-                            $output.= '
-                            <div class="account-detail2"
-                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                                <div class="flex">
-                                    <p style="text-transform: uppercase;">
-                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                            earned &#8358;'.$unit.'</span>
-                                    </p>
-                                    <div class="payee">
-                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                    </div>
-                                    <div class="inner-detail">
-                                        <div class="date">
-                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                        </div>
-                                    </div>
-                                    '.$output2.'
-                                </div>
-                            </div>
-                        
-                            ';
-                        
-                        }
-  
-    }
-    } else {
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-        <p>No customer has earned on this date</p>
-    </div>
-    ";
-    }
-
-    echo $output;
-    }
-
-
-    function selectUserEarningStatus($name){
-        if($name == "Pending"){
-            $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-            AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
-        }
-
-        if($name == "Paid"){
-            $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
-            AND earning_history.balance_earning = 0 AND earning_history.earning_status = 'paid' ORDER BY earning_id DESC";
-        }
-
-        $result = $this->dbcon->query($sql);
-        $output = "";
-    
-        if($result->num_rows > 0){
-        while($data = $result->fetch_assoc()){
-        $earnedprice = $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999
-        || $unitprice > 99999 || $unitprice >
-        999999){
-        $unit = number_format(round($unitprice));
-        } else {
-        $unit = round($unitprice);
-        }
-    
-        if($data['payee'] == $data['earnee'] ){
-            if($data['offline_status'] != ""){
-                $customer = "Paid Offline:";
-            } else {
-                $customer = "".$data['earnee']." Paid:";
-            }
-        }
-        else {
-            if($data['offline_status'] != ""){
-                $customer = "Paid Offline:";
-            } else {
-                $customer = "Customer Paid:";
-            }
-        }
-    
-        $unitprice2 = $data['product_price'];
-    
-        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
-        999999){
-        $unit2 = number_format(round($unitprice2));
-        } else {
-        $unit2 = round($unitprice2);
-        }
-    
-        if($data['balance_earning'] != ""){
-            if($data['earning_status'] == "unpaid"){ 
-                                $output2 = '<div class="detail-four">
-                                <div class="detail"
-                                    style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                    <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
-                                </div>
-                            </div>';
-                                }
-                
-            if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
-                $output2 = '  <div class="detail-four">
-                <div class="detail"
-                    style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-                </div>
-            </div>';
-            }
-                            } else {
-                                $output2 = "";
-                            }
-                            if($data['payment_mode'] == "Offline"){
-                                if($data['offline_status'] == ""){
-                                    $outputmode=' <p
-                                    style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                    Approved</p>';
-                                  } else {
-                                      $outputmode = ' <p
-                                      style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                      '.$data['offline_status'].'</p>';
-                                  }
-                                $output.= '
-                                <div class="account-detail2"
-                                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                                    <div class="flex">
-                                   '.$outputmode.'
-                                        <p style="text-transform: uppercase;">
-                                            <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                                earned &#8358;'.$unit.'</span>
-                                        </p>
-                                        <div class="payee">
-                                            <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                                &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                        </div>
-                                        <div class="inner-detail">
-                                            <div class="date">
-                                                <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                            </div>
-                                        </div>
-                                        '.$output2.'
-                                    </div>
-                                </div>
-                            
-                                ';
-                            
-                            } else {
-                                $output.= '
-                                <div class="account-detail2"
-                                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                                    <div class="flex">
-                                        <p style="text-transform: uppercase;">
-                                            <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                                earned &#8358;'.$unit.'</span>
-                                        </p>
-                                        <div class="payee">
-                                            <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                                &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                        </div>
-                                        <div class="inner-detail">
-                                            <div class="date">
-                                                <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                            </div>
-                                        </div>
-                                        '.$output2.'
-                                    </div>
-                                </div>
-                            
-                                ';
-                            
-                            }
-       
-        }
-        } else {
-            if($name == "Pending"){
-                $output .= "
-                <div class='success'>
-                    <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                    <p>There are no pending earnings</p>
-                </div>
-                ";
-            }
-
-            if($name == "Paid"){
-                $output .= "
-                <div class='success'>
-                    <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                    <p>There are no paid earnings</p>
-                </div>
-                ";
-            }
-        }
-    
-        echo $output;
-        }
-
-
-        function selectUserEarningStatus2($name){
-            if($name == "Pending"){
-                $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-     earning_history.earner_id AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
-            }
-    
-            if($name == "Paid"){
-                $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-                earning_history.earner_id AND earning_history.balance_earning = 0 ORDER BY earning_id DESC";
-            }
-
-            if($name == "Unpaid"){
-                $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-                earning_history.earner_id AND earning_history.earning_status = 'unpaid' ORDER BY earning_id DESC";
-            }
-            $result = $this->dbcon->query($sql);
-            $output = "";
-        
-            if($result->num_rows > 0){
-            while($data = $result->fetch_assoc()){
-            $earnedprice = $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999
-            || $unitprice > 99999 || $unitprice >
-            999999){
-            $unit = number_format(round($unitprice));
-            } else {
-            $unit = round($unitprice);
-            }
-        
-            if($data['payee'] == $data['earnee'] ){
-                if($data['offline_status'] != ""){
-                    $customer = "Paid Offline:";
-                } else {
-                    $customer = "".$data['earnee']." Paid:";
-                }
-            }
-            else {
-                if($data['offline_status'] != ""){
-                    $customer = "Paid Offline:";
-                } else {
-                    $customer = "Customer Paid:";
-                }
-            }
-        
-            $unitprice2 = $data['product_price'];
-        
-            if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
-            999999){
-            $unit2 = number_format(round($unitprice2));
-            } else {
-            $unit2 = round($unitprice2);
-            }
-        
-            if($data['balance_earning'] != ""){
-                if($data['earning_status'] == "unpaid"){ 
-                                    $output2 = '<div class="detail-four">
-                                    <div class="detail"
-                                        style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                        <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
-                                    </div>
-                                </div>';
-                                    }
-                    
-                if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
-                    $output2 = '  <div class="detail-four">
-                    <div class="detail"
-                        style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-                    </div>
-                </div>';
-                }
-                                } else {
-                                    $output2 = "";
-                                }
-                                if($data['payment_mode'] == "Offline"){
-                                    if($data['offline_status'] == ""){
-                                        $outputmode=' <p
-                                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                        Approved</p>';
-                                      } else {
-                                          $outputmode = ' <p
-                                          style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                          '.$data['offline_status'].'</p>';
-                                      }
-                                    $output.= '
-                                    <div class="account-detail2"
-                                        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                                        <div class="flex">
-                                        '.$outputmode.'
-                                            <p style="text-transform: uppercase;">
-                                                <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                                    earned &#8358;'.$unit.'</span>
-                                            </p>
-                                            <div class="payee">
-                                                <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                                    &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                            </div>
-                                            <div class="inner-detail">
-                                                <div class="date">
-                                                    <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                                </div>
-                                            </div>
-                                            '.$output2.'
-                                        </div>
-                                    </div>
-                                
-                                    ';
-                                } else {
-                                    $output.= '
-                                    <div class="account-detail2"
-                                        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                                        <div class="flex">
-                                            <p style="text-transform: uppercase;">
-                                                <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                                    earned &#8358;'.$unit.'</span>
-                                            </p>
-                                            <div class="payee">
-                                                <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                                    &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                            </div>
-                                            <div class="inner-detail">
-                                                <div class="date">
-                                                    <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                                </div>
-                                            </div>
-                                            '.$output2.'
-                                        </div>
-                                    </div>
-                                
-                                    ';
-                                }
-           
-        
             }
             } else {
-                if($name == "Pending"){
-                    $output .= "
-                    <div class='success'>
-                        <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                        <p>There are no pending earnings</p>
-                    </div>
-                    ";
-                }
-    
-                if($name == "Paid"){
-                    $output .= "
-                    <div class='success'>
-                        <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                        <p>There are no paid earnings</p>
-                    </div>
-                    ";
-                }
-
-                if($name == "Unpaid"){
-                    $output .= "
-                    <div class='success'>
-                        <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                        <p>There are no unpaid earnings</p>
-                    </div>
-                    ";
-                }
+            $output .= "
+            <div class='success'>
+                <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                <p>This agent does not exist </p>
+            </div>
+            ";
             }
-        
+
             echo $output;
             }
 
 
+            function searchCustomerEarning($name){
+            $sql = "SELECT * FROM user WHERE email = '{$name}'";
+            $result = $this->dbcon->query($sql);
+            $output = "";
 
-            function selectUserEarningStatus3($name,$user,$type){
-                if($name == "Pending"){
-                    $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND earning_status = 'unpaid' ORDER BY earning_id DESC";
+            if($result->num_rows > 0){
+            while($data = $result->fetch_assoc()){
+            $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+            '{$data['unique_id']}' AND offline_status = ''
+            ORDER BY
+            earning_id DESC";
+            $result2 = $this->dbcon->query($totalpayment);
+            $row = $result2->fetch_assoc();
+            if($result2->num_rows == 1){
+            foreach ($row as $key => $value) {
+            $sumearn = $value;
+            }
+            }else{
+            $sumearn = $row;
+            }
+            // if($result->num_rows == 1){
+            // return $row;
+            // }else{
+            // return $row;
+            // }
+
+            $output1 = '
+            <div class="transaction-details2">
+                <div class="details" style="text-transform: capitalize;">
+                    <p class="pname email-span">
+                        <span>'.$data['first_name'].'</span>&nbsp;<span>'.$data['last_name'].'</span>
+                    </p>
+                </div>
+
+                <div class="details hide flexdetail" style="text-transform: lowercase;">
+                    <p class="pname email-span"> '.$data['email'].'</p>
+                </div> ';
+
+                $unique = $data['unique_id'];
+                $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}'";
+                $result1 = $this->dbcon->query($sql1);
+                $row1 = $result1->fetch_assoc();
+                foreach ($row1 as $key => $value1) {
+                if(is_null($value1)){
+                $data1 = "0";
+                } else{
+                $data1 = $value1;
                 }
-        
-                if($name == "Paid"){
-                    $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND balance_earning = 0 AND earning_status = 'paid' ORDER BY earning_id DESC";
-                }
-    
-                if($name == "Unpaid"){
-                    $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND earning_status = 'unpaid' ORDER BY earning_id DESC";
-                }
-                $result = $this->dbcon->query($sql);
-                $output = "";
-            
-                if($result->num_rows > 0){
-                while($data = $result->fetch_assoc()){
-                $earnedprice = $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999
-                || $unitprice > 99999 || $unitprice >
-                999999){
-                $unit = number_format(round($unitprice));
-                } else {
-                $unit = round($unitprice);
-                }
-            
-                if($data['payee'] == $data['earnee'] ){
-                    if($data['offline_status'] != ""){
-                        $customer = "Paid Offline:";
-                    } else {
-                        $customer = "".$data['earnee']." Paid:";
-                    }
-                }
-                else {
-                    if($data['offline_status'] != ""){
-                        $customer = "Paid Offline:";
-                    } else {
-                        $customer = "Customer Paid:";
-                    }
-                }
-            
-                $unitprice2 = $data['product_price'];
-            
-                if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
-                999999){
-                $unit2 = number_format(round($unitprice2));
-                } else {
-                $unit2 = round($unitprice2);
-                }
-            
-                if($data['balance_earning'] != ""){
-                    if($data['earning_status'] == "unpaid"){ 
-                                        $output2 = '<div class="detail-four">
-                                        <div class="detail"
-                                            style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                            <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
-                                        </div>
-                                    </div>';
-                                        }
-                        
-                    if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
-                        $output2 = '  <div class="detail-four">
-                        <div class="detail"
-                            style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                            <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-                        </div>
-                    </div>';
-                    }
-                                    } else {
-                                        $output2 = "";
-                                    }
-                if($type == "executive"){
-                    $username = $data['earnee'];
                 }
 
-                if($type == "customer"){
-                    $username = "You";
+                $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
+                $result2 = $this->dbcon->query($sql2);
+                $row2 = $result2->fetch_assoc();
+                foreach ($row2 as $key => $value) {
+                $data2 = $value;
                 }
 
-                if($type == "Yurland"){
-                    $username = "Yurland";
+                $sql5 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+                '{$unique}' AND offline_status = ''ORDER BY earning_id DESC";
+                $result5 = $this->dbcon->query($sql5);
+                $row5 = $result5->fetch_assoc();
+                if($result5->num_rows == 1){
+                foreach ($row5 as $key => $value) {
+                $unitprice5 = $value;
                 }
-                if($data['payment_mode'] == "Offline"){
-                    if($data['offline_status'] == ""){
-                        $outputmode=' <p
-                        style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                        Approved</p>';
-                      } else {
-                          $outputmode = ' <p
-                          style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                          '.$data['offline_status'].'</p>';
-                      }
-                    $output.= '
-                    <div class="account-detail2"
-                        style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                        <div class="flex">
-                       '.$outputmode.'
-                            <p style="text-transform: uppercase;">
-                                <span style="color: #000000!important; font-size: 16px;">'.$username.'
-                                    earned &#8358;'.$unit.'</span>
-                            </p>
-                            <div class="payee">
-                                <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                    &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                            </div>
-                            <div class="inner-detail">
-                                <div class="date">
-                                    <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                </div>
-                            </div>
-                            '.$output2.'
-                        </div>
-                    </div>
-                
-                    ';
-                
+                }else{
+                $unitprice5 = $row5;
+                }
+
+                if($unitprice5 > 999 || $unitprice5 > 9999 || $unitprice5 > 99999 ||
+                $unitprice5 > 999999){
+                $data5 = number_format(round($unitprice5));
                 } else {
-                    $output.= '
-                <div class="account-detail2"
-                    style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                    <div class="flex">
-                        <p style="text-transform: uppercase;">
-                            <span style="color: #000000!important; font-size: 16px;">'.$username.'
-                                earned &#8358;'.$unit.'</span>
-                        </p>
-                        <div class="payee">
-                            <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                            <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                        </div>
-                        <div class="inner-detail">
-                            <div class="date">
-                                <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                            </div>
-                        </div>
-                        '.$output2.'
+                $data5 = round($unitprice5);
+                }
+
+                $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND offline_status =
+                '' AND delete_status != 'Deleted'";
+                $result3 = $this->dbcon->query($sql3);
+                $row3 = $result3->fetch_assoc();
+                $date = $data['user_date'];
+
+                foreach ($row3 as $key => $value3) {
+                if(is_null($value3)){
+                $data3 = "0";
+                } else{
+
+                if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
+                $data3 = number_format($value3);
+                } else {
+                $data3 = $value3;
+                }
+                }
+                }
+
+                $referral = $data['personal_ref'];
+                $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
+                $result4 = $this->dbcon->query($sql4);
+                $row4 = $result4->fetch_assoc();
+
+                foreach ($row4 as $key => $value4) {
+                $data4 = $value4;
+                };
+
+
+                $output2 = '
+                <div class="details" style="text-transform: capitalize;">
+                    <p class="pname">&#8358;'.$data5.'</p>
+                </div>
+
+                <div class="details hide flexdetail" style="text-transform: capitalize;">
+                    <p class="pname">'.$data1.'</p>
+                </div>
+
+                <div class="details hide flexdetail" style="text-transform: capitalize;">
+                    <p class="pname">&#8358;'.$data3.'</p>
+                </div>
+
+
+                <div class="details" style="text-transform: capitalize;">
+                    <p class="pname">'.$data4.'</p>
+                </div>
+
+
+                <div class="details" style="text-transform: capitalize;">
+                    <div class="detail" style="">
+                        <a href="customerprofileinfo.php?unique='.$data['unique_id'].'&real=91838JDFOJOEI939">
+                            <p style="font-size: 14px; color: #fff;">View</p>
+                        </a>
                     </div>
                 </div>
-            
                 ';
-            
+
+
+
                 }
-                
-                }
+                $output .= ''.$output1.''.$output2.'';
                 } else {
-                    if($name == "Pending"){
-                        if($type == "executive"){
-                            $output .= "
-                            <div class='success'>
-                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                                <p>There are no pending earnings for this user</p>
+                $output .= "
+                <div class='success'>
+                    <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                    <p>This customer does not exist </p>
+                </div>
+                ";
+                }
+
+                echo $output;
+                }
+
+
+                function searchExecutiveEarning($name){
+                $sql = "SELECT * FROM executive WHERE executive_email = '{$name}'";
+                $result = $this->dbcon->query($sql);
+                $output = "";
+
+                if($result->num_rows > 0){
+                while($data = $result->fetch_assoc()){
+                $date = $data['executive_date'];
+                $execid = $data['unique_id'];
+                $totalpayment = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND
+                offline_status =''ORDER BY
+                earning_id
+                DESC";
+                $result2=$this->dbcon->query($totalpayment);
+                $row = $result2->fetch_assoc();
+                if($result2->num_rows == 1){
+                foreach ($row as $key => $value) {
+                $sumearn = $value;
+                }
+                }else{
+                $sumearn = $row;
+                }
+                // if($result->num_rows == 1){
+                // return $row;
+                // }else{
+                // return $row;
+                // }
+
+                $output1 = '
+                <div class="transaction-details2">
+                    <div class="details" style="text-transform: capitalize;">
+                        <p class="pname email-span">
+                            <span>'.$data['full_name'].'</span>
+                        </p>
+                    </div>
+
+                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                        <p class="pname email-span"> '.$data['executive_email'].'</p>
+                    </div>
+                    <div class="details hide flexdetail" style="text-transform: lowercase;">
+                        <p class="pname email-span"> '.$data['earning'].'%</p>
+                    </div>
+                    ';
+
+                    $execid = $data['unique_id'];
+                    $execdate = $data['executive_date'];
+                    $execearn = $data['earning'];
+
+                    $output5 = '<div class="details" style="text-transform: capitalize;">
+                        <p class="pname">&#8358;';
+                            $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND
+                            offline_status = ''ORDER BY
+                            earning_id DESC";
+                            $result3 = $this->dbcon->query($sql3);
+
+                            $row3 = $result3->fetch_assoc();
+                            if($result3->num_rows == 1){
+                            foreach ($row3 as $key => $value) {
+                            $unitprice3 = $value;
+                            }
+                            }else{
+                            $unitprice3 = $row3;
+                            }
+
+                            if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 || $unitprice3 > 999999){
+                            $data3 = number_format(round($unitprice3));
+                            } else {
+                            $data3 = round($unitprice3);
+                            }
+
+
+
+                            $output6 = $data3.'</p>
+                    </div> ';
+
+
+                    $output9 = ' <div class="details" style="text-transform: capitalize;">
+                        <div class="detail" style="">
+                            <a href="execinfo.php?unique='.$execid.'&real=91838JDFOJOEI939">
+                                <p style="font-size: 14px; color: #fff;">View</p>
+                            </a>
+                        </div>
+                    </div>';
+
+
+                    $output .= ''.$output1.''.$output5.''.$output6.''.$output9.'';
+
+                    }
+                    } else {
+                    $output .= "
+                    <div class='success'>
+                        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                        <p>This executive does not exist </p>
+                    </div>
+                    ";
+                    }
+
+                    echo $output;
+                    }
+
+
+                    function searchAgentEarningByMonth($month,$year){
+                    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}'
+                    ORDER BY
+                    earning_id
+                    DESC";
+                    $result = $this->dbcon->query($sql);
+                    $output = "";
+                    $agentid = [];
+                    if($result->num_rows > 0){
+                    while($data = $result->fetch_assoc()){
+                    array_push($agentid,$data['earner_id']);
+                    }
+
+                    $agentid2 = array_unique($agentid);
+                    $agentdata = [];
+                    foreach($agentid2 as $key => $value) {
+
+                    $totalpayment = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
+                    $result2 = $this->dbcon->query($totalpayment);
+                    $row = $result2->fetch_assoc();
+                    if($result2->num_rows > 0){
+                    array_push($agentdata,$row['uniqueagent_id']);
+                    }
+                    // else{
+                    // return $row;
+                    // }
+
+                    }
+
+
+
+                    foreach($agentdata as $key => $value){
+
+                    $totalagent = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
+                    $results = $this->dbcon->query($totalagent);
+                    $row4 = $results->fetch_assoc();
+                    $agentdate = $row4['agent_date'];
+                    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
+                    payment_month =
+                    '{$month}' AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
+
+                    $result3=$this->dbcon->query($totalearning);
+                    $row2 = $result3->fetch_assoc();
+
+
+                    $output1 = '
+                    <div class="transaction-details2">
+                        <div class="details" style="text-transform: capitalize;">
+                            <p class="pname email-span">
+                                <span>'.$row4['agent_name'].'</span>
+                            </p>
+                        </div>
+
+                        <div class="details hide flexdetail" style="text-transform: lowercase;">
+                            <p class="pname email-span"> '.$row4['agent_email'].'</p>
+                        </div> ';
+
+                        $output5 = '<div class="details" style="text-transform: capitalize;">
+                            <p class="pname">&#8358;';
+                                $agentid = $row4['uniqueagent_id'];
+                                $refid = $row4['referral_id'];
+                                $percentage = $row4['earning_percentage'];
+                                $agentdate = $row4['agent_date'];
+                                $sql = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+                                '{$agentid}' AND payment_month = '{$month}' AND payment_year = '{$year}' AND
+                                offline_status = '' ORDER BY earning_id DESC";
+                                $result = $this->dbcon->query($sql);
+                                $row = $result->fetch_assoc();
+                                if($result->num_rows == 1){
+                                foreach ($row as $key => $value) {
+                                $unitprice2 = $value;
+                                }
+                                }else{
+                                $unitprice2 = $row;
+                                }
+
+                                if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 ||
+                                $unitprice2 > 999999){
+                                $data3 = number_format(round($unitprice2));
+                                } else {
+                                $data3 = round($unitprice2);
+                                }
+
+                                $output6 = $data3.'</p>
+                        </div> ';
+
+
+                        $output7 = '<div class="details" style="text-transform: capitalize;">
+                            <p class="pname">&#8358;';
+                                $agentid = $row4['uniqueagent_id'];
+                                $refid = $row4['referral_id'];
+                                $agentdate = $row4['agent_date'];
+                                $sql2 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
+                                = '{$agentid}' AND payment_month = '{$month}' AND payment_year = '{$year}' AND
+                                offline_status = '' ORDER BY earning_id DESC";
+                                $result2 = $this->dbcon->query($sql2);
+                                $row2 = $result2->fetch_assoc();
+                                if($result2->num_rows == 1){
+                                foreach ($row2 as $key => $value) {
+                                $unitprice3 = $value;
+                                }
+                                }else{
+                                $unitprice3 = $row2;
+                                }
+
+                                if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 ||
+                                $unitprice3 > 999999){
+                                $data3 = number_format(round($unitprice3));
+                                } else {
+                                $data3 = round($unitprice3);
+                                }
+
+                                $output8 = $data3.'</p>
+                        </div> ';
+
+
+                        $sql5 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
+                        DESC";
+                        $result5 = $this->dbcon->query($sql5);
+                        $row5 = array();
+                        while($row = $result5->fetch_assoc()){
+                        $row5[] = $row;
+                        }
+
+                        $customer = $row5;
+
+                        $output3 = '<div class="details hide flexdetail" style="text-transform: capitalize;">
+                            <p class="pname">';
+
+                                if(!empty($customer)){
+                                $percent = $percentage / 100;
+                                $agenttotalunits = [];
+                                foreach($customer as $key => $value2){
+                                $unique = $value2['unique_id'];
+                                $sql1 = "SELECT SUM(product_unit) FROM payment WHERE
+                                customer_id='{$unique}' AND payment_month = '{$month}' AND payment_year = '{$year}'";
+                                $result1 = $this->dbcon->query($sql1);
+                                $total1 = $result1->fetch_assoc();
+                                foreach($total1 as $key => $value3){
+                                if(is_null($value3)){
+                                //echo "0";
+                                } else {
+                                array_push($agenttotalunits,$value3);
+                                } }
+
+                                }
+                                $sumunits = array_sum($agenttotalunits);
+                                $data1 = $sumunits;
+                                } else {
+                                $data1 = "0";
+                                }
+                                $output4 = $data1.'</p>
+                        </div> ';
+
+                        $referral = $row4['referral_id'];
+                        $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
+                        $result4 = $this->dbcon->query($sql4);
+                        $row4 = $result4->fetch_assoc();
+
+                        foreach ($row4 as $key => $value4) {
+                        $data4 = $value4;
+                        };
+
+                        $output2 = '
+                        <div class="details" style="text-transform: capitalize;">
+                            <p class="pname">'.$data4.'</p>
+                        </div>
+
+                        ';
+
+
+
+                        $output9 = ' <div class="details" style="text-transform: capitalize;">
+                            <div class="detail" style="">
+                                <a href="agentinfo.php?unique='.$agentid.'&real=91838JDFOJOEI939">
+                                    <p style="font-size: 14px; color: #fff;">View</p>
+                                </a>
                             </div>
-                            ";
+                        </div>
+                    </div>';
+
+
+                    $output .=
+                    ''.$output1.''.$output5.''.$output6.''.$output7.''.$output8.''.$output3.''.$output4.''.$output2.''.$output9.'';
+                    }
+
+                    } else {
+                    $output .= "
+                    <div class='success'>
+                        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                        <p>No agent has earned on this month</p>
+                    </div>
+                    ";
+                    }
+
+                    echo $output;
+                    }
+
+                    function searchUserEarningByMonth($month,$year){
+                    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}'
+                    ORDER BY
+                    earning_id
+                    DESC";
+                    $result = $this->dbcon->query($sql);
+                    $output = "";
+                    $agentid = [];
+                    if($result->num_rows > 0){
+                    while($data = $result->fetch_assoc()){
+                    array_push($agentid,$data['earner_id']);
+                    }
+
+                    $agentid2 = array_unique($agentid);
+                    $agentdata = [];
+                    foreach($agentid2 as $key => $value) {
+
+                    $totalpayment = "SELECT * FROM user WHERE unique_id = '{$value}'";
+                    $result2 = $this->dbcon->query($totalpayment);
+                    $row = $result2->fetch_assoc();
+                    if($result2->num_rows > 0){
+                    array_push($agentdata,$row['unique_id']);
+                    }
+                    // else{
+                    // return $row;
+                    // }
+
+                    }
+
+
+
+                    foreach($agentdata as $key => $value){
+
+                    $totalagent = "SELECT * FROM user WHERE unique_id = '{$value}'";
+                    $results = $this->dbcon->query($totalagent);
+                    $row4 = $results->fetch_assoc();
+                    $agentdate = $row4['user_date'];
+                    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
+                    payment_month =
+                    '{$month}' AND payment_year = '{$year}' AND offline_status = ''ORDER BY earning_id DESC";
+
+                    $result3=$this->dbcon->query($totalearning);
+                    $row2 = $result3->fetch_assoc();
+
+
+                    $output1 = '
+                    <div class="transaction-details2">
+                        <div class="details" style="text-transform: capitalize;">
+                            <p class="pname email-span">
+                                <span>'.$row4['first_name'].'</span>&nbsp;<span>'.$row4['last_name'].'</span>
+                            </p>
+                        </div>
+
+                        <div class="details hide flexdetail" style="text-transform: lowercase;">
+                            <p class="pname email-span"> '.$row4['email'].'</p>
+                        </div> ';
+
+                        $unique = $row4['unique_id'];
+                        $sql1 = "SELECT SUM(product_unit) FROM payment WHERE customer_id='{$unique}' AND payment_month =
+                        '{$month}' AND payment_year = '{$year}'";
+                        $result1 = $this->dbcon->query($sql1);
+                        $row1 = $result1->fetch_assoc();
+                        foreach ($row1 as $key => $value1) {
+                        if(is_null($value1)){
+                        $data1 = "0";
+                        } else{
+                        $data1 = $value1;
+                        }
+                        }
+
+                        $sql2 = "SELECT COUNT(product_price) FROM payment WHERE customer_id='{$unique}'";
+                        $result2 = $this->dbcon->query($sql2);
+                        $row2 = $result2->fetch_assoc();
+                        foreach ($row2 as $key => $value) {
+                        $data2 = $value;
+                        }
+
+                        $sql3 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$unique}' AND
+                        payment_month = '{$month}' AND payment_year = '{$year}' AND offline_status = '' AND
+                        delete_status != 'Deleted'";
+                        $result3 = $this->dbcon->query($sql3);
+                        $row3 = $result3->fetch_assoc();
+                        foreach ($row3 as $key => $value3) {
+                        if(is_null($value3)){
+                        $data3 = "0";
+                        } else{
+
+                        if($value3 > 999 || $value3 > 9999 || $value3 > 99999 || $value3 > 999999){
+                        $data3 = number_format($value3);
+                        } else {
+                        $data3 = $value3;
+                        }
+                        }
+                        }
+
+                        $sql5 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id =
+                        '{$unique}' AND payment_month = '{$month}' AND payment_year = '{$year}' AND offline_status = ''
+                        ORDER BY earning_id DESC";
+                        $result5 = $this->dbcon->query($sql5);
+                        $row5 = $result5->fetch_assoc();
+                        if($result5->num_rows == 1){
+                        foreach ($row5 as $key => $value5) {
+                        $unitprice5 = $value5;
+                        }
+                        }else{
+                        $unitprice5 = $row5;
+                        }
+
+                        if($unitprice5 > 999 || $unitprice5 > 9999 || $unitprice5 > 99999 ||
+                        $unitprice5 > 999999){
+                        $data5 = number_format(round($unitprice5));
+                        } else {
+                        $data5 = round($unitprice5);
+                        }
+
+                        $referral = $row4['personal_ref'];
+                        $sql4 = "SELECT COUNT(referral_id) FROM user WHERE referral_id='{$referral}'";
+                        $result4 = $this->dbcon->query($sql4);
+                        $row4 = $result4->fetch_assoc();
+
+                        foreach ($row4 as $key => $value4) {
+                        $data4 = $value4;
+                        };
+
+
+
+
+                        $output2 = '
+                        <div class="details" style="text-transform: capitalize;">
+                            <p class="pname">&#8358;'.$data5.'</p>
+                        </div>
+
+                        <div class="details hide flexdetail" style="text-transform: capitalize;">
+                            <p class="pname">'.$data1.'</p>
+                        </div>
+
+                        <div class="details hide flexdetail" style="text-transform: capitalize;">
+                            <p class="pname">&#8358;'.$data3.'</p>
+                        </div>
+
+
+                        <div class="details" style="text-transform: capitalize;">
+                            <p class="pname">'.$data4.'</p>
+                        </div>
+
+
+                        <div class="details" style="text-transform: capitalize;">
+                            <div class="detail" style="">
+                                <a href="customerprofileinfo.php?unique='.$unique.'&real=91838JDFOJOEI939">
+                                    <p style="font-size: 14px; color: #fff;">View</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    ';
+
+
+                    $output .= ''.$output1.''.$output2.'';
+                    }
+
+                    } else {
+                    $output .= "
+                    <div class='success'>
+                        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                        <p>No user has earned on this month</p>
+                    </div>
+                    ";
+                    }
+
+                    echo $output;
+                    }
+
+
+
+                    function searchExecutiveEarningByMonth($month,$year){
+                    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}'
+                    ORDER BY
+                    earning_id
+                    DESC";
+                    $result = $this->dbcon->query($sql);
+                    $output = "";
+
+                    if($result->num_rows > 0){
+
+                    $agentdata = [];
+
+                    $totalpayment = "SELECT * FROM executive";
+                    $result2 = $this->dbcon->query($totalpayment);
+                    if($result2->num_rows > 0){
+                    while($row = $result2->fetch_assoc()){
+                    array_push($agentdata,$row['unique_id']);
+
+                    }
+                    }
+                    // else{
+                    // return $row;
+                    // }
+
+                    foreach($agentdata as $key => $value){
+
+                    $totalagent = "SELECT * FROM executive WHERE unique_id = '{$value}'";
+                    $results = $this->dbcon->query($totalagent);
+                    $row4 = $results->fetch_assoc();
+                    $execdate = $row4['executive_date'];
+                    $execid = $row4['unique_id'];
+                    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND
+                    payment_month='{$month}' AND payment_year =
+                    '{$year}' AND offline_status = ''ORDER BY earning_id DESC"; $result3=$this->
+                    dbcon->query($totalearning);
+                    $row2 = $result3->fetch_assoc();
+                    if($result3->num_rows == 1){
+                    foreach ($row2 as $key => $value) {
+                    $sumearn = $value;
+                    }
+                    }else{
+                    $sumearn = $row;
+                    }
+
+                    $output1 = '
+                    <div class="transaction-details2">
+                        <div class="details" style="text-transform: capitalize;">
+                            <p class="pname email-span">
+                                <span>'.$row4['full_name'].'</span>
+                            </p>
+                        </div>
+
+                        <div class="details hide flexdetail" style="text-transform: lowercase;">
+                            <p class="pname email-span"> '.$row4['executive_email'].'</p>
+                        </div>
+                        <div class="details hide flexdetail" style="text-transform: lowercase;">
+                            <p class="pname email-span"> '.$row4['earning'].'%</p>
+                        </div>
+                        ';
+
+                        $execid = $row4['unique_id'];
+                        $execdate = $row4['executive_date'];
+                        $execearn = $row4['earning'];
+
+                        $output5 = '<div class="details" style="text-transform: capitalize;">
+                            <p class="pname">&#8358;';
+                                $sql3 = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}'
+                                AND payment_month = '{$month}' AND payment_year = '{$year}' AND offline_status = ''
+                                ORDER BY
+                                earning_id DESC";
+                                $result3 = $this->dbcon->query($sql3);
+
+                                $row3 = $result3->fetch_assoc();
+                                if($result3->num_rows == 1){
+                                foreach ($row3 as $key => $value) {
+                                $unitprice3 = $value;
+                                }
+                                }else{
+                                $unitprice3 = $row3;
+                                }
+
+                                if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 || $unitprice3 >
+                                999999){
+                                $data3 = number_format(round($unitprice3));
+                                } else {
+                                $data3 = round($unitprice3);
+                                }
+
+
+
+                                $output6 = $data3.'</p>
+                        </div> ';
+
+
+                        $output9 = ' <div class="details" style="text-transform: capitalize;">
+                            <div class="detail" style="">
+                                <a href="execinfo.php?unique='.$execid.'&real=91838JDFOJOEI939">
+                                    <p style="font-size: 14px; color: #fff;">View</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>';
+
+
+                    $output .= ''.$output1.''.$output5.''.$output6.''.$output9.'';
+
+                    }
+
+                    } else {
+                    $output .= "
+                    <div class='success'>
+                        <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                        <p>No executive has earned on this month</p>
+                    </div>
+                    ";
+                    }
+
+                    echo $output;
+                    }
+
+                    function downloadAgentEarning($month,$year){
+                    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}'
+                    ORDER BY
+                    earning_id
+                    DESC";
+                    $result = $this->dbcon->query($sql);
+                    $alldata = "";
+                    $agentid = [];
+
+                    if($result->num_rows > 0){
+                    while($data = $result->fetch_assoc()){
+                    array_push($agentid,$data['earner_id']);
+                    }
+
+                    $agentid2 = array_unique($agentid);
+                    $agentdata = [];
+                    foreach($agentid2 as $key => $value) {
+                    $totalpayment = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
+                    $result2 = $this->dbcon->query($totalpayment);
+                    $row = $result2->fetch_assoc();
+                    if($result2->num_rows > 0){
+                    array_push($agentdata,$row['uniqueagent_id']);
+                    }
+                    // else{
+                    // return $row;
+                    // }
+                    }
+                    foreach($agentdata as $key => $value){
+
+                    $totalagent = "SELECT * FROM agent_table WHERE uniqueagent_id = '{$value}'";
+                    $results = $this->dbcon->query($totalagent);
+                    $row4 = $results->fetch_assoc();
+                    $agentdate = $row4['agent_date'];
+                    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
+                    payment_month='{$month}' AND payment_year = '{$year}' AND offline_status = ''ORDER BY earning_id
+                    DESC"; $result3=$this->dbcon->query($totalearning);
+                    $row2 = $result3->fetch_assoc();
+
+                    $sql6 = "SELECT SUM(product_price) FROM earning_history WHERE earner_id
+                    = '{$value}' AND payment_month = '{$month}' AND payment_year = '{$year}' AND offline_status =
+                    ''ORDER BY earning_id DESC";
+                    $result6 = $this->dbcon->query($sql6);
+                    $row6 = $result6->fetch_assoc();
+                    if($result6->num_rows == 1){
+                    foreach ($row6 as $key => $value) {
+                    $unitprice6 = $value;
+                    }
+                    }else{
+                    $unitprice6 = $row2;
+                    }
+
+                    if($unitprice6 > 999 || $unitprice6 > 9999 || $unitprice6 > 99999 ||
+                    $unitprice6 > 999999){
+                    $paymentprocessed = number_format(round($unitprice6));
+                    } else {
+                    $paymentprocessed = round($unitprice6);
+                    }
+
+                    $refid = $row4['referral_id'];
+
+
+                    $sql7 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
+                    DESC";
+                    $result7 = $this->dbcon->query($sql7);
+                    $row7 = array();
+                    while($row = $result7->fetch_assoc()){
+                    $row7[] = $row;
+                    }
+
+                    $customer = $row7;
+
+                    if(!empty($customer)){
+                    $percent = $percentage / 100;
+                    $agenttotalunits = [];
+                    foreach($customer as $key => $value2){
+                    $unique = $value2['unique_id'];
+
+                    $sql8 = "SELECT SUM(product_unit) FROM payment WHERE
+                    customer_id='{$unique}' AND payment_month = '{$month}' AND payment_year = '{$year}'";
+                    $result8 = $this->dbcon->query($sql8);
+                    $total8 = $result8->fetch_assoc();
+                    foreach($total8 as $key => $value3){
+                    if(is_null($value3)){
+                    //echo "0";
+                    } else {
+                    array_push($agenttotalunits,$value3);
+                    } }
+
+                    }
+                    $sumunits = array_sum($agenttotalunits);
+                    $noofunits = $sumunits;
+                    } else {
+                    $noofunits = "0";
+                    }
+
+
+                    if(!empty($row4['group_id'])){
+                    $group = "SELECT * FROM group_table WHERE uniquegroup_id = '{$row4['group_id']}'";
+                    $result5 = $this->dbcon->query($group);
+                    $row5 = $result5->fetch_assoc();
+                    $groupname = $row5['group_name'];
+                    } else {
+                    $groupname = "None";
+                    }
+
+
+                    if($result3->num_rows == 1){
+                    foreach ($row2 as $key => $value) {
+                    $earnedprice = $value;
+                    $unitprice = $earnedprice;
+
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                    $price = number_format(round($unitprice));
+                    } else {
+                    $price = round($unitprice);
+                    }
+
+                    }
+                    } else {
+                    $sumearn = $row2;
+                    }
+
+
+                    $output2 = '
+                    <tr>
+                        <td>'.$row4['agent_id'].'</td>
+                        <td>'.$month.'</td>
+                        <td>'.$year.'</td>
+                        <td>'.$row4['agent_name'].'</td>
+                        <td>Agent</td>
+                        <td>'.$groupname.'</td>
+                        <td>'.$row4['bank_name'].'</td>
+                        <td>'.$row4['account_number'].'</td>
+                        <td>'.$row4['reg_account_name'].'</td>
+                        <td>&#8358;'.$price.'</td>
+                        <td>&#8358;'.$paymentprocessed.'</td>
+                        <td>'.$noofunits.'</td>
+                    </tr>
+                    ';
+
+
+
+                    $alldata .= ''.$output2.'';
+                    }
+
+
+
+                    } else {
+                    $alldata .= "No Data";
+
+                    }
+
+                    echo $alldata;
+                    }
+
+                    function downloadUserEarning($month,$year){
+                    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}'
+                    ORDER BY
+                    earning_id
+                    DESC";
+                    $result = $this->dbcon->query($sql);
+                    $alldata = "";
+                    $agentid = [];
+
+                    if($result->num_rows > 0){
+                    while($data = $result->fetch_assoc()){
+                    array_push($agentid,$data['earner_id']);
+                    }
+
+                    $agentid2 = array_unique($agentid);
+                    $agentdata = [];
+                    foreach($agentid2 as $key => $value) {
+                    $totalpayment = "SELECT * FROM user WHERE unique_id = '{$value}'";
+                    $result2 = $this->dbcon->query($totalpayment);
+                    $row = $result2->fetch_assoc();
+                    if($result2->num_rows > 0){
+                    array_push($agentdata,$row['unique_id']);
+                    }
+                    // else{
+                    // return $row;
+                    // }
+                    }
+                    foreach($agentdata as $key => $value){
+
+                    $totalagent = "SELECT * FROM user WHERE unique_id = '{$value}'";
+                    $results = $this->dbcon->query($totalagent);
+                    $row4 = $results->fetch_assoc();
+                    $agentdate = $row4['user_date'];
+                    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$value}' AND
+                    payment_month='{$month}' AND payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id
+                    DESC"; $result3=$this->dbcon->query($totalearning);
+                    $row2 = $result3->fetch_assoc();
+
+                    $sql6 = "SELECT SUM(product_price) FROM land_history WHERE customer_id='{$value}' AND payment_month
+                    = '{$month}' AND payment_year = '{$year}' AND offline_status='' AND delete_status != 'Deleted'";
+                    $result6 = $this->dbcon->query($sql6);
+                    $row6 = $result6->fetch_assoc();
+                    if($result6->num_rows == 1){
+                    foreach ($row6 as $key => $value) {
+                    $unitprice6 = $value;
+                    }
+                    }else{
+                    $unitprice6 = $row2;
+                    }
+
+                    if($unitprice6 > 999 || $unitprice6 > 9999 || $unitprice6 > 99999 ||
+                    $unitprice6 > 999999){
+                    $paymentprocessed = number_format(round($unitprice6));
+                    } else {
+                    $paymentprocessed = round($unitprice6);
+                    }
+
+                    $refid = $row4['personal_ref'];
+
+
+                    $sql7 = "SELECT * FROM user WHERE referral_id = '{$refid}' ORDER BY user_id
+                    DESC";
+                    $result7 = $this->dbcon->query($sql7);
+                    $row7 = array();
+                    while($row = $result7->fetch_assoc()){
+                    $row7[] = $row;
+                    }
+
+                    $customer = $row7;
+
+
+
+                    if($result3->num_rows == 1){
+                    foreach ($row2 as $key => $value) {
+                    $earnedprice = $value;
+                    $unitprice = $earnedprice;
+
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                    $price = number_format(round($unitprice));
+                    } else {
+                    $price = round($unitprice);
+                    }
+
+                    }
+                    } else {
+                    $sumearn = $row2;
+                    }
+
+
+                    $output2 = '
+                    <tr>
+                        <td>'.$row4['user_id'].'</td>
+                        <td>'.$month.'</td>
+                        <td>'.$year.'</td>
+                        <td>'.$row4['first_name'].' '.$row4['last_name'].'</td>
+                        <td>User</td>
+                        <td>'.$row4['bank_name'].'</td>
+                        <td>'.$row4['account_number'].'</td>
+                        <td>&#8358;'.$price.'</td>
+                        <td>&#8358;'.$paymentprocessed.'</td>
+                    </tr>
+                    ';
+
+
+
+                    $alldata .= ''.$output2.'';
+                    }
+
+
+
+                    } else {
+                    $alldata .= "No Data";
+
+                    }
+
+                    echo $alldata;
+                    }
+
+
+                    function downloadExecutiveEarning($month,$year){
+                    $sql = "SELECT * FROM earning_history WHERE payment_month='{$month}' AND payment_year = '{$year}'
+                    ORDER BY
+                    earning_id
+                    DESC";
+                    $result = $this->dbcon->query($sql);
+                    $alldata = "";
+
+
+                    if($result->num_rows > 0){
+
+                    $agentdata = [];
+
+                    $totalpayment = "SELECT * FROM executive";
+                    $result2 = $this->dbcon->query($totalpayment);
+                    if($result2->num_rows > 0){
+                    while($row = $result2->fetch_assoc()){
+                    array_push($agentdata,$row['unique_id']);
+                    }
+                    }
+                    // else{
+                    // return $row;
+                    // }
+
+                    foreach($agentdata as $key => $value){
+
+                    $totalagent = "SELECT * FROM executive WHERE unique_id = '{$value}'";
+                    $results = $this->dbcon->query($totalagent);
+                    $row4 = $results->fetch_assoc();
+                    $execdate = $row4['executive_date'];
+                    $execid = $row4['unique_id'];
+                    $totalearning = "SELECT SUM(earned_amount) FROM earning_history WHERE earner_id = '{$execid}' AND
+                    payment_month='{$month}' AND
+                    payment_year = '{$year}' AND offline_status = '' ORDER BY earning_id DESC";
+                    $result3=$this->dbcon->query($totalearning);
+                    $row2 = $result3->fetch_assoc();
+
+
+                    if($result3->num_rows == 1){
+                    foreach ($row2 as $key => $value) {
+                    $earnedprice = $value;
+                    $unitprice = $earnedprice;
+
+                    if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                    $price = number_format(round($unitprice));
+                    } else {
+                    $price = round($unitprice);
+                    }
+
+                    }
+                    } else {
+                    $sumearn = $row2;
+                    }
+
+                    $output2 = '
+                    <tr>
+                        <td>'.$row4['executive_id'].'</td>
+                        <td>'.$month.'</td>
+                        <td>'.$year.'</td>
+                        <td>'.$row4['full_name'].'</td>
+                        <td>Executive</td>
+                        <td>&#8358;'.$price.'</td>
+                    </tr>
+                    ';
+
+
+
+                    $alldata .= ''.$output2.'';
+                    }
+
+
+
+                    } else {
+                    $alldata .= "No Data";
+
+                    }
+
+                    echo $alldata;
+                    }
+
+
+                    function searchGroup($name){
+                    $sql = "SELECT * FROM group_table WHERE group_name = '{$name}'";
+                    $result = $this->dbcon->query($sql);
+                    $output = "";
+
+                    if($result->num_rows > 0){
+                    while($data = $result->fetch_assoc()){
+                    $output1 = '
+                    <div class="transaction-details2">
+                        <div class="details" style="text-transform: capitalize;">
+                            <p class="pname email-span">
+                                <span>'.$data['group_name'].'</span>
+                            </p>
+                        </div>
+
+                        <div class="details hide flexdetail" style="text-transform: capitalize;">
+                            <p class="pname email-span"> '.$data['group_location'].'</p>
+                        </div>
+
+                        <div class="details hide flexdetail" style="text-transform: capitalize;">
+                            <p class="pname email-span"> '.$data['group_head'].'</p>
+                        </div>
+                        ';
+
+                        $groupid = $data['uniquegroup_id'];
+
+
+                        $output5 = '<div class="details" style="text-transform: capitalize;">
+                            <p class="pname">';
+
+                                $sql3 = "SELECT COUNT(uniqueagent_id) FROM agent_table WHERE group_id='{$groupid}'";
+                                $result3 = $this->dbcon->query($sql3);
+                                $row3 = $result3->fetch_assoc();
+                                foreach($row3 as $key => $value3){
+                                if(is_null($value3)){
+                                $data3 = "0";
+                                } else {
+                                $data3 = $value3;
+                                }
+
+                                }
+                                $output6 = $data3.'</p>
+                        </div> ';
+
+
+                        $output9 = ' <div class="details" style="text-transform: capitalize;">
+                            <div class="detail" style="">
+                                <a href="groupinfo.php?unique='.$groupid.'&real=91838JDFOJOEI939">
+                                    <p style="font-size: 14px; color: #fff;">View</p>
+                                </a>
+                            </div>
+                        </div>';
+
+
+                        $output .= ''.$output1.''.$output5.''.$output6.''.$output9.'';
+                        }
+                        } else {
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 20em; height:20em;' />
+                            <p>This group does not exist </p>
+                        </div>
+                        ";
+                        }
+
+                        echo $output;
+                        }
+
+
+
+
+                        function selectEarningbyname($name){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND agent_name =
+                        '{$name}' ORDER BY earning_id DESC";
+                        $result = $this->dbcon->query($sql);
+                        $output = "";
+
+                        if($result->num_rows > 0){
+                        while($data = $result->fetch_assoc()){
+
+                        $earnedprice= $data['earned_amount'];
+                        $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999 || $unitprice > 99999 ||
+                        $unitprice > 999999){
+                        $unit = number_format(round($unitprice));
+                        } else {
+                        $unit = round($unitprice);
+                        }
+
+                        if($data['payee'] == $data['earnee'] ){
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "".$data['earnee']." Paid:";
+                        }
+                        }
+                        else {
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "Customer Paid:";
+                        }
+                        }
+
+                        $unitprice2 = $data['product_price'];
+
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                        $unit2 = number_format(round($unitprice2));
+                        } else {
+                        $unit2 = round($unitprice2);
+                        }
+
+
+                        if($data['balance_earning'] != ""){
+                        if($data['earning_status'] == "unpaid"){
+                        $output2 = '<div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>';
+                        }
+
+                        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
+                        $output2 = ' <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>';
+                        }
+                        } else {
+                        $output2 = "";
+                        }
+                        if($data['payment_mode'] == "Offline"){
+                        if($data['offline_status'] == ""){
+                        $outputmode=' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            Approved</p>';
+                        } else {
+                        $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            '.$data['offline_status'].'</p>';
+                        }
+                        $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
+                            <div class="account-detail2"
+                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                <div class="flex">
+                                    '.$outputmode.'
+                                    <p style="text-transform: uppercase;">
+                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                            earned &#8358;'.$unit.'</span>
+                                    </p>
+                                    <div class="payee">
+                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                        <p class="payee-name"
+                                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                    </div>
+                                    <div class="inner-detail">
+                                        <div class="date">
+                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$output2.'
+                                </div>
+                            </div>
+
+                        </a> ';
+
+                        } else {
+                        $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
+                            <div class="account-detail2"
+                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                <div class="flex">
+                                    <p style="text-transform: uppercase;">
+                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                            earned &#8358;'.$unit.'</span>
+                                    </p>
+                                    <div class="payee">
+                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                        <p class="payee-name"
+                                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                    </div>
+                                    <div class="inner-detail">
+                                        <div class="date">
+                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$output2.'
+                                </div>
+                            </div>
+
+                        </a> ';
+
+                        }
+
+                        }
+                        } else {
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>This agent does not exist</p>
+                        </div>
+                        ";
+                        }
+
+                        echo $output;
+                        }
+
+                        function selectUserEarningbyname($name){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND
+                        earnee = '{$name}'
+                        ORDER BY earner_id DESC";
+                        $result = $this->dbcon->query($sql);
+                        $output = "";
+
+                        if($result->num_rows > 0){
+                        while($data = $result->fetch_assoc()){
+                        $earnedprice = $data['earned_amount'];
+                        $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999 || $unitprice > 99999 ||
+                        $unitprice > 999999){
+                        $unit = number_format(round($unitprice));
+                        } else {
+                        $unit = round($unitprice);
+                        }
+
+                        if($data['payee'] == $data['earnee'] ){
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "".$data['earnee']." Paid:";
+                        }
+                        }
+                        else {
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "Customer Paid:";
+                        }
+                        }
+
+                        $unitprice2 = $data['product_price'];
+
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                        $unit2 = number_format(round($unitprice2));
+                        } else {
+                        $unit2 = round($unitprice2);
+                        }
+
+                        if($data['balance_earning'] != ""){
+                        if($data['earning_status'] == "unpaid"){
+                        $output2 = '<div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>';
+                        }
+
+                        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
+                        $output2 = ' <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>';
+                        }
+                        } else {
+                        $output2 = "";
+                        }
+                        if($data['payment_mode'] == "Offline"){
+                        if($data['offline_status'] == ""){
+                        $outputmode=' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            Approved</p>';
+                        } else {
+                        $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            '.$data['offline_status'].'</p>';
+                        }
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                '.$outputmode.'
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+
+                        } else {
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+
+                        }
+
+                        }
+                        } else {
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>This customer does not exist</p>
+                        </div>
+                        ";
+                        }
+
+                        echo $output;
+                        }
+
+
+                        function downloadByEarnMode($name,$mode,$user){
+                        if($user == "customer"){
+                        if($mode == "downloadearnname"){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND
+                        earnee = '{$name}'
+                        ORDER BY earner_id DESC";
+                        }
+
+                        if($mode == "downloadearndate"){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND payment_date =
+                        '{$name}' ORDER BY earning_id DESC";
+                        }
+
+                        if($mode == "downloadpending"){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
+                        }
+
+                        if($mode == "downloadpaid"){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND earning_history.balance_earning = 0 AND earning_history.earning_status = 'paid' ORDER BY
+                        earning_id DESC";
+                        }
+
+
+                        if($mode == "downloadunpaid"){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND earning_history.earning_status = 'unpaid' ORDER BY earning_id DESC";
+                        }
+                        }
+
+                        if($user == "agent"){
+                        if($mode == "downloadearnname"){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND agent_name =
+                        '{$name}' ORDER BY earning_id DESC";
+                        }
+
+                        if($mode == "downloadearndate"){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND
+                        payment_date = '{$name}' ORDER BY earning_id DESC";
+                        }
+
+                        if($mode == "downloadpending"){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
+                        }
+
+                        if($mode == "downloadpaid"){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND earning_history.balance_earning = 0 AND
+                        earning_history.earning_status = 'paid' ORDER BY earning_id DESC";
+                        }
+
+                        if($mode == "downloadunpaid"){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND earning_history.earning_status = 'unpaid' ORDER BY earning_id
+                        DESC";
+                        }
+                        }
+
+
+                        if($user == "executive"){
+
+                        if($mode == "downloadpending"){
+                        $sql = "SELECT * FROM earning_history WHERE earner_id = '{$name}' AND earning_status='unpaid'
+                        ORDER BY earning_id DESC";
+                        }
+
+                        if($mode == "downloadpaid"){
+                        $sql = "SELECT * FROM earning_history WHERE earner_id = '{$name}' AND balance_earning = 0 AND
+                        earning_status = 'paid' ORDER BY earning_id DESC";
+                        }
+
+                        if($mode == "downloadunpaid"){
+                        $sql = "SELECT * FROM earning_history WHERE earner_id = '{$name}' AND earning_status = 'unpaid'
+                        ORDER BY earning_id DESC";
+                        }
+                        }
+
+                        $result = $this->dbcon->query($sql);
+                        $output = "";
+
+                        if($result->num_rows > 0){
+                        while($data = $result->fetch_assoc()){
+                        $earnedprice = $data['earned_amount'];
+                        $unitprice=$earnedprice; if($unitprice> 999 || $unitprice > 9999 || $unitprice > 99999 ||
+                        $unitprice > 999999){
+                        $unit = number_format(round($unitprice));
+                        } else {
+                        $unit = round($unitprice);
+                        }
+
+                        if($data['payee'] == $data['earnee'] ){
+                        $customer = "".$data['earnee']." Paid:";
+                        }
+                        else {
+                        $customer = "Customer Paid:"; }
+
+                        $unitprice2 = $data['product_price'];
+
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 > 999999){
+                        $unit2 = number_format(round($unitprice2));
+                        } else {
+                        $unit2 = round($unitprice2);
+                        }
+
+                        $uniqueid = $data['earner_id'];
+                        $sql2 = "SELECT * FROM user WHERE unique_id = '{$uniqueid}'";
+                        $result2 = $this->dbcon->query($sql2);
+                        $row2 = $result2->fetch_assoc();
+
+                        $unitprice = $data['product_price'];
+                        if($unitprice > 999 || $unitprice > 9999 || $unitprice > 99999 || $unitprice > 999999){
+                        $amount = number_format(round($unitprice));
+                        } else {
+                        $amount = round($unitprice);
+                        }
+
+
+
+
+                        $unitprice3 = $data['product_price'] - $earnedprice;
+                        if($unitprice3 > 999 || $unitprice3 > 9999 || $unitprice3 > 99999 || $unitprice3 > 999999){
+                        $amount3 = number_format(round($unitprice3));
+                        } else {
+                        $amount3 = round($unitprice3); }
+
+                        if($user == "customer"){
+                        $usertype = "User";
+                        $output.= '
+                        <tr>
+                            <td><span>'.$row2['user_id'].'</span></td>
+                            <td><span>'.$row2['first_name'].'</span><span>'.$row2['last_name'].'</span></td>
+                            <td><span>'.$data['earner_id'].'</span></td>
+                            <td>'.$usertype.'</td>
+                            <td>'.$row2['bank_name'].'</td>
+                            <td>'.$row2['account_number'].'</td>
+                            <td>'.$unit.'</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        ';
+                        }
+
+                        if($user == "agent"){
+                        $usertype = "Agent";
+
+                        $output.= '
+                        <tr>
+                            <td><span>'.$row2['agent_id'].'</span></td>
+                            <td><span>'.$row2['agent_name'].'</span></td>
+                            <td><span>'.$data['earner_id'].'</span></td>
+                            <td>'.$usertype.'</td>
+                            <td>'.$row2['bank_name'].'</td>
+                            <td>'.$row2['account_number'].'</td>
+                            <td>'.$unit.'</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        ';
+                        }
+
+
+
+                        }
+                        } else {
+                        $output .= " ";
+                        }
+
+                        echo $output;
+                        }
+
+                        function selectUserEarningbyDate($name){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND payment_date =
+                        '{$name}' ORDER BY earning_id DESC";
+                        $result = $this->dbcon->query($sql);
+                        $output = "";
+
+                        if($result->num_rows > 0){
+                        while($data = $result->fetch_assoc()){
+                        $earnedprice = $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice
+                        > 9999
+                        || $unitprice > 99999 || $unitprice >
+                        999999){
+                        $unit = number_format(round($unitprice));
+                        } else {
+                        $unit = round($unitprice);
+                        }
+
+                        if($data['payee'] == $data['earnee'] ){
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "".$data['earnee']." Paid:";
+                        }
+                        }
+                        else {
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "Customer Paid:";
+                        }
+                        }
+
+                        $unitprice2 = $data['product_price'];
+
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
+                        999999){
+                        $unit2 = number_format(round($unitprice2));
+                        } else {
+                        $unit2 = round($unitprice2);
+                        }
+
+                        if($data['balance_earning'] != ""){
+                        if($data['earning_status'] == "unpaid"){
+                        $output2 = '<div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>';
+                        }
+
+                        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
+                        $output2 = ' <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>';
+                        }
+                        } else {
+                        $output2 = "";
+                        }
+                        if($data['payment_mode'] == "Offline"){
+                        if($data['offline_status'] == ""){
+                        $outputmode=' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            Approved</p>';
+                        } else {
+                        $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            '.$data['offline_status'].'</p>';
+                        }
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                '.$outputmode.'
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+
+                        } else {
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+
+                        }
+
+                        }
+                        } else {
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>No customer has earned on this date</p>
+                        </div>
+                        ";
+                        }
+
+                        echo $output;
+                        }
+
+
+                        function selectUserEarningStatus($name){
+                        if($name == "Pending"){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
+                        }
+
+                        if($name == "Paid"){
+                        $sql = "SELECT * FROM user FULL JOIN earning_history WHERE unique_id = earning_history.earner_id
+                        AND earning_history.balance_earning = 0 AND earning_history.earning_status = 'paid' ORDER BY
+                        earning_id DESC";
+                        }
+
+                        $result = $this->dbcon->query($sql);
+                        $output = "";
+
+                        if($result->num_rows > 0){
+                        while($data = $result->fetch_assoc()){
+                        $earnedprice = $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice
+                        > 9999
+                        || $unitprice > 99999 || $unitprice >
+                        999999){
+                        $unit = number_format(round($unitprice));
+                        } else {
+                        $unit = round($unitprice);
+                        }
+
+                        if($data['payee'] == $data['earnee'] ){
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "".$data['earnee']." Paid:";
+                        }
+                        }
+                        else {
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "Customer Paid:";
+                        }
+                        }
+
+                        $unitprice2 = $data['product_price'];
+
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
+                        999999){
+                        $unit2 = number_format(round($unitprice2));
+                        } else {
+                        $unit2 = round($unitprice2);
+                        }
+
+                        if($data['balance_earning'] != ""){
+                        if($data['earning_status'] == "unpaid"){
+                        $output2 = '<div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>';
+                        }
+
+                        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
+                        $output2 = ' <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>';
+                        }
+                        } else {
+                        $output2 = "";
+                        }
+                        if($data['payment_mode'] == "Offline"){
+                        if($data['offline_status'] == ""){
+                        $outputmode=' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            Approved</p>';
+                        } else {
+                        $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            '.$data['offline_status'].'</p>';
+                        }
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                '.$outputmode.'
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+
+                        } else {
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+
+                        }
+
+                        }
+                        } else {
+                        if($name == "Pending"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>There are no pending earnings</p>
+                        </div>
+                        ";
+                        }
+
+                        if($name == "Paid"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>There are no paid earnings</p>
+                        </div>
+                        ";
+                        }
+                        }
+
+                        echo $output;
+                        }
+
+
+                        function selectUserEarningStatus2($name){
+                        if($name == "Pending"){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND earning_history.earning_status='unpaid' ORDER BY earning_id DESC";
+                        }
+
+                        if($name == "Paid"){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND earning_history.balance_earning = 0 ORDER BY earning_id DESC";
+                        }
+
+                        if($name == "Unpaid"){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND earning_history.earning_status = 'unpaid' ORDER BY earning_id
+                        DESC";
+                        }
+                        $result = $this->dbcon->query($sql);
+                        $output = "";
+
+                        if($result->num_rows > 0){
+                        while($data = $result->fetch_assoc()){
+                        $earnedprice = $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice
+                        > 9999
+                        || $unitprice > 99999 || $unitprice >
+                        999999){
+                        $unit = number_format(round($unitprice));
+                        } else {
+                        $unit = round($unitprice);
+                        }
+
+                        if($data['payee'] == $data['earnee'] ){
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "".$data['earnee']." Paid:";
+                        }
+                        }
+                        else {
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "Customer Paid:";
+                        }
+                        }
+
+                        $unitprice2 = $data['product_price'];
+
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
+                        999999){
+                        $unit2 = number_format(round($unitprice2));
+                        } else {
+                        $unit2 = round($unitprice2);
+                        }
+
+                        if($data['balance_earning'] != ""){
+                        if($data['earning_status'] == "unpaid"){
+                        $output2 = '<div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>';
+                        }
+
+                        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
+                        $output2 = ' <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>';
+                        }
+                        } else {
+                        $output2 = "";
+                        }
+                        if($data['payment_mode'] == "Offline"){
+                        if($data['offline_status'] == ""){
+                        $outputmode=' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            Approved</p>';
+                        } else {
+                        $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            '.$data['offline_status'].'</p>';
+                        }
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                '.$outputmode.'
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+                        } else {
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+                        }
+
+
+                        }
+                        } else {
+                        if($name == "Pending"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>There are no pending earnings</p>
+                        </div>
+                        ";
+                        }
+
+                        if($name == "Paid"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>There are no paid earnings</p>
+                        </div>
+                        ";
+                        }
+
+                        if($name == "Unpaid"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>There are no unpaid earnings</p>
+                        </div>
+                        ";
+                        }
+                        }
+
+                        echo $output;
+                        }
+
+
+
+                        function selectUserEarningStatus3($name,$user,$type){
+                        if($name == "Pending"){
+                        $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND earning_status = 'unpaid'
+                        ORDER BY earning_id DESC";
+                        }
+
+                        if($name == "Paid"){
+                        $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND balance_earning = 0 AND
+                        earning_status = 'paid' ORDER BY earning_id DESC";
+                        }
+
+                        if($name == "Unpaid"){
+                        $sql = "SELECT * FROM earning_history WHERE earner_id ='{$user}' AND earning_status = 'unpaid'
+                        ORDER BY earning_id DESC";
+                        }
+                        $result = $this->dbcon->query($sql);
+                        $output = "";
+
+                        if($result->num_rows > 0){
+                        while($data = $result->fetch_assoc()){
+                        $earnedprice = $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice
+                        > 9999
+                        || $unitprice > 99999 || $unitprice >
+                        999999){
+                        $unit = number_format(round($unitprice));
+                        } else {
+                        $unit = round($unitprice);
+                        }
+
+                        if($data['payee'] == $data['earnee'] ){
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "".$data['earnee']." Paid:";
+                        }
+                        }
+                        else {
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "Customer Paid:";
+                        }
+                        }
+
+                        $unitprice2 = $data['product_price'];
+
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
+                        999999){
+                        $unit2 = number_format(round($unitprice2));
+                        } else {
+                        $unit2 = round($unitprice2);
+                        }
+
+                        if($data['balance_earning'] != ""){
+                        if($data['earning_status'] == "unpaid"){
+                        $output2 = '<div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
+                            </div>
+                        </div>';
+                        }
+
+                        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
+                        $output2 = ' <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>';
+                        }
+                        } else {
+                        $output2 = "";
+                        }
+                        if($type == "executive"){
+                        $username = $data['earnee'];
                         }
 
                         if($type == "customer"){
-                            $output .= "
-                            <div class='success'>
-                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                                <p>You have no pending earnings</p>
-                            </div>
-                            ";
+                        $username = "You";
                         }
 
                         if($type == "Yurland"){
-                            $output .= "
-                            <div class='success'>
-                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                                <p>Yurland has no pending earnings</p>
-                            </div>
-                            ";
+                        $username = "Yurland";
                         }
-                        
-                    }
-        
-                    if($name == "Paid"){
-                        if($type == "executive"){
-                            $output .= "
-                            <div class='success'>
-                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                                <p>There are no paid earnings for this user</p>
+                        if($data['payment_mode'] == "Offline"){
+                        if($data['offline_status'] == ""){
+                        $outputmode=' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            Approved</p>';
+                        } else {
+                        $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            '.$data['offline_status'].'</p>';
+                        }
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                '.$outputmode.'
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$username.'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
                             </div>
-                            ";
+                        </div>
+
+                        ';
+
+                        } else {
+                        $output.= '
+                        <div class="account-detail2"
+                            style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                            <div class="flex">
+                                <p style="text-transform: uppercase;">
+                                    <span style="color: #000000!important; font-size: 16px;">'.$username.'
+                                        earned &#8358;'.$unit.'</span>
+                                </p>
+                                <div class="payee">
+                                    <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                    <p class="payee-name"
+                                        style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                </div>
+                                <div class="inner-detail">
+                                    <div class="date">
+                                        <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                    </div>
+                                </div>
+                                '.$output2.'
+                            </div>
+                        </div>
+
+                        ';
+
+                        }
+
+                        }
+                        } else {
+                        if($name == "Pending"){
+                        if($type == "executive"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>There are no pending earnings for this user</p>
+                        </div>
+                        ";
                         }
 
                         if($type == "customer"){
-                            $output .= "
-                            <div class='success'>
-                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                                <p>You have no paid earnings</p>
-                            </div>
-                            ";
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>You have no pending earnings</p>
+                        </div>
+                        ";
                         }
 
-                        
                         if($type == "Yurland"){
-                            $output .= "
-                            <div class='success'>
-                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                                <p>Yurland has no paid earnings</p>
-                            </div>
-                            ";
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>Yurland has no pending earnings</p>
+                        </div>
+                        ";
                         }
-                       
-                    }
-    
-                    if($name == "Unpaid"){
 
-                    if($type == "executive"){
+                        }
+
+                        if($name == "Paid"){
+                        if($type == "executive"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>There are no paid earnings for this user</p>
+                        </div>
+                        ";
+                        }
+
+                        if($type == "customer"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>You have no paid earnings</p>
+                        </div>
+                        ";
+                        }
+
+
+                        if($type == "Yurland"){
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>Yurland has no paid earnings</p>
+                        </div>
+                        ";
+                        }
+
+                        }
+
+                        if($name == "Unpaid"){
+
+                        if($type == "executive"){
                         $output .= "
                         <div class='success'>
                             <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
@@ -14000,146 +14265,123 @@ $output1 = '
                         }
 
                         if($type == "customer"){
-                            $output .= "
-                            <div class='success'>
-                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                                <p>You have no unpaid earnings</p>
-                            </div>
-                            ";
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>You have no unpaid earnings</p>
+                        </div>
+                        ";
                         }
 
-                        
+
                         if($type == "Yurland"){
-                            $output .= "
-                            <div class='success'>
-                                <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-                                <p>Yurland has no unpaid earnings</p>
-                            </div>
-                            ";
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>Yurland has no unpaid earnings</p>
+                        </div>
+                        ";
                         }
-                    }
-                }
-            
-                echo $output;
-                }
-        
-    
-    
-    
+                        }
+                        }
+
+                        echo $output;
+                        }
 
 
 
 
-    function selectEarningbyDate($name){
-    $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
-    earning_history.earner_id AND
-    payment_date = '{$name}' ORDER BY earning_id DESC";
-    $result = $this->dbcon->query($sql);
-    $output = "";
 
-    if($result->num_rows > 0){
-    while($data = $result->fetch_assoc()){
 
-    $earnedprice= $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice >
-    9999 || $unitprice > 99999 || $unitprice >
-    999999){
-    $unit = number_format(round($unitprice));
-    } else {
-    $unit = round($unitprice);
-    }
 
-    if($data['payee'] == $data['earnee'] ){
-        if($data['offline_status'] != ""){
-            $customer = "Paid Offline:";
-        } else {
-            $customer = "".$data['earnee']." Paid:";
-        }
-    }
-    else {
-        if($data['offline_status'] != ""){
-            $customer = "Paid Offline:";
-        } else {
-            $customer = "Customer Paid:";
-        }
-    }
 
-    $unitprice2 = $data['product_price'];
+                        function selectEarningbyDate($name){
+                        $sql = "SELECT * FROM agent_table FULL JOIN earning_history WHERE uniqueagent_id =
+                        earning_history.earner_id AND
+                        payment_date = '{$name}' ORDER BY earning_id DESC";
+                        $result = $this->dbcon->query($sql);
+                        $output = "";
 
-    if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
-    999999){
-    $unit2 = number_format(round($unitprice2));
-    } else {
-    $unit2 = round($unitprice2);
-    }
+                        if($result->num_rows > 0){
+                        while($data = $result->fetch_assoc()){
 
-    if($data['balance_earning'] != ""){
-        if($data['earning_status'] == "unpaid"){ 
-                            $output2 = '<div class="detail-four">
+                        $earnedprice= $data['earned_amount']; $unitprice=$earnedprice; if($unitprice> 999 || $unitprice
+                        >
+                        9999 || $unitprice > 99999 || $unitprice >
+                        999999){
+                        $unit = number_format(round($unitprice));
+                        } else {
+                        $unit = round($unitprice);
+                        }
+
+                        if($data['payee'] == $data['earnee'] ){
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "".$data['earnee']." Paid:";
+                        }
+                        }
+                        else {
+                        if($data['offline_status'] != ""){
+                        $customer = "Paid Offline:";
+                        } else {
+                        $customer = "Customer Paid:";
+                        }
+                        }
+
+                        $unitprice2 = $data['product_price'];
+
+                        if($unitprice2 > 999 || $unitprice2 > 9999 || $unitprice2 > 99999 || $unitprice2 >
+                        999999){
+                        $unit2 = number_format(round($unitprice2));
+                        } else {
+                        $unit2 = round($unitprice2);
+                        }
+
+                        if($data['balance_earning'] != ""){
+                        if($data['earning_status'] == "unpaid"){
+                        $output2 = '<div class="detail-four">
                             <div class="detail"
                                 style="width: 100px; height: 20px; background-color: blue; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Pending</p>
                             </div>
                         </div>';
-                            }
-            
-        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
-            $output2 = '  <div class="detail-four">
-            <div class="detail"
-                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
-            </div>
-        </div>';
-        }
+                        }
+
+                        if($data['balance_earning'] == 0 && $data['earning_status'] == "paid"){
+                        $output2 = ' <div class="detail-four">
+                            <div class="detail"
+                                style="width: 100px; height: 20px; background-color: green; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <p style="font-size: 14px; color: #fff; text-transform:capitalize;">Paid</p>
+                            </div>
+                        </div>';
+                        }
                         } else {
-                            $output2 = "";
+                        $output2 = "";
                         }
                         if($data['payment_mode'] == "Offline"){
-                            if($data['offline_status'] == ""){
-                                $outputmode=' <p
-                                style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                Approved</p>';
-                              } else {
-                                  $outputmode = ' <p
-                                  style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
-                                  '.$data['offline_status'].'</p>';
-                              }
-                            $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
-                            <div class="account-detail2"
-                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
-                                <div class="flex">
-                               '.$outputmode.'
-                                    <p style="text-transform: uppercase;">
-                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
-                                            earned &#8358;'.$unit.'</span>
-                                    </p>
-                                    <div class="payee">
-                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
-                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
-                                    </div>
-                                    <div class="inner-detail">
-                                        <div class="date">
-                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
-                                        </div>
-                                    </div>
-                                    '.$output2.'
-                                </div>
-                            </div>
-                    
-                        </a> ';
-                    
+                        if($data['offline_status'] == ""){
+                        $outputmode=' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            Approved</p>';
                         } else {
-                            $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
+                        $outputmode = ' <p
+                            style="color: #7e252b; font-size: 12px; display:flex; align-items:center; justify-content:center; border-radius: 25px; border: 2px solid #7e252b; padding: 0 5px; width:80px; text-transform: capitalize;">
+                            '.$data['offline_status'].'</p>';
+                        }
+                        $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
                             <div class="account-detail2"
                                 style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
                                 <div class="flex">
+                                    '.$outputmode.'
                                     <p style="text-transform: uppercase;">
                                         <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
                                             earned &#8358;'.$unit.'</span>
                                     </p>
                                     <div class="payee">
                                         <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
-                                        <p class="payee-name" style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                        <p class="payee-name"
+                                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
                                             &#8358;'.$unit2.' for '.$data['product_name'].'</p>
                                     </div>
                                     <div class="inner-detail">
@@ -14150,43 +14392,71 @@ $output1 = '
                                     '.$output2.'
                                 </div>
                             </div>
-                    
+
                         </a> ';
-                    
+
+                        } else {
+                        $output.= '<a href="agenthistory.php?unique='.$data['uniqueagent_id'].'">
+                            <div class="account-detail2"
+                                style="height: 3em; display: flex; justify-content: space-between; align-items:center;">
+                                <div class="flex">
+                                    <p style="text-transform: uppercase;">
+                                        <span style="color: #000000!important; font-size: 16px;">'.$data['earnee'].'
+                                            earned &#8358;'.$unit.'</span>
+                                    </p>
+                                    <div class="payee">
+                                        <p class="payee-tag" style="color: #808080;">'.$customer.'</p>&nbsp;
+                                        <p class="payee-name"
+                                            style="text-transform: capitalize; color: #808080; text-overflow: ellipsis;">
+                                            &#8358;'.$unit2.' for '.$data['product_name'].'</p>
+                                    </div>
+                                    <div class="inner-detail">
+                                        <div class="date">
+                                            <span style="font-size: 13px;">'.$data['payment_date'].'</span>
+                                        </div>
+                                    </div>
+                                    '.$output2.'
+                                </div>
+                            </div>
+
+                        </a> ';
+
                         }
 
-   
-    }
-    } else {
-    $output .= "
-    <div class='success'>
-        <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
-        <p>No agent has earned on this date</p>
-    </div>
-    ";
-    }
 
-    echo $output;
-    }
+                        }
+                        } else {
+                        $output .= "
+                        <div class='success'>
+                            <img src='images/asset_success.svg' alt='' style='width: 15em; height: 15em;' />
+                            <p>No agent has earned on this date</p>
+                        </div>
+                        ";
+                        }
 
-    function uploadExcel($earnerid,$paidearnings,$balanceearnings,$amountearned){
-             
-            $paid = "paid";
-            $sql = "UPDATE earning_history SET amount_paid='{$paidearnings}', balance_earning='{$balanceearnings}',earning_status='{$paid}' WHERE earner_id='{$earnerid}' AND earning_status = 'unpaid'";
+                        echo $output;
+                        }
 
-            $result = $this->dbcon->query($sql);
-            if($this->dbcon->affected_rows == 1){
-               echo "success";
-            } 
-            else {
-                echo "failed";
-               echo $this->dbcon->error;
-            }
-         
-    }
+                        function uploadExcel($earnerid,$paidearnings,$balanceearnings,$amountearned){
+
+                        $paid = "paid";
+                        $sql = "UPDATE earning_history SET amount_paid='{$paidearnings}',
+                        balance_earning='{$balanceearnings}',earning_status='{$paid}' WHERE earner_id='{$earnerid}' AND
+                        earning_status = 'unpaid'";
+
+                        $result = $this->dbcon->query($sql);
+                        if($this->dbcon->affected_rows == 1){
+                        echo "success";
+                        }
+                        else {
+                        echo "failed";
+                        echo $this->dbcon->error;
+                        }
+
+                        }
 
 
 
-    }
+                        }
 
-    ?>
+                        ?>

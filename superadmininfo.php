@@ -794,6 +794,21 @@ include "projectlog.php";
                         </form>
                         <?php }?>
                         <?php 
+                   
+                    if($value['comingsoon_status'] == "Off"){?>
+                        <form action="" class="comingsoon-form" method="POST">
+                            <button class="price" type="submit" name="coming<?php echo $name?>"
+                                style="background-color: #7e252b; color: #fff;">Coming Soon</button>
+
+                        </form>
+                        <?php } else {?>
+                        <form action="" class="removecomingsoon-form" method="POST">
+                            <button class="price" type="submit" name="removecoming<?php echo $name?>"
+                                style="background-color: #7e252b; color: #fff;">Remove Coming Soon</button>
+
+                        </form>
+                        <?php }?>
+                        <?php 
             
                 
                 if(isset($_POST["close".$name])){
@@ -801,16 +816,30 @@ include "projectlog.php";
                     $restored = "closed";
                         header("Location: successpage/deletesuccess.php?detect=".$restored."");
                     
-                
             }
 
             if(isset($_POST["open".$name])){
                 $insertuser = $land->openProduct($name);
                 $restored = "opened";
                     header("Location: successpage/deletesuccess.php?detect=".$restored."");
-                
-            
+
         }
+
+        if(isset($_POST["coming".$name])){
+            $insertuser = $land->comingsoonProduct($name);
+            $restored = "comingsoon";
+                header("Location: successpage/deletesuccess.php?detect=".$restored."");
+            
+        
+    }
+
+    if(isset($_POST["removecoming".$name])){
+        $insertuser = $land->removeComingsoonProduct($name);
+        $restored = "removecomingsoon";
+            header("Location: successpage/deletesuccess.php?detect=".$restored."");
+        
+    
+}
             ?>
 
                         </p>

@@ -55,16 +55,19 @@ if(isset($_POST["submit"])){
     if(isset($_SESSION['uniqueagent_id'])){
         $payee = $selectagent['agent_name'];
         $agentid = $selectagent['uniqueagent_id'];
+        $adminid = "";
     } 
 
     if(isset($_SESSION['uniquesubadmin_id'])){
         $payee = $subadmin['subadmin_name'];
         $agentid = "noagent";
+        $adminid = $subadmin['unique_id'];
     }
 
     if(isset($_SESSION['uniquesupadmin_id'])){
         $payee = $subadmin['super_adminname'];
         $agentid = "noagent";
+        $adminid = $subadmin['unique_id'];
     }
 
     $none = "none";
@@ -220,6 +223,12 @@ if(isset($_POST["submit"])){
                 "display_name" => "Prodprice",
                 "variable_name" => "prodprice",
                 "value" => $prodprice
+            ],
+
+            [
+                "display_name" => "Adminid",
+                "variable_name" => "Adminid",
+                "value" => $adminid
             ],
           ]
        ]

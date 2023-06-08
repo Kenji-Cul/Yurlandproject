@@ -990,6 +990,13 @@ if(!isset($_GET['unique'])){
                             value="<?php if(isset($newuser['earning_percentage'])){echo $newuser['earning_percentage'];}?>" />
                     </div>
 
+                    <div class="input-div number">
+                        <label for="earningtwo">Downliner Earning Percentage</label>
+                        <input type="number" id="earningtwo" placeholder="Enter downliner earning percentage"
+                            name="earningtwo"
+                            value="<?php if(isset($newuser['downliner_percentage'])){echo $newuser['downliner_percentage'];}?>" />
+                    </div>
+
                     <div class="input-div email">
                         <label>Profile Image</label>
                         <input type="text" name="text" placeholder="Upload agent profile image" disabled />

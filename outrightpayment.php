@@ -77,6 +77,7 @@ if(isset($_POST["submit"])){
     }
     $newpayid = rand();
     $payee = $selectuser['first_name']." ".$selectuser['last_name'];
+    $adminid = "";
     if($selectuser['referral_id'] != "Yurland"){
         $agent = $user->selectAgentRef($selectuser['referral_id']);
         $userperson = $user->selectUserRef($selectuser['referral_id']);
@@ -235,6 +236,12 @@ if(isset($_POST["submit"])){
                 "display_name" => "Pay Mode",
                 "variable_name" => "Pay Mode",
                 "value" =>  $paymode
+            ],
+
+            [
+                "display_name" => "Adminid",
+                "variable_name" => "Adminid",
+                "value" => $adminid
             ],
 
           ]

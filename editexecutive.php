@@ -816,6 +816,13 @@ if(!isset($_GET['unique'])){
                             value="<?php if(isset($newuser['earning'])){echo $newuser['earning'];}?>" />
                     </div>
 
+                    <div class="input-div email">
+                        <label for="earningtwo">Downliner Earning Percentage</label>
+                        <input type="number" id="earningtwo" placeholder="Edit downliner earning percentage"
+                            name="earningtwo"
+                            value="<?php if(isset($newuser['downliner_earning'])){echo $newuser['downliner_earning'];}?>" />
+                    </div>
+
 
 
                     <div class="input-div email">
