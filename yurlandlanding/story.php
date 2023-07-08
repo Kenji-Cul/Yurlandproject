@@ -148,8 +148,7 @@ include_once "../projectlog.php";
 
 
         <br /><br />
-        <h3>THE SOLUTION – <?php echo MY_APP_NAME;?></h3><br /> <?php echo MY_APP_NAME;?> is a PropTech product, by
-        <b>Ilu-Oba International Limited</b>
+        <h3>THE SOLUTION – <?php echo MY_APP_NAME;?></h3><br /> <?php echo MY_APP_NAME;?> is a PropTech product
         developed by <b> Arklips Limited</b> to help every Nigerian own a land at very afforadable rates spread across a
         fixed savings period of up
         to 18 months. With <?php echo MY_APP_NAME;?>, land ownership would be brought closer to everyone who really

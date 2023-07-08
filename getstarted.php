@@ -267,7 +267,7 @@ include "projectlog.php";
 
         <div class="company-flex">
             <div class="company">
-                A Product of <span>Ilu-Oba Int.Ltd</span> in partnership with <span>Arklips</span>
+                Developed by<span>Arklips Limited</span>
             </div>
         </div>
     </section>

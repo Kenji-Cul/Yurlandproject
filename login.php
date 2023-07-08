@@ -111,7 +111,7 @@ if(isset($_SESSION['unique_id'])){
 
     <footer class="footerdiv">
         <p>YurLAND &#169; 2022 | All Right Reserved</p>
-        <p>A product of Ilu-oba International Limited and Arklips Limited</p>
+        <p>A product of Arklips Limited</p>
         <p>Connect with us Facebook, Twitter, Instagram</p>
         <p style="font-size: 30px;">
             <a href="https://instagram.com/yurlandng?igshid=NTdlMDg3MTY="><i class="ri-instagram-line"></a></i><a

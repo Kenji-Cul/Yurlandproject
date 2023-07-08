@@ -74,8 +74,7 @@ include_once "projectlog.php";
                 <div class="col-md-6">
                     <div class="card"><img style="width:100%;" src="yurlandlanding/images/doorstep2.png" alt="" /></div>
                     <br />
-                    <div class="">Powered By: <img src="yurlandlanding/images/ilu2.png" height="100" alt=""><a
-                            class="navbar-brand">Ilu-Oba International Limited</a></div>
+                    <div class="">Developed By: <a class="navbar-brand">Arklips Limited</a></div>
 
                 </div>
             </div>
@@ -724,7 +723,6 @@ include_once "projectlog.php";
                         <div class="col-3"></div>
                         <div class="col-6">
                             <br /><br /><br />
-                            <p> A member of <br /><img src="yurlandlanding/images/ilu2.png" width="100" /> </p>
                         </div>
                         <div class="col-3"></div>
                         <div class="col-12">
