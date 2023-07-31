@@ -277,7 +277,6 @@ include_once "../projectlog.php";
                         <div class="col-3"></div>
                         <div class="col-6">
                             <br /><br /><br />
-                            <p> A member of <br /><img src="images/ilu2.png" width="100" /> </p>
                         </div>
                         <div class="col-3"></div>
                         <div class="col-12">

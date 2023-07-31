@@ -136,7 +136,6 @@ $txt = '
     ">
         <p>Acct Number: 1017004706</p>
         <p>Bank Name: Zenith Bank</p>
-        <p>Account Name: Ilu-Oba International Limited</p>
         <p>
             Office Address: 1 Abiola Adeyemi Street, Off Ologunfe B/Stop, NNPC
             Filling Station Plaza, Ikotun-Igando Road, Ikotun, Lagos.

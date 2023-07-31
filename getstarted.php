@@ -267,7 +267,7 @@ include "projectlog.php";
 
         <div class="company-flex">
             <div class="company">
-                Developed by<span>Arklips Limited</span>
+                Developed by <span>Arklips Limited</span>
             </div>
         </div>
     </section>

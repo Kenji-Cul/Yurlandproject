@@ -78,7 +78,7 @@ include_once "../projectlog.php";
         any of these terms.
         <br /><br />
         <h4>ABOUT US</h4><br />
-        YurLAND, a Real Estate Product developed by Ilu-Oba International Limited “Real Estate company in Nigeria”, in
+        YurLAND, a Real Estate Product developed by Arklips Limited “Real Estate company in Nigeria”, in
         partnership with Arklips Limited a tech base company into the development of tech related software to aid access
         into Logistics, Investments and Properties.
         <br />
@@ -86,7 +86,7 @@ include_once "../projectlog.php";
         <h4>Objectives of relationship</h4><br />
 
         The objective of coming into a relationship with yurLAND is to partake from the real estate offers provided by
-        Ilu-Oba Intl Ltd and Arklips Ltd for their customers.
+        Arklips Ltd for their customers.
         As a customer, you have access to all offers provided by the two firms via the RealTech product yurLAND through
         the use of an internet enabled pc or smartphone.
         <br />
@@ -300,7 +300,6 @@ include_once "../projectlog.php";
         <br />Our physical office address: 1 Abiola Adeyemi Street, Jidsam Filling Station Plaza, Igando-Ikotun Road,
         LAGOS State.
         Partners Website;
-        <br />Ilu-Oba International Limited: https://Iluobainternationallimited.com
         <br />Arklips Limited : https://arklips.com
 
         <br /><br /><a href="getstarted.html" target="_blank" class="submit-button">By Continuing, you consent to have
@@ -354,15 +353,14 @@ include_once "../projectlog.php";
                             <ul class="nav flex-column services-nav">
                                 <li class="nav-item"><a class="nav-link" href="https://medium.com/@yurland.ng"
                                         target="_blank">Learn</a></li>
-                                <li class="nav-item"><a class="nav-link" href="terms.php">T&C</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+                                <li class="nav-item"><a class="nav-link" href="yurlandlanding/terms.php">T&C</a></li>
+                                <li class="nav-item"><a class="nav-link" href="../contactus.php">Contact Us</a></li>
 
                             </ul>
                         </div><br /><br /><br />
                         <div class="col-3"></div>
                         <div class="col-6">
                             <br /><br /><br />
-                            <p> A member of <br /><img src="images/ilu2.png" width="100" /> </p>
                         </div>
                         <div class="col-3"></div>
                         <div class="col-12">

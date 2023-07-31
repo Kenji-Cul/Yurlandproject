@@ -294,10 +294,6 @@ $txt = '
     </h2>
     <h2><span style="text-transform: capitalize">Portal:</span> https://yurland.com.ng</h2>
     <h2>
-        <span style="text-transform: capitalize">Ilu-Oba International Limited:</span>
-        https://Iluobainternationallimited.com
-    </h2>
-    <h2>
         <span style="text-transform: capitalize">Arklips Limited</span> : https://arklips.com
     </h2>
 </div>
